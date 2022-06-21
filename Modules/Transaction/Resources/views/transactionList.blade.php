@@ -1,108 +1,42 @@
 @php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $codeColor = [
+            1 => '#ff0000',
+            2 => '#ffd633',
+            3 => '#cccccc',
+            4 => '#ffd633',
+            5 => '#ffd633',
+            6 => '#009900',
+        ];
 @endphp
 
 @extends('layouts.main')
 
 @section('page-style')
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
+@section('page-plugin')
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        $('#sample_1').dataTable({
-                language: {
-                    aria: {
-                        sortAscending: ": activate to sort column ascending",
-                        sortDescending: ": activate to sort column descending"
-                    },
-                    emptyTable: "No data available in table",
-                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                    infoEmpty: "No entries found",
-                    infoFiltered: "(filtered1 from _MAX_ total entries)",
-                    lengthMenu: "_MENU_ entries",
-                    search: "Search:",
-                    zeroRecords: "No matching records found"
-                },
-                buttons: [{
-                    extend: "print",
-                    className: "btn dark btn-outline",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                  extend: "copy",
-                  className: "btn blue btn-outline",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                },{
-                  extend: "pdf",
-                  className: "btn yellow-gold btn-outline",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                }, {
-                    extend: "excel",
-                    className: "btn green btn-outline",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                    extend: "csv",
-                    className: "btn purple btn-outline ",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                  extend: "colvis",
-                  className: "btn red",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                }],
-                responsive: {
-                    details: {
-                        type: "column",
-                        target: "tr"
-                    }
-                },
-                order: [0, "asc"],
-                lengthMenu: [
-                    [5, 10, 15, 20, -1],
-                    [5, 10, 15, 20, "All"]
-                ],
-                pageLength: 10,
-                dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
-        });
-
-        $('#sample_1').on('click', '.delete', function() {
-            let token  = "{{ csrf_token() }}";
-            let column = $(this).parents('tr');
-            let id     = $(this).data('id');
-
-            $.ajax({
-                type : "POST",
-                url : "{{ url('transaction/delete') }}",
-                data : "_token="+token+"&id_transation="+id,
-                success : function(result) {
-                    if (result == "success") {
-                        $('#sample_1').DataTable().row(column).remove().draw();
-                        toastr.info("Transaction has been deleted.");
-                    }
-                    else {
-                        toastr.warning("Something went wrong. Failed to delete Transaction.");
-                    }
-                }
-            });
-        });
-    </script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('content')
@@ -127,6 +61,34 @@
     </div><br>
 
     @include('layouts.notifications')
+    <?php
+    $date_start = '';
+    $date_end = '';
+
+    if(Session::has('filter-transaction-list')){
+        $search_param = Session::get('filter-transaction-list');
+        if(isset($search_param['date_start'])){
+            $date_start = $search_param['date_start'];
+        }
+
+        if(isset($search_param['date_end'])){
+            $date_end = $search_param['date_end'];
+        }
+
+        if(isset($search_param['rule'])){
+            $rule = $search_param['rule'];
+        }
+
+        if(isset($search_param['conditions'])){
+            $conditions = $search_param['conditions'];
+        }
+    }
+    ?>
+
+    <form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
+        {{ csrf_field() }}
+        @include('transaction::transactionFilter')
+    </form>
 
     <div class="portlet light portlet-fit bordered">
         <div class="portlet-title">
@@ -135,36 +97,48 @@
             </div>
         </div>
         <div class="portlet-body">
-            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
-            <thead>
-              <tr>
-                  <th>Receipt Number</th>
-                  <th>Customer Name</th>
-                  <th>Phone</th>
-                  <th>Total Price</th>
-                  <th>Payment Status</th>
-                  <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-                @if(!empty($list))
-                    @foreach($list as $res)
-                        <tr>
-                            <td>{{ $res['transaction_receipt_number'] }}</td>
-                            <td>{{ $res['user']['name'] }}</td>
-                            <td>{{ $res['user']['phone'] }}</td>
-                            <td>Rp {{ number_format($res['transaction_grandtotal'], 2) }}</td>
-                            <td>{{ $res['transaction_payment_status'] }}</td>
-                            <td>
-                                @if(MyHelper::hasAccess([39], $grantedFeature))
-                                    <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail', $res['transaction_receipt_number']) }}"><i class="icon-pencil"></i> Detail </a>
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-            </table>
+            <div style="display: block;overflow-x: auto;white-space: nowrap;">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Actions</th>
+                        <th>Transaction Status</th>
+                        <th>Date</th>
+                        <th>Grandtotal</th>
+                        <th>Receipt Number Group</th>
+                        <th>Receipt Number</th>
+                        <th>Customer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(!empty($data))
+                        @foreach($data as $res)
+                            <tr>
+                                <td>
+                                    @if(MyHelper::hasAccess([39], $grantedFeature))
+                                        <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail', $res['id_transaction']) }}"><i class="icon-pencil"></i> Detail </a>
+                                    @endif
+                                </td>
+                                <td><span class="badge badge-default badge-sm" style="background-color: {{$codeColor[$res['transaction_status_code']]??'#cccccc'}}">{{ $res['transaction_status_text'] }}</span></td>
+                                <td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
+                                <td>Rp {{number_format($res['transaction_grandtotal'],0,",",".")}}</td>
+                                <td>{{ $res['transaction_group_receipt_number'] }}</td>
+                                <td>{{ $res['transaction_receipt_number'] }}</td>
+                                <td>
+                                    {{$res['user_name']}} </br>
+                                    {{$res['user_phone']}} </br>
+                                    {{$res['user_email']}} </br>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            @if ($dataPaginator)
+                {{ $dataPaginator->links() }}
+            @endif
         </div>
     </div>
 @endsection

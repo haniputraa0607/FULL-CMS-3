@@ -89,6 +89,10 @@ Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Htt
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
 {
+    Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
+    Route::post('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
+    Route::get('detail/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);
+
     Route::group(['prefix' => 'log-invalid-flag'], function(){
         Route::any('list', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@listLogInvalidFlag']);
         Route::any('detail', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@detailLogInvalidFlag']);
@@ -109,8 +113,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::post('failed-void-payment/confirm', [ 'uses' => 'ManualRefundController@confirmManualRefund']);
 
     Route::any('/create/fake', 'TransactionController@fakeTransaction');
-    Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
-    Route::get('/detail/{id}/{key}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);
     Route::get('/delete/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDelete']);
 
     Route::any('/{key}/{slug}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transaction']);
