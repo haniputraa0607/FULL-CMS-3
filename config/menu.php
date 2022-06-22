@@ -1056,12 +1056,12 @@ return [
                             'active' => '\View::shared("submenu_active") == "setting-payment-method"',
                             'url' => 'transaction/setting/available-payment'
                         ],
-//                        [
-//                            'label' => 'Available Delivery',
-//                            'required_features' => [320],
-//                            'active' => '\View::shared("submenu_active") == "delivery-setting-available"',
-//                            'url' => 'transaction/setting/available-delivery'
-//                        ],
+                        [
+                            'label' => 'Available Delivery',
+                            'required_features' => [320],
+                            'active' => '\View::shared("submenu_active") == "delivery-setting-available"',
+                            'url' => 'transaction/setting/available-delivery'
+                        ],
 //                        [
 //                            'label' => 'Upload Logo Delivery',
 //                            'required_features' => [320],
@@ -2548,7 +2548,7 @@ return [
 				[
 					'label' => 'Mobile Apps Home',
 					'required_features' => [15, 16, 17, 18, 144, 145, 146, 147, 241, 246],
-					'active' => '\View::shared("menu_active") == "setting/home"',
+					'active' => '\View::shared("menu_active") == "setting-home"',
 					'url' => 'setting/home',
 					'icon' => 'icon-screen-tablet '
 				],
