@@ -75,12 +75,20 @@
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<a href="{{url('/')}}">Home</a>
+			<a href="#">Home</a>
 			<i class="fa fa-circle"></i>
 		</li>
 		<li>
-			<a href="javascript:;">Doctor</a>
+			<span>{{ $title }}</span>
+			@if (!empty($sub_title))
+				<i class="fa fa-circle"></i>
+			@endif
 		</li>
+		@if (!empty($sub_title))
+		<li>
+			<span>{{ $sub_title }}</span>
+		</li>
+		@endif
 	</ul>
 </div>
 <br>
@@ -91,13 +99,18 @@
 			<div class="portlet-title">
 				<div class="caption font-blue ">
 					<i class="icon-settings font-blue "></i>
-					<span class="caption-subject bold uppercase">New Doctor</span>
+					@if(isset($doctor))
+						<span class="caption-subject bold uppercase">Detail Doctor</span>
+					@else
+						<span class="caption-subject bold uppercase">New Doctor</span>
+					@endif
 				</div>
 			</div>
 			<div class="portlet-body form">
 				@if(isset($doctor))
 				<form role="form" class="form-horizontal" action="{{ url('/doctor', $doctor['id_doctor'])}}/update"" method="POST">
 					@method('PUT')
+					<input name="id_doctor" value="{{$doctor['id_doctor']}}" class="form-control hidden" />
 				@else 
 				<form role="form" class="form-horizontal" action="{{url('doctor/store')}}" method="POST" enctype="multipart/form-data">
 				@endif
@@ -124,7 +137,7 @@
 							    </label>
 							</div>
 							<div class="col-md-4">
-								<input type="text" name="doctor_phone" placeholder="Phone Number (Required & Unique)" value="{{isset($doctor) ? $doctor['doctor_phone'] : ''}}" class="form-control" required autocomplete="new-password" />
+								<input type="text" name="doctor_phone" placeholder="Phone Number (Required & Unique)" value="{{isset($doctor) ? $doctor['doctor_phone'] : ''}}" class="form-control" required autocomplete="new-password" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />
 							</div>
 						</div>
 						<div class="form-group">
@@ -136,7 +149,7 @@
 							    </label>
 							</div>
 							<div class="col-md-4">
-								<input type="password" name="pin" placeholder="6 digits PIN (Leave empty to autogenerate)" class="form-control mask_number" maxlength="6" autocomplete="new-password" />
+								<input type="password" name="pin" placeholder="6 digits PIN (Leave empty to autogenerate)" class="form-control mask_number" minlength="8" autocomplete="new-password" required onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />
 							</div>
 						</div>
 						<div class="form-group">

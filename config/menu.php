@@ -241,11 +241,13 @@ return [
 							'label' => 'New User Doctor',
 							'required_features' => [329],
 							'url' => 'doctor/create',
+							'active' => '\View::shared("submenu_active") == "doctor-create"',
 						],
 						[
 							'label' => 'Doctor List',
 							'required_features' => [328],
 							'url' => 'doctor',
+							'active' => '\View::shared("submenu_active") == "doctor-list"',
 						],
 						[
 							'label' => '[Master] Clinic',
