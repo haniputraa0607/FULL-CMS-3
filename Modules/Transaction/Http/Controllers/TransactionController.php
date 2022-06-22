@@ -1836,18 +1836,28 @@ class TransactionController extends Controller
     }
     public function availableDeliveryUpdate(Request $request) {
         $post = $request->except('_token');
+
         $delivery = [];
         foreach ($request->delivery as $code => $val) {
+            $services = [];
+
+            foreach ($val['service'] as $s){
+                $services[] = [
+                    "code" => $s['code'],
+                    "service_name" => $s['service_name'],
+                    "available_status" => $s['available_status']??0
+                ];
+            }
+
             $delivery[] = [
-                'code' => $code,
-                'delivery_name' => $val['delivery_name']??"",
-                'show_status' => $val['show_status']??0,
-                'available_status' => $val['available_status']??0,
-                'description' => $val['description']??""
+                "delivery_name" => $val['delivery_name'],
+                "delivery_method" => $code,
+                "service" => $services
             ];
         }
 
-        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery, 'default_delivery' => $post['default_delivery']]);
+        $data = MyHelper::post('transaction/available-delivery/update',['delivery' => $delivery]);
+
         if (($data['status']??false) == 'success') {
             return back()->withSuccess(['Success update setting']);
         } else {

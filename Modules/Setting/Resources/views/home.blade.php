@@ -727,7 +727,7 @@
 										<span class="required" aria-required="true"> * </span>
 									</label>
 									<div class="col-md-4">
-										<input type="number" class="form-control" name="default_home_splash_duration" value="{{$default_home['default_home_splash_duration']??''}}" min="1">
+										<input type="number" class="form-control" name="default_home_splash_duration" value="{{$default_home['default_home_splash_duration']??''}}" min="1" required>
 									</div>
 								</div>
 								<div class="form-group col-md-12">
