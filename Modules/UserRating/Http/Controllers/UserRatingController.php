@@ -36,8 +36,14 @@ class UserRatingController extends Controller
         $data['outlets'] = array_map(function($var){
             return [$var['id_outlet'],$var['outlet_name']];
         },$outlets);
-        $data['next_page'] = $data['ratingData']['next_page_url']?url()->current().'?page='.($page+1):'';
-        $data['prev_page'] = $data['ratingData']['prev_page_url']?url()->current().'?page='.($page-1):'';
+
+        if(isset($data['ratingData']['next_page_url'])){
+            $data['next_page'] = $data['ratingData']['next_page_url']?url()->current().'?page='.($page+1):'';
+            $data['prev_page'] = $data['ratingData']['prev_page_url']?url()->current().'?page='.($page-1):'';
+        } else {
+            $data['next_page'] = '';
+            $data['prev_page'] = '';
+        }
         return view('userrating::index',$data);
     }
 
