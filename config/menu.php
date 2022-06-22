@@ -1003,6 +1003,82 @@ return [
 			],
 			'icon' => 'fa fa-money'
 		],
+        
+        [
+            'type' => 'group',
+            'label' => 'Order',
+            'children' => [
+                [
+                    'type' => 'tree',
+                    'label' => 'Transaction',
+                    'icon' => 'fa fa-shopping-cart',
+                    'children' => [
+                        [
+                            'label' => 'Transaction List',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction"',
+                            'url' => 'transaction'
+                        ],
+                        [
+                            'label' => '[Response] Payment Success',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-transaction-success"',
+                            'url' => 'transaction/autoresponse/transaction-success'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Accepted',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-order-accepted"',
+                            'url' => 'transaction/autoresponse/order-accepted'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Reject',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-order-reject"',
+                            'url' => 'transaction/autoresponse/order-reject'
+                        ],
+                        [
+                            'label' => '[Response] Merchant Transaction New',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-merchant-transaction-new"',
+                            'url' => 'transaction/autoresponse/merchant-transaction-new'
+                        ]
+                    ]
+                ],
+                [
+                    'type' => 'tree',
+                    'label' => 'Order Settings',
+                    'icon' => 'fa fa-cogs',
+                    'children' => [
+                        [
+                            'label' => 'Available Payment Method',
+                            'required_features' => [250],
+                            'active' => '\View::shared("submenu_active") == "setting-payment-method"',
+                            'url' => 'transaction/setting/available-payment'
+                        ],
+//                        [
+//                            'label' => 'Available Delivery',
+//                            'required_features' => [320],
+//                            'active' => '\View::shared("submenu_active") == "delivery-setting-available"',
+//                            'url' => 'transaction/setting/available-delivery'
+//                        ],
+//                        [
+//                            'label' => 'Upload Logo Delivery',
+//                            'required_features' => [320],
+//                            'active' => '\View::shared("submenu_active") == "delivery-setting-upload-image"',
+//                            'url' => 'transaction/setting/delivery-upload-image'
+//                        ],
+//                        [
+//                            'label' => 'Setting Refund Reject Order',
+//                            'required_features' => [250],
+//                            'active' => '\View::shared("submenu_active") == "refund-reject-order"',
+//                            'url' => 'transaction/setting/refund-reject-order'
+//                        ]
+                    ]
+                ]
+            ]
+        ],
+
 		/** HIDE 
 		[
 			'type' => 'group',

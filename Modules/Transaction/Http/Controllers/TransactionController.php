@@ -88,6 +88,15 @@ class TransactionController extends Controller
                   'submenu_active'    => 'transaction-autoresponse-'.$subject,
                   'type'              => 'trx'  
 				];
+
+        if($subject == 'transaction-success'){
+            $subject = 'payment-success';
+        }elseif($subject == 'order-accepted'){
+            $subject = 'transaction-accepted';
+        }elseif($subject == 'order-reject'){
+            $subject = 'transaction-reject';
+        }
+
         switch ($subject) {
             case 'receive-inject-voucher':
                 $data['menu_active'] = 'inject-voucher';
@@ -316,6 +325,10 @@ class TransactionController extends Controller
 			$data['textreplaces'] = $test['result'];
 			$data['subject'] = $subject;
 		}
+
+        if($subject == 'merchant-transaction-new'){
+            $data['textreplaces'] = [];
+        }
 
         $custom = [];
         if (isset($data['data']['custom_text_replace'])) {
@@ -1230,79 +1243,69 @@ class TransactionController extends Controller
        
     }
 
-    public function transactionList() {
-        $data = [];
+    public function transactionList(Request $request) {
+        $post = $request->except('_token');
         $data = [
             'title'          => 'Transaction',
             'menu_active'    => 'transaction',
             'sub_title'      => 'List Transaction',
-            'submenu_active' => 'transaction-search'
+            'submenu_active' => 'transaction',
+            'title_date_start' => 'Start',
+            'title_date_end' => 'End',
         ];
 
-        $list = MyHelper::get('transaction');
-
-        if (isset($list['status']) && $list['status'] == 'success') {
-            $data['list'] = $list['result'];
-        } elseif (isset($list['status']) && $list['status'] == 'fail') {
-            return view('transaction::transactionList', $data)->withErrors($list['messages']);
-        } else {
-            return view('transaction::transactionList', $data)->withErrors(['Data not found']);
+        if(Session::has('filter-transaction-list') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-transaction-list');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-transaction-list');
         }
+
+        $list = MyHelper::post('transaction/list-all', $post);
+
+        if (isset($list['result']['data']) && !empty($list['result']['data'])) {
+            $data['data']          = $list['result']['data'];
+            $data['dataTotal']     = $list['result']['total'];
+            $data['dataPerPage']   = $list['result']['from'];
+            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
+        }
+        else {
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-transaction-list',$post);
+        }
+
 
         return view('transaction::transactionList', $data);
     }
 
-    public function transactionDetail($id, $key) {
-        // $data = [];
+    public function transactionDetail($id) {
         $data = [
             'title'          => 'Transaction',
             'menu_active'    => 'transaction',
             'sub_title'      => 'Detail Transaction',
-            'submenu_active' => 'transaction-'.$key
+            'submenu_active' => 'transaction'
         ];
 
-        // $detail = MyHelper::post('transaction/detail', ['id_transaction' => $id, 'type' => 'trx']);
-        // // return $detail;
-        // if (isset($detail['status']) && $detail['status'] == 'success') {
-        //     $data['data'] = $detail['result'];
-        // } else {
-        //     return parent::redirect($detail, 'Data not valid');
-        // }
+        $check = MyHelper::post('transaction/be/detail', ['id_transaction' => $id, 'admin' => 1]);
 
-        // $grand_total = MyHelper::post('transaction/grand-total', []);
-        // if (empty($grand_total)) {
-        //     return view('transaction::not_found', ['messages' => ['Setting Not Found']]);
-        // } else {
-        //     foreach ($grand_total as $key => $value) {
-        //         if ($value == 'shipping') {
-        //             $grand_total[$key] = 'shipment';
-        //         }
-
-        //     }
-        // }
-
-        // $data['setting'] = $grand_total;
-        // return $data;
-        // return view('transaction::transactionDetail2', $data);
-        // return view('transaction::transactionDetail3', $data);
-
-        $post['id_transaction'] = $id;
-        $post['type'] = 'trx';
-        $post['check'] = 1;
-
-        //$check = MyHelper::post('transaction/be/detail/webview/simple?log_save=0', $post);
-        // $check = MyHelper::post('outletapp/order/detail/view?log_save=0', $data);
-        $check = MyHelper::post('transaction/be/detail', ['id_transaction' => $id, 'type' => 'trx', 'admin' => 1]);
-
-    	if (isset($check['status']) && $check['status'] == 'success') {
-    		$data['data'] = $check['result'];
-    	} elseif (isset($check['status']) && $check['status'] == 'fail') {
-            return view('error', ['msg' => 'Data failed']);
-        } else {
-            return view('error', ['msg' => 'Something went wrong, try again']);
+        if (isset($check['status']) && $check['status'] == "success") {
+            $data['detail'] = $check['result'];
+            return view('transaction::transactionDetail3', $data);
+        }else{
+            return redirect('transaction')->withErrors(['Failed get detail transaction']);
         }
-        return view('transaction::transactionDetail3', $data);
-    	
     }
 
     public function transactionDelete($id) {
