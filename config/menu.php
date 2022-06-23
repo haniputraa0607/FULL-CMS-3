@@ -1046,6 +1046,13 @@ return [
                     ]
                 ],
                 [
+                    'label' => 'Failed Void Payment',
+                    'required_features' => [299],
+                    'active' => '\View::shared("menu_active") == "failed-void-payment"',
+                    'url' => 'transaction/failed-void-payment',
+                    'icon' => 'fa fa-exclamation-triangle'
+                ],
+                [
                     'type' => 'tree',
                     'label' => 'Order Settings',
                     'icon' => 'fa fa-cogs',
@@ -1068,12 +1075,12 @@ return [
 //                            'active' => '\View::shared("submenu_active") == "delivery-setting-upload-image"',
 //                            'url' => 'transaction/setting/delivery-upload-image'
 //                        ],
-//                        [
-//                            'label' => 'Setting Refund Reject Order',
-//                            'required_features' => [250],
-//                            'active' => '\View::shared("submenu_active") == "refund-reject-order"',
-//                            'url' => 'transaction/setting/refund-reject-order'
-//                        ]
+                        [
+                            'label' => 'Setting Refund Reject Order',
+                            'required_features' => [250],
+                            'active' => '\View::shared("submenu_active") == "refund-reject-order"',
+                            'url' => 'transaction/setting/refund-reject-order'
+                        ]
                     ]
                 ]
             ]
