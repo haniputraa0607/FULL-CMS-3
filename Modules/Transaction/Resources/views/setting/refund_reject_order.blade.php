@@ -114,33 +114,48 @@
                     </select>
                 </div>
             </div>
+{{--            <div class="form-group">--}}
+{{--                <div class="input-icon right">--}}
+{{--                    <label class="col-md-3 control-label">--}}
+{{--                        Ovo--}}
+{{--                    <span class="required" aria-required="true"> * </span>  --}}
+{{--                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih metode refund pembayaran apabila transaksi yang menggunakan metode pembayaran Ovo dibatalkan" data-container="body"></i>--}}
+{{--                    </label>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-3">--}}
+{{--                    <select class="select2 form-control" name="refund_ipay88">--}}
+{{--                        <option value="0">{{env('POINT_NAME', 'Points')}}</option>--}}
+{{--                        <option value="1" {{$status['refund_ipay88'] ? 'selected' : ''}}>Void Ovo</option>--}}
+{{--                    </select>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <div class="form-group">--}}
+{{--                <div class="input-icon right">--}}
+{{--                    <label class="col-md-3 control-label">--}}
+{{--                        Shopeepay--}}
+{{--                    <span class="required" aria-required="true"> * </span>  --}}
+{{--                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih metode refund pembayaran apabila transaksi yang menggunakan metode pembayaran Shopeepay dibatalkan" data-container="body"></i>--}}
+{{--                    </label>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-3">--}}
+{{--                    <select class="select2 form-control" name="refund_shopeepay">--}}
+{{--                        <option value="0">{{env('POINT_NAME', 'Points')}}</option>--}}
+{{--                        <option value="1" {{$status['refund_shopeepay'] ? 'selected' : ''}}>Void Shopeepay</option>--}}
+{{--                    </select>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <div class="form-group">
                 <div class="input-icon right">
                     <label class="col-md-3 control-label">
-                        Ovo
-                    <span class="required" aria-required="true"> * </span>  
-                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih metode refund pembayaran apabila transaksi yang menggunakan metode pembayaran Ovo dibatalkan" data-container="body"></i>
+                        Xendit
+                        <span class="required" aria-required="true"> * </span>
+                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih metode refund pembayaran apabila transaksi yang menggunakan metode pembayaran xendit dibatalkan" data-container="body"></i>
                     </label>
                 </div>
                 <div class="col-md-3">
-                    <select class="select2 form-control" name="refund_ipay88">
+                    <select class="select2 form-control" name="refund_xendit">
                         <option value="0">{{env('POINT_NAME', 'Points')}}</option>
-                        <option value="1" {{$status['refund_ipay88'] ? 'selected' : ''}}>Void Ovo</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-icon right">
-                    <label class="col-md-3 control-label">
-                        Shopeepay
-                    <span class="required" aria-required="true"> * </span>  
-                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih metode refund pembayaran apabila transaksi yang menggunakan metode pembayaran Shopeepay dibatalkan" data-container="body"></i>
-                    </label>
-                </div>
-                <div class="col-md-3">
-                    <select class="select2 form-control" name="refund_shopeepay">
-                        <option value="0">{{env('POINT_NAME', 'Points')}}</option>
-                        <option value="1" {{$status['refund_shopeepay'] ? 'selected' : ''}}>Void Shopeepay</option>
+                        <option value="1" {{$status['refund_xendit'] ? 'selected' : ''}}>Void Xendit</option>
                     </select>
                 </div>
             </div>
