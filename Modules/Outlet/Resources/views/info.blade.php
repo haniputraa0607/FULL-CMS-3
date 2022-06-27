@@ -213,29 +213,6 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-3 control-label">
-                Image Logo Landscape<span class="required" aria-required="true">* <br>(maximum height 300) </span>
-                <i class="fa fa-question-circle tooltips" data-original-title="Logo outlet maksimal tinggi 300 px" data-container="body"></i>
-            </label>
-            <div class="col-md-8">
-                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="fileinput-new thumbnail" style="width: 300px; height: 150px;">
-                        <img src="@if(!empty($val['outlet_image_logo_landscape'])){{$val['url_outlet_image_logo_landscape']}}@endif" alt="">
-                    </div>
-                    <div class="fileinput-preview fileinput-exists thumbnail" id="imageDetail" style="max-width: 300px; max-height: 150px;"></div>
-                    <div>
-                        <span class="btn default btn-file">
-                        <span class="fileinput-new"> Select image </span>
-                        <span class="fileinput-exists"> Change </span>
-                        <input type="file" class="filePhotoDetail" id="fieldphotodetail" accept="image/*" name="outlet_image_logo_landscape" @if(empty($val['outlet_image_logo_landscape'])) required @endif>
-                        </span>
-
-                        <a href="javascript:;" id="remove_fieldphotodetail" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="form-group">
             <label class="col-md-3 control-label">

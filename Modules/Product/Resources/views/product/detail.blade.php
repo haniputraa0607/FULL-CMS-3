@@ -514,61 +514,7 @@
                 }
             });
         });
-
-         $(".file").change(function(e) {
-            var widthImg  = 300;
-            var heightImg = 300;
-
-            var _URL = window.URL || window.webkitURL;
-            var image, file;
-
-            if ((file = this.files[0])) {
-                image = new Image();
-
-                image.onload = function() {
-                    if (this.width == widthImg && this.height == heightImg) {
-                        // image.src = _URL.createObjectURL(file);
-                    //    $('#formimage').submit()
-                    }
-                    else {
-                        toastr.warning("Please check dimension of your photo.");
-                        $('#imageproduct').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
-                        $('#fieldphoto').val("");
-
-                    }
-                };
-
-                image.src = _URL.createObjectURL(file);
-            }
-
-        });
-        $(".filePhotoDetail").change(function(e) {
-            var widthImg  = 720;
-            var heightImg = 360;
-
-            var _URL = window.URL || window.webkitURL;
-            var image, file;
-
-            if ((file = this.files[0])) {
-                image = new Image();
-
-                image.onload = function() {
-                    if (this.width == widthImg && this.height == heightImg) {
-                        // image.src = _URL.createObjectURL(file);
-                    //    $('#formimage').submit()
-                    }
-                    else {
-                        toastr.warning("Please check dimension of your photo.");
-                        $('#imageproductDetail').children('img').attr('src', 'https://www.placehold.it/720x360/EFEFEF/AAAAAA&amp;text=no+image');
-                        $('#filePhotoDetail').val("");
-
-                    }
-                };
-
-                image.src = _URL.createObjectURL(file);
-            }
-
-        });
+        
         $('#select_tag').change(function(){
 			var value = $(this).val();
             if(value !== null){

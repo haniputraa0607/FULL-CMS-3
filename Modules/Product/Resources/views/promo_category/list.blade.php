@@ -127,6 +127,7 @@ $configs            = session('configs');
                                 <input type="text" class="form-control search-field" name="keyword" placeholder="Search">
                                 <div class="input-group-btn">
                                     <button class="btn blue search-btn" type="submit"><i class="fa fa-search"></i></button>
+                                    <a class="btn green-dark search-btn" href="{{url('product/promo-category')}}"><i class="fa fa-trash-o"></i></a>
                                 </div>
                             </div>
                         </div>

@@ -793,75 +793,75 @@ return [
 					'icon' => 'fa fa-puzzle-piece'
 				],
 				*/
-				[
-					'label' => 'Product Variant NON PRICE (NO SKU)',
-					'required_features' => [],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'New Product Variant NON PRICE (NO SKU)',
-							'required_features' => [284],
-							'active' => '\View::shared("submenu_active") == "product-modifier-group-new"',
-							'url' => 'product/modifier-group/create'
-						],
-						[
-							'type' => 'group',
-							'required_features' => [283, 285, 286, 287],
-							'children' => [
-								[
-									'label' => 'Product Variant NON PRICE (NO SKU) List',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-list"',
-									'url' => 'product/modifier-group'
-								],
-								[
-									'label' => 'Product Variant NON PRICE (NO SKU) Price',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-price"',
-									'url' => 'product/modifier-group/price'
-								],
-								[
-									'label' => 'Product Variant NON PRICE (NO SKU) Detail',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-detail"',
-									'url' => 'product/modifier-group/detail'
-								],
-								[
-									'label' => 'Manage Position Product Variant NON PRICE (NO SKU)',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-position"',
-									'url' => 'product/modifier-group/position'
-								],
-								[
-									'label' => 'Export & Import Product Variant NON PRICE (NO SKU)',
-									'required_features' => [],
-									'type' => 'tree',
-									'children' => [
-										[
-											'label' => 'Import Product Variant NON PRICE (NO SKU)',
-											'required_features' => [],
-											'active' => '\View::shared("submenu_active") == "product-modifier-group-import-global"',
-											'url' => 'product/modifier-group/import'
-										],
-										[
-											'label' => 'Import Product Variant NON PRICE (NO SKU) Price',
-											'required_features' => [],
-											'active' => '\View::shared("submenu_active") == "product-modifier-group-import-price"',
-											'url' => 'product/modifier-group/import-price'
-										],
-									],
-								],
-								[
-									'label' => 'Inventory Brand',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-inventory-brand"',
-									'url' => 'product/modifier-group/inventory-brand'
-								],
-							]
-						],
-					],
-					'icon' => 'fa fa-glass'
-				],
+//				[
+//					'label' => 'Product Variant NON PRICE (NO SKU)',
+//					'required_features' => [],
+//					'type' => 'tree',
+//					'children' => [
+//						[
+//							'label' => 'New Product Variant NON PRICE (NO SKU)',
+//							'required_features' => [284],
+//							'active' => '\View::shared("submenu_active") == "product-modifier-group-new"',
+//							'url' => 'product/modifier-group/create'
+//						],
+//						[
+//							'type' => 'group',
+//							'required_features' => [283, 285, 286, 287],
+//							'children' => [
+//								[
+//									'label' => 'Product Variant NON PRICE (NO SKU) List',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-list"',
+//									'url' => 'product/modifier-group'
+//								],
+//								[
+//									'label' => 'Product Variant NON PRICE (NO SKU) Price',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-price"',
+//									'url' => 'product/modifier-group/price'
+//								],
+//								[
+//									'label' => 'Product Variant NON PRICE (NO SKU) Detail',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-detail"',
+//									'url' => 'product/modifier-group/detail'
+//								],
+//								[
+//									'label' => 'Manage Position Product Variant NON PRICE (NO SKU)',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-position"',
+//									'url' => 'product/modifier-group/position'
+//								],
+//								[
+//									'label' => 'Export & Import Product Variant NON PRICE (NO SKU)',
+//									'required_features' => [],
+//									'type' => 'tree',
+//									'children' => [
+//										[
+//											'label' => 'Import Product Variant NON PRICE (NO SKU)',
+//											'required_features' => [],
+//											'active' => '\View::shared("submenu_active") == "product-modifier-group-import-global"',
+//											'url' => 'product/modifier-group/import'
+//										],
+//										[
+//											'label' => 'Import Product Variant NON PRICE (NO SKU) Price',
+//											'required_features' => [],
+//											'active' => '\View::shared("submenu_active") == "product-modifier-group-import-price"',
+//											'url' => 'product/modifier-group/import-price'
+//										],
+//									],
+//								],
+//								[
+//									'label' => 'Inventory Brand',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-inventory-brand"',
+//									'url' => 'product/modifier-group/inventory-brand'
+//								],
+//							]
+//						],
+//					],
+//					'icon' => 'fa fa-glass'
+//				],
 				[
 					'label' => 'Product Variant (SKU)',
 					'required_features' => [],
