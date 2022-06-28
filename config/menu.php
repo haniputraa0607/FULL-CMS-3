@@ -619,24 +619,24 @@ return [
 								],
 							],
 						],
-						[
-							'label' => 'Image Product',
-							'required_features' => [51],
-							'type' => 'tree',
-							'children' => [
-								[
-									'label' => 'Upload Image',
-									'required_features' => [],
-									'url' => 'product/image/add'
-								],
-								[
-									'label' => 'Image List',
-									'required_features' => [],
-									'active' => '\View::shared("child_active") == "product-image-list"',
-									'url' => 'product/image/list'
-								],
-							],
-						],
+//						[
+//							'label' => 'Image Product',
+//							'required_features' => [51],
+//							'type' => 'tree',
+//							'children' => [
+//								[
+//									'label' => 'Upload Image',
+//									'required_features' => [],
+//									'url' => 'product/image/add'
+//								],
+//								[
+//									'label' => 'Image List',
+//									'required_features' => [],
+//									'active' => '\View::shared("child_active") == "product-image-list"',
+//									'url' => 'product/image/list'
+//								],
+//							],
+//						],
 						[
 							'required_features' => [48],
 							'type' => 'group',
@@ -653,18 +653,18 @@ return [
 									'active' => '\View::shared("submenu_active") == "product-list-hidden"',
 									'url' => 'product/hidden'
 								],
-								[
-									'label' => 'Manage Product Category',
-									'required_features' => [43],
-									'active' => '\View::shared("submenu_active") == "product-category"',
-									'url' => 'product/position/assign'
-								],
-								[
-									'label' => 'Manage Position',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-position"',
-									'url' => 'product/position/assign'
-								],
+//								[
+//									'label' => 'Manage Product Category',
+//									'required_features' => [43],
+//									'active' => '\View::shared("submenu_active") == "product-category"',
+//									'url' => 'product/position/assign'
+//								],
+//								[
+//									'label' => 'Manage Position',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-position"',
+//									'url' => 'product/position/assign'
+//								],
 								[
 									'label' => 'Product Photo Default',
 									'required_features' => [],

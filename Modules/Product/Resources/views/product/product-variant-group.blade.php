@@ -1,137 +1,97 @@
 <form class="form-horizontal" id="form_product_variant_group" action="{{url('product/product-variant-group/'.$product[0]['product_code'])}}" method="POST">
     {{ csrf_field() }}
     <div class="form-body">
-        <div class="form-group">
-            <label  class="col-md-3 control-label">Product Variant <span class="text-danger">*</span></label>
-            <div class="col-md-4">
-                <select class="form-control select2" id="select2-product-variant" multiple="multiple" style="width: 100%">
+        @foreach($product_variant_group as $key=>$val)
+            <div class="form-group">
+                <label  class="col-md-3 control-label">Code</label>
+                <div class="col-md-4">
+                    <input class="form-control" placeholder="Product Variant Group Code" disabled value="{{$val['product_variant_group_code']}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-md-3 control-label">Variant</label>
+                <div class="col-md-4">
                     <?php
-                        $declaration = [];
-                        foreach($product_variant as $key=>$val){
-                            if(!empty($val['product_variant_parent'])){
-                                $declaration[$val['product_variant_parent']['product_variant_name']][] = [
-                                    'id_parent' => $val['id_parent'],
-                                    'id_product_variant' => $val['id_product_variant'],
-                                    'product_variant_name' => $val['product_variant_name']
-                                ];
-                            }
-                        }
+                        $arr = array_column($val['product_variant_pivot'], 'product_variant_name');
+                        $name = implode(',',$arr);
                     ?>
-                    @foreach($declaration as $key=>$val)
-                        <optgroup label="{{$key}}">
-                            @foreach($val as $child)
-                                <option value="{{$child['id_product_variant']}}|{{$child['id_parent']}}">{{$child['product_variant_name']}}</option>
-                            @endforeach
-                        </optgroup>
+                    <input class="form-control" disabled value="{{$name}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-md-3 control-label">Price <span class="text-danger">*</span></label>
+                <div class="col-md-4">
+                    <input class="form-control price" maxlength="11" name="variants[{{$key}}][product_variant_group_price]" placeholder="Price Product Variant Group" value="{{(int)$val['product_variant_group_price']}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label">Visible <span class="text-danger">*</span>
+                </label>
+                <div class="input-icon right">
+                    <div class="col-md-2">
+                        <div class="md-radio-inline">
+                            <div class="md-radio">
+                                <input type="radio" id="radio-variant-visibility1_{{$key}}" name="variants[{{$key}}][product_variant_group_visibility]" class="md-radiobtn req-type" value="Visible" @if(!empty($val['variant_detail']) && $val['variant_detail']['product_variant_group_visibility'] == 'Visible') checked @endif>
+                                <label for="radio-variant-visibility1_{{$key}}">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Visible</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="md-radio-inline">
+                            <div class="md-radio">
+                                <input type="radio" id="radio-variant-visibility2_{{$key}}"name="variants[{{$key}}][product_variant_group_visibility]" class="md-radiobtn req-type" value="Hidden" @if(empty($val['variant_detail']) || $val['variant_detail']['product_variant_group_visibility'] == 'Hidden') checked @endif>
+                                <label for="radio-variant-visibility2_{{$key}}">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Hidden </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="multiple" class="control-label col-md-3">Wholesaler</label>
+                <div class="col-md-8" id="div_variant_wholesaler_{{$key}}">
+                    <a class="btn yellow" style="margin-bottom: 2%" onclick="addVariantWholesaler('{{$key.'_'.count($val['product_variant_group_wholesaler'])}}')">Add Wholesaler <i class="fa fa-plus-circle"></i></a>
+                    @foreach($val['product_variant_group_wholesaler'] as $index=>$wholesaler)
+                        <div class="row" style="margin-bottom: 2%" id="variant_wholesaler_{{$key}}_{{$index}}">
+                            <div class="col-md-5">
+                                <div class="input-group">
+                            <span class="input-group-addon">
+                                min
+                            </span>
+                                    <input class="form-control price" required name="variants[{{$key}}][wholesalers][{{$index}}][minimum]" value="{{$wholesaler['variant_wholesaler_minimum']}}">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="input-group">
+                                    <input class="form-control price" required name="variants[{{$key}}][wholesalers][{{$index}}][unit_price]" value="{{(int)$wholesaler['variant_wholesaler_unit_price']}}">
+                                    <span class="input-group-addon">
+                                /pcs
+                            </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <a class="btn red" style="margin-bottom: 2%" onclick="deleteVariantWholesaler('{{$key.'_'.$index}}')"><i class="fa fa-trash"></i></a>
+                            </div>
+                        </div>
                     @endforeach
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label  class="col-md-3 control-label">Code <span class="text-danger">*</span></label>
-            <div class="col-md-4">
-                <input class="form-control" id="product-variant-group-code" placeholder="Product Variant Group Code">
-            </div>
-        </div>
-        <div class="form-group">
-            <label  class="col-md-3 control-label">Price <span class="text-danger">*</span></label>
-            <div class="col-md-4">
-                <input class="form-control price" maxlength="11" id="product-variant-group-price" placeholder="Price Product Variant Group">
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-3 control-label">Visible <span class="text-danger">*</span>
-            </label>
-            <div class="input-icon right">
-                <div class="col-md-2">
-                    <div class="md-radio-inline">
-                        <div class="md-radio">
-                            <input type="radio" id="radio-variant-visibility1" name="product_variant_group_visibility" class="md-radiobtn req-type" value="Visible" checked>
-                            <label for="radio-variant-visibility1">
-                                <span></span>
-                                <span class="check"></span>
-                                <span class="box"></span> Visible</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <div class="md-radio-inline">
-                        <div class="md-radio">
-                            <input type="radio" id="radio-variant-visibility2" name="product_variant_group_visibility" class="md-radiobtn req-type" value="Hidden">
-                            <label for="radio-variant-visibility2">
-                                <span></span>
-                                <span class="check"></span>
-                                <span class="box"></span> Hidden </label>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div>
-        <input type="hidden" id="product-variant-group-id" value="">
-        <input type="hidden" id="product-variant-group-code" name="product_variant_group_code" value="">
-        <input type="hidden" id="product-variant-group-visibility" name="product_variant_group_visibility" value="">
-        <input type="hidden" id="product_base_price_pvg" name="product_base_price_pvg" value="">
-
-        <div class="form-group row">
-            <label  class="col-md-3 col-form-label"></label>
-            <div class="col-md-4">
-                <a onclick="addProductVariantGroup()" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Add Product Variant Group</a>
+            <input type="hidden" value="{{$val['id_product_variant_group']}}" name="variants[{{$key}}][id_product_variant_group]">
+            <hr style="border-top: 1px dashed black;">
+        @endforeach
+    </div>
+    <div class="form-actions">
+        <div class="row">
+            <div class="col-md-3">
             </div>
-        </div>
-        <div style="margin-top: 5%">
-            <table class="table table-bordered table-hover" style="width: 70%" id="table-product-variant">
-                <thead>
-                <th>Product Variant</th>
-                <th>Code</th>
-                <th>Price</th>
-                <th>Visibility</th>
-                <th>Action</th>
-                </thead>
-                <tbody id="product-variant-group-body">
-                @foreach($product_variant_group as $key=>$val)
-                    <tr>
-                        <td>
-                            <?php
-                            $arr = array_column($val['product_variant_pivot'], 'product_variant_name');
-                            $name = implode(',',$arr);
-                            echo $name;
-                            ?>
-                        </td>
-                        <td>{{$val['product_variant_group_code']}}</td>
-                        <td>{{number_format($val['product_variant_group_price'],0,",",".")}}</td>
-                        <td>{{$val['product_variant_group_visibility']}}</td>
-                        <td>
-                            <a  onclick="deleteRowProductVariant(this, {{$val['id_product_variant_group']}})" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Delete</a>
-                            <a  onclick="editRowProductVariant(this,{{$key}})" class="btn btn-sm btn-primary" style="margin-left: 2%"><i class="fa fa-pen"></i> Edit</a>
-                        </td>
-                        <?php
-                            $tmp = [];
-                            foreach ($val['product_variant_pivot'] as $p){
-                                $tmp[] = $p['id_product_variant'].'|'.$p['id_parent'];
-                            }
-                            $id_edit = implode(',',$tmp);
-                            $arr_id = array_column($val['product_variant_pivot'], 'id_product_variant');
-                            $id = implode(',',$arr_id);
-                        ?>
-                        <input type="hidden" id="product-variant-{{$key}}" name="data[{{$key}}][id]" value="{{$id}}">
-                        <input type="hidden" id="product-variant-edit-{{$key}}" name="data[{{$key}}][id-edit]" value="{{$id_edit}}">
-                        <input type="hidden" id="product-variant-group-code-{{$key}}" name="data[{{$key}}][code]" value="{{$val['product_variant_group_code']}}">
-                        <input type="hidden" id="product-variant-price-{{$key}}" name="data[{{$key}}][price]" value="{{(int)$val['product_variant_group_price']}}">
-                        <input type="hidden" id="product-variant-group-visibility-{{$key}}" name="data[{{$key}}][visibility]" value="{{$val['product_variant_group_visibility']}}">
-                        <input type="hidden" id="product-variant-group-id-{{$key}}" name="data[{{$key}}][group_id]" value="{{$val['id_product_variant_group']}}">
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+            <div class="col-md-9">
+                <button type="submit" class="btn btn-success mr-2">Submit</button>
+            </div>
         </div>
     </div>
 </form>
-<div class="form-actions">
-    <div class="row">
-        <div class="col-md-3">
-        </div>
-        <div class="col-md-9">
-            <button onclick="submitProductVariant()" class="btn btn-success mr-2">Submit</button>
-        </div>
-    </div>
-</div>

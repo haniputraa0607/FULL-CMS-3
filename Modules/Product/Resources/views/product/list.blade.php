@@ -223,15 +223,12 @@
             <table class="table table-striped table-bordered table-hover" width="100%" id="sample_1">
                 <thead>
                     <tr>
-                        <th> No </th>
                         <th> Code </th>
                         <th> Category </th>
                         <th> Name </th>
                         <th> Brand </th>
                         <!-- <th> Allow Sync </th> -->
-                        <th >Default Visibility Product</th>
-                        <th> Override Visible </th>
-                        <th> Override Hidden </th>
+                        <th >Visibility Product</th>
                         @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
                             <th> Action </th>
                         @endif
@@ -241,7 +238,6 @@
                     @if (!empty($product))
                         @foreach($product as $key => $value)
                             <tr>
-                                <td>{{ $key+1 }}</td>
                                 <td>{{ $value['product_code'] }}</td>
                                 @if (empty($value['category']))
                                     <td>Uncategorize</td>
@@ -267,11 +263,9 @@
                                         <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>
                                         <span class="bootstrap-switch-label" style="width: 35px;">&nbsp;</span>
                                         <span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 35px;"></span>
-                                        <input type="checkbox" name="product_visibility" @if($value['product_visibility'] == 'Visible') checked @endif data-id="{{ $value['id_product'] }}" class="make-switch switch-large switch-change" data-on-text="Visible" data-off-text="Hidden">
+                                        <input type="checkbox" name="product_visibility" @if(!empty($value['product_detail'][0]['product_detail_visibility']) && $value['product_detail'][0]['product_detail_visibility'] == 'Visible') checked @endif data-id="{{ $value['id_product'] }}" class="make-switch switch-large switch-change" data-on-text="Visible" data-off-text="Hidden">
                                     </div>
                                 </td>
-                                <td><a href="{{ url('product/detail') }}/{{ $value['product_code'] }}#visibility">{{ $value['product_detail_count'] }}</a></td>
-                                <td><a href="{{ url('product/detail') }}/{{ $value['product_code'] }}#visibility">{{ $value['product_detail_hiddens_count'] }}</td>
                                 @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
                                     <td style="width: 80px;">
                                         @if(MyHelper::hasAccess([52], $grantedFeature))
