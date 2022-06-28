@@ -162,29 +162,6 @@
                 </div>
             </div>
         </div>
-         <div class="form-group">
-            <label class="col-md-3 control-label">
-                Photo Detail<span class="required" aria-required="true">* <br>(720*360) </span>
-                <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk Detail" data-container="body"></i>
-            </label>
-            <div class="col-md-8">
-                <div class="fileinput fileinput-new" data-provides="fileinput">
-                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                     <img src="@if(isset($syu['product_photo_detail'])){{ env('STORAGE_URL_API') }}{{$syu['product_photo_detail']}}@endif" alt="">
-                    </div>
-                    <div class="fileinput-preview fileinput-exists thumbnail" id="imageproductDetail" style="max-width: 200px; max-height: 200px;"></div>
-                    <div>
-                        <span class="btn default btn-file">
-                        <span class="fileinput-new"> Select image </span>
-                        <span class="fileinput-exists"> Change </span>
-                        <input type="file" class="filePhotoDetail" id="fieldphotodetail" accept="image/*" name="product_photo_detail">
-                        </span>
-
-                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
         <!--<div class="form-group">-->
