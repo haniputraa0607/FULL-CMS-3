@@ -43,7 +43,7 @@
         <div class="form-group">
             <label class="col-md-3 text-right control-label">Promo Category <i class="fa fa-question-circle tooltips" data-original-title="Pilih Kategori Promo Produk" data-container="body"></i></label>
             <div class="col-md-8">
-                <select name="id_product_promo_category[]" class="select2 form-control" data-placeholder="Select category" multiple>
+                <select name="id_product_promo_category[]" class="select2 form-control" data-placeholder="Promo category" multiple>
                     <option value=""></option>
                     @foreach($promo_categories as $category)
                     <option value="{{$category['id_product_promo_category']}}" @if(in_array($category['id_product_promo_category'],$product[0]['product_promo_categories'])) selected @endif>{{$category['product_promo_category_name']}}</option>
@@ -82,17 +82,6 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-md-3 control-label">POS Name
-                <i class="fa fa-question-circle tooltips" data-original-title="Nama Default Dari POS" data-container="body"></i>
-            </label>
-            <div class="col-md-8">
-                <div class="input-icon right">
-                    <input type="text" class="form-control" name="product_name_pos" value="{{ $syu['product_name_pos'] }}" readonly>
-                </div>
-            </div>
-        </div>
-
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -141,7 +130,7 @@
         </div>
          <div class="form-group">
             <label class="col-md-3 control-label">
-                Photo <span class="required" aria-required="true">* <br>(300*300) </span>
+                Photo <span class="required" aria-required="true">* </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
             </label>
             <div class="col-md-8">
@@ -199,31 +188,38 @@
                </div>
            </div>
         </div>
-          <!-- {{--<div class="form-group">
-            <label for="multiple" class="control-label col-md-3">Tag
-                {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}
+
+        <div class="form-group" id="div_parent_wholesaler" @if($product[0]['product_variant_status'] == 1) style="display: none" @endif>
+            <label for="multiple" class="control-label col-md-3">Wholesaler
+                <i class="fa fa-question-circle tooltips" data-original-title="Harga grosir" data-container="body"></i>
             </label>
-            <div class="col-md-8">
-                <select name="id_tag[]" class="bs-select form-control" id="select_tag" multiple data-live-search="true" title="Select Tag">
-                    <option id="option_new_tag" value="+" data-content="<span class='btn btn-info'><i class='fa fa-plus' style='color:#fff'></i> Add New Category</span>">
-                        New Tag
-                    </option>
-                    @php
-                        if (!empty($syu['product_tags'])) {
-                            $selectedTag = array_pluck($syu['product_tags'], 'id_tag');
-                        }
-                        else {
-                            $selectedTag = [];
-                        }
-                        @endphp
-                        @if (!empty($tags))
-                            @foreach($tags as $tag)
-                                <option value="{{ $tag['id_tag'] }}" @if(in_array($tag['id_tag'], $selectedTag)) selected @endif>{{ $tag['tag_name'] }}</option>
-                            @endforeach
-                        @endif
-                </select>
+            <div class="col-md-8" id="div_wholesaler">
+                <a class="btn yellow" style="margin-bottom: 2%" onclick="addWholesaler({{count($syu['product_wholesaler'])}})">Add Wholesaler <i class="fa fa-plus-circle"></i></a>
+                @foreach($syu['product_wholesaler'] as $key=>$wholesaler)
+                    <div class="row" style="margin-bottom: 2%" id="wholesaler_{{$key}}">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                            <span class="input-group-addon">
+                                min
+                            </span>
+                                <input class="form-control price" required name="product_wholesaler[{{$key}}][minimum]" value="{{$wholesaler['product_wholesaler_minimum']}}">
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <input class="form-control price" required name="product_wholesaler[{{$key}}][unit_price]" value="{{(int)$wholesaler['product_wholesaler_unit_price']}}">
+                                <span class="input-group-addon">
+                                /pcs
+                            </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <a class="btn red" onclick="deleteWholesaler({{$key}})"><i class="fa fa-trash"></i></a>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-        </div> --}} -->
+        </div>
     </div>
     <input type="hidden" name="id_product" value="{{ $syu['id_product'] }}">
     @endforeach
