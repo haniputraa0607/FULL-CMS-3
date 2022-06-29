@@ -110,6 +110,7 @@ class UserRatingController extends Controller
 
         $data['options'] = MyHelper::get('user-rating/option?outlet=true')['result']??[];
         $data['options_hs'] = MyHelper::get('user-rating/option?hairstylist=true')['result']??[];
+        $data['options_product'] = MyHelper::get('user-rating/option?product=true')['result']??[];
 
         foreach ($ratings as $rating) {
             $data['setting'][$rating['key']] = $rating;
@@ -285,8 +286,8 @@ class UserRatingController extends Controller
             if (isset($post['max_rating_value'])) {
 
             	switch ($target) {
-            		case 'hairstylist':
-            			$maxRatingSubject = 'response_max_rating_value_hairstylist';
+            		case 'product':
+            			$maxRatingSubject = 'response_max_rating_value_product';
             			break;
 
                     case 'doctor':
@@ -344,11 +345,11 @@ class UserRatingController extends Controller
         $data['textreplaces'] = MyHelper::get('autocrm/textreplace')['result']??[];
 
         switch ($target) {
-        	case 'hairstylist':
-        		$data['submenu_active'] = 'user-rating-response-hairstylist';
-        		$data['subject'] = 'user-rating-hairstylist';
-        		$data['max_rating_value'] = MyHelper::post('setting',['key' => 'response_max_rating_value_hairstylist'])['result']['value']??2;
-		        $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>'User Rating hairstylist'])['result']??[];
+        	case 'product':
+        		$data['submenu_active'] = 'user-rating-response-product';
+        		$data['subject'] = 'user-rating-product';
+        		$data['max_rating_value'] = MyHelper::post('setting',['key' => 'response_max_rating_value_product'])['result']['value']??2;
+		        $data['data'] = MyHelper::post('autocrm/list',['autocrm_title'=>'User Rating Product'])['result']??[];
 		        $data['custom'] = explode(';',($data['data']['custom_text_replace'] ?? null));
         		break;
 
@@ -370,143 +371,4 @@ class UserRatingController extends Controller
         return view('userrating::response',$data);
     }
 
-    public function reportHairstylist(Request $request)
-    {
-        $data = [
-            'title'          => 'User Rating',
-            'sub_title'      => 'Report User Rating Hairstylist',
-            'menu_active'    => 'user-rating',
-            'submenu_active' => 'user-rating-report-hairstylist',
-            'filter_title'   => 'User Rating Filter'
-        ];
-        $date_start = date('Y-m-d H:i:s',strtotime(session('rating_hs_date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('rating_hs_date_end',date('Y-m-d H:i:s'))));
-        $post['photos_only'] = session('rating_hs_photos_only',0);
-        $post['notes_only'] = session('rating_hs_notes_only',0);
-        $post['transaction_type'] = session('rating_hs_transaction_type', 'all');
-        $post['date_start'] = $date_start;
-        $post['date_end'] = $date_end;
-        $post['rating_target'] = 'hairstylist';
-        $data['reportData'] = MyHelper::post('user-rating/report',$post)['result']??[];
-        if(!$data['reportData']){
-            return back()->withErrors(['Rating data not found']);
-        }
-        $ratingOk = [];
-        foreach ($data['reportData']['rating_item'] as $value) {
-            $ratingOk[$value['rating_value']] = $value;
-        }
-        $outletOk = [];
-        $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
-        foreach ($data['reportData']['rating_data'] as $value) {
-            if(!$colorRand){
-                $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
-            }
-            $randomNumber = array_rand($colorRand);
-            $outletOk[$value['rating_value']][] = [
-                'name' => $value['outlet_code'].' - '.$value['outlet_name'],
-                'total' => $value['total'],
-                'color' => $colorRand[$randomNumber]
-            ];
-            unset($colorRand[$randomNumber]);
-        }
-        $data['date_start'] = date('d F Y',strtotime($date_start));
-        $data['date_end'] = date('d F Y',strtotime($date_end));
-        $data['reportData']['rating_item'] = $ratingOk;
-        $data['reportData']['rating_data'] = $outletOk;
-        $data['redirect_url'] = url('user-rating/report/hairstylist');
-        return view('userrating::report',$data+$post);
-    }
-
-    public function setReportFilterHairstylist(Request $request)
-    {
-        $post = $request->except('_token');
-        $new_sess = [];
-        if($request->post('date_start')){
-            $new_sess['rating_hs_date_start'] = str_replace('-','',$request->post('date_start',date('01 M Y')));
-        }
-        if($request->post('date_end')){
-            $new_sess['rating_hs_date_end'] = str_replace('-','',$request->post('date_end',date('d M Y')));
-        }
-        if(!is_null($request->post('photos_only'))){
-            $new_sess['rating_hs_photos_only'] = !!$request->post('photos_only');
-        }
-        if(!is_null($request->post('notes_only'))){
-            $new_sess['rating_hs_notes_only'] = !!$request->post('notes_only');
-        }
-        if(!is_null($request->post('order'))){
-            $new_sess['rating_hs_order'] = $request->post('order');
-        }
-        if(!is_null($request->post('transaction_type'))){
-            $new_sess['rating_hs_transaction_type'] = $request->post('transaction_type');
-        }
-        if($request->exists('search')){
-            $new_sess['rating_hs_search'] = $request->post('search');
-        }
-        session($new_sess);
-        return back();
-    }
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function reportListHairstylist(Request $request)
-    {
-        $data = [
-            'title'          => 'User Rating',
-            'sub_title'      => 'Report User Rating Hairstylist',
-            'menu_active'    => 'user-rating',
-            'submenu_active' => 'user-rating-report-hairstylist',
-            'filter_title'   => 'User Rating Filter'
-        ];
-        $post = $request->except('_token');
-        $date_start = date('Y-m-d H:i:s',strtotime(session('rating_hs_date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('rating_hs_date_end',date('Y-m-d H:i:s'))));
-        $page = $request->get('page')?:1;
-        $post['date_start'] = $date_start;
-        $post['date_end'] = $date_end;
-        $post['order'] = session('rating_hs_order','fullname');
-        $post['search'] = session('rating_hs_search');
-        $post['page'] = $page;
-        $post['transaction_type'] = session('rating_hs_transaction_type', 'all');
-        $post['rating_target'] = 'hairstylist';
-        $data['rating_data'] = MyHelper::post('user-rating/report/hairstylist',$post)['result'] ?? [];
-        $data['next_page'] = $data['rating_data']['next_page_url']?url()->current().'?page='.($page+1):'';
-        $data['prev_page'] = $data['rating_data']['prev_page_url']?url()->current().'?page='.($page-1):'';
-        $data['date_start'] = date('d F Y',strtotime($date_start));
-        $data['date_end'] = date('d F Y',strtotime($date_end));
-        $data['redirect_url'] = url('user-rating/report/hairstylist');
-        return view('userrating::report_outlet',$data+$post);
-    }
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function reportDetailHairstylist(Request $request, $id_user_hair_stylist)
-    {
-        $data = [
-            'title'          => 'User Rating',
-            'sub_title'      => 'Report User Rating Hairstylist',
-            'menu_active'    => 'user-rating',
-            'submenu_active' => 'user-rating-report-hairstylist',
-            'filter_title'   => 'User Rating Filter'
-        ];
-        $date_start = date('Y-m-d H:i:s',strtotime(session('rating_hs_date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('rating_hs_date_end',date('Y-m-d H:i:s'))));
-        $post['photos_only'] = session('rating_hs_photos_only',0);
-        $post['notes_only'] = session('rating_hs_notes_only',0);
-        $post['date_start'] = $date_start;
-        $post['date_end'] = $date_end;
-        $post['id_user_hair_stylist'] = $id_user_hair_stylist;
-        $post['transaction_type'] = session('rating_hs_transaction_type', 'all');
-        $post['rating_target'] = 'hairstylist';
-        $data['reportData'] = MyHelper::post('user-rating/report/hairstylist',$post)['result'] ?? [];
-        if(!$data['reportData']){
-            return back()->withErrors(['Rating data not found']);
-        }
-        $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
-        $data['date_start'] = date('d F Y',strtotime($date_start));
-        $data['date_end'] = date('d F Y',strtotime($date_end));
-        $data['redirect_url'] = url('user-rating/report/hairstylist');
-        return view('userrating::report_outlet_detail',$data+$post);
-    }
 }

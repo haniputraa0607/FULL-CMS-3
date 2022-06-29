@@ -23,13 +23,6 @@ Route::prefix('user-rating')->middleware(['web', 'validate_session'])->group(fun
     Route::any('autoresponse/{target}', 'UserRatingController@autoresponse');
     Route::any('autoresponse', 'UserRatingController@autoresponse');
     Route::group(['prefix'=>'report'],function(){
-		Route::group(['prefix'=>'hairstylist'],function(){
-		    Route::get('/', 'UserRatingController@reportHairstylist');
-		    Route::post('/', 'UserRatingController@setReportFilterHairstylist');
-		    Route::get('detail', 'UserRatingController@reportListHairstylist');
-		    Route::get('detail/{id_hairstylist}', 'UserRatingController@reportDetailHairstylist');
-		});
-
 		Route::group(['prefix'=>'outlet'],function(){
 		    Route::get('/', 'UserRatingController@report');
 		    Route::post('/', 'UserRatingController@setReportFilter');
