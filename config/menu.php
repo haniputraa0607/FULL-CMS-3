@@ -720,6 +720,12 @@ return [
 							'url' => 'user-rating/autoresponse/doctor',
 							'required_features' => [],
 						],
+                        [
+                            'label' => '[Response] Rating Product',
+                            'required_features' => [],
+                            'url' => 'user-rating/autoresponse/product',
+                            'active' => '\View::shared("submenu_active") == "user-rating-response-product"',
+                        ],
 					]
 				],
 				/** HIDE 
