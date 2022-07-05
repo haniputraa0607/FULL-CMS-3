@@ -637,8 +637,8 @@
         }
 
         $('#myForm').on('submit', function(e) {
-
-            if($('#field_content_long').summernote('isEmpty')) {
+            var news_type = $('#news_type').val();
+            if($('#field_content_long').summernote('isEmpty') && news_type != 'video') {
                 $('#validation').remove();
                 $('#field_content_long').parent().append('<p id="validation" style="color: red;margin-top: -2%">Content long can not be empty.</p>');
                 e.preventDefault();

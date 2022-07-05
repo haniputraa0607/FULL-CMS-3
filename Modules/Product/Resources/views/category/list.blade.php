@@ -245,6 +245,9 @@ $grantedFeature     = session('granted_features');
                 </div>
             </div>
             <div class="portlet-body form">
+                <div class="alert alert-warning deteksi-trigger">
+                    <b><i class="fa fa-warning"></i> Upload Image : width/height maximum 100 px and maximum size is 10 KB.</b>
+                </div>
                 <form class="form-horizontal" role="form" id="form_create_table" action="{{url('product/category/create')}}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-body">
