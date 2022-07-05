@@ -166,6 +166,12 @@ class SettingController extends Controller
             $sub = 'max-consultation-quota';
             $active = 'max-consultation-quota';
             $subTitle = 'Maximum Consultation Quota';
+        } elseif ($key == 'privacypolicy') {
+            $sub = 'about-privacy-policy';
+            $active = 'privacy-policy';
+            $subTitle = 'Kebijakan Privasi';
+            $label = 'Kebijakan Privasi';
+            $span = '';
         }
 
         $data = [

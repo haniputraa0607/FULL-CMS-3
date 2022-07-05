@@ -144,7 +144,6 @@
             <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
                 <thead>
                     <tr>
-                        <th> No </th>
                         <th> Title </th>
                         <th> Date Publish </th>
                         <th> Type </th>
@@ -157,7 +156,6 @@
                     @if (!empty($news))
                         @foreach($news as $key => $value)
                             <tr>
-                                <td>{{ $key+1 }}</td>
                                 <td>{{ $value['news_title'] }}</td>
                                 <td>
                                     @php

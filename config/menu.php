@@ -2759,7 +2759,7 @@ return [
 				],
 				[
 					'label' => 'Privacy Policy',
-					'required_features' => [367],
+					'required_features' => [350],
 					'url' => 'setting/privacypolicy',
 					'icon' => 'fa fa-lock'
 				],
