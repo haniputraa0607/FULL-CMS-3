@@ -33,6 +33,27 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script>
+		$('.onlynumber').keypress(function (e) {
+			var regex = new RegExp("^[0-9]");
+			var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+			var check_browser = navigator.userAgent.search("Firefox");
+
+			if(check_browser == -1){
+				if (regex.test(str) || e.which == 8) {
+					return true;
+				}
+			}else{
+				if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+					return true;
+				}
+			}
+
+			e.preventDefault();
+			return false;
+		});
+	</script>
 @endsection
 
 @section('content')
@@ -96,7 +117,7 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" name="phone" placeholder="Phone Number (Required & Unique)" class="form-control" required autocomplete="new-password" value="{{old('phone')}}"/>
+								<input type="text" name="phone" maxlength="20" placeholder="Phone Number (Required & Unique)" class="form-control onlynumber" required autocomplete="new-password" value="{{old('phone')}}"/>
 							</div>
 						</div>
 						<div class="form-group">
