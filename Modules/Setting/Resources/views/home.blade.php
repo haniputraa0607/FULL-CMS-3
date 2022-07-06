@@ -447,6 +447,71 @@
 	    window.history.pushState(href, href, "{{url()->current()}}"+href);
 	});
 
+	$('.onlynumber').keypress(function (e) {
+		var regex = new RegExp("^[0-9]");
+		var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+		var check_browser = navigator.userAgent.search("Firefox");
+		if(check_browser == -1){
+			if (regex.test(str) || e.which == 8) {
+				return true;
+			}
+		}else{
+			if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+				return true;
+			}
+		}
+		e.preventDefault();
+		return false;
+	});
+
+	$(".file").change(function(e) {
+		var widthImg  = 750;
+		var heightImg = 375;
+
+		var _URL = window.URL || window.webkitURL;
+		var image, file;
+
+		if ((file = this.files[0])) {
+			image = new Image();
+
+			image.onload = function() {
+				if (this.width == widthImg && this.height == heightImg) {
+				}else {
+					toastr.warning("Please check dimension of your photo.");
+					$('#div_background_default').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+					$("#remove_fieldphoto").trigger( "click" );
+
+				}
+			};
+
+			image.src = _URL.createObjectURL(file);
+		}
+
+	});
+
+	$(".fileupdate").change(function(e) {
+		var widthImg  = 750;
+		var heightImg = 375;
+
+		var _URL = window.URL || window.webkitURL;
+		var image, file;
+
+		if ((file = this.files[0])) {
+			image = new Image();
+
+			image.onload = function() {
+				if (this.width == widthImg && this.height == heightImg) {
+				}else {
+					toastr.warning("Please check dimension of your photo.");
+					$("#remove_fieldphoto_update").trigger( "click" );
+
+				}
+			};
+
+			image.src = _URL.createObjectURL(file);
+		}
+
+	});
 	</script>
 @endsection
 
@@ -1140,9 +1205,9 @@
 									<span class="btn default btn-file">
 									<span class="fileinput-new"> Select image </span>
 									<span class="fileinput-exists"> Change </span>
-									<input type="file" accept="image/*" name="banner_image" required>
+									<input type="file" class="file" id="fieldphoto" accept="image/*" name="banner_image" required>
 									</span>
-									<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+									<a href="javascript:;" id="remove_fieldphoto" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 								</div>
 							</div>
 						</div>
@@ -1222,7 +1287,7 @@
 						<label class="col-md-3 control-label">Date Start</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" name="banner_start" size="16" class="form-control">
+								<input type="text" autocomplete="off" name="banner_start" size="16" class="form-control" required>
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
@@ -1236,7 +1301,7 @@
 						<label class="col-md-3 control-label">Date End</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" name="banner_end" size="16" class="form-control">
+								<input type="text" autocomplete="off" name="banner_end" size="16" class="form-control" required>
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
@@ -1310,9 +1375,9 @@
 									<span class="btn default btn-file">
 									<span class="fileinput-new"> Select image </span>
 									<span class="fileinput-exists"> Change </span>
-									<input type="file" accept="image/*" name="banner_image">
+									<input type="file" class="fileupdate" accept="image/*" name="banner_image">
 									</span>
-									<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+									<a href="javascript:;" id="remove_fieldphoto_update" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 								</div>
 							</div>
 						</div>
