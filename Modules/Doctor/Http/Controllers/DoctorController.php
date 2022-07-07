@@ -76,8 +76,9 @@ class DoctorController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $post = $request->all();
         $data = [
             'title'          => 'Doctor',
             'sub_title'      => 'Doctor Create',
@@ -85,7 +86,7 @@ class DoctorController extends Controller
             'submenu_active' => 'doctor-create'
         ];
 
-        $clinic = MyHelper::get('doctor/clinic');
+        $clinic = MyHelper::get('outlet/be/list');
 
         if (isset($clinic['status']) && $clinic['status'] == "success") {
             $data['clinic'] = $clinic['result'];
@@ -102,6 +103,8 @@ class DoctorController extends Controller
         if (isset($specialist['status']) && $specialist['status'] == "success") {
             $data['specialist'] = $specialist['result'];
         }
+
+        $data['id_outlet'] = $post['id_outlet']??null;
 
         return view('doctor::form', $data);
     }

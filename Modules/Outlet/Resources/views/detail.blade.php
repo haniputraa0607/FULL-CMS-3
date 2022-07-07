@@ -647,6 +647,9 @@
                 <li>
                     <a href="#visibility" data-toggle="tab"> Visibility Product</a>
                 </li>
+                <li>
+                    <a href="#doctors" data-toggle="tab"> Doctors</a>
+                </li>
             </ul>
         </div>
         <div class="portlet-body">
@@ -680,6 +683,9 @@
                 </div>
                 <div class="tab-pane" id="visibility">
                     @include('outlet::outlet_visibility')
+                </div>
+                <div class="tab-pane" id="doctors">
+                    @include('outlet::outlet_doctors')
                 </div>
             </div>
         </div>

@@ -14,7 +14,7 @@
 Route::prefix('doctor')->group(function() {
     Route::get('/', 'DoctorController@index');
     Route::post('/', 'DoctorController@filter');
-    Route::get('/create', 'DoctorController@create');
+    Route::any('/create', 'DoctorController@create');
     Route::get('/{id}/show', 'DoctorController@show');
     Route::post('/store', 'DoctorController@store');
     Route::get('/{id}/edit', 'DoctorController@edit');

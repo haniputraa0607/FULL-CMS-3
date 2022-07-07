@@ -148,13 +148,17 @@
 							    </label>
 							</div>
 							<div class="col-md-6">
-								<select name="id_doctor_clinic" class="form-control input-sm select2" data-placeholder="Select Clinic..." required>
+								<select name="id_outlet" class="form-control input-sm select2" data-placeholder="Select Clinic..." required>
 									<option value="">Select Clinic...</option>
 									@if(isset($clinic))
 										@foreach($clinic as $row)
-											<option value="{{$row['id_doctor_clinic']}}" 
-											{{isset($doctor) ? $doctor['id_doctor_clinic'] == $row['id_doctor_clinic'] ? "selected" : '' : ''}}>
-											{{$row['doctor_clinic_name']}}</option>
+											<?php
+												$selected = '';
+												if((isset($doctor) && $doctor['id_outlet'] == $row['id_outlet']) || (!empty($id_outlet) && $id_outlet == $row['id_outlet'])){
+													$selected = 'selected';
+												}
+											?>
+											<option value="{{$row['id_outlet']}}" {{$selected}}>{{$row['outlet_name']}}</option>
 										@endforeach
 									@endif
 								</select>
