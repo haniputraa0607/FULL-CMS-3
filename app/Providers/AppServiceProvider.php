@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use MyHelper;
+use View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +19,16 @@ class AppServiceProvider extends ServiceProvider
         if(env('REDIRECT_HTTPS', 'false') == 'true') {
             $url->forceScheme('https');
         }
+
+        view()->composer('*', function ($view) 
+            {
+                $view->with('configs', session('configs'));
+                $view->with('grantedFeature', session('granted_features'));
+
+                $badges = MyHelper::get('sidebar-badge')['result'] ?? [];
+                View::share('sidebar_badges', $badges);
+                View::share('total_inbox', 123);
+            });
     }
 
     /**

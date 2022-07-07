@@ -859,6 +859,20 @@ class MyHelper
       $url = substr($menu['url'] ?? '', 0, 4) == 'http' ? $menu['url'] : ($menu['url'] ?? '') ? url($menu['url']) : 'javascript:void(0)';
       $icon = ($menu['icon'] ?? '') ? '<i class="' . $menu['icon'] . '"></i>' : '';
 
+      if (!($menu['type'] ?? false) && ($menu['children'] ?? false)) {
+        $menu['type'] = ($menu['label'] ?? false) ? 'tree' : 'group';
+      }
+
+      if (($menu['type'] ?? 'single') != 'group' && ($menu['badge'] ?? false)) {
+        if (strpos($menu['badge']['value'], 'View::shared')) {
+          $badge = eval('return ' . $menu['badge']['value'] . ';');
+        } else {
+          $badge = \View::shared('sidebar_badges')[$menu['badge']['value']] ?? '';
+        }
+        $marginRight = ($menu['type'] ?? 'single') != 'single' ? 20 : 0;
+        $menu['label'] .= '<span class="badge badge-'. ($menu['badge']['type'] ?? 'info') .' pull-right" style="margin-right:' . $marginRight . 'px">' .$badge. '</span>';
+      }
+
       switch ($menu['type'] ?? 'single') {
         case 'tree':
           $submenu = '<li class="nav-item %active%"><a href="' . $url . '" class="nav-link nav-toggle">' . $icon . '<span class="title">' . $menu['label'] . '</span><span class="arrow %active%"></span></a><ul class="sub-menu">';
