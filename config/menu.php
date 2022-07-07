@@ -250,12 +250,6 @@ return [
 							'active' => '\View::shared("submenu_active") == "doctor-list"',
 						],
 						[
-							'label' => '[Master] Clinic',
-							'required_features' => [332],
-							'active' => '\View::shared("submenu_active") == "doctor-clinic"',
-							'url' => 'doctor/clinic',
-						],
-						[
 							'label' => '[Master] Specialist',
 							'required_features' => [336],
 							'active' => '\View::shared("submenu_active") == "doctor-specialist"',
@@ -2615,6 +2609,12 @@ return [
 					'required_features' => [251,252],
 					'url' => 'setting/time-expired',
 					'icon' => 'fa fa-envelope'
+				],
+				[
+					'label' => 'Settings Max Quota Consultations',
+					'required_features' => [348],
+					'url' => 'setting/max_consultation_quota',
+					'icon' => 'fa fa-file'
 				],
 			],
 		],
