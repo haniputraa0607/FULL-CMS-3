@@ -390,6 +390,26 @@
 			$('#formSuspend').submit();
 		}
 	})
+
+    $('.onlynumber').keypress(function (e) {
+        var regex = new RegExp("^[0-9]");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+        var check_browser = navigator.userAgent.search("Firefox");
+
+        if(check_browser == -1){
+            if (regex.test(str) || e.which == 8) {
+                return true;
+            }
+        }else{
+            if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+                return true;
+            }
+        }
+
+        e.preventDefault();
+        return false;
+    });
 	</script>
 @endsection
 
@@ -1248,7 +1268,7 @@
 											</div>
 											<div class="form-group">
 												<label class="control-label">Phone</label>
-												<input type="text" name="phone" placeholder="Phone Number(Required & Unique)" class="form-control" value="{{$profile['phone']}}" />
+												<input type="text" name="phone" placeholder="Phone Number(Required & Unique)" maxlength="20" class="form-control onlynumber" value="{{$profile['phone']}}" />
 											</div>
 											<div class="form-group">
 												<label class="control-label">Email</label>
