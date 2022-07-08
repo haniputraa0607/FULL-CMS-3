@@ -167,10 +167,11 @@ class ConsultationController extends Controller
             'submenu_active' => 'consultation-list',
         ];
 
-        $doctor = MyHelper::get('be/consultation/detail/'.$id);
+        $consultation = MyHelper::get('be/consultation/detail/'.$id);
+        if($consultation['status'] == 'success') $data['result'] = $consultation['result']; else $data['result'] = null;
 
-        dd($doctor);
-
+        //dd($data);
+        
         return view('consultation::detail', $data);
     }
 }

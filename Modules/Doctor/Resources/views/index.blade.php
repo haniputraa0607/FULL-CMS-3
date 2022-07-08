@@ -208,7 +208,7 @@ $grantedFeature     = session('granted_features');
 							<tr>
 								<th scope="col"> Name </th>
 								<th scope="col"> Phone </th>
-								<th scope="col"> Clinic </th>
+								<th scope="col"> Outlet </th>
 								<th scope="col"> Session Price</th>
 								<th> </th>
 							</tr>
