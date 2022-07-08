@@ -245,17 +245,13 @@ return [
 							'label' => 'New User Doctor',
 							'required_features' => [329],
 							'url' => 'doctor/create',
+							'active' => '\View::shared("submenu_active") == "doctor-create"',
 						],
 						[
 							'label' => 'Doctor List',
 							'required_features' => [328],
 							'url' => 'doctor',
-						],
-						[
-							'label' => '[Master] Clinic',
-							'required_features' => [332],
-							'active' => '\View::shared("submenu_active") == "doctor-clinic"',
-							'url' => 'doctor/clinic',
+							'active' => '\View::shared("submenu_active") == "doctor-list"',
 						],
 						[
 							'label' => '[Master] Specialist',
@@ -2717,6 +2713,12 @@ return [
 					'required_features' => [251,252],
 					'url' => 'setting/time-expired',
 					'icon' => 'fa fa-envelope'
+				],
+				[
+					'label' => 'Settings Max Quota Consultations',
+					'required_features' => [348],
+					'url' => 'setting/max_consultation_quota',
+					'icon' => 'fa fa-file'
 				],
 			],
 		],
