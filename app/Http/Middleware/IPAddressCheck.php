@@ -29,7 +29,6 @@ class IPAddressCheck
         }
         $getLocation = \Location::get($ip);
 
-        return $next($request);
         if($getLocation && isset($getLocation->countryCode)){
             if($getLocation->countryCode == 'SG' || $getLocation->countryCode == "ID"){
                 return $next($request);
