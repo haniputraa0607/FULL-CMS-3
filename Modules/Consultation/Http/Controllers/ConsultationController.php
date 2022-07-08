@@ -10,10 +10,10 @@ use App\Lib\MyHelper;
 
 class ConsultationController extends Controller
 {
-    public function index()
-    {
-        return view('consultation::index');
-    }
+    // public function index()
+    // {
+    //     return view('consultation::index');
+    // }
 
     public function consultationList() {
         $data = [];
@@ -94,5 +94,83 @@ class ConsultationController extends Controller
 
         }
     }
+
+    /**
+     * Display a listing of the resource.
+     * @return Response
+     */
+    public function index(Request $request)
+    {
+        $post = $request->all();
+
+        $data = [
+            'title'          => 'Consultation',
+            'sub_title'      => 'Consultation List',
+            'menu_active'    => 'consultation',
+            'submenu_active' => 'consultation-list',
+            'filter_title'   => 'Filter Consultation',
+        ];
+
+        if(session('list_consultation_filter')){
+            $extra=session('list_consultation_filter');
+            $data['rule']=array_map('array_values', $extra['rule']);
+            $data['operator']=$extra['operator'];
+        } else{
+            $extra=[
+                'rule' => [],
+                'operator' => ''
+            ];
+            $data['rule']=array_map('array_values', $extra['rule']);
+            $data['operator']=$extra['operator'];
+            $data['hide_record_total']=1;
+        }
+
+        if ($request->wantsJson()) {
+            $data = MyHelper::post('be/consultation', $post + $extra )['result'] ?? [];
+            $data['recordsFiltered'] = $data['total'] ?? 0;
+            $data['recordsTotal'] = $data['total'] ?? 0;
+            $data['draw'] = $request->draw;
+
+            return $data;
+        }
+
+        return view('consultation::index', $data);
+    }
+
+    /**
+     * apply filter.
+     * @return Response
+     */
+    public function filter(Request $request)
+    {
+        $post = $request->all();
+
+        if(($post['rule']??false) && !isset($post['draw'])){
+            session(['list_consultation_filter'=>$post]);
+            return back();
+        }
+
+        if($post['clear']??false){
+            session(['list_consultation_filter'=>null]);
+            return back();
+        }
+
+        return abort(404);
+    }
     
+    public function detail($id)
+    {
+        $data = [
+            'title'          => 'Consultation',
+            'sub_title'      => 'Consultation List',
+            'menu_active'    => 'consultation',
+            'submenu_active' => 'consultation-list',
+        ];
+
+        $doctor = MyHelper::get('be/consultation/detail/'.$id);
+
+        dd($doctor);
+
+        return view('consultation::detail', $data);
+    }
 }

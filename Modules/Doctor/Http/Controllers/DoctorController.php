@@ -85,10 +85,10 @@ class DoctorController extends Controller
             'submenu_active' => 'doctor-create'
         ];
 
-        $clinic = MyHelper::get('doctor/clinic');
+        $outlet = MyHelper::get('outlet/be/list', ['all_outlet' => 1]);
 
-        if (isset($clinic['status']) && $clinic['status'] == "success") {
-            $data['clinic'] = $clinic['result'];
+        if (isset($outlet['status']) && $outlet['status'] == "success") {
+            $data['outlet'] = $outlet['result'];
         } 
 
         $service = MyHelper::get('doctor/service');
@@ -103,6 +103,10 @@ class DoctorController extends Controller
             $data['specialist'] = $specialist['result'];
         }
 
+        $celebrate = MyHelper::get('setting/be/celebrate_list');
+
+		if($celebrate['status'] == 'success') $data['celebrate'] = $celebrate['result']; else $data['celebrate'] = null;
+
         return view('doctor::form', $data);
     }
 
@@ -114,10 +118,15 @@ class DoctorController extends Controller
     public function store(Request $request)
     {
         $post = $request->all();
+
+        //dd($post);
+
         if(isset($post['doctor_photo']) && !empty($post['doctor_photo'])){
             $post['doctor_photo'] = MyHelper::encodeImage($post['doctor_photo']);
         }
-        $post['pin'] = null;
+
+        if(isset($post['doctor_service']) && !empty($post['doctor_service'])){$post['doctor_service'] = implode(',' , $post['doctor_service']);} else {$post['doctor_service'] = null;}
+
         $store = MyHelper::post('doctor/store', $post);
 
         if(($store['status']??'')=='success'){
@@ -145,10 +154,10 @@ class DoctorController extends Controller
     public function edit($id)
     {
         $data = [
-            'title'          => 'Clinic',
-            'sub_title'      => 'Clinic Edit',
+            'title'          => 'Doctor',
+            'sub_title'      => 'Doctor List',
             'menu_active'    => 'doctor',
-            'submenu_active' => 'doctor-clinic'
+            'submenu_active' => 'doctor-list',
         ];
 
         $doctor = MyHelper::get('doctor/detail/'.$id);
@@ -162,11 +171,11 @@ class DoctorController extends Controller
             $data['doctor'] = [];
         }
         
-        $clinic = MyHelper::get('doctor/clinic');
+        $outlet = MyHelper::get('outlet/be/list', ['all_outlet' => 1]);
 
-        if (isset($clinic['status']) && $clinic['status'] == "success") {
-            $data['clinic'] = $clinic['result'];
-        } 
+        if (isset($outlet['status']) && $outlet['status'] == "success") {
+            $data['outlet'] = $outlet['result'];
+        }  
 
         $service = MyHelper::get('doctor/service');
 
@@ -185,6 +194,10 @@ class DoctorController extends Controller
             $data['selected_id_specialist'][] = $row['id_doctor_specialist'];
         }
 
+        $celebrate = MyHelper::get('setting/be/celebrate_list');
+
+		if($celebrate['status'] == 'success') $data['celebrate'] = $celebrate['result']; else $data['celebrate'] = null;
+
         return view('doctor::form', $data);
     }
 
@@ -197,12 +210,11 @@ class DoctorController extends Controller
     public function update(Request $request, $id)
     {
         $post = $post = $request->except('_method');
+
         if(isset($post['doctor_photo']) && !empty($post['doctor_photo'])){ $post['doctor_photo'] = MyHelper::encodeImage($post['doctor_photo']);} else {unset($post['doctor_photo']);}
 
         if(isset($post['doctor_service']) && !empty($post['doctor_service'])){$post['doctor_service'] = implode(',' , $post['doctor_service']);} else {$post['doctor_service'] = null;}
-        
-        $post['pin'] = null;
-        
+
         $store = MyHelper::post('doctor/store', $post);
 
         if(($store['status']??'')=='success'){
