@@ -913,9 +913,9 @@ $configs    		= session('configs');
                         <li class=" @if(!isset($tipe)) active @endif">
                             <a data-toggle="tab" href="#fraud_device"><i class="fa fa-cog"></i> Device </a>
                         </li>
-                        <li class=" @if(isset($tipe) && $tipe == 'fraud_transaction_point') active @endif">
-                            <a data-toggle="tab" href="#fraud_transaction_point"><i class="fa fa-cog"></i> Transaction Point </a>
-                        </li>
+{{--                        <li class=" @if(isset($tipe) && $tipe == 'fraud_transaction_point') active @endif">--}}
+{{--                            <a data-toggle="tab" href="#fraud_transaction_point"><i class="fa fa-cog"></i> Transaction Point </a>--}}
+{{--                        </li>--}}
                         <li class=" @if(isset($tipe) && $tipe == 'fraud_transaction_in_day') active @endif">
                             <a data-toggle="tab" href="#fraud_transaction_in_day"><i class="fa fa-cog"></i> Transaction in day </a>
                         </li>

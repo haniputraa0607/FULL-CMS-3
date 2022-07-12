@@ -180,6 +180,10 @@ class NewsController extends Controller
                 $news['id_product'] = $post['id_product'];
             }
 
+            if(!isset($post['news_by'])){
+                $news['news_by'] = " ";
+            }
+
             $save = MyHelper::post('news/create', $news);
 
             if (isset($save['status']) && $save['status'] == "success") {
@@ -299,10 +303,9 @@ class NewsController extends Controller
             if (isset($news['news_image_dalam'])) {
                 $news['news_image_dalam']  = MyHelper::encodeImage($news['news_image_dalam']);
             }
-            
-            $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%' ,$news['news_content_long']);
 
             if (isset($news['news_content_long'])) {
+                $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%' ,$news['news_content_long']);
                 // remove tag <font>
                 $news['news_content_long'] =preg_replace("/<\\/?font(.|\\s)*?>/",'',$news['news_content_long']);
             }
@@ -315,6 +318,10 @@ class NewsController extends Controller
             if (!isset($news['toggle_time'])) {
                 unset($news['news_event_time_start']);
                 unset($news['news_event_time_end']);
+            }
+
+            if(!isset($post['news_by'])){
+                $news['news_by'] = " ";
             }
             
             // update data master news

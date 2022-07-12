@@ -18,11 +18,12 @@ class MerchantController extends Controller
                 'title'          => 'Merchant',
                 'menu_active'    => 'merchant',
                 'sub_title'      => 'Setting Register Introduction',
-                'submenu_active' => 'merchant-setting-register-introduction'
+                'submenu_active' => 'merchant-setting-register-introduction',
+                'status'        => 'introduction'
             ];
 
             $data['result'] = MyHelper::get('merchant/register/introduction/detail')['result']??[];
-            return view('merchant::setting.register_introduction', $data);
+            return view('merchant::register_page', $data);
 
         } else {
             if(!empty($post['image'])){
@@ -45,11 +46,12 @@ class MerchantController extends Controller
                 'title'          => 'Merchant',
                 'menu_active'    => 'merchant',
                 'sub_title'      => 'Setting Register Success',
-                'submenu_active' => 'merchant-setting-register-success'
+                'submenu_active' => 'merchant-setting-register-success',
+                'status'        => 'success'
             ];
 
             $data['result'] = MyHelper::get('merchant/register/success/detail')['result']??[];
-            return view('merchant::setting.register_success', $data);
+            return view('merchant::register_page', $data);
 
         } else {
             if(!empty($post['image'])){
@@ -59,6 +61,62 @@ class MerchantController extends Controller
 
             if (($update['status'] ?? false) == 'success'){
                 return back()->with('success', ['Register success setting has been updated']);
+            }else{
+                return back()->withErrors($update['messages'] ?? ['Update failed']);
+            }
+        }
+    }
+
+    public function settingRegisterApproved(Request $request){
+        $post = $request->all();
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Merchant',
+                'menu_active'    => 'merchant',
+                'sub_title'      => 'Setting Register Approved',
+                'submenu_active' => 'merchant-setting-register-aproved',
+                'status'        => 'aproved'
+            ];
+
+            $data['result'] = MyHelper::get('merchant/register/approved/detail')['result']??[];
+            return view('merchant::register_page', $data);
+
+        } else {
+            if(!empty($post['image'])){
+                $post['image'] = MyHelper::encodeImage($post['image']);
+            }
+            $update = MyHelper::post('merchant/register/approved/save', $post);
+
+            if (($update['status'] ?? false) == 'success'){
+                return back()->with('success', ['Register approved setting has been updated']);
+            }else{
+                return back()->withErrors($update['messages'] ?? ['Update failed']);
+            }
+        }
+    }
+
+    public function settingRegisterRejected(Request $request){
+        $post = $request->all();
+        if (empty($post)) {
+            $data = [
+                'title'          => 'Merchant',
+                'menu_active'    => 'merchant',
+                'sub_title'      => 'Setting Register Rejected',
+                'submenu_active' => 'merchant-setting-register-rejected',
+                'status'        => 'rejected'
+            ];
+
+            $data['result'] = MyHelper::get('merchant/register/rejected/detail')['result']??[];
+            return view('merchant::register_page', $data);
+
+        } else {
+            if(!empty($post['image'])){
+                $post['image'] = MyHelper::encodeImage($post['image']);
+            }
+            $update = MyHelper::post('merchant/register/rejected/save', $post);
+
+            if (($update['status'] ?? false) == 'success'){
+                return back()->with('success', ['Register rejected setting has been updated']);
             }else{
                 return back()->withErrors($update['messages'] ?? ['Update failed']);
             }
@@ -212,5 +270,63 @@ class MerchantController extends Controller
     public function candidateDelete($id){
         $delete = MyHelper::post('merchant/delete', ['id_merchant' => $id]);
         return $delete;
+    }
+
+    public function withdrawalList(Request  $request){
+        $post = $request->all();
+
+        $data = [
+            'title'          => 'Merchant',
+            'sub_title'      => 'Withdrawal List',
+            'menu_active'    => 'merchant',
+            'submenu_active' => 'withdrawal-list',
+            'title_date_start' => 'Start',
+            'title_date_end' => 'End',
+            'type' => ''
+        ];
+
+        if(Session::has('filter-merchant-withdrawal') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-merchant-withdrawal');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-merchant-withdrawal');
+        }
+
+        $getList = MyHelper::post('merchant/withdrawal/list',$post);
+
+        if (isset($getList['status']) && $getList['status'] == "success") {
+            $data['data']          = $getList['result']['data'];
+            $data['dataTotal']     = $getList['result']['total'];
+            $data['dataPerPage']   = $getList['result']['from'];
+            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($getList['result']['data'], $getList['result']['total'], $getList['result']['per_page'], $getList['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-merchant-withdrawal',$post);
+        }
+
+        return view('merchant::withdrawal_list', $data);
+    }
+
+    public function withdrawalCompleted(Request $request){
+        $post = $request->all();
+        $update = MyHelper::post('merchant/withdrawal/completed',$post);
+
+        if (isset($update['status']) && $update['status'] == "success") {
+            return redirect('merchant/withdrawal')->withSuccess(['Success change status to completed']);
+        }else{
+            return redirect('merchant/withdrawal')->withErrors($update['messages']??['Failed change status']);
+        }
     }
 }

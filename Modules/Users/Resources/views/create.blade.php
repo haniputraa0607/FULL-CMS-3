@@ -33,6 +33,27 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script>
+		$('.onlynumber').keypress(function (e) {
+			var regex = new RegExp("^[0-9]");
+			var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+			var check_browser = navigator.userAgent.search("Firefox");
+
+			if(check_browser == -1){
+				if (regex.test(str) || e.which == 8) {
+					return true;
+				}
+			}else{
+				if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+					return true;
+				}
+			}
+
+			e.preventDefault();
+			return false;
+		});
+	</script>
 @endsection
 
 @section('content')
@@ -72,7 +93,7 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" name="name" placeholder="User Name (Required)" class="form-control" required />
+								<input type="text" name="name" placeholder="User Name (Required)" class="form-control" required value="{{old('name')}}"/>
 							</div>
 						</div>
 						<div class="form-group">
@@ -84,7 +105,7 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" name="email" placeholder="Email (Required & Unique)" class="form-control" required autocomplete="new-password" />
+								<input type="text" name="email" placeholder="Email (Required & Unique)" class="form-control" required autocomplete="new-password" value="{{old('email')}}"/>
 							</div>
 						</div>
 						<div class="form-group">
@@ -96,34 +117,34 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="text" name="phone" placeholder="Phone Number (Required & Unique)" class="form-control" required autocomplete="new-password" />
+								<input type="text" name="phone" maxlength="20" placeholder="Phone Number (Required & Unique)" class="form-control onlynumber" required autocomplete="new-password" value="{{old('phone')}}"/>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    PIN
+									Password
 							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="PIN terdiri dari 6 digit angka" data-container="body"></i>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Password terdiri dari minimal 8 digit karakter, wajib mengandung huruf dan angka" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<input type="password" name="pin" placeholder="6 digits PIN (Leave empty to autogenerate)" class="form-control mask_number" maxlength="6" autocomplete="new-password" />
+								<input type="password" name="pin" placeholder="Minimum 8 digits karakter (Leave empty to autogenerate)" minlength="8" class="form-control mask_number" autocomplete="new-password" />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    Sent PIN to User?
+							    Sent Password to User?
 							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="Pilih apakah akan mengirimkan PIN ke user (Yes/No)" data-container="body"></i>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Pilih apakah akan mengirimkan password ke user (Yes/No)" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-9">
 								<select name="sent_pin" class="form-control input-sm select2" data-placeholder="Yes / No" required>
 									<option value="">Select...</option>
-									<option value="Yes">Yes</option>
-									<option value="No">No</option>
+									<option value="Yes" @if(old('sent_pin') == 'Yes') selected @endif>Yes</option>
+									<option value="No" @if(old('sent_pin') == 'No') selected @endif>No</option>
 								</select>
 							</div>
 						</div>
@@ -157,8 +178,8 @@
 							<div class="col-md-9">
 								<select name="gender" class="form-control input-sm select2" data-placeholder="Male / Female" required>
 									<option value="">Select...</option>
-									<option value="Male">Male</option>
-									<option value="Female">Female</option>
+									<option value="Male" @if(old('gender') == 'Male') selected @endif>Male</option>
+									<option value="Female" @if(old('gender') == 'Female') selected @endif>Female</option>
 								</select>
 							</div>
 						</div>
@@ -175,7 +196,7 @@
 									<option value="">Select...</option>
 									@if(isset($celebrate))
 										@foreach($celebrate as $row)
-											<option value="{{$row}}">{{$row}}</option>
+											<option value="{{$row}}" @if(old('celebrate') == $row) selected @endif>{{$row}}</option>
 										@endforeach
 									@endif
 								</select>
@@ -194,7 +215,7 @@
 									<option value="">Select...</option>
 									@if(isset($job))
 										@foreach($job as $row)
-											<option value="{{$row}}">{{$row}}</option>
+											<option value="{{$row}}" @if(old('job') == $row) selected @endif>{{$row}}</option>
 										@endforeach
 									@endif
 								</select>
@@ -213,7 +234,7 @@
 									<option value="">Select...</option>
 									@if(isset($province))
 										@foreach($province as $row)
-											<option value="{{$row['id_province']}}">{{$row['province_name']}}</option>
+											<option value="{{$row['id_province']}}" @if(old('id_province') == $row['id_province']) selected @endif>{{$row['province_name']}}</option>
 										@endforeach
 									@endif
 								</select>
@@ -232,7 +253,7 @@
 									<option value="">Select...</option>
 									@if(isset($city))
 										@foreach($city as $row)
-											<option value="{{$row['id_city']}}">{{$row['city_name']}}</option>
+											<option value="{{$row['id_city']}}" @if(old('id_city') == $row['id_city']) selected @endif>{{$row['city_name']}}</option>
 										@endforeach
 									@endif
 								</select>
@@ -247,7 +268,7 @@
 							    </label>
 							</div>
 							<div class="col-md-9">
-								<textarea type="text" name="address" placeholder="Input your address here..." class="form-control"></textarea>
+								<textarea type="text" name="address" placeholder="Input your address here..." class="form-control">{{old('address')}}</textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -260,8 +281,8 @@
 							</div>
 							<div class="col-md-9">
 								<select name="level" class="form-control input-sm select2">
-									<option value="Admin">Admin</option>
-									<option value="Customer" selected>Customer</option>
+									<option value="Admin" @if(old('level') == 'Admin') selected @endif>Admin</option>
+									<option value="Customer" @if(old('level') == 'Admin' || empty(old('level'))) selected @endif>Customer</option>
 								</select>
 							</div>
 						</div>

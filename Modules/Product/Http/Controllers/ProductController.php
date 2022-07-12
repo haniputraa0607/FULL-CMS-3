@@ -740,8 +740,8 @@ class ProductController extends Controller
                 $data['outlet']          = [];
                 $data['outletTotal']     = 0;
                 $data['outletPerPage']   = 0;
-                $data['trxUpTo']      = 0;
-                $data['trxPaginator'] = false;
+                $data['outletUpTo']      = 0;
+                $data['outletPaginator'] = false;
             }
 
             $outletsSpecialPrice = MyHelper::post('outlet/be/list/product-special-price', $dtPrice);
@@ -1486,4 +1486,26 @@ class ProductController extends Controller
         return $product;
     }
 
+    public function productRecommendation(Request $request){
+        $post=$request->except('_token');
+
+        $data = [
+            'title'          => 'Product',
+            'sub_title'      => 'Product Recommendation',
+            'menu_active'    => 'product',
+            'submenu_active' => 'product-recommendation',
+        ];
+
+        if(empty($post)){
+            $data['products'] = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+            return view('product::product.product_recommendation', $data);
+        }else{
+            $save = MyHelper::post('product/recommendation/save', $post);
+            if (isset($save['status']) && $save['status'] == 'success') {
+                return parent::redirect($save, 'Product recommendation success save.', 'product/recommendation');
+            } else {
+                return back()->witherrors($save['messages']??['Something went wrong']);
+            }
+        }
+    }
 }

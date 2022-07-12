@@ -277,6 +277,9 @@
                                 // console.log(data);
                             }
                         });
+                    },
+                    onKeyup: function (e) {
+                        removeValidation();
                     }
                 }
             });
@@ -628,6 +631,21 @@
             drawVideo();
             @endif
         });
+
+        function removeValidation(){
+            $('#validation').remove();
+        }
+
+        $('#myForm').on('submit', function(e) {
+            var news_type = $('#news_type').val();
+            if($('#field_content_long').summernote('isEmpty') && news_type != 'video') {
+                $('#validation').remove();
+                $('#field_content_long').parent().append('<p id="validation" style="color: red;margin-top: -2%">Content long can not be empty.</p>');
+                e.preventDefault();
+                $('#field_content_long').focus();
+                focusSet = true;
+            }
+        })
     </script>
     <script type="text/javascript">
         function actionForm(identity, state) {
@@ -914,7 +932,7 @@
             </div>
         </div>
         <div class="portlet-body m-form__group row">
-            <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" id="myForm" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                     <div class="col-md-4">
                         <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_1.jpg')}}"  style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial1">
                         <img src="{{env('STORAGE_URL_VIEW') }}{{('img/news/news_article_2.jpg')}}" style="box-shadow: 0 0 5px rgba(0,0,0,.08); width:100%" alt="tutorial" id="tutorial2">
@@ -986,7 +1004,7 @@
                                             <span class="box"></span> Date Limit </label>
                                     </div>
                                     <div class="md-radio">
-                                        <input type="radio" id="optionsRadios5" name="publish_type" class="md-radiobtn publishType" value="always" @if(old('publish_type')=='always') checked @endif required>
+                                        <input type="radio" id="optionsRadios5" name="publish_type" class="md-radiobtn publishType" value="always" @if(old('publish_type')=='always' || empty(old('publish_type'))) checked @endif required>
                                         <label for="optionsRadios5">
                                             <span></span>
                                             <span class="check"></span>
@@ -996,7 +1014,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group showPublish" style="display: none;">
+                        <div class="form-group showPublish">
                             <label class="col-md-3 control-label"> </label>
                             <div class="col-md-4">
                                 <div class="input-group">
@@ -1008,7 +1026,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-md-4 always">
+                            <div class="col-md-4 always"  @if(old('publish_type')=='always' || empty(old('publish_type'))) style="display: none;" @endif>
                                 <div class="input-group">
                                     <input type="text" class="datepicker form-control always field_publish_date" name="news_expired_date" value="{{ old('news_expired_date') }}" autocomplete="off">
                                     <span class="input-group-btn">
@@ -1159,7 +1177,7 @@
                                 </label>
                             </div>
                             <div class="col-md-9">
-                                <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News">{{old('news_content_short')}}</textarea>
+                                <textarea name="news_content_short" id="field_content_short" class="form-control" placeholder="Content Short News" required>{{old('news_content_short')}}</textarea>
                             </div>
                         </div>
 

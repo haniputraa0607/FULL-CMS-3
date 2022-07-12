@@ -169,6 +169,12 @@
     <script type="text/javascript">
 
         $(document).ready(function(){
+            $('#table_product').DataTable( {
+                "pageLength": 15,
+                "lengthChange": false,
+                "ordering": false,
+                "info" : false
+            });
             /* MAPS */
             longNow = "{{ $outlet[0]['outlet_longitude'] }}";
             latNow = "{{ $outlet[0]['outlet_latitude'] }}";
@@ -409,8 +415,9 @@
                 }
             });
         });
+
         $(".file").change(function(e) {
-            var widthImg  = 600;
+            var widthImg  = 300;
             var heightImg = 300;
 
             var _URL = window.URL || window.webkitURL;
@@ -422,13 +429,60 @@
                 image.onload = function() {
                     if (this.width == widthImg && this.height == heightImg) {
                         // image.src = _URL.createObjectURL(file);
-                       $('#formimage').submit()
+                        //    $('#formimage').submit()
                     }
                     else {
                         toastr.warning("Please check dimension of your photo.");
-                        $(this).val("");
+                        $('#image').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $("#remove_fieldphoto").trigger( "click" );
 
-                        $('#imageoutlet').children('img').attr('src', 'https://www.placehold.it/600x300/EFEFEF/AAAAAA&amp;text=no+image');
+                    }
+                };
+
+                image.src = _URL.createObjectURL(file);
+            }
+
+        });
+        $(".filePhotoDetail").change(function(e) {
+            var _URL = window.URL || window.webkitURL;
+            var image, file;
+
+            if ((file = this.files[0])) {
+                image = new Image();
+
+                image.onload = function() {
+                    if (this.height > 300) {
+                        toastr.warning("Please check dimension of your photo. Maximum height is 300 px");
+                        $('#imageDetail').children('img').attr('src', 'https://www.placehold.it/720x360/EFEFEF/AAAAAA&amp;text=no+image');
+                        $("#remove_fieldphotodetail").trigger( "click" );
+                    }
+                };
+
+                image.src = _URL.createObjectURL(file);
+            }
+
+        });
+
+        $(".filePhotoCover").change(function(e) {
+            var widthImg  = 720;
+            var heightImg = 360;
+
+            var _URL = window.URL || window.webkitURL;
+            var image, file;
+
+            if ((file = this.files[0])) {
+                image = new Image();
+
+                image.onload = function() {
+                    if (this.width == widthImg && this.height == heightImg) {
+                        // image.src = _URL.createObjectURL(file);
+                        //    $('#formimage').submit()
+                    }
+                    else {
+                        toastr.warning("Please check dimension of your photo.");
+                        $('#imageCover').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $("#remove_fieldphotocover").trigger( "click" );
+
                     }
                 };
 
@@ -500,8 +554,6 @@
     $('.latlong').change(function(){
         var lat = $('#lat').val()
         var long = $('#lng').val()
-        console.log(lat)
-        console.log(long)
         initialize(lat, long);
     })
     $('.is_closed').change(function(){
@@ -553,12 +605,23 @@
             </div>
             <ul class="nav nav-tabs">
 
-                <li class="active" id="infoOutlet">
+                <li @if(!isset($tipe)) class="active" @endif id="infoOutlet">
                     <a href="#info" data-toggle="tab" > Info </a>
                 </li>
+                <li id="listProduct">
+                    <a href="#list_product" data-toggle="tab" > List Product </a>
+                </li>
+                <li id="listPayment" @if(isset($tipe) && $tipe=='list_payment') class="active" @endif>
+                    <a href="#list_payment" data-toggle="tab" > List Payment </a>
+                </li>
+                <li id="logBalanceOutlet" @if(isset($tipe) && $tipe=='log_balance') class="active" @endif>
+                    <a href="#log_balance" data-toggle="tab" > Log Balance </a>
+                </li>
+                @if(MyHelper::hasAccess([5], $configs))
                 <li id="pinOutlet">
                     <a href="#pin" data-toggle="tab" > Update Pin </a>
                 </li>
+                @endif
                 @if(MyHelper::hasAccess([29], $grantedFeature))
                     <li>
                         <a href="#photo" data-toggle="tab"> Photo </a>
@@ -577,21 +640,28 @@
                             <a href="#admin" data-toggle="tab"> Admin Outlet </a>
                         </li>
                     @endif
+                    <li>
+                        <a href="#schedule" data-toggle="tab"> Schedule </a>
+                    </li>
                 @endif
                 <li>
-                    <a href="#schedule" data-toggle="tab"> Schedule </a>
+                    <a href="#visibility" data-toggle="tab"> Visibility Product</a>
                 </li>
-                @if(MyHelper::hasAccess([51], $grantedFeature))
-                <li>
-                    <a href="#visibility" data-toggle="tab"> Visibility </a>
-                </li>
-                @endif
             </ul>
         </div>
         <div class="portlet-body">
             <div class="tab-content">
-                <div class="tab-pane active" id="info">
+                <div class="tab-pane @if(!isset($tipe)) active @endif" id="info">
                     @include('outlet::info')
+                </div>
+                <div class="tab-pane @if(isset($tipe) && $tipe=='log_balance') active @endif" id="log_balance">
+                    @include('outlet::log_balance')
+                </div>
+                <div class="tab-pane @if(isset($tipe) && $tipe=='list_payment') active @endif" id="list_payment">
+                    @include('outlet::list_payment')
+                </div>
+                <div class="tab-pane" id="list_product">
+                    @include('outlet::list_product')
                 </div>
                 <div class="tab-pane" id="pin">
                     @include('outlet::pin')

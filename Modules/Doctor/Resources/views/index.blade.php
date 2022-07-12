@@ -80,14 +80,14 @@ $grantedFeature     = session('granted_features');
             opsi:[],
             placeholder:'Doctor Phone'
         },
-		doctor_clinic_name:{
-            display:'Clinic',
+		outlet:{
+            display:'Outlet',
             operator:[
                 ['=','='],
                 ['like','like'],
             ],
             opsi:[],
-            placeholder:'Doctor Clinic'
+            placeholder:'Outlet Clinic'
         },
 		doctor_session_price:{
             display:'Session Price',
@@ -145,10 +145,10 @@ $grantedFeature     = session('granted_features');
 						data: "doctor_phone",
 					},
 					{
-						data: "clinic.doctor_clinic_name",
+						data: "outlet.outlet_name",
 					},
 					{
-						data: "doctor_session_price",
+						data: "doctor_session_price", render: $.fn.dataTable.render.number( ',', '.', 3, 'Rp' )
 					},
 					{
 						data: "id_doctor",

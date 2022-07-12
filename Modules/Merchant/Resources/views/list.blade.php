@@ -60,8 +60,8 @@
     $date_start = '';
     $date_end = '';
 
-    if(Session::has('filter-merchant-candidate')){
-        $search_param = Session::get('filter-merchant-candidate');
+    if(Session::has('filter-merchant')){
+        $search_param = Session::get('filter-merchant');
         if(isset($search_param['date_start'])){
             $date_start = $search_param['date_start'];
         }

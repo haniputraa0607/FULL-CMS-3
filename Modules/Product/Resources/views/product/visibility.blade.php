@@ -182,16 +182,8 @@
                             <input type="hidden" name="visibility" value="{{$visibility}}">
 							<input type="hidden" name="key" value="{{$key}}">
 							<div class="form-group">
-								<label class="col-md-5 control-label" style="padding:0">Select All Product in All Outlet</label>
+								<label class="col-md-5 control-label" style="padding:0"></label>
 								<div class="col-md-1">
-									<div class="md-checkbox">
-										<input type="checkbox" id="allOutlet" onclick="checkAll(this, 'allOutlet')" class="md-checkboxbtn" @if(isset($allOutlet) && $allOutlet == true) checked @endif>
-										<label for="allOutlet">
-											<span></span>
-											<span class="check"></span>
-											<span class="box"></span></label>
-											</label>
-									</div>
 								</div>
 								<label class="col-md-3 control-label" style="padding:0">Select All Product in This Outlet</label>
 								<div class="col-md-1">

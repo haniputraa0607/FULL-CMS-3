@@ -14,6 +14,10 @@ return [
 			'required_configs_rule' => 'or',
 			'required_features' => [1,2], // kalau parent tidak ada ketentuan khusus cukup taruh di child nya aja
 			'required_features_rule' => 'or',
+            'badge' => [
+                'type' => 'info', // info | success | warning | danger
+                'value' => 'total_home', // for eval
+            ],
 		],
 		*/
 
@@ -241,32 +245,28 @@ return [
 							'label' => 'New User Doctor',
 							'required_features' => [329],
 							'url' => 'doctor/create',
+							'active' => '\View::shared("submenu_active") == "doctor-create"',
 						],
 						[
 							'label' => 'Doctor List',
 							'required_features' => [328],
 							'url' => 'doctor',
+							'active' => '\View::shared("submenu_active") == "doctor-list"',
 						],
 						[
-							'label' => 'Clinic',
-							'required_features' => [332],
-							'active' => '\View::shared("submenu_active") == "doctor-clinic"',
-							'url' => 'doctor/clinic',
-						],
-						[
-							'label' => 'Specialist',
+							'label' => '[Master] Specialist',
 							'required_features' => [336],
 							'active' => '\View::shared("submenu_active") == "doctor-specialist"',
 							'url' => 'doctor/specialist',
 						],
 						[
-							'label' => 'Specialist Category',
+							'label' => '[Master] Specialist Category',
 							'required_features' => [340],
 							'active' => '\View::shared("submenu_active") == "doctor-specialist-category"',
 							'url' => 'doctor/specialist-category',
 						],
 						[
-							'label' => 'Service',
+							'label' => '[Master] Service',
 							'required_features' => [344],
 							'active' => '\View::shared("submenu_active") == "doctor-service"',
 							'url' => 'doctor/service',
@@ -313,11 +313,12 @@ return [
 								],
 							],
 						],
-						[
-							'label' => 'Manage Position',
-							'url' => 'news/position/assign',
-							'required_features' => [22,166],
-						],
+                        [
+                            'label' => 'News Featured',
+                            'active' => '\View::shared("submenu_active") == "news-featured"',
+                            'url' => 'news/featured',
+                            'required_features' => [19],
+                        ],
 						[
 							'type' => 'group',
 							'required_features' => [120,122],
@@ -363,7 +364,7 @@ return [
                     'label' => 'Merchant',
                     'type' => 'tree',
                     'icon' => 'fa fa-university',
-                    'required_configs' => [95],
+                    'required_features' => [323,324,325,326,327,348],
                     'children' => [
                         [
                             'label' => 'Setting Register Introduction',
@@ -376,6 +377,16 @@ return [
                             'required_features' => [326],
                         ],
                         [
+                            'label' => 'Setting Register Approved',
+                            'url' => 'merchant/setting/register-approved',
+                            'required_features' => [326],
+                        ],
+                        [
+                            'label' => 'Setting Register Rejected',
+                            'url' => 'merchant/setting/register-rejected',
+                            'required_features' => [326],
+                        ],
+                        [
                             'label' => 'Merchant List',
                             'url' => 'merchant',
                             'required_features' => [323,324,325,326,327],
@@ -384,6 +395,11 @@ return [
                             'label' => 'Merchant Candidate List',
                             'url' => 'merchant/candidate',
                             'required_features' => [323,324,325,326,327],
+                        ],
+                        [
+                            'label' => 'Withdrawal',
+                            'url' => 'merchant/withdrawal',
+                            'required_features' => [348],
                         ],
                         [
                             'label' => '[Response] Register Merchant',
@@ -431,12 +447,12 @@ return [
 							'url' => 'setting/default_outlet',
 							'required_features' => [199],
 						],
-						[
-							'label' => 'QR Code Outlet',
-							'active' => '\View::shared("submenu_active") == "outlet-qrcode"',
-							'url' => 'outlet/qrcode',
-							'required_features' => [24,27],
-						],
+//						[
+//							'label' => 'QR Code Outlet',
+//							'active' => '\View::shared("submenu_active") == "outlet-qrcode"',
+//							'url' => 'outlet/qrcode',
+//							'required_features' => [24,27],
+//						],
 						[
 							'label' => 'Outlet Holiday Setting',
 							'active' => '\View::shared("submenu_active") == "outlet-holiday"',
@@ -469,31 +485,31 @@ return [
 							'active' => '\View::shared("submenu_active") == "outlet-pin-response"',
 							'url' => 'outlet/autoresponse/request_pin',
 							'required_configs' => [5,101],
-							'required_features' => [24,40],
+							'required_features' => [40],
 						],
-						[
-							'type' => 'group',
-							'required_features' => [120,122],
-							'children' => [
-								[
-									'label' => '[Response] Outlet Pin Sent',
-									'url' => 'autoresponse/outlet/outlet-pin-sent',
-									'required_configs' => [134],
-								],
-								[
-									'label' => '[Response] Outlet Pin Sent User Franchise',
-									'url' => 'autoresponse/outlet/outlet-pin-sent-user-franchise',
-								],
-								[
-									'label' => '[Response] Request Admin User Franchise',
-									'url' => 'autoresponse/outlet/request-admin-user-franchise',
-								],
-								[
-									'label' => '[Forward] Incomplete Outlet Data',
-									'url' => 'outlet/autoresponse/incomplete-outlet-data',
-								],
-							],
-						],
+//						[
+//							'type' => 'group',
+//							'required_features' => [120,122],
+//							'children' => [
+//								[
+//									'label' => '[Response] Outlet Pin Sent',
+//									'url' => 'autoresponse/outlet/outlet-pin-sent',
+//									'required_configs' => [134],
+//								],
+//								[
+//									'label' => '[Response] Outlet Pin Sent User Franchise',
+//									'url' => 'autoresponse/outlet/outlet-pin-sent-user-franchise',
+//								],
+//								[
+//									'label' => '[Response] Request Admin User Franchise',
+//									'url' => 'autoresponse/outlet/request-admin-user-franchise',
+//								],
+//								[
+//									'label' => '[Forward] Incomplete Outlet Data',
+//									'url' => 'outlet/autoresponse/incomplete-outlet-data',
+//								],
+//							],
+//						],
 						[
 							'label' => 'Outlet Group Filter',
 							'type' => 'tree',
@@ -518,11 +534,6 @@ return [
 					'icon' => 'icon-wallet',
 					'type' => 'tree',
 					'children' => [
-						[
-							'label' => 'New Category',
-							'url' => 'product/category/create',
-							'required_features' => [45],
-						],
 						[
 							'label' => 'Category List',
 							'active' => '\View::shared("submenu_active") == "product-category-list"',
@@ -608,24 +619,24 @@ return [
 								],
 							],
 						],
-						[
-							'label' => 'Image Product',
-							'required_features' => [51],
-							'type' => 'tree',
-							'children' => [
-								[
-									'label' => 'Upload Image',
-									'required_features' => [],
-									'url' => 'product/image/add'
-								],
-								[
-									'label' => 'Image List',
-									'required_features' => [],
-									'active' => '\View::shared("child_active") == "home"',
-									'url' => 'product/image/list'
-								],
-							],
-						],
+//						[
+//							'label' => 'Image Product',
+//							'required_features' => [51],
+//							'type' => 'tree',
+//							'children' => [
+//								[
+//									'label' => 'Upload Image',
+//									'required_features' => [],
+//									'url' => 'product/image/add'
+//								],
+//								[
+//									'label' => 'Image List',
+//									'required_features' => [],
+//									'active' => '\View::shared("child_active") == "product-image-list"',
+//									'url' => 'product/image/list'
+//								],
+//							],
+//						],
 						[
 							'required_features' => [48],
 							'type' => 'group',
@@ -642,24 +653,30 @@ return [
 									'active' => '\View::shared("submenu_active") == "product-list-hidden"',
 									'url' => 'product/hidden'
 								],
-								[
-									'label' => 'Manage Product Category',
-									'required_features' => [43],
-									'active' => '\View::shared("submenu_active") == "product-category"',
-									'url' => 'product/position/assign'
-								],
-								[
-									'label' => 'Manage Position',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-position"',
-									'url' => 'product/position/assign'
-								],
+//								[
+//									'label' => 'Manage Product Category',
+//									'required_features' => [43],
+//									'active' => '\View::shared("submenu_active") == "product-category"',
+//									'url' => 'product/position/assign'
+//								],
+//								[
+//									'label' => 'Manage Position',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-position"',
+//									'url' => 'product/position/assign'
+//								],
 								[
 									'label' => 'Product Photo Default',
 									'required_features' => [],
 									'active' => '\View::shared("submenu_active") == "product-photo-default"',
 									'url' => 'product/photo/default'
 								],
+                                [
+                                    'label' => 'Product Recommendation',
+                                    'required_features' => [43],
+                                    'active' => '\View::shared("submenu_active") == "product-recommendation"',
+                                    'url' => 'product/recommendation'
+                                ],
 							],
 						],
 						[
@@ -680,6 +697,35 @@ return [
 								],
 							]
 						],
+					]
+				],
+				[
+					'label' => 'User Rating',
+					'type' => 'tree',
+					'icon' => 'icon-star',
+					'required_configs' => [],
+					'children' => [
+						[
+							'label' => 'User Rating List',
+							'url' => 'user-rating',
+							'required_features' => [],
+						],
+						[
+							'label' => 'User Rating Setting',
+							'url' => 'user-rating/setting',
+							'required_features' => [],
+						],
+						[
+							'label' => '[Response] Rating Doctor',
+							'url' => 'user-rating/autoresponse/doctor',
+							'required_features' => [],
+						],
+                        [
+                            'label' => '[Response] Rating Product',
+                            'required_features' => [],
+                            'url' => 'user-rating/autoresponse/product',
+                            'active' => '\View::shared("submenu_active") == "user-rating-response-product"',
+                        ],
 					]
 				],
 				/** HIDE 
@@ -753,75 +799,75 @@ return [
 					'icon' => 'fa fa-puzzle-piece'
 				],
 				*/
-				[
-					'label' => 'Product Variant NON PRICE (NO SKU)',
-					'required_features' => [],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'New Product Variant NON PRICE (NO SKU)',
-							'required_features' => [284],
-							'active' => '\View::shared("submenu_active") == "product-modifier-group-new"',
-							'url' => 'product/modifier-group/create'
-						],
-						[
-							'type' => 'group',
-							'required_features' => [283, 285, 286, 287],
-							'children' => [
-								[
-									'label' => 'Product Variant NON PRICE (NO SKU) List',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-list"',
-									'url' => 'product/modifier-group'
-								],
-								[
-									'label' => 'Product Variant NON PRICE (NO SKU) Price',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-price"',
-									'url' => 'product/modifier-group/price'
-								],
-								[
-									'label' => 'Product Variant NON PRICE (NO SKU) Detail',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-detail"',
-									'url' => 'product/modifier-group/detail'
-								],
-								[
-									'label' => 'Manage Position Product Variant NON PRICE (NO SKU)',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-position"',
-									'url' => 'product/modifier-group/position'
-								],
-								[
-									'label' => 'Export & Import Product Variant NON PRICE (NO SKU)',
-									'required_features' => [],
-									'type' => 'tree',
-									'children' => [
-										[
-											'label' => 'Import Product Variant NON PRICE (NO SKU)',
-											'required_features' => [],
-											'active' => '\View::shared("submenu_active") == "product-modifier-group-import-global"',
-											'url' => 'product/modifier-group/import'
-										],
-										[
-											'label' => 'Import Product Variant NON PRICE (NO SKU) Price',
-											'required_features' => [],
-											'active' => '\View::shared("submenu_active") == "product-modifier-group-import-price"',
-											'url' => 'product/modifier-group/import-price'
-										],
-									],
-								],
-								[
-									'label' => 'Inventory Brand',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-modifier-group-inventory-brand"',
-									'url' => 'product/modifier-group/inventory-brand'
-								],
-							]
-						],
-					],
-					'icon' => 'fa fa-glass'
-				],
+//				[
+//					'label' => 'Product Variant NON PRICE (NO SKU)',
+//					'required_features' => [],
+//					'type' => 'tree',
+//					'children' => [
+//						[
+//							'label' => 'New Product Variant NON PRICE (NO SKU)',
+//							'required_features' => [284],
+//							'active' => '\View::shared("submenu_active") == "product-modifier-group-new"',
+//							'url' => 'product/modifier-group/create'
+//						],
+//						[
+//							'type' => 'group',
+//							'required_features' => [283, 285, 286, 287],
+//							'children' => [
+//								[
+//									'label' => 'Product Variant NON PRICE (NO SKU) List',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-list"',
+//									'url' => 'product/modifier-group'
+//								],
+//								[
+//									'label' => 'Product Variant NON PRICE (NO SKU) Price',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-price"',
+//									'url' => 'product/modifier-group/price'
+//								],
+//								[
+//									'label' => 'Product Variant NON PRICE (NO SKU) Detail',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-detail"',
+//									'url' => 'product/modifier-group/detail'
+//								],
+//								[
+//									'label' => 'Manage Position Product Variant NON PRICE (NO SKU)',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-position"',
+//									'url' => 'product/modifier-group/position'
+//								],
+//								[
+//									'label' => 'Export & Import Product Variant NON PRICE (NO SKU)',
+//									'required_features' => [],
+//									'type' => 'tree',
+//									'children' => [
+//										[
+//											'label' => 'Import Product Variant NON PRICE (NO SKU)',
+//											'required_features' => [],
+//											'active' => '\View::shared("submenu_active") == "product-modifier-group-import-global"',
+//											'url' => 'product/modifier-group/import'
+//										],
+//										[
+//											'label' => 'Import Product Variant NON PRICE (NO SKU) Price',
+//											'required_features' => [],
+//											'active' => '\View::shared("submenu_active") == "product-modifier-group-import-price"',
+//											'url' => 'product/modifier-group/import-price'
+//										],
+//									],
+//								],
+//								[
+//									'label' => 'Inventory Brand',
+//									'required_features' => [],
+//									'active' => '\View::shared("submenu_active") == "product-modifier-group-inventory-brand"',
+//									'url' => 'product/modifier-group/inventory-brand'
+//								],
+//							]
+//						],
+//					],
+//					'icon' => 'fa fa-glass'
+//				],
 				[
 					'label' => 'Product Variant (SKU)',
 					'required_features' => [],
@@ -963,6 +1009,89 @@ return [
 			],
 			'icon' => 'fa fa-money'
 		],
+        
+        [
+            'type' => 'group',
+            'label' => 'Order',
+            'children' => [
+                [
+                    'type' => 'tree',
+                    'label' => 'Transaction',
+                    'icon' => 'fa fa-shopping-cart',
+                    'children' => [
+                        [
+                            'label' => 'Transaction List',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction"',
+                            'url' => 'transaction'
+                        ],
+                        [
+                            'label' => '[Response] Payment Success',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-transaction-success"',
+                            'url' => 'transaction/autoresponse/transaction-success'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Accepted',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-order-accepted"',
+                            'url' => 'transaction/autoresponse/order-accepted'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Reject',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-order-reject"',
+                            'url' => 'transaction/autoresponse/order-reject'
+                        ],
+                        [
+                            'label' => '[Response] Merchant Transaction New',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-merchant-transaction-new"',
+                            'url' => 'transaction/autoresponse/merchant-transaction-new'
+                        ]
+                    ]
+                ],
+                [
+                    'label' => 'Failed Void Payment',
+                    'required_features' => [299],
+                    'active' => '\View::shared("menu_active") == "failed-void-payment"',
+                    'url' => 'transaction/failed-void-payment',
+                    'icon' => 'fa fa-exclamation-triangle'
+                ],
+                [
+                    'type' => 'tree',
+                    'label' => 'Order Settings',
+                    'icon' => 'fa fa-cogs',
+                    'children' => [
+                        [
+                            'label' => 'Available Payment Method',
+                            'required_features' => [250],
+                            'active' => '\View::shared("submenu_active") == "setting-payment-method"',
+                            'url' => 'transaction/setting/available-payment'
+                        ],
+                        [
+                            'label' => 'Available Delivery',
+                            'required_features' => [320],
+                            'active' => '\View::shared("submenu_active") == "delivery-setting-available"',
+                            'url' => 'transaction/setting/available-delivery'
+                        ],
+//                        [
+//                            'label' => 'Upload Logo Delivery',
+//                            'required_features' => [320],
+//                            'active' => '\View::shared("submenu_active") == "delivery-setting-upload-image"',
+//                            'url' => 'transaction/setting/delivery-upload-image'
+//                        ],
+                        [
+                            'label' => 'Setting Refund Reject Order',
+                            'required_features' => [250],
+                            'active' => '\View::shared("submenu_active") == "refund-reject-order"',
+                            'url' => 'transaction/setting/refund-reject-order'
+                        ]
+                    ]
+                ]
+            ]
+        ],
+
 		/** HIDE 
 		[
 			'type' => 'group',
@@ -2432,7 +2561,7 @@ return [
 				[
 					'label' => 'Mobile Apps Home',
 					'required_features' => [15, 16, 17, 18, 144, 145, 146, 147, 241, 246],
-					'active' => '\View::shared("menu_active") == "setting/home"',
+					'active' => '\View::shared("menu_active") == "setting-home"',
 					'url' => 'setting/home',
 					'icon' => 'icon-screen-tablet '
 				],
@@ -2585,6 +2714,12 @@ return [
 					'url' => 'setting/time-expired',
 					'icon' => 'fa fa-envelope'
 				],
+				[
+					'label' => 'Settings Max Quota Consultations',
+					'required_features' => [348],
+					'url' => 'setting/max_consultation_quota',
+					'icon' => 'fa fa-file'
+				],
 			],
 		],
 		[
@@ -2630,7 +2765,7 @@ return [
 				],
 				[
 					'label' => 'Privacy Policy',
-					'required_features' => [367],
+					'required_features' => [350],
 					'url' => 'setting/privacypolicy',
 					'icon' => 'fa fa-lock'
 				],

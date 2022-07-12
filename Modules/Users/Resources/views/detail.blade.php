@@ -390,6 +390,26 @@
 			$('#formSuspend').submit();
 		}
 	})
+
+    $('.onlynumber').keypress(function (e) {
+        var regex = new RegExp("^[0-9]");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+        var check_browser = navigator.userAgent.search("Firefox");
+
+        if(check_browser == -1){
+            if (regex.test(str) || e.which == 8) {
+                return true;
+            }
+        }else{
+            if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+                return true;
+            }
+        }
+
+        e.preventDefault();
+        return false;
+    });
 	</script>
 @endsection
 
@@ -1228,7 +1248,7 @@
                                     @if(MyHelper::hasAccess([5], $grantedFeature) || $profile['phone'] == session('phone'))
 									<li>
 										<a data-toggle="tab" href="#tab_3-3">
-											<i class="fa fa-lock"></i> Change PIN </a>
+											<i class="fa fa-lock"></i> Change Password </a>
 									</li>
                                     @endif
 									<li>
@@ -1248,7 +1268,7 @@
 											</div>
 											<div class="form-group">
 												<label class="control-label">Phone</label>
-												<input type="text" name="phone" placeholder="Phone Number(Required & Unique)" class="form-control" value="{{$profile['phone']}}" />
+												<input type="text" name="phone" placeholder="Phone Number(Required & Unique)" maxlength="20" class="form-control onlynumber" value="{{$profile['phone']}}" />
 											</div>
 											<div class="form-group">
 												<label class="control-label">Email</label>
@@ -1394,11 +1414,11 @@
 										<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" method="POST">
 										{{ csrf_field() }}
 											<div class="form-group">
-												<label class="control-label">New PIN</label>
-												<input type="password" class="form-control" name="password_new" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)" autocomplete="new-password" /> </div>
+												<label class="control-label">New Password</label>
+												<input type="password" class="form-control" name="password_new" autocomplete="new-password" /> </div>
 											<div class="form-group">
-												<label class="control-label">Re-type New PIN</label>
-												<input type="password" class="form-control" name="password_new_confirmation" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)"/> </div>
+												<label class="control-label">Re-type New Password</label>
+												<input type="password" class="form-control" name="password_new_confirmation"/> </div>
 											<div class="margin-top-10">
 												<button class="btn green"> Save Changes </button>
 											</div>
@@ -1422,9 +1442,9 @@
 											</div>
                                             @if(MyHelper::hasAccess([5], $grantedFeature))
 											<div class="form-group row">
-												<label class="control-label col-md-12">Your PIN</label>
+												<label class="control-label col-md-12">Your Password</label>
 												<div class="col-md-4">
-													<input type="password" id="pinUser" class="form-control" width="30%" name="password_suspend" placeholder="Enter Your current PIN" required style="width: 91.3%;" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
+													<input type="password" id="pinUser" class="form-control" width="30%" name="password_suspend" placeholder="Your current password" required style="width: 91.3%;" maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
 												</div>
 												<div class="col-md-8"></div>
 											</div>
@@ -1457,7 +1477,7 @@
 							<div class="col-md-4">
 								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
 								{{ csrf_field() }}
-									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current PIN" required maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
+									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current password" required>
 									<input type="hidden" class="form-control" name="level" value="Customer">
 									<button class="btn btn-lg green btn-block"> Yes! Be a Customer <i class="fa fa-user "></i> </button>
 								</form>
@@ -1468,7 +1488,7 @@
 							<div class="col-md-4">
 								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
 								{{ csrf_field() }}
-									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current PIN" required maxLength="6" minLength="6" onkeypress="return isNumberKey(event)">
+									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current password" required>
 									<input type="hidden" class="form-control" name="level" value="Admin">
 									<button class="btn btn-lg yellow btn-block"> Yes! Be an Admin <i class="fa fa-user-plus "></i> </button>
 								</form>
@@ -1479,7 +1499,7 @@
 							<div class="col-md-4">
 								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
 								{{ csrf_field() }}
-									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current PIN" required>
+									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current password" required>
 									<input type="hidden" class="form-control" name="level" value="Super Admin">
 									<button class="btn btn-lg red btn-block"> Yes! Be a Super Admin <i class="fa fa-user-secret "></i> </button>
 								</form>
@@ -1546,7 +1566,7 @@
 						<div class="form-group">
 							<label class="col-md-3 control-label">Your Password</label>
 							<div class="col-md-4">
-								<input type="password" class="form-control" width="30%" name="password_permission" placeholder="Enter Your current PIN" required style="width: 91.3%;">
+								<input type="password" class="form-control" width="30%" name="password_permission" placeholder="Enter Your current password" required style="width: 91.3%;">
 							</div>
 						</div>
 						<div class="form-actions">

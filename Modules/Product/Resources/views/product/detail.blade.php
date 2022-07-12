@@ -514,61 +514,7 @@
                 }
             });
         });
-
-         $(".file").change(function(e) {
-            var widthImg  = 300;
-            var heightImg = 300;
-
-            var _URL = window.URL || window.webkitURL;
-            var image, file;
-
-            if ((file = this.files[0])) {
-                image = new Image();
-
-                image.onload = function() {
-                    if (this.width == widthImg && this.height == heightImg) {
-                        // image.src = _URL.createObjectURL(file);
-                    //    $('#formimage').submit()
-                    }
-                    else {
-                        toastr.warning("Please check dimension of your photo.");
-                        $('#imageproduct').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
-                        $('#fieldphoto').val("");
-
-                    }
-                };
-
-                image.src = _URL.createObjectURL(file);
-            }
-
-        });
-        $(".filePhotoDetail").change(function(e) {
-            var widthImg  = 720;
-            var heightImg = 360;
-
-            var _URL = window.URL || window.webkitURL;
-            var image, file;
-
-            if ((file = this.files[0])) {
-                image = new Image();
-
-                image.onload = function() {
-                    if (this.width == widthImg && this.height == heightImg) {
-                        // image.src = _URL.createObjectURL(file);
-                    //    $('#formimage').submit()
-                    }
-                    else {
-                        toastr.warning("Please check dimension of your photo.");
-                        $('#imageproductDetail').children('img').attr('src', 'https://www.placehold.it/720x360/EFEFEF/AAAAAA&amp;text=no+image');
-                        $('#filePhotoDetail').val("");
-
-                    }
-                };
-
-                image.src = _URL.createObjectURL(file);
-            }
-
-        });
+        
         $('#select_tag').change(function(){
 			var value = $(this).val();
             if(value !== null){
@@ -723,11 +669,13 @@
             $("input[name=product_global_price]").val('');
             $("input[name=product_global_price]").prop('disabled', true);
             $('input[name=product_global_price]').prop('required',false);
+            $('#div_parent_wholesaler').hide();
         }else{
             $('#nav-prod-variant').hide();
             $("input[name=product_global_price]").val($("#old_global_price").val());
             $("input[name=product_global_price]").prop('disabled', false);
             $('input[name=product_global_price]').prop('required',true);
+            $('#div_parent_wholesaler').show();
         }
     });
 
@@ -922,6 +870,140 @@
         }
     }
 
+    var wholesalerIndex = 0;
+    function addWholesaler(id){
+        id = id + wholesalerIndex;
+        var html = '<div class="row" style="margin-bottom: 2%" id="wholesaler_'+id+'">';
+        html += '<div class="col-md-5">';
+        html += '<div class="input-group">';
+        html += '<span class="input-group-addon">min</span>';
+        html += '<input class="form-control price" required name="product_wholesaler['+id+'][minimum]">';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="col-md-5">';
+        html += '<div class="input-group">';
+        html += '<input class="form-control price" required name="product_wholesaler['+id+'][unit_price]">';
+        html += '<span class="input-group-addon">/pcs</span>';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="col-md-2">';
+        html += '<a class="btn red" onclick="deleteWholesaler('+id+')"><i class="fa fa-trash"></i></a>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#div_wholesaler').append(html);
+        wholesalerIndex++;
+
+        $('.price').each(function() {
+            var input = $(this).val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $(this).val( function() {
+                return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            });
+        });
+
+        $( ".price" ).on( "keyup", numberFormat);
+        function numberFormat(event){
+            var selection = window.getSelection().toString();
+            if ( selection !== '' ) {
+                return;
+            }
+
+            if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+                return;
+            }
+            var $this = $( this );
+            var input = $this.val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $this.val( function() {
+                return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            });
+        }
+
+        $( ".price" ).on( "blur", checkFormat);
+        function checkFormat(event){
+            var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+            if(!$.isNumeric(data)){
+                $( this ).val("");
+            }
+        }
+    }
+
+    function deleteWholesaler(id){
+        $('#wholesaler_'+id).empty();
+    }
+
+    var variantWholesalerIndex = 0;
+    function addVariantWholesaler(id){
+        var split = id.split('_');
+        var index = split[1] + variantWholesalerIndex;
+        var html = '<div class="row" style="margin-bottom: 2%" id="variant_wholesaler_'+split[0]+'_'+index+'">';
+        html += '<div class="col-md-5">';
+        html += '<div class="input-group">';
+        html += '<span class="input-group-addon">min</span>';
+        html += '<input class="form-control price" required name="variants['+split[0]+'][wholesalers]['+index+'][minimum]">';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="col-md-5">';
+        html += '<div class="input-group">';
+        html += '<input class="form-control price" required name="variants['+split[0]+'][wholesalers]['+index+'][unit_price]">';
+        html += '<span class="input-group-addon">/pcs</span>';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="col-md-2">';
+        html += '<a class="btn red" onclick="deleteVariantWholesaler(\''+ split[0]+'_'+index + '\')"><i class="fa fa-trash"></i></a>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#div_variant_wholesaler_'+split[0]).append(html);
+        variantWholesalerIndex++;
+
+        $('.price').each(function() {
+            var input = $(this).val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $(this).val( function() {
+                return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            });
+        });
+
+        $( ".price" ).on( "keyup", numberFormat);
+        function numberFormat(event){
+            var selection = window.getSelection().toString();
+            if ( selection !== '' ) {
+                return;
+            }
+
+            if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+                return;
+            }
+            var $this = $( this );
+            var input = $this.val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $this.val( function() {
+                return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            });
+        }
+
+        $( ".price" ).on( "blur", checkFormat);
+        function checkFormat(event){
+            var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+            if(!$.isNumeric(data)){
+                $( this ).val("");
+            }
+        }
+    }
+
+    function deleteVariantWholesaler(id){
+        $('#variant_wholesaler_'+id).empty();
+    }
   </script>
 
 @endsection
@@ -971,15 +1053,15 @@
                         <a href="#photo" data-toggle="tab"> Photo </a>
                     </li>
                 @endif -->
-                <li>
-                    <a href="#outletsetting" data-toggle="tab"> Outlet Setting</a>
-                </li>
-                <li>
-                    <a href="#outletpricesetting" data-toggle="tab"> Outlet Price Setting</a>
-                </li>
-                <li>
-                    <a href="#visibility" data-toggle="tab"> Visibility </a>
-                </li>
+{{--                <li>--}}
+{{--                    <a href="#outletsetting" data-toggle="tab"> Outlet Setting</a>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <a href="#outletpricesetting" data-toggle="tab"> Outlet Price Setting</a>--}}
+{{--                </li>--}}
+{{--                <li>--}}
+{{--                    <a href="#visibility" data-toggle="tab"> Visibility </a>--}}
+{{--                </li>--}}
 				<!-- <li>
                     <a href="#discount" data-toggle="tab"> Discount </a>
                 </li> -->

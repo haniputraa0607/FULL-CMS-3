@@ -67,6 +67,44 @@
 				placeholder: "Input Service",
 				tags: true
 			});
+
+			$('.price').each(function() {
+				var input = $(this).val();
+				var input = input.replace(/[\D\s\._\-]+/g, "");
+				input = input ? parseInt( input, 10 ) : 0;
+
+				$(this).val( function() {
+					return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+				});
+			});
+
+			$( ".price" ).on( "keyup", numberFormat);
+			function numberFormat(event){
+				var selection = window.getSelection().toString();
+				if ( selection !== '' ) {
+					return;
+				}
+
+				if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+					return;
+				}
+				var $this = $( this );
+				var input = $this.val();
+				var input = input.replace(/[\D\s\._\-]+/g, "");
+				input = input ? parseInt( input, 10 ) : 0;
+
+				$this.val( function() {
+					return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+				});
+			}
+
+			$( ".price" ).on( "blur", checkFormat);
+			function checkFormat(event){
+				var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+				if(!$.isNumeric(data)){
+					$( this ).val("");
+				}
+			}
 		});
 	</script>
 @endsection
@@ -75,12 +113,20 @@
 <div class="page-bar">
 	<ul class="page-breadcrumb">
 		<li>
-			<a href="{{url('/')}}">Home</a>
+			<a href="#">Home</a>
 			<i class="fa fa-circle"></i>
 		</li>
 		<li>
-			<a href="javascript:;">Doctor</a>
+			<span>{{ $title }}</span>
+			@if (!empty($sub_title))
+				<i class="fa fa-circle"></i>
+			@endif
 		</li>
+		@if (!empty($sub_title))
+		<li>
+			<span>{{ $sub_title }}</span>
+		</li>
+		@endif
 	</ul>
 </div>
 <br>
@@ -91,13 +137,18 @@
 			<div class="portlet-title">
 				<div class="caption font-blue ">
 					<i class="icon-settings font-blue "></i>
-					<span class="caption-subject bold uppercase">New Doctor</span>
+					@if(isset($doctor))
+						<span class="caption-subject bold uppercase">Detail Doctor</span>
+					@else
+						<span class="caption-subject bold uppercase">New Doctor</span>
+					@endif
 				</div>
 			</div>
 			<div class="portlet-body form">
 				@if(isset($doctor))
 				<form role="form" class="form-horizontal" action="{{ url('/doctor', $doctor['id_doctor'])}}/update"" method="POST">
 					@method('PUT')
+					<input name="id_doctor" value="{{$doctor['id_doctor']}}" class="form-control hidden" />
 				@else 
 				<form role="form" class="form-horizontal" action="{{url('doctor/store')}}" method="POST" enctype="multipart/form-data">
 				@endif
@@ -111,7 +162,7 @@
 							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama doctor" data-container="body"></i>
 							    </label>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-7">
 								<input type="text" name="doctor_name" placeholder="Doctor Name (Required)" value="{{isset($doctor) ? $doctor['doctor_name'] : ''}}" class="form-control" required />
 							</div>
 						</div>
@@ -123,44 +174,11 @@
 							    <i class="fa fa-question-circle tooltips" data-original-title="Nomor telepon seluler" data-container="body"></i>
 							    </label>
 							</div>
-							<div class="col-md-4">
-								<input type="text" name="doctor_phone" placeholder="Phone Number (Required & Unique)" value="{{isset($doctor) ? $doctor['doctor_phone'] : ''}}" class="form-control" required autocomplete="new-password" />
+							<div class="col-md-7">
+								<input type="text" name="doctor_phone" placeholder="Phone Number (Required & Unique)" value="{{isset($doctor) ? $doctor['doctor_phone'] : ''}}" class="form-control" required autocomplete="new-password" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="input-icon right">
-							    <label class="col-md-3 control-label">
-							    PIN
-							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="PIN terdiri dari 6 digit angka" data-container="body"></i>
-							    </label>
-							</div>
-							<div class="col-md-4">
-								<input type="password" name="pin" placeholder="6 digits PIN (Leave empty to autogenerate)" class="form-control mask_number" maxlength="6" autocomplete="new-password" />
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="input-icon right">
-							    <label class="col-md-3 control-label">
-							    Clinic
-							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="Pilih klinik dokter" data-container="body"></i>
-							    </label>
-							</div>
-							<div class="col-md-6">
-								<select name="id_doctor_clinic" class="form-control input-sm select2" data-placeholder="Select Clinic..." required>
-									<option value="">Select Clinic...</option>
-									@if(isset($clinic))
-										@foreach($clinic as $row)
-											<option value="{{$row['id_doctor_clinic']}}" 
-											{{isset($doctor) ? $doctor['id_doctor_clinic'] == $row['id_doctor_clinic'] ? "selected" : '' : ''}}>
-											{{$row['doctor_clinic_name']}}</option>
-										@endforeach
-									@endif
-								</select>
-							</div>
-						</div>
-						{{--<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Gender
@@ -168,24 +186,98 @@
 							    <i class="fa fa-question-circle tooltips" data-original-title="Jenis kelamin user (laki-laki/perempuan)" data-container="body"></i>
 							    </label>
 							</div>
-							<div class="col-md-9">
+							<div class="col-md-7">
 								<select name="gender" class="form-control input-sm select2" data-placeholder="Male / Female" required>
 									<option value="">Select...</option>
-									<option value="Male">Male</option>
-									<option value="Female">Female</option>
+									<option value="Male" {{isset($doctor) ? $doctor['gender'] == "Male" ? "selected" : '' : ''}}>Male</option>
+									<option value="Female" {{isset($doctor) ? $doctor['gender'] == "Female" ? "selected" : '' : ''}}>Female</option>
 								</select>
 							</div>
-						</div>--}}
+						</div>
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    Session Price
+							    Birthday
 							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan harga sesi" data-container="body"></i>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
+									<input type="text" class="form-control form-filter input-sm date-picker" name="birthday" placeholder="Birthday Date" required>
+									<span class="input-group-btn">
+										<button class="btn btn-sm default" type="button">
+											<i class="fa fa-calendar"></i>
+										</button>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Celebrate
+							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<select name="celebrate" class="form-control input-sm select2" placeholder="Search Celebrate" data-placeholder="Choose Users Celebrate">
+									<option value="">Select...</option>
+									@if(isset($celebrate))
+										@foreach($celebrate as $row)
+											<option value="{{$row}}" {{isset($doctor) ? $doctor['celebrate'] == $row ? "selected" : '' : ''}}>{{$row}}</option>
+										@endforeach
+									@endif
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+									Password
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Password terdiri dari minimal 8 digit karakter, wajib mengandung huruf dan angka" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<input type="password" name="pin" placeholder="Minimum 8 digits karakter (Leave empty to autogenerate)" minlength="8" class="form-control mask_number" autocomplete="new-password" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Sent Password to Doctor?
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Pilih apakah akan mengirimkan password ke user (Yes/No)" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-4">
-								<input type="text" name="doctor_session_price" placeholder="Session Price (Required)" value="{{isset($doctor) ? $doctor['doctor_session_price'] : ''}}" class="form-control" required />
+								<select name="sent_pin" class="form-control input-sm select2" data-placeholder="Yes / No" required>
+									<option value="">Select...</option>
+									<option value="Yes" @if(old('sent_pin') == 'Yes') selected @endif>Yes</option>
+									<option value="No" @if(old('sent_pin') == 'No') selected @endif>No</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Outlet Clinic
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Pilih klinik dokter" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<select name="id_outlet" class="form-control input-sm select2" data-placeholder="Select Outlet Clinic..." required>
+									<option value="">Select Outlet Clinic...</option>
+									@if(isset($outlet))
+										@foreach($outlet as $row)
+											<option value="{{$row['id_outlet']}}" 
+											{{isset($doctor) ? $doctor['id_outlet'] == $row['id_outlet'] ? "selected" : '' : ''}}>
+											{{$row['outlet_name']}}</option>
+										@endforeach
+									@endif
+								</select>
 							</div>
 						</div>
 						<div class="form-group">
@@ -196,7 +288,7 @@
 							    <i class="fa fa-question-circle tooltips" data-original-title="Pilih specialist dokter" data-container="body"></i>
 							    </label>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-7">
 								<select name="doctor_specialist[]" id="selectService" class="form-control input-sm select2-multiple select2-hidden-accessible" multiple="multiple" data-placeholder="Select specialist..." required>
 									<option value="">Select Specialist...</option>
 									@if(isset($specialist))
@@ -225,7 +317,7 @@
 							    <i class="fa fa-question-circle tooltips" data-original-title="Pilih service dokter" data-container="body"></i>
 							    </label>
 							</div>
-							<div class="col-md-6">
+							<div class="col-md-7">
 								<select name="doctor_service[]" id="selectService" class="form-control input-sm select2-multiple select2-hidden-accessible" multiple="multiple" data-placeholder="Select service..." required>
 									<option value="">Select Service...</option>
 									@if(isset($service))
@@ -247,6 +339,54 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Session Price
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan harga sesi" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-4">
+								<input type="text" name="doctor_session_price" placeholder="Session Price (Required)" value="{{isset($doctor) ? $doctor['doctor_session_price'] : ''}}" class="form-control price" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Practical Experience
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan jumlah tahun praktek" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" name="practical_experience" placeholder="Practical Experience (Required)" value="{{isset($doctor) ? $doctor['practical_experience'] : ''}}" class="form-control" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Alumni
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan alumni doctor" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" name="alumni" placeholder="Alumni Doctor (Required)" value="{{isset($doctor) ? $doctor['alumni'] : ''}}" class="form-control" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Registration Certificate Number
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan Nomor Sertifikat" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" name="registration_certificate_number" placeholder="Registration Certificate Number (Required)" value="{{isset($doctor) ? $doctor['registration_certificate_number'] : ''}}" class="form-control" required />
+							</div>
+						</div>
+						<div class="form-group">
                             <label class="col-md-3 control-label"> Status Account <span class="text-danger">*</span></label>
                             <div class="col-md-3">
                                 <input data-switch="true" type="checkbox" name="is_active" data-on-text="Active" data-off-text="Deactive" checked/>
@@ -256,6 +396,7 @@
 							<div class="input-icon right">
 								<label class="col-md-3 control-label">
 									Id Photo
+									<span class="required" aria-required="true"> (300*300) </span>
 									<i class="fa fa-question-circle tooltips" data-original-title="Foto Professional Dokter" data-container="body"></i>
 								</label>
 							</div>
@@ -264,12 +405,16 @@
 									<div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
 										<img src="https://www.cs.emory.edu/site/media/rg5">
 									</div>
-									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
+									@if(isset($doctor))
+									<img src="{{ env('STORAGE_URL_API')}}{{$doctor['doctor_photo']}}?updated_at={{time()}}" alt="">
+									@else
+									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300px; max-height: 300px;"> </div>
+									@endif
 									<div>
 										<span class="btn default btn-file">
 											<span class="fileinput-new"> Select image </span>
 											<span class="fileinput-exists"> Change </span>
-											<input type="file" accept="image/*" id="field_image" class="file" name="doctor_photo">
+											<input type="file" accept="image/*" id="field_image" class="file" name="doctor_photo" value="{{isset($doctor) ? $doctor['doctor_photo'] : ''}}">
 										</span>
 										<a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 									</div>

@@ -45,7 +45,7 @@
 	</head>
     <!-- END HEAD -->
 
-    <body class="login" @if(env('BACKGROUND_LOGIN')) style="background-color:{{env('BACKGROUND_LOGIN')}} !important" @endif>
+    <body class="login" @if(env('BACKGROUND_LOGIN')) style="background:{{env('BACKGROUND_LOGIN')}} !important; min-height: 100vh;" @endif>
         <!-- BEGIN LOGO -->
         <div class="logo">
             <a href="index.html">
@@ -69,7 +69,7 @@
                     <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" value="{{ old('username') }}" /> </div>
                 <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">PIN</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="PIN" name="password" required maxlength="6" />
+                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="PIN" name="password" required/>
 				</div>
 				<div class="form-group" style="margin-bottom: 0">
                     {!!  GoogleReCaptchaV3::renderField('captcha_div','login', 'captcha_div') !!}
@@ -95,7 +95,7 @@
             <!-- END LOGIN FORM -->
 
         </div>
-        <div class="copyright" style="color: #fff"> Copyright © 2022 Technopartner Indonesia</div>
+        <div class="copyright" style="color: #000"> Copyright © 2022 Technopartner Indonesia</div>
         <!--[if lt IE 9]>
 <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/respond.min.js')}}"></script>
 <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/excanvas.min.js')}}"></script>

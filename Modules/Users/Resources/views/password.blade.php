@@ -90,9 +90,9 @@
 				<form class="form-horizontal form-bordered" action="{{ url()->current() }}" method="post">
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label col-md-3">Your 6 Digit PIN</label>
+							<label class="control-label col-md-3">Your Password</label>
 							<div class="col-md-9">
-								<input type="password" name="password" class="form-control" minLength="6" maxLength="6" onkeypress="return isNumberKey(event)"/>
+								<input type="password" name="password" class="form-control"/>
 							</div>
 						</div>
 					</div>

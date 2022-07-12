@@ -12,6 +12,11 @@ $i = count($category['category_child']??[]);
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
+@section('page-plugin')
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 @endsection
 
 @section('page-script')
@@ -45,6 +50,18 @@ $i = count($category['category_child']??[]);
                 '<input class="form-control" type="text" maxlength="200" id="product_category_name_'+i+'" name="child['+i+'][product_category_name]" required placeholder="Enter product category name"/>' +
                 '</div>' +
                 '<input type="hidden" name="child['+i+'][id_product_category]" value="0">'+
+                '<div class="col-md-2">' +
+                '<div class="fileinput fileinput-new" data-provides="fileinput">' +
+                '<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 40px; max-height: 40px;"> </div>' +
+                '<div>' +
+                '<span class="btn default btn-file">' +
+                '<span class="fileinput-new" style="font-size: 12px;"> Select Image </span>' +
+                '<span class="fileinput-exists"> <i class="fa fa-pencil"></i> </span>' +
+                '<input type="file" accept="image/png" name="child['+i+'][product_category_image]" class="file" data-type="'+i+'"> </span>' +
+                '<a href="javascript:;" id="removeImage_'+i+'" class="btn red default fileinput-exists" data-dismiss="fileinput"> <i class="fa fa-trash"></i> </a>' +
+                '</div>' +
+                '</div>' +
+                '</div>' +
                 '<div class="col-md-3">' +
                 '<a class="btn btn-danger btn" style="margin-left: 2%" onclick="deleteForm('+i+')">&nbsp;<i class="fa fa-trash"></i> </a>' +
                 '</div>' +
@@ -59,6 +76,35 @@ $i = count($category['category_child']??[]);
         function deleteForm(number) {
             $('#child_'+number).empty();
         }
+
+        $(".file").change(function(e) {
+            var type      = $(this).data('type');
+            var widthImg  = 0;
+            var heightImg = 0;
+            var _URL = window.URL || window.webkitURL;
+            var image, file;
+
+            if ((file = this.files[0])) {
+                image = new Image();
+                var size = file.size/1024;
+
+                image.onload = function() {
+                    if (this.width !== this.height) {
+                        toastr.warning("Please check dimension of your photo. Recommended dimensions are 1:1");
+                        $("#removeImage_"+type).trigger( "click" );
+                    }
+                    if (this.width > 100 ||  this.height > 100) {
+                        toastr.warning("Please check dimension of your photo. The maximum height and width 100px.");
+                        $("#removeImage_"+type).trigger( "click" );
+                    }
+                    if (size > 10) {
+                        toastr.warning("The maximum size is 10 KB");
+                        $("#removeImage_"+type).trigger( "click" );
+                    }
+                };
+                image.src = _URL.createObjectURL(file);
+            }
+        });
     </script>
 @endsection
 
@@ -94,13 +140,30 @@ $i = count($category['category_child']??[]);
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" role="form" id="form_create_table" action="{{url('product/category/update/'.$category['id_product_category'])}}" method="POST">
+            <form class="form-horizontal" role="form" id="form_create_table" action="{{url('product/category/update/'.$category['id_product_category'])}}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
                 <div class="form-body">
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label">Category Name Parent <span class="text-danger">*</span></label>
                         <div class="col-md-4">
                             <input class="form-control" type="text" maxlength="200" name="product_category_name" value="{{$category['product_category_name']}}" required placeholder="Enter category name here"/>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 40px; height: 40px;">
+                                    @if(isset($category['url_product_category_photo']) && $category['url_product_category_photo'] != "")
+                                        <img src="{{$category['url_product_category_photo']}}" id="preview" />
+                                    @endif
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 40px; max-height: 40px;"> </div>
+                                <div>
+                                    <span class="btn default btn-file">
+                                    <span class="fileinput-new" style="font-size: 12px;"> Select Image </span>
+                                    <span class="fileinput-exists"> <i class="fa fa-pencil"></i> </span>
+                                    <input type="file" accept="image/png" name="product_category_image" class="file" data-type="parent"> </span>
+                                    <a href="javascript:;" id="removeImage_parent" class="btn red default fileinput-exists" data-dismiss="fileinput"> <i class="fa fa-trash"></i> </a>
+                                </div>
+                            </div>
                         </div>
                         @if($category['last_child'] == 0)
                         <div class="col-md-3">
@@ -116,6 +179,23 @@ $i = count($category['category_child']??[]);
                                     <label class="col-md-3 col-form-label">{{$category['product_category_name']}}  <span class="text-danger">*</span></label>
                                     <div class="col-md-4">
                                         <input class="form-control" type="text" maxlength="200" name="child[{{$i}}][product_category_name]" value="{{$child['product_category_name']}}" required placeholder="Enter product category name here"/>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new thumbnail" style="width: 40px; height: 40px;">
+                                                @if(isset($child['url_product_category_photo']) && $child['url_product_category_photo'] != "")
+                                                    <img src="{{$child['url_product_category_photo']}}" id="preview_{{$i}}" />
+                                                @endif
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 40px; max-height: 40px;"> </div>
+                                            <div>
+                                                <span class="btn default btn-file">
+                                                <span class="fileinput-new" style="font-size: 12px;"> Select Image </span>
+                                                <span class="fileinput-exists"> <i class="fa fa-pencil"></i> </span>
+                                                <input type="file" accept="image/png" name="child[{{$i}}][product_category_image]" class="file" data-type="{{$i}}"> </span>
+                                                <a href="javascript:;" id="removeImage_{{$i}}" class="btn red default fileinput-exists" data-dismiss="fileinput"> <i class="fa fa-trash"></i> </a>
+                                            </div>
+                                        </div>
                                     </div>
                                     <input type="hidden" name="child[{{$i}}][id_product_category]" value="{{$child['id_product_category']}}">
                                 </div>

@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('doctor')->group(function() {
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'doctor'], function(){
     Route::get('/', 'DoctorController@index');
     Route::post('/', 'DoctorController@filter');
     Route::get('/create', 'DoctorController@create');
@@ -21,8 +21,7 @@ Route::prefix('doctor')->group(function() {
     Route::put('/{id}/update', 'DoctorController@update');
     Route::post('/delete', 'DoctorController@destroy');
 
-    Route::resource('clinic', 'DoctorClinicController');
     Route::resource('service', 'DoctorServiceController');
     Route::resource('specialist', 'DoctorSpecialistController');
     Route::resource('specialist-category', 'DoctorSpecialistCategoryController');
-});
+}); 

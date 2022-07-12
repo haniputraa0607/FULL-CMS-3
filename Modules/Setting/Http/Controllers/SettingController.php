@@ -162,6 +162,16 @@ class SettingController extends Controller
             $span = 'credit_card_payment_gateway';
             $colInput = 4;
             $colLabel = 3;
+        } elseif ($key == 'max_consultation_quota') {
+            $sub = 'max-consultation-quota';
+            $active = 'max-consultation-quota';
+            $subTitle = 'Maximum Consultation Quota';
+        } elseif ($key == 'privacypolicy') {
+            $sub = 'about-privacy-policy';
+            $active = 'privacy-policy';
+            $subTitle = 'Kebijakan Privasi';
+            $label = 'Kebijakan Privasi';
+            $span = '';
         }
 
         $data = [
@@ -198,7 +208,15 @@ class SettingController extends Controller
             $data['value'] = $result['value'];
             $data['key'] = 'value';
             return view('setting::default_outlet', $data);
-        }else{
+        } elseif ($key == 'max_consultation_quota') {
+            $request = MyHelper::post('setting', ['key-like' => $key]);
+            if (isset($request['status']) && $request['status'] == 'success') {
+                $data['result'] = $request['result'];
+                return view('setting::max-consultation-quota', $data);
+            } else {
+                return view('setting::max-consultation-quota',$data);
+            }
+        } else{
             $request = MyHelper::post('setting', ['key' => $key]);
 
             if (isset($request['status']) && $request['status'] == 'success') {
@@ -1164,7 +1182,8 @@ class SettingController extends Controller
         }else {
             $data['menu_list'] = [
                 'main_menu' => [],
-                'other_menu'=> []
+                'other_menu'=> [],
+                'home_menu' => []
             ];
         }
 
@@ -1200,6 +1219,8 @@ class SettingController extends Controller
 
         if($category == 'other-menu') {
             return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#other_menu');
+        }elseif($category == 'home-menu'){
+            return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#home_menu');
         }else{
             return parent::redirect($result, 'Text menu has been updated.', 'setting/text_menu#main_menu');
         }
@@ -1443,5 +1464,13 @@ class SettingController extends Controller
 
         $result = MyHelper::post('setting/outletapp/splash-screen', $post);
         return parent::redirect($result, 'Splash Screen has been updated.');
+    }
+
+    public function updateMaxConsultationQuota(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $update = MyHelper::post('setting/max-consultation/update', $post);
+        return parent::redirect($update, 'Setting data has been updated.');
     }
 }
