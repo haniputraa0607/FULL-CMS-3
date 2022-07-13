@@ -76,8 +76,9 @@ class DoctorController extends Controller
      * Show the form for creating a new resource.
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $post = $request->all();
         $data = [
             'title'          => 'Doctor',
             'sub_title'      => 'Doctor Create',
@@ -113,6 +114,7 @@ class DoctorController extends Controller
 
 		if($celebrate['status'] == 'success') $data['celebrate'] = $celebrate['result']; else $data['celebrate'] = null;
 
+        $data['id_outlet'] = $post['id_outlet']??null;
         return view('doctor::form', $data);
     }
 

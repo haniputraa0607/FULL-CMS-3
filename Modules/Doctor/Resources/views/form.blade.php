@@ -272,9 +272,13 @@
 									<option value="">Select Outlet Clinic...</option>
 									@if(isset($outlet))
 										@foreach($outlet as $row)
-											<option value="{{$row['id_outlet']}}" 
-											{{isset($doctor) ? $doctor['id_outlet'] == $row['id_outlet'] ? "selected" : '' : ''}}>
-											{{$row['outlet_name']}}</option>
+											<?php
+												$selected = '';
+												if((isset($doctor) && $doctor['id_outlet'] == $row['id_outlet']) || (!empty($id_outlet) && $id_outlet == $row['id_outlet'])){
+													$selected = 'selected';
+												}
+											?>
+											<option value="{{$row['id_outlet']}}" {{$selected}}>{{$row['outlet_name']}}</option>
 										@endforeach
 									@endif
 								</select>

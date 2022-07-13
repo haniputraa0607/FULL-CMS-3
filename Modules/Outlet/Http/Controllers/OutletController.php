@@ -253,6 +253,8 @@ class OutletController extends Controller
             }
 
             $data['products'] = MyHelper::post('product/be/list', ['id_outlet' => $data['outlet'][0]['id_outlet'], 'outlet_detail' => 1])['result']??[];
+            $data['doctors'] = MyHelper::post('doctor/list/outlet', ['id_outlet' => $data['outlet'][0]['id_outlet']])['result']??[];
+            $data['id_outlet'] = $data['outlet'][0]['id_outlet'];
             return view('outlet::detail', $data);
         }
         else {
