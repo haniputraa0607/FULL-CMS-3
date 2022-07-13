@@ -1694,11 +1694,63 @@ return [
 				],
 			],
 		],
+         */
 		[
 			'type' => 'group',
 			'label' => 'Promo',
 			'children' => [
-				[
+                [
+                    'label' => 'Promo Campaign',
+                    'required_features' => [],
+                    'required_configs' => [93],
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'New Promo Campaign',
+                            'required_features' => [202],
+                            'active' => '\View::shared("submenu_active") == "promo-campaign-create"',
+                            'url' => 'promo-campaign/create'
+                        ],
+                        [
+                            'label' => 'Promo Campaign List',
+                            'required_features' => [200],
+                            'active' => '\View::shared("submenu_active") == "promo-campaign-list"',
+                            'url' => 'promo-campaign'
+                        ],
+                        [
+                            'label' => 'Featured Merchant',
+                            'required_features' => [204],
+                            'active' => '\View::shared("submenu_active") == "promo-campaign-featured-merchant"',
+                            'url' => 'promo-campaign/featured-merchant'
+                        ],
+                        [
+                            'type' => 'group',
+                            'required_features' => [120,122],
+                            'children' => [
+                                [
+                                    'label' => '[Forward] Create Promo Campaign',
+                                    'required_features' => [],
+                                    'url' => 'autoresponse/promo-campaign/create-promo-campaign'
+                                ],
+                                [
+                                    'label' => '[Forward] Update Promo Campaign',
+                                    'required_features' => [],
+                                    'url' => 'autoresponse/promo-campaign/update-promo-campaign'
+                                ],
+                                [
+                                    'label' => 'Share Promo Code Message',
+                                    'required_features' => [],
+                                    'url' => 'promo-campaign/share-promo'
+                                ],
+                            ],
+                        ],
+                    ],
+                    'icon' => 'fa fa-tag'
+                ]
+            ]
+        ],
+                /*
+                 [
 					'label' => 'Deals',
 					'required_features' => [],
 					'required_configs' => [25,18],
@@ -1918,48 +1970,6 @@ return [
 					'active' => '\View::shared("menu_active") == "deals-transaction"',
 					'url' => 'deals/transaction',
 					'icon' => 'fa fa-bar-chart'
-				],
-				[
-					'label' => 'Promo Campaign',
-					'required_features' => [],
-					'required_configs' => [93],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'New Promo Campaign',
-							'required_features' => [202],
-							'active' => '\View::shared("submenu_active") == "promo-campaign-create"',
-							'url' => 'promo-campaign/create'
-						],
-						[
-							'label' => 'Promo Campaign List',
-							'required_features' => [200],
-							'active' => '\View::shared("submenu_active") == "promo-campaign-list"',
-							'url' => 'promo-campaign'
-						],
-						[
-							'type' => 'group',
-							'required_features' => [120,122],
-							'children' => [
-								[
-									'label' => '[Forward] Create Promo Campaign',
-									'required_features' => [],
-									'url' => 'autoresponse/promo-campaign/create-promo-campaign'
-								],
-								[
-									'label' => '[Forward] Update Promo Campaign',
-									'required_features' => [],
-									'url' => 'autoresponse/promo-campaign/update-promo-campaign'
-								],
-								[
-									'label' => 'Share Promo Code Message',
-									'required_features' => [],
-									'url' => 'promo-campaign/share-promo'
-								],
-							],
-						],
-					],
-					'icon' => 'fa fa-tag'
 				],
 				[
 					'label' => 'Promo Cashback Setting',

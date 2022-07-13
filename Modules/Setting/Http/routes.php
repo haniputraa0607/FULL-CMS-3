@@ -86,6 +86,12 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('featured_subscription/reorder', ['middleware' => 'feature_control:243', 'uses' => 'SettingController@reorderFeaturedSubscription']);
     Route::get('featured_subscription/delete/{slug}', ['middleware' => 'feature_control:244', 'uses' => 'SettingController@deleteFeaturedSubscription']);
 
+    /* featured promo campaign */
+    Route::post('featured_promo_campaign/create', ['uses' => 'SettingController@createFeaturedPromoCampaign']);
+    Route::post('featured_promo_campaign/update', ['uses' => 'SettingController@updateFeaturedPromoCampaign']);
+    Route::post('featured_promo_campaign/reorder', ['uses' => 'SettingController@reorderFeaturedPromoCampaign']);
+    Route::get('featured_promo_campaign/delete/{slug}', ['uses' => 'SettingController@deleteFeaturedPromoCampaign']);
+
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
 });

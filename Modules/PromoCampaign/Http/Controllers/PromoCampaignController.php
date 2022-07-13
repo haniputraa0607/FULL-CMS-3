@@ -85,7 +85,7 @@ class PromoCampaignController extends Controller
             $data['total']          = 0;
         }
 
-        $getOutlet = MyHelper::get('outlet/list?log_save=0');
+        $getOutlet = MyHelper::get('outlet/be/list?log_save=0');
         if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result'];
         else $data['outlets'] = [];
 
@@ -180,7 +180,7 @@ class PromoCampaignController extends Controller
                 $data['rule2'] = $filter;
             }
 
-            $outlets = MyHelper::post('outlet/list', $post);
+            $outlets = MyHelper::post('outlet/be/list', $post);
             $data['payment_list'] = MyHelper::post('transaction/available-payment',['show_all' => 0])['result'] ?? [];
             $data['delivery_list'] = MyHelper::get('transaction/be/available-delivery')['result']['delivery'] ?? [];
 
@@ -309,6 +309,15 @@ class PromoCampaignController extends Controller
                 $post['id_promo_campaign'] = $id_promo_campaign;
                 $messages = ['Promo Campaign has been updated'];
             }
+
+            if (!empty($post['promo_image'])) {
+                $post['promo_image']  = MyHelper::encodeImage($post['promo_image']);
+            }
+
+            if (!empty($post['promo_image_detail'])) {
+                $post['promo_image_detail']  = MyHelper::encodeImage($post['promo_image_detail']);
+            }
+
             $action = MyHelper::post('promo-campaign/step1', $post);
 
             if (isset($action['status']) && $action['status'] == 'success') 
@@ -361,20 +370,20 @@ class PromoCampaignController extends Controller
             $post['id_promo_campaign'] = $id_promo_campaign;
             $msg_success = ['Promo Campaign has been updated'];
             if ( ($post['promo_type'] ?? false) == 'Discount delivery') {
-            	$shipment = [];
-            	if ($post['filter_shipment'] == 'all_shipment') {
-            		$shipment[] = 'GO-SEND';
-            	}
-
             	if (isset($post['shipment_method'])) {
             		$shipment = $post['shipment_method'];
             		$shipment = array_flip($shipment);
             		unset($shipment['Pickup Order']);
             		$shipment = array_flip($shipment);
-            		if (empty($shipment)) $shipment[] = 'GO-SEND';
             	}
-            	$shipment_text 	= implode(', ', $shipment);
-            	$msg_shipment 	= 'Tipe shipment yang tersimpan adalah delivery '.$shipment_text.' karena tipe promo yang dipilih merupakan diskon delivery';
+
+                if(!empty($shipment)){
+                    $shipment_text 	= implode(', ', $shipment);
+                    $msg_shipment 	= 'Tipe shipment yang tersimpan adalah delivery '.$shipment_text.' karena tipe promo yang dipilih merupakan diskon delivery';
+                }else{
+                    $msg_shipment 	= 'Tipe shipment yang tersimpan adalah all shipment';
+                }
+
             	$msg_success[] 	= $msg_shipment;
             }
 
@@ -531,5 +540,81 @@ class PromoCampaignController extends Controller
     		$redirect->withInput()->withErrors($action['messages'] ?? ['Failed to update promo description']);
     	}
     	return $redirect;
+    }
+
+    /* Featured Promo Campaign */
+    public function listFeaturedPromoCampaign(Request $request)
+    {
+        $data = [
+            'title'             => 'Promo Campaign',
+            'sub_title'         => 'Featured Promo Campaign Merchant',
+            'menu_active'       => 'promo-campaign',
+            'submenu_active'    => 'promo-campaign-featured-merchant'
+        ];
+
+        // featured promo campaign
+        $data['featured_promo_campaigns'] = MyHelper::get('setting/featured_promo_campaign/list-merchant')['result'] ?? [];
+        $data['promo_campaigns'] = MyHelper::get('promo-campaign/active-campaign?featured=true&promo_use=Product')['result'] ?? [];
+
+        return view('promocampaign::featured_promo_campaign', $data);
+    }
+
+    public function createFeaturedPromoCampaign(Request $request)
+    {
+        $post = $request->except('_token');
+        $post['feature_type'] = 'merchant';
+        $result = MyHelper::post('setting/featured_promo_campaign/create', $post);
+
+        if(isset($result['status']) && $result['status'] == 'success'){
+            return redirect('promo-campaign/featured-merchant')->withSuccess(['New featured promo campaign has been created']);
+        }else{
+            return redirect('promo-campaign/featured-merchant')->withErrors($result['messages']??['Something went wrong']);
+        }
+    }
+
+    public function updateFeaturedPromoCampaign(Request $request)
+    {
+        $post = $request->except('_token');
+        $validatedData = $request->validate([
+            'id_featured_promo_campaign'    => 'required'
+        ]);
+        $result = MyHelper::post('setting/featured_promo_campaign/update', $post);
+
+        if(isset($result['status']) && $result['status'] == 'success'){
+            return redirect('promo-campaign/featured-merchant')->withSuccess(['Featured promo campaign has been updated']);
+        }else{
+            return redirect('promo-campaign/featured-merchant')->withErrors($result['messages']??['Something went wrong']);
+        }
+    }
+
+    public function reorderFeaturedPromoCampaign(Request $request)
+    {
+        $post = $request->except("_token");
+        $result = MyHelper::post('setting/featured_promo_campaign/reorder', $post);
+
+        if(isset($result['status']) && $result['status'] == 'success'){
+            return redirect('promo-campaign/featured-merchant')->withSuccess(['Featured promo campaign has been sorted']);
+        }else{
+            return redirect('promo-campaign/featured-merchant')->withErrors($result['messages']??['Something went wrong']);
+        }
+    }
+
+    public function deleteFeaturedPromoCampaign($id_promo_campaign)
+    {
+        $post['id_featured_promo_campaign'] = $id_promo_campaign;
+        $result = MyHelper::post('setting/featured_promo_campaign/delete', $post);
+
+        if(isset($result['status']) && $result['status'] == 'success'){
+            return redirect('promo-campaign/featured-merchant')->withSuccess(['Featured promo campaign has been deleted']);
+        }else{
+            return redirect('promo-campaign/featured-merchant')->withErrors($result['messages']??['Something went wrong']);
+        }
+    }
+
+    public function updateVisibility(Request $request){
+        $post = $request->except('_token');
+        $post['id_promo_campaign'] = MyHelper::explodeSlug($post['id_promo_campaign'])[0] ?? null;
+        $update = MyHelper::post('promo-campaign/update-visibility', $post);
+        return $update;
     }
 }

@@ -22,6 +22,7 @@
 	// $delivery_list = ['GO-SEND'];
 	// $is_delivery = count(array_intersect($shipment_method, $delivery_list)) > 0;
 @endphp
+@if($result['promo_use_in'] != 'Consultation')
 <div class="row">
 	<div class="col-md-12">
 		<label class="control-label">Shipment method</label>
@@ -42,15 +43,13 @@
 	        @endif>
 		        <label class="control-label">Select Shipment</label>
 	        <div class="mt-checkbox-inline">
-	            <label class="mt-checkbox mt-checkbox-outline">
-	                <input class="input-selected-shipment" type="checkbox" value="Pickup Order" name="shipment_method[]" @if (in_array('Pickup Order', $shipment_method)) checked @endif> Pickup Order
-	                <span></span>
-	            </label>
 	            @foreach ($delivery_list as $delivery)
-		            <label class="mt-checkbox mt-checkbox-outline">
-		                <input class="input-selected-shipment" type="checkbox" value="{{ $delivery['code'] }}" name="shipment_method[]" @if (in_array($delivery['code'], $shipment_method)) checked @endif> {{ $delivery['delivery_name'] }}
-		                <span></span>
-		            </label>
+					@foreach($delivery['service'] as $s)
+						<label class="mt-checkbox mt-checkbox-outline">
+							<input class="input-selected-shipment" type="checkbox" value="{{ $s['code'] }}" name="shipment_method[]" @if (in_array($s['code'], $shipment_method)) checked @endif> {{ $delivery['delivery_name']  }} - {{ $s['service_name']  }}
+							<span></span>
+						</label>
+					@endforeach
 	            @endforeach
 	            {{-- <label class="mt-checkbox mt-checkbox-outline">
 	                <input class="input-selected-shipment" type="checkbox" value="Delivery"	 id="checkbox-shipment-delivery" @if ($is_delivery) checked @endif> Delivery
@@ -78,6 +77,7 @@
         </div> --}}
 	</div>
 </div>
+@endif
 @endsection
 
 @section('promo-shipment-method-script')

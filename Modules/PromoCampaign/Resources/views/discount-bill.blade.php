@@ -1,4 +1,5 @@
 @section('discount-bill')
+@if($result['promo_use_in'] != 'Consultation')
 <div class="form-group">
 	<div class="row">
 		<div class="col-md-3">
@@ -12,7 +13,7 @@
 		</div>
 	</div>
 </div>
-
+@endif
 <div id="select-product-bill">
 	<div class="form-group row" style="width: 100%!important">
 		<div class="">

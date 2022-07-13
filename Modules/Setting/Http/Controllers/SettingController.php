@@ -665,6 +665,9 @@ class SettingController extends Controller
         else
             $data['featured_subscriptions'] = [];
 
+        // featured promo campaign
+        $data['featured_promo_campaigns'] = MyHelper::get('setting/featured_promo_campaign/list')['result'] ?? [];
+
         // subscription
         $sp=['select' => ['id_subscription', 'subscription_title']];
         $request = MyHelper::post('subscription/be/list-complete',$sp);
@@ -674,6 +677,9 @@ class SettingController extends Controller
         $dp=['deals_type'=>'Deals','forSelect2'=>true, 'featured'=>true];
         $request = MyHelper::post('deals/be/list',$dp);
         $data['deals'] = $request['result']??[];
+
+        // promo campaign
+        $data['promo_campaigns'] = MyHelper::get('promo-campaign/active-campaign?featured=true')['result'] ?? [];
 
         // news for banner
         $news_req = [
@@ -1472,5 +1478,41 @@ class SettingController extends Controller
 
         $update = MyHelper::post('setting/max-consultation/update', $post);
         return parent::redirect($update, 'Setting data has been updated.');
+    }
+
+    /* Featured Promo Campaign */
+    public function createFeaturedPromoCampaign(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $result = MyHelper::post('setting/featured_promo_campaign/create', $post);
+
+        return parent::redirect($result, 'New featured promo campaign has been created.', 'setting/home#featured_promo_campaign');
+    }
+
+    public function updateFeaturedPromoCampaign(Request $request)
+    {
+        $post = $request->except('_token');
+        $validatedData = $request->validate([
+            'id_featured_promo_campaign'    => 'required'
+        ]);
+        $result = MyHelper::post('setting/featured_promo_campaign/update', $post);
+        return parent::redirect($result, 'Featured promo campaign has been updated.', 'setting/home#featured_promo_campaign',[],true);
+    }
+
+    public function reorderFeaturedPromoCampaign(Request $request)
+    {
+        $post = $request->except("_token");
+        $result = MyHelper::post('setting/featured_promo_campaign/reorder', $post);
+
+        return parent::redirect($result, 'Featured promo campaign has been sorted.', 'setting/home#featured_promo_campaign');
+    }
+
+    public function deleteFeaturedPromoCampaign($id_promo_campaign)
+    {
+        $post['id_featured_promo_campaign'] = $id_promo_campaign;
+        $result = MyHelper::post('setting/featured_promo_campaign/delete', $post);
+
+        return parent::redirect($result, 'Featured promo campaign has been deleted.', 'setting/home#featured_promo_campaign');
     }
 }

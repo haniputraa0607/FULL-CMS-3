@@ -5,14 +5,16 @@
 @extends('layouts.main-closed')
 
 @section('page-style')
-	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" /> 
-	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 		.select2-results__option[aria-selected=true] {
-		    display: none;
+			display: none;
 		}
 		.text-decoration-none {
 			text-decoration: none!important;
@@ -31,6 +33,8 @@
 @section('page-script')
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
 
 	@php
 		$code_type 			= null;
@@ -358,6 +362,69 @@
             }
         });
 	});
+
+	$("#file").change(function(e) {
+		var widthImg  = 300;
+		var heightImg = 300;
+
+		var _URL = window.URL || window.webkitURL;
+		var image, file;
+
+		if ((file = this.files[0])) {
+			image = new Image();
+
+			image.onload = function() {
+				if (this.width == widthImg && this.height == heightImg) {
+				}
+				else {
+					toastr.warning("Please check dimension of your photo.");
+					$("#remove_fieldphoto").trigger( "click" );
+
+				}
+			};
+
+			image.src = _URL.createObjectURL(file);
+		}
+	});
+
+	$("#fileDetail").change(function(e) {
+		var widthImg  = 750;
+		var heightImg = 375;
+
+		var _URL = window.URL || window.webkitURL;
+		var image, file;
+
+		if ((file = this.files[0])) {
+			image = new Image();
+
+			image.onload = function() {
+				if (this.width == widthImg && this.height == heightImg) {
+				}
+				else {
+					toastr.warning("Please check dimension of your photo.");
+					$("#remove_fieldphotodetail").trigger( "click" );
+
+				}
+			};
+
+			image.src = _URL.createObjectURL(file);
+		}
+	});
+
+	function changePromoUse(value){
+		$('.radio_product_type').prop('checked', false);
+		$('.radio_brand_rule').prop('checked', false);
+		$('#brands option:selected').remove();
+
+		if(value == 'Product'){
+			$('.for_product').show();
+			$('.radio_product_type').prop('required', true);
+		}else{
+			$('.for_product').hide();
+			$('.radio_product_type').prop('required', false);
+		}
+	}
+
 	</script>
 	<style>
 	input[type=number]::-webkit-inner-spin-button, 
@@ -406,7 +473,7 @@
 			</div>
 		</div>
 	</div>
-	<form role="form" action="" method="POST">
+	<form role="form" action="" method="POST" enctype="multipart/form-data">
 		<div class="col-md-1"></div>
 		
 		{{-- info --}}
@@ -438,6 +505,99 @@
 							<input required type="text" class="form-control" name="promo_title" placeholder="Promo Title" @if(isset($result['promo_title']) && $result['promo_title'] != "") value="{{$result['promo_title']}}" @elseif(old('promo_title') != "") value="{{old('promo_title')}}" @endif autocomplete="off">
 						</div>
 					</div>
+
+					<div class="form-group">
+						<label class="control-label">Promo Use</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Promo akan digunakan untuk transaksi product atau transaksi konsultasi" data-container="body"></i>
+						<div class="input-group col-md-12">
+							<div class="input-icon right">
+								<select onchange="changePromoUse(this.value)" class="form-control select2-multiple" name="promo_use_in" data-placeholder="Select Promo Use" @if(!empty($result)) readonly @else required @endif>
+									<option></option>
+									<option value="Product" @if(old('promo_use_in') == 'Product' || (!empty($result) && $result['promo_use_in'] == 'Product')) selected @endif>Product</option>
+									<option value="Consultation" @if(old('promo_use_in') == 'Consultation' || (!empty($result) && $result['promo_use_in'] == 'Consultation')) selected @endif>Consultation</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Description</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Promo" data-container="body"></i>
+						<div class="input-group col-md-12">
+							<textarea required type="text" class="form-control" name="promo_description" placeholder="Promo Description">{{$result['promo_description']??old('promo_description')}}</textarea>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Visibility</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Visibility promo" data-container="body"></i>
+						<div class="mt-radio-list">
+							<label class="mt-radio mt-radio-outline"> Visible
+								<input type="radio" value="Visible" name="promo_campaign_visibility" @if(isset($result['promo_campaign_visibility']) && $result['promo_campaign_visibility'] == "Visible") checked @elseif(old('promo_campaign_visibility') == "Visible" || (empty(old('promo_campaign_visibility')) && empty($result))) checked @endif required/>
+								<span></span>
+							</label>
+							<label class="mt-radio mt-radio-outline"> Hidden
+								<input type="radio" value="Hidden" name="promo_campaign_visibility" @if(isset($result['promo_campaign_visibility']) && $result['promo_campaign_visibility'] == "Hidden") checked  @elseif(old('promo_campaign_visibility') == "Hidden") checked @endif required/>
+								<span></span>
+							</label>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Image</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Gambar Promo" data-container="body"></i>
+						<br>
+						<span class="required" aria-required="true"> (300*300) </span>
+						<div class="input-group col-md-12 text-center">
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+								<div class="fileinput-new thumbnail" style="width: 350px; height: 175px;">
+									<img src="{{ $result['url_promo_image'] ?? 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image' }}" alt="Image">
+								</div>
+								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px;"></div>
+								<div class="text-left">
+			                        <span class="btn default btn-file">
+			                        <span class="fileinput-new"> Select image </span>
+			                        <span class="fileinput-exists"> Change </span>
+			                        <input type="file" accept="image/*"  {{ empty($result['promo_image']) ? 'required' : '' }} name="promo_image" id="file">
+
+			                        </span>
+
+									<a href="javascript:;" id="remove_fieldphoto" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label">Image Detail</label>
+						<span class="required" aria-required="true"> * </span>
+						<i class="fa fa-question-circle tooltips" data-original-title="Gambar Promo Detail" data-container="body"></i>
+						<br>
+						<span class="required" aria-required="true"> (750*375) </span>
+						<div class="input-group col-md-12 text-center">
+							<div class="fileinput fileinput-new" data-provides="fileinput">
+								<div class="fileinput-new thumbnail" style="width: 350px; height: 175px;">
+									<img src="{{ $result['url_promo_image_detail'] ?? 'https://www.placehold.it/750x375/EFEFEF/AAAAAA&amp;text=no+image' }}" alt="Image Detail">
+								</div>
+								<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 350px; max-height: 175px;"></div>
+								<div class="text-left">
+			                        <span class="btn default btn-file">
+			                        <span class="fileinput-new"> Select image </span>
+			                        <span class="fileinput-exists"> Change </span>
+			                        <input type="file" accept="image/*"  {{ empty($result['promo_image_detail']) ? 'required' : '' }} name="promo_image_detail" id="fileDetail">
+
+			                        </span>
+
+									<a href="javascript:;" id="remove_fieldphotodetail" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+								</div>
+							</div>
+						</div>
+					</div>
+
 					<div class="form-group">
 						<label for="selectTag" class="control-label">Tag</label>
 						<i class="fa fa-question-circle tooltips" data-original-title="Kode tag digunakan untuk mengkategorikan kode promo" data-container="body"></i>
@@ -469,17 +629,16 @@
 							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central + charged outlet total must be 100</p>
 						</div>
 					</div>
-					<div class="form-group">
+					<div class="form-group for_product" @if(old('promo_use_in') == 'Consultation' || (!empty($result['promo_use_in']) && $result['promo_use_in'] == 'Consultation')) style="display:none" @endif>
                         <div class="input-icon right">
                             <label class="control-label">
                             Brand
-                            <span class="required" aria-required="true"> * </span>  
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih brand untuk promo campaign ini" data-container="body"></i>
                             </label>
                         </div>
                         <div class="">
                             <div class="input-icon right">
-                                <select class="form-control select2-multiple disable-input" data-placeholder="Select Brand" name="id_brand[]" multiple required>
+                                <select class="form-control select2-multiple disable-input" id="brands" data-placeholder="Select Brand" name="id_brand[]" multiple>
                                     <option></option>
                                 @php
 									$selected_brand = [];
@@ -505,41 +664,40 @@
                         </div>
                     </div>
 
-                    <div class="form-group" style="height: 90px;">
+                    <div class="form-group for_product" @if(old('promo_use_in') == 'Consultation' || (!empty($result['promo_use_in']) && $result['promo_use_in'] == 'Consultation')) style="display:none" @endif style="height: 90px;">
 						<label class="control-label">Brand Rule</label>
-						<span class="required" aria-required="true"> * </span>
 						<i class="fa fa-question-circle tooltips" data-original-title="Pilih rule yang akan digunakan untuk memilih outlet" data-container="body"></i>
 						<div class="mt-radio-list">
 							<label class="mt-radio mt-radio-outline"> All selected brands
-								<input type="radio" value="and" name="brand_rule" @if(isset($result['brand_rule']) && $result['brand_rule'] == "and") checked @elseif(old('brand_rule') == "and") checked @endif required/>
+								<input type="radio" value="and" class="radio_brand_rule" name="brand_rule" @if(isset($result['brand_rule']) && $result['brand_rule'] == "and") checked @elseif(old('brand_rule') == "and") checked @endif />
 								<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki semua brand yang dipilih" data-container="body"></i>
 								<span></span>
 							</label>
 							<label class="mt-radio mt-radio-outline"> One of the selected brands
-								<input type="radio" value="or" name="brand_rule" @if(isset($result['brand_rule']) && $result['brand_rule'] == "or") checked  @elseif(old('brand_rule') == "or") checked @endif required/>
+								<input type="radio" value="or" class="radio_brand_rule" name="brand_rule" @if(isset($result['brand_rule']) && $result['brand_rule'] == "or") checked  @elseif(old('brand_rule') == "or") checked @endif />
 								<i class="fa fa-question-circle tooltips" data-original-title="Promo akan berlaku untuk outlet yang memiliki setidaknya salah satu brand yang dipilih" data-container="body"></i>
 								<span></span>
 							</label>
 						</div>
 					</div>
 
-					<div class="form-group" style="height: 125px;">
+					<div class="form-group for_product" @if(old('promo_use_in') == 'Consultation' || (!empty($result['promo_use_in']) && $result['promo_use_in'] == 'Consultation')) style="display:none" @endif style="height: 125px;">
 						<label class="control-label">Product Type</label>
 						<span class="required" aria-required="true"> * </span>
 						<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe produk yang akan dikenakan promo jika promo yang dipilih menggunakan syarat produk" data-container="body"></i>
 						<div class="mt-radio-list">
 							<label class="mt-radio mt-radio-outline"> Product only
-								<input type="radio" value="single" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single") checked @elseif(old('product_type') == "single") checked @endif required/>
+								<input type="radio" value="single" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single") checked @elseif(old('product_type') == "single") checked @endif required/>
 								<i class="fa fa-question-circle tooltips" data-original-title="Syarat produk yang dapat dipilih hanya produk saja tanpa variant" data-container="body"></i>
 								<span></span>
 							</label>
 							<label class="mt-radio mt-radio-outline"> Product variant only
-								<input type="radio" value="variant" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "variant") checked  @elseif(old('product_type') == "variant") checked @endif required/>
+								<input type="radio" value="variant" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "variant") checked  @elseif(old('product_type') == "variant") checked @endif required/>
 								<i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dengan variant" data-container="body"></i>
 								<span></span>
 							</label>
 							<label class="mt-radio mt-radio-outline"> Product + Product variant
-								<input type="radio" value="single + variant" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single + variant") checked  @elseif(old('product_type') == "single + variant") checked @endif required/>
+								<input type="radio" value="single + variant" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single + variant") checked  @elseif(old('product_type') == "single + variant") checked @endif required/>
 								<i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dan product dengan variant" data-container="body"></i>
 								<span></span>
 							</label>

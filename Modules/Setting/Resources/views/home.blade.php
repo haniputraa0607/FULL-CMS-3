@@ -4,6 +4,7 @@
     $configs     		= session('configs');
 ?>
 @extends('layouts.main')
+@include('setting::featured_promo_campaign')
 
 @section('page-style')
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -513,6 +514,7 @@
 
 	});
 	</script>
+	@yield('featured-promo-campaign-script')
 @endsection
 
 @section('content')
@@ -563,6 +565,9 @@
             <a href="#featured_subscription" data-toggle="tab">Featured Subscription</a>
         </li>
 		@endif
+		<li>
+			<a href="#featured_promo_campaign" data-toggle="tab">Featured Promo Campaign</a>
+		</li>
         @if(MyHelper::hasAccess([246], $grantedFeature))
         <li>
             <a href="#user_inbox" data-toggle="tab">User Inbox</a>
@@ -915,6 +920,8 @@
 	@if(MyHelper::hasAccess([241], $grantedFeature))
 	@include('setting::featured_subscription')
 	@endif
+
+	@yield('featured-promo-campaign')
 
 	@if(MyHelper::hasAccess([246], $grantedFeature))
 	@include('setting::user_inbox')
