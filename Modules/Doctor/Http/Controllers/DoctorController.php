@@ -90,17 +90,23 @@ class DoctorController extends Controller
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
         } 
+        
+        
 
         $service = MyHelper::get('doctor/service');
 
         if (isset($service['status']) && $service['status'] == "success") {
             $data['service'] = $service['result'];
+        } else {
+            $data['service'] = [];
         }
 
         $specialist = MyHelper::get('doctor/specialist');
 
         if (isset($specialist['status']) && $specialist['status'] == "success") {
             $data['specialist'] = $specialist['result'];
+        } else {
+            $data['specialist'] = [];
         }
 
         $celebrate = MyHelper::get('setting/be/celebrate_list');

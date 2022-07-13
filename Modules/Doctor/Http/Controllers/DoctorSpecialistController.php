@@ -50,6 +50,8 @@ class DoctorSpecialistController extends Controller
 
         if (isset($category['status']) && $category['status'] == "success") {
             $data['category'] = $category['result'];
+        } else {
+            $data['category'] = [];
         }
 
         return view('doctor::specialist.form', $data);
