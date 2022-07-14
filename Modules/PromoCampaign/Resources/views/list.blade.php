@@ -239,16 +239,16 @@
                 @else
                 <a href="{{ url('promo-campaign/list?promo_type=Tier discount') }}" class="btn btn-info">Tier Discount</a>
                 @endif
-                @if( Request::get('promo_type') == 'Buy X Get Y' )
-                <a href="{{ url('promo-campaign/list?promo_type=Buy X Get Y') }}" class="icon-btn checked-button" >
-                    <div style="">Buy X Get Y</div>
-                    <span class="badge badge-success">
-                   <i class="fa fa-check"></i>
-                </span>
-                </a>
-                @else
-                <a href="{{ url('promo-campaign/list?promo_type=Buy X Get Y') }}" class="btn btn-success">Buy X get Y</a>
-                @endif
+{{--                @if( Request::get('promo_type') == 'Buy X Get Y' )--}}
+{{--                <a href="{{ url('promo-campaign/list?promo_type=Buy X Get Y') }}" class="icon-btn checked-button" >--}}
+{{--                    <div style="">Buy X Get Y</div>--}}
+{{--                    <span class="badge badge-success">--}}
+{{--                   <i class="fa fa-check"></i>--}}
+{{--                </span>--}}
+{{--                </a>--}}
+{{--                @else--}}
+{{--                <a href="{{ url('promo-campaign/list?promo_type=Buy X Get Y') }}" class="btn btn-success">Buy X get Y</a>--}}
+{{--                @endif--}}
                 <a href="{{ url('promo-campaign') }}" class="btn btn-danger">All</a>
             </div>
         </div>
