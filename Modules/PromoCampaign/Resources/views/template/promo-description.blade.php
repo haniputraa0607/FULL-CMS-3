@@ -80,8 +80,6 @@ $grantedFeature     = session('granted_features');
 					<div class="col-md-6">
 						<a href="javascript:;" class="img-preview" data-src="{{ env('STORAGE_URL_VIEW') }}img/deals/promo_description.jpg">
 							<div style="text-align: center;">
-								<img id="imageresource" class="zoom-in img-tutorial" src="{{ env('STORAGE_URL_VIEW') }}img/deals/promo_description.jpg" height="550px" />
-								<p style="text-align: center">(b)</p>
 							</div>
 						</a>
 					</div>
