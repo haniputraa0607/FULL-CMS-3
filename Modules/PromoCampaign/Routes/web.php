@@ -34,6 +34,13 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:93'], 
     Route::any('step1/{slug}', 'PromoCampaignController@step1');
     Route::any('step2/{slug}', 'PromoCampaignController@step2');
 
+    Route::get('featured-merchant', ['uses' => 'PromoCampaignController@listFeaturedPromoCampaign']);
+    Route::post('featured-merchant/create', ['uses' => 'PromoCampaignController@createFeaturedPromoCampaign']);
+    Route::post('featured-merchant/update', ['uses' => 'PromoCampaignController@updateFeaturedPromoCampaign']);
+    Route::post('featured-merchant/reorder', ['uses' => 'PromoCampaignController@reorderFeaturedPromoCampaign']);
+    Route::get('featured-merchant/delete/{slug}', ['uses' => 'PromoCampaignController@deleteFeaturedPromoCampaign']);
+
+    Route::post('update-visibility', 'PromoCampaignController@updateVisibility');
 });
 
 Route::group(['middleware' => ['web', 'validate_session', 'config_control:93'], 'prefix' => 'referral'], function () {

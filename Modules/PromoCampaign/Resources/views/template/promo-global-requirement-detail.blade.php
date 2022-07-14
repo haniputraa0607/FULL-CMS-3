@@ -16,7 +16,9 @@
 
 	$delivery_list_text = [];
 	foreach ($delivery_list ?? [] as $delivery) {
-		$delivery_list_text[$delivery['code']] = $delivery['delivery_name'];
+        foreach($delivery['service'] as $s){
+            $delivery_list_text[$s['code']] = $delivery['delivery_name'].'-'.$s['service_name'];
+        }
 	}
 @endphp
 
