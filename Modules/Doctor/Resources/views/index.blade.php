@@ -148,7 +148,7 @@ $grantedFeature     = session('granted_features');
 						data: "outlet.outlet_name",
 					},
 					{
-						data: "doctor_session_price", render: $.fn.dataTable.render.number( ',', '.', 3, 'Rp' )
+						data: "doctor_session_price", render: $.fn.dataTable.render.number( ',', '.', 0, 'Rp' )
 					},
 					{
 						data: "id_doctor",

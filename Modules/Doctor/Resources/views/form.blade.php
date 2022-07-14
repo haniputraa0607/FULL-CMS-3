@@ -105,6 +105,27 @@
 					$( this ).val("");
 				}
 			}
+
+			var max_fields = 10;
+			var wrapper = $(".container1");
+			var add_button = $(".add_form_field");
+
+			var x = 1;
+			$(add_button).click(function(e) {
+				e.preventDefault();
+				if (x < max_fields) {
+					x++;
+					$(wrapper).append('<div><div class="col-md-8" style="margin-top:10px;"><input type="text" name="practice_experience_place[]" placeholder="Practice Experience Place" class="form-control" required /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div> </div>'); //add input box
+				} else {
+					alert('You Reached the limits')
+				}
+			});
+
+			$(wrapper).on("click", ".delete", function(e) {
+				e.preventDefault();
+				$(this).parent('div').parent('div').remove();
+				x--;
+			})
 		});
 	</script>
 @endsection
@@ -176,6 +197,30 @@
 							</div>
 							<div class="col-md-7">
 								<input type="text" name="doctor_phone" placeholder="Phone Number (Required & Unique)" value="{{isset($doctor) ? $doctor['doctor_phone'] : ''}}" class="form-control" required autocomplete="new-password" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    ID Card Number
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan Nomor Kartu Identitas" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" name="id_card_number" placeholder="Id Card Number (Required)" value="{{isset($doctor) ? $doctor['id_card_number'] : ''}}" class="form-control" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Address
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan Alamat" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<textarea type="text" name="address" placeholder="Input your address here..." class="form-control">{{isset($doctor) ? $doctor['address'] : ''}}</textarea> 
 							</div>
 						</div>
 						<div class="form-group">
@@ -357,13 +402,36 @@
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
-							    Practical Experience
+							    Practice Experience
 							    <span class="required" aria-required="true"> * </span>
 							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan jumlah tahun praktek" data-container="body"></i>
 							    </label>
 							</div>
 							<div class="col-md-7">
-								<input type="text" name="practical_experience" placeholder="Practical Experience (Required)" value="{{isset($doctor) ? $doctor['practical_experience'] : ''}}" class="form-control" required />
+								<input type="text" name="practice_experience" placeholder="Practice Experience Years / Months (Required)" value="{{isset($doctor) ? $doctor['practice_experience'] : ''}}" class="form-control" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Practice Experience Place
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan jumlah tahun praktek" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<div class="container1">
+									<button class="add_form_field btn btn-success" style="margin-bottom:10px;">Add New Field &nbsp; 
+										<span style="font-weight:bold;">+ </span>
+									</button>
+									@if(isset($doctor))
+										@foreach($doctor['practice_experience_place'] as $exp)
+											<div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="practice_experience_place[]" placeholder="Practice Experience Place (Required)" class="form-control" value="{{$exp}}" required /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
+										@endforeach
+									@else
+										<div><div class="col-md-8"><input type="text" name="practice_experience_place[]" placeholder="Practice Experience Place (Required)" class="form-control" required /></div></div>
+									@endif
+								</div>
 							</div>
 						</div>
 						<div class="form-group">
@@ -388,6 +456,18 @@
 							</div>
 							<div class="col-md-7">
 								<input type="text" name="registration_certificate_number" placeholder="Registration Certificate Number (Required)" value="{{isset($doctor) ? $doctor['registration_certificate_number'] : ''}}" class="form-control" required />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-icon right">
+							    <label class="col-md-3 control-label">
+							    Practice Lisence Number
+							    <span class="required" aria-required="true"> * </span>
+							    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan Surat Izin Praktek" data-container="body"></i>
+							    </label>
+							</div>
+							<div class="col-md-7">
+								<input type="text" name="practice_lisence_number" placeholder="Practice Lisence Number (Required)" value="{{isset($doctor) ? $doctor['practice_lisence_number'] : ''}}" class="form-control" required />
 							</div>
 						</div>
 						<div class="form-group">

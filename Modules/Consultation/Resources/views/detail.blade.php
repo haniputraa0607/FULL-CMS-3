@@ -489,13 +489,13 @@
 															@if(!empty($result['recomendation_product']))
 																@foreach($result['recomendation_product'] as $res)
 																<tr>
-																	<td>{{$res['name']}}</td>
-																	<td>{{$res['variant']}}</td>
-																	<td>{{$res['outlet']}}</td>
-																	<td>{{$res['price']}}</td>
-																	<td>{{$res['qty']}}</td>
-																	@php $subtotal = $res['price'] * $res['qty']; @endphp
-																	<td>{{$subtotal}}</td>
+																	<td>{{$res['product']['product_name']}}</td>
+																	<td>{{$res['variant']['product_variant_group_name']}}</td>
+																	<td>{{$res['get_outlet']['outlet_name']}}</td>
+                                                                    <td>Rp {{number_format($res['variant']['product_variant_group_price'],0,",",".")}}</td>
+																	<td>{{$res['qty_product']}}</td>
+																	@php $subtotal = $res['variant']['product_variant_group_price'] * $res['qty_product']; @endphp
+																	<td>Rp {{number_format($subtotal,0,",",".")}}</td>
 																</tr>
 																@endforeach
 															@else
@@ -520,13 +520,13 @@
 															@if(!empty($result['recomendation_drug']))
 																@foreach($result['recomendation_drug'] as $res)
 																<tr>
-																	<td>{{$res['name']}}</td>
-																	<td>{{$res['variant']}}</td>
-																	<td>{{$res['outlet']}}</td>
-																	<td>{{$res['price']}}</td>
-																	<td>{{$res['qty']}}</td>
-																	@php $subtotal = $res['price'] * $res['qty']; @endphp
-																	<td>{{$subtotal}}</td>
+                                                                    <td>{{$res['product']['product_name']}}</td>
+																	<td>{{$res['variant']['product_variant_group_name']}}</td>
+																	<td>{{$res['get_outlet']['outlet_name']}}</td>
+                                                                    <td>Rp {{number_format($res['variant']['product_variant_group_price'],0,",",".")}}</td>
+																	<td>{{$res['qty_product']}}</td>
+																	@php $subtotal = $res['variant']['product_variant_group_price'] * $res['qty_product']; @endphp
+																	<td>Rp {{number_format($subtotal,0,",",".")}}</td>
 																</tr>
 																@endforeach
 															@else

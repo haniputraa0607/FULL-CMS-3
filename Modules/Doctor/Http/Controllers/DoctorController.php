@@ -91,8 +91,6 @@ class DoctorController extends Controller
         if (isset($outlet['status']) && $outlet['status'] == "success") {
             $data['outlet'] = $outlet['result'];
         } 
-        
-        
 
         $service = MyHelper::get('doctor/service');
 
@@ -115,6 +113,7 @@ class DoctorController extends Controller
 		if($celebrate['status'] == 'success') $data['celebrate'] = $celebrate['result']; else $data['celebrate'] = null;
 
         $data['id_outlet'] = $post['id_outlet']??null;
+
         return view('doctor::form', $data);
     }
 
@@ -134,6 +133,8 @@ class DoctorController extends Controller
         }
 
         if(isset($post['doctor_service']) && !empty($post['doctor_service'])){$post['doctor_service'] = implode(',' , $post['doctor_service']);} else {$post['doctor_service'] = null;}
+
+        if(isset($post['practice_experience_place']) && !empty($post['practice_experience_place'])){$post['practice_experience_place'] = implode(',' , $post['practice_experience_place']);} else {$post['practice_experience_place'] = null;}
 
         $store = MyHelper::post('doctor/store', $post);
 
@@ -170,8 +171,11 @@ class DoctorController extends Controller
 
         $doctor = MyHelper::get('doctor/detail/'.$id);
 
-        $explode = explode( ", " , $doctor['result']['doctor_service']);
+        $explode = explode( "," , $doctor['result']['doctor_service']);
         $doctor['result']['doctor_service'] = $explode;
+
+        $explode2 = explode( "," , $doctor['result']['practice_experience_place']);
+        $doctor['result']['practice_experience_place'] = $explode2;
 
         if (isset($doctor['status']) && $doctor['status'] == "success") {
             $data['doctor'] = $doctor['result'];
@@ -205,6 +209,8 @@ class DoctorController extends Controller
         $celebrate = MyHelper::get('setting/be/celebrate_list');
 
 		if($celebrate['status'] == 'success') $data['celebrate'] = $celebrate['result']; else $data['celebrate'] = null;
+
+        //dd($data);
 
         return view('doctor::form', $data);
     }

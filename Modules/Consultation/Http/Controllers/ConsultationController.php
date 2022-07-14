@@ -168,9 +168,10 @@ class ConsultationController extends Controller
         ];
 
         $consultation = MyHelper::get('be/consultation/detail/'.$id);
+        //dd($consultation);
         if($consultation['status'] == 'success') $data['result'] = $consultation['result']; else $data['result'] = null;
 
-        //dd($data);
+        //dd($data['result']);
         
         return view('consultation::detail', $data);
     }

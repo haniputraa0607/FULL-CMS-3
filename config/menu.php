@@ -1088,7 +1088,14 @@ return [
                             'url' => 'transaction/setting/refund-reject-order'
                         ]
                     ]
-                ]
+				],
+				[
+                    'label' => 'Consultation',
+                    'required_features' => [],
+                    'active' => '\View::shared("menu_active") == "consultation"',
+                    'url' => 'consultation/be',
+                    'icon' => 'fa fa-user'
+                ],
             ]
         ],
 
