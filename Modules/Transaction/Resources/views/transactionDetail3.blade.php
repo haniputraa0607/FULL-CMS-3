@@ -167,7 +167,10 @@
                                 {{$product['product_base_price']}}
                             </div>
                             <div class="col-md-4" style="text-align: right">
-                                <p><b>{{$product['product_total_price']}}</b></p>
+                                <b>{{$product['product_total_price']}}</b>
+                                @if(!empty($product['discount_all']))
+                                    <b style="color: red"><br>- {{number_format($product['discount_all'],0,",",".")}}</b>
+                                @endif
                             </div>
                         </div>
                     @endforeach
@@ -177,10 +180,17 @@
                         <div class="col-md-6" style="text-align: right"></div>
                     </div>
                     @foreach($detail['payment_detail'] as $pd)
-                        <div class="row">
-                            <div class="col-md-6" style="text-align: left"><h5>{{$pd['text']}}</h5></div>
-                            <div class="col-md-6" style="text-align: right"><h5>{{$pd['value']}}</h5></div>
-                        </div>
+                        @if(strpos($pd['text'],"Discount") === false)
+                            <div class="row">
+                                <div class="col-md-6" style="text-align: left"><h5>{{$pd['text']}}</h5></div>
+                                <div class="col-md-6" style="text-align: right"><h5>{{$pd['value']}}</h5></div>
+                            </div>
+                        @else
+                            <div class="row" style="color: red">
+                                <div class="col-md-6" style="text-align: left"><h5>{{$pd['text']}}</h5></div>
+                                <div class="col-md-6" style="text-align: right"><h5>{{$pd['value']}}</h5></div>
+                            </div>
+                        @endif
                     @endforeach
                     <hr>
                     <div class="row">

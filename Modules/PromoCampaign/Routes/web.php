@@ -40,6 +40,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:93'], 
     Route::post('featured-merchant/reorder', ['uses' => 'PromoCampaignController@reorderFeaturedPromoCampaign']);
     Route::get('featured-merchant/delete/{slug}', ['uses' => 'PromoCampaignController@deleteFeaturedPromoCampaign']);
 
+    Route::any('share-promo', 'PromoCampaignController@sharePromo');
     Route::post('update-visibility', 'PromoCampaignController@updateVisibility');
 });
 

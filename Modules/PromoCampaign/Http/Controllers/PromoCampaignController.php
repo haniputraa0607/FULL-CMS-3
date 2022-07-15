@@ -617,4 +617,33 @@ class PromoCampaignController extends Controller
         $update = MyHelper::post('promo-campaign/update-visibility', $post);
         return $update;
     }
+
+    public function sharePromo(Request $request){
+        $data = [
+            'title'             => 'Share Promo Campaign Code Message',
+            'menu_active'       => 'promo-campaign',
+            'submenu_active'    => 'promo-campaign-share-promo-code'
+        ];
+        if($post=$request->except('_token')){
+            $data=[
+                'update'=>[
+                    'share_promo_code'=>['value_text',$post['share_promo_code']],
+                ]
+            ];
+
+            $result = MyHelper::post('setting/update2', $data);
+            if(($result['status']??'')=='success'){
+                return redirect('promo-campaign/share-promo')->with('success',['Share promo campaign code message has been updated']);
+            }else{
+                return back()->withErrors($result['messages']??['Something went wrong']);
+            }
+        }else{
+            $share_promo_code=MyHelper::post('setting',['key'=>'share_promo_code'])['result']['value_text']??'';
+            $data['msg']=[
+                'share_promo_code'=>$share_promo_code
+            ];
+
+            return view('promocampaign::share_promo_code',$data);
+        }
+    }
 }
