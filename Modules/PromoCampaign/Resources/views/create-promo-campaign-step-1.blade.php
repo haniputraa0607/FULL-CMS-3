@@ -425,6 +425,26 @@
 		}
 	}
 
+	$('.onlynumber').keypress(function (e) {
+		var regex = new RegExp("^[0-9]");
+		var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+		var check_browser = navigator.userAgent.search("Firefox");
+
+		if(check_browser == -1){
+			if (regex.test(str) || e.which == 8) {
+				return true;
+			}
+		}else{
+			if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+				return true;
+			}
+		}
+
+		e.preventDefault();
+		return false;
+	});
+
 	</script>
 	<style>
 	input[type=number]::-webkit-inner-spin-button, 
@@ -512,7 +532,7 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Promo akan digunakan untuk transaksi product atau transaksi konsultasi" data-container="body"></i>
 						<div class="input-group col-md-12">
 							<div class="input-icon right">
-								<select onchange="changePromoUse(this.value)" class="form-control select2-multiple" name="promo_use_in" data-placeholder="Select Promo Use" @if(!empty($result)) readonly @else required @endif>
+								<select onchange="changePromoUse(this.value)" class="form-control select2-multiple" name="promo_use_in" data-placeholder="Select Promo Use" @if(!empty($result['promo_use_in'])) readonly @endif required>
 									<option></option>
 									<option value="Product" @if(old('promo_use_in') == 'Product' || (!empty($result) && $result['promo_use_in'] == 'Product')) selected @endif>Product</option>
 									<option value="Consultation" @if(old('promo_use_in') == 'Consultation' || (!empty($result) && $result['promo_use_in'] == 'Consultation')) selected @endif>Consultation</option>
@@ -610,7 +630,7 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak pusat" data-container="body"></i>
 						<div class="input-group col-md-12">
 							<div class="input-group">
-								<input required type="text" class="form-control disable-input" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
+								<input required type="text" class="form-control disable-input onlynumber" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
 							<p style="color: red;display: none" id="label_central">Invalid value, charged central + charged outlet total must be 100</p>
@@ -623,7 +643,7 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak outlet" data-container="body"></i>
 						<div class="input-group col-md-12">
 							<div class="input-group">
-								<input required type="text" class="form-control disable-input" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
+								<input required type="text" class="form-control disable-input onlynumber" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
 							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central + charged outlet total must be 100</p>
