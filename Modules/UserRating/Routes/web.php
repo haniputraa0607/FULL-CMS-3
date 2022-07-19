@@ -23,12 +23,18 @@ Route::prefix('user-rating')->middleware(['web', 'validate_session'])->group(fun
     Route::any('autoresponse/{target}', 'UserRatingController@autoresponse');
     Route::any('autoresponse', 'UserRatingController@autoresponse');
     Route::group(['prefix'=>'report'],function(){
-		Route::group(['prefix'=>'outlet'],function(){
-		    Route::get('/', 'UserRatingController@report');
-		    Route::post('/', 'UserRatingController@setReportFilter');
-		    Route::get('detail', 'UserRatingController@reportOutlet');
-		    Route::get('detail/{outlet_code}', 'UserRatingController@reportOutletDetail');
-		});
-	});
+        Route::group(['prefix'=>'product'],function(){
+            Route::get('/', 'UserRatingController@reportProduct');
+            Route::post('/', 'UserRatingController@setReportFilterProduct');
+            Route::get('detail', 'UserRatingController@reportListProduct');
+            Route::get('detail/{id_product}', 'UserRatingController@reportDetailProduct');
+        });
 
+        Route::group(['prefix'=>'doctor'],function(){
+            Route::get('/', 'UserRatingController@reportDoctor');
+            Route::post('/', 'UserRatingController@setReportFilterDoctor');
+            Route::get('detail', 'UserRatingController@reportListDoctor');
+            Route::get('detail/{id_doctor}', 'UserRatingController@reportDetailDoctor');
+        });
+	});
 });

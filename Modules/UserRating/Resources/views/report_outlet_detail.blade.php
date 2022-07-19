@@ -180,13 +180,6 @@
 			<span class="caption-subject font-dark sbold uppercase font-blue">{{ $sub_title }} {{ $reportData['rating_data']['fullname'] ?? $reportData['rating_data']['outlet_name'] }}</span>
 		</div>
 		<div class="actions">
-            <div class="form-group">
-            	<select class="select2 form-control" id="transaction-type-input" name="transaction_type">
-            		<option value="all">All Transaction</option>
-            		<option value="online" {{$transaction_type == 'online' ? 'selected' : ''}}>Online Transaction</option>
-            		<option value="offline" {{$transaction_type == 'offline' ? 'selected' : ''}}>Offline Transaction</option>
-            	</select>
-            </div>
         </div>
 	</div>
 	<div class="portlet-body">
@@ -390,6 +383,9 @@
 								@if ($rating_target == 'hairstylist')
 									<th> Hair Stylist </th>
 								@endif
+								@if ($rating_target == 'product')
+									<th> Product </th>
+								@endif
 								<th> User </th>
 								<th> Grand Total </th>
 								<th> Action </th>
@@ -400,9 +396,12 @@
 							@foreach($reportData['rating_item']['data'][$i] as $feedback)
 							<tr>
 								<td>{{date('d M Y',strtotime($feedback['created_at']))}}</td>
-								<td><a href="{{url('transaction/' .$feedback['transaction']['transaction_from']. '/detail'.'/'.$feedback['transaction']['id_transaction'].'/'.strtolower($feedback['transaction']['trasaction_type']))}}">{{$feedback['transaction']['transaction_receipt_number']}}</a></td>
+								<td><a href="{{url('transaction/detail'.'/'.$feedback['transaction']['id_transaction'])}}">{{$feedback['transaction']['transaction_receipt_number']}}</a></td>
 								@if ($rating_target == 'hairstylist')
 									<td><a href="{{ url('recruitment/hair-stylist/detail'.'/'.$feedback['user_hair_stylist']['id_user_hair_stylist']) }}">{{ $feedback['user_hair_stylist']['fullname'] }}</a></td>
+								@endif
+								@if ($rating_target == 'product')
+									<td><a href="{{ url('product/detail/'.$feedback['product']['product_code']) }}">{{ $feedback['product']['product_name'] }}</a></td>
 								@endif
 								<td><a href="{{url('user/detail'.'/'.$feedback['user']['phone'])}}">{{$feedback['user']['name']}}</a></td>
 								<td>Rp {{number_format($feedback['transaction']['transaction_grandtotal'],0,',','.')}}</td>
@@ -435,6 +434,10 @@
 											<input type="hidden" name="rule[6][subject]" value="hairstylist_phone">
 											<input type="hidden" name="rule[6][operator]" value="=">
 											<input type="hidden" name="rule[6][parameter]" value="{{$reportData['rating_data']['phone_number']}}">
+										@elseif ($rating_target == 'product')
+											<input type="hidden" name="rule[6][subject]" value="product_name">
+											<input type="hidden" name="rule[6][operator]" value="=">
+											<input type="hidden" name="rule[6][parameter]" value="{{$reportData['rating_data']['product_name']}}">
 										@else
 											<input type="hidden" name="rule[6][subject]" value="outlet">
 											<input type="hidden" name="rule[6][operator]" value="{{$reportData['rating_data']['id_outlet']}}">

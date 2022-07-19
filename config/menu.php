@@ -708,21 +708,33 @@ return [
 						[
 							'label' => 'User Rating List',
 							'url' => 'user-rating',
-							'required_features' => [],
+							'required_features' => [352],
 						],
 						[
 							'label' => 'User Rating Setting',
 							'url' => 'user-rating/setting',
-							'required_features' => [],
+							'required_features' => [353],
 						],
+                        [
+                            'label' => 'User Rating Report Product',
+                            'required_features' => [352],
+                            'active' => '\View::shared("submenu_active") == "user-rating-report-product"',
+                            'url' => 'user-rating/report/product'
+                        ],
+                        [
+                            'label' => 'User Rating Report Doctor',
+                            'required_features' => [352],
+                            'active' => '\View::shared("submenu_active") == "user-rating-report-doctor"',
+                            'url' => 'user-rating/report/doctor'
+                        ],
 						[
 							'label' => '[Response] Rating Doctor',
 							'url' => 'user-rating/autoresponse/doctor',
-							'required_features' => [],
+							'required_features' => [353],
 						],
                         [
                             'label' => '[Response] Rating Product',
-                            'required_features' => [],
+                            'required_features' => [353],
                             'url' => 'user-rating/autoresponse/product',
                             'active' => '\View::shared("submenu_active") == "user-rating-response-product"',
                         ],
@@ -1621,49 +1633,6 @@ return [
 						// ],
 					],
 					'icon' => 'fa fa-credit-card'
-				],
-				[
-					'label' => 'User Rating',
-					'required_features' => [356,357],
-					'required_configs' => [122],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'User Rating List',
-							'required_features' => [356],
-							'active' => '\View::shared("submenu_active") == "user-rating-list"',
-							'url' => 'user-rating'
-						],
-						[
-							'label' => 'User Rating Setting',
-							'required_features' => [357],
-							'active' => '\View::shared("submenu_active") == "rating-setting"',
-							'url' => 'user-rating/setting'
-						],
-						[
-							'label' => 'User Rating Report Outlet',
-							'required_features' => [356],
-							'active' => '\View::shared("submenu_active") == "user-rating-report"',
-							'url' => 'user-rating/report/outlet'
-						],
-						[
-							'label' => 'User Rating Report Hairstylist',
-							'required_features' => [256],
-							'active' => '\View::shared("submenu_active") == "user-rating-report-hairstylist"',
-							'url' => 'user-rating/report/hairstylist'
-						],
-						[
-							'label' => '[Response] Rating Outlet',
-							'required_features' => [357],
-							'url' => 'user-rating/autoresponse/outlet'
-						],
-						[
-							'label' => '[Response] Rating Hairstylist',
-							'required_features' => [357],
-							'url' => 'user-rating/autoresponse/hairstylist'
-						],
-					],
-					'icon' => 'fa fa-star-o'
 				],
 			],
 		],

@@ -79,13 +79,6 @@
 			<span class="caption-subject font-dark sbold uppercase font-blue">{{ $sub_title }}</span>
 		</div>
 		<div class="actions">
-            <div class="form-group">
-            	<select class="select2 form-control" id="transaction-type-input" name="transaction_type">
-            		<option value="all">All Transaction</option>
-            		<option value="online" {{$transaction_type == 'online' ? 'selected' : ''}}>Online Transaction</option>
-            		<option value="offline" {{$transaction_type == 'offline' ? 'selected' : ''}}>Offline Transaction</option>
-            	</select>
-            </div>
         </div>
 	</div>
 	<div class="portlet-body">

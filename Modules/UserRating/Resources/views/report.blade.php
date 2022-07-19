@@ -211,15 +211,6 @@
 		<div class="caption">
 			<span class="caption-subject font-dark sbold uppercase font-blue">{{ $sub_title }}</span>
 		</div>
-		<div class="actions">
-            <div class="form-group">
-            	<select class="select2 form-control" id="transaction-type-input" name="transaction_type">
-            		<option value="all">All Transaction</option>
-            		<option value="online" {{$transaction_type == 'online' ? 'selected' : ''}}>Online Transaction</option>
-            		<option value="offline" {{$transaction_type == 'offline' ? 'selected' : ''}}>Offline Transaction</option>
-            	</select>
-            </div>
-        </div>
 	</div>
 	<div class="portlet-body">
 		<form action="{{url()->current()}}" class="form-horizontal" method="POST">
@@ -310,7 +301,7 @@
 							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 5
 						</div>
 					</div>
-					<a class="more" data-target="summary5">Show Detail<i class="m-icon-swapright m-icon-white"></i></a>
+					<div class="more" data-target="summary5">Rating 5 start</div>
 				</div>
 			</div>
 			<div class="col-md-{{$col}}">
@@ -326,7 +317,7 @@
 							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 4
 						</div>
 					</div>
-					<a class="more" data-target="summary4">Show Detail<i class="m-icon-swapright m-icon-white"></i></a>
+					<div class="more" data-target="summary5">Rating 4 start</div>
 				</div>
 			</div>
 		</div>
@@ -344,7 +335,7 @@
 							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> 3
 						</div>
 					</div>
-					<a class="more" data-target="summary3">Show Detail<i class="m-icon-swapright m-icon-white"></i></a>
+					<div class="more" data-target="summary5">Rating 3 start</div>
 				</div>
 			</div>
 			<div class="col-md-{{$col}}">
@@ -360,7 +351,7 @@
 							<i class="fa fa-star"></i> <i class="fa fa-star"></i> 2
 						</div>
 					</div>
-					<a class="more" data-target="summary2">Show Detail<i class="m-icon-swapright m-icon-white"></i></a>
+					<div class="more" data-target="summary5">Rating 2 start</div>
 				</div>
 			</div>
 			<div class="col-md-{{$col}}">
@@ -376,7 +367,7 @@
 							<i class="fa fa-star"></i> 1
 						</div>
 					</div>
-					<a class="more" data-target="summary1">Show Detail<i class="m-icon-swapright m-icon-white"></i></a>
+					<div class="more" data-target="summary5">Rating 1 start</div>
 				</div>
 			</div>
 		</div>
@@ -432,6 +423,9 @@
 								@if ($rating_target == 'hairstylist')
 									<th> Hair Stylist </th>
 								@endif
+								@if ($rating_target == 'product')
+									<th>Product</th>
+								@endif
 								<th> User </th>
 								<th> Grand Total </th>
 								<th> Action </th>
@@ -442,9 +436,12 @@
 							@foreach($reportData['rating_item'][$i]['data'] as $feedback)
 							<tr>
 								<td>{{date('d M Y',strtotime($feedback['created_at']))}}</td>
-								<td><a href="{{url('transaction/' .$feedback['transaction']['transaction_from']. '/detail'.'/'.$feedback['transaction']['id_transaction'].'/'.strtolower($feedback['transaction']['trasaction_type']))}}">{{$feedback['transaction']['transaction_receipt_number']}}</a></td>
+								<td><a href="{{url('transaction/detail'.'/'.$feedback['transaction']['id_transaction'])}}">{{$feedback['transaction']['transaction_receipt_number']}}</a></td>
 								@if ($rating_target == 'hairstylist')
 									<td><a href="{{ url('recruitment/hair-stylist/detail'.'/'.$feedback['user_hair_stylist']['id_user_hair_stylist']) }}">{{ $feedback['user_hair_stylist']['fullname'] }}</a></td>
+								@endif
+								@if ($rating_target == 'product')
+									<td><a href="{{ url('product/detail/'.$feedback['product']['product_code']) }}">{{ $feedback['product']['product_name'] }}</a></td>
 								@endif
 								<td><a href="{{url('user/detail'.'/'.$feedback['user']['phone'])}}">{{$feedback['user']['name']}}</a></td>
 								<td>Rp {{number_format($feedback['transaction']['transaction_grandtotal'],0,',','.')}}</td>
