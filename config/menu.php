@@ -270,7 +270,13 @@ return [
 							'required_features' => [344],
 							'active' => '\View::shared("submenu_active") == "doctor-service"',
 							'url' => 'doctor/service',
-						]
+						],
+						[
+                            'label' => '[Response] Pin Sent',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "doctor-autoresponse-pin-sent"',
+                            'url' => 'doctor/autoresponse/pin-sent'
+                        ],
 					]
 				],
 			],
