@@ -387,14 +387,18 @@ return [
                             'required_features' => [326],
                         ],
                         [
-                            'label' => 'Merchant List',
+                            'label' => 'List',
                             'url' => 'merchant',
                             'required_features' => [323,324,325,326,327],
                         ],
                         [
-                            'label' => 'Merchant Candidate List',
+                            'label' => 'Candidate List',
                             'url' => 'merchant/candidate',
                             'required_features' => [323,324,325,326,327],
+                            'badge'=>[
+                                'type'=>'warning',
+                                'value'=>'merchant_register_pending',
+                            ]
                         ],
                         [
                             'label' => 'Withdrawal',
@@ -416,6 +420,10 @@ return [
                             'url' => 'autoresponse/merchant/rejected-merchant',
                             'required_features' => [326],
                         ],
+                    ],
+                    'badge'=>[
+                        'type'=>'warning',
+                        'value'=>'merchant_register_pending',
                     ]
                 ],
 				[
@@ -1035,7 +1043,11 @@ return [
                             'label' => 'Transaction List',
                             'required_features' => [69],
                             'active' => '\View::shared("submenu_active") == "transaction"',
-                            'url' => 'transaction'
+                            'url' => 'transaction',
+                            'badge'=>[
+                                'type'=>'warning',
+                                'value'=>'transaction_pending',
+                            ]
                         ],
                         [
                             'label' => '[Response] Payment Success',
@@ -1061,6 +1073,10 @@ return [
                             'active' => '\View::shared("submenu_active") == "transaction-autoresponse-merchant-transaction-new"',
                             'url' => 'transaction/autoresponse/merchant-transaction-new'
                         ]
+                    ],
+                    'badge'=>[
+                        'type'=>'warning',
+                        'value'=>'transaction_pending',
                     ]
                 ],
                 [
