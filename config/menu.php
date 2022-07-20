@@ -1097,7 +1097,7 @@ return [
 				],
 				[
                     'label' => 'Consultation',
-                    'required_features' => [],
+                    'required_features' => [351],
                     'active' => '\View::shared("menu_active") == "consultation"',
                     'url' => 'consultation/be',
                     'icon' => 'fa fa-user'
