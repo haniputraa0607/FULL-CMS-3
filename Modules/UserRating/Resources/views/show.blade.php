@@ -89,14 +89,20 @@
                 	<div class="row">
                 		<label class="col-md-3 text-right">Target</label>
                 		<div class="col-md-5">
-                            {{ $rating['id_user_hair_stylist'] ? 'Hairstylist' : 'Outlet' }}<br/>
+                            @if($rating['id_product'])
+                                Product
+                            @elseif($rating['id_doctor'])
+                                Doctor
+                            @else
+                                Outlet
+                            @endif
                         </div>
                 	</div>
-                	@if ($rating['id_user_hair_stylist'])
+                	@if ($rating['id_product'])
                 		<div class="row">
-	                		<label class="col-md-3 text-right">Hair Stylist</label>
+	                		<label class="col-md-3 text-right">Product</label>
 	                		<div class="col-md-5">
-                            	<a href="{{ url('recruitment/hair-stylist/detail'.'/'.$rating['user_hair_stylist']['id_user_hair_stylist']) }}">{{ $rating['user_hair_stylist']['fullname'] }}</a><br/>
+                            	<a href="{{ url('product/detail'.'/'.$rating['product']['product_code']) }}">{{ $rating['product']['product_name'] }}</a><br/>
 	                        </div>
 	                	</div>
                 	@endif
