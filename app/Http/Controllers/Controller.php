@@ -28,12 +28,7 @@ class Controller extends BaseController
         if (!$captcha) {
         	return redirect()->back()->withErrors(['Recaptcha failed']);
         }
-
-
-		if(strlen($request->input('password')) != 6){
-			return redirect('login')->withErrors(['Pin must be 6 digits' => 'Pin must be 6 digits'])->withInput();
-		}
-
+        
 		$post = $request->all();
 		$postLogin =  MyHelper::postLogin($request);
 

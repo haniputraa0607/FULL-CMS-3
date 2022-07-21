@@ -1078,6 +1078,11 @@ return [
                             'required_features' => [93],
                             'active' => '\View::shared("submenu_active") == "transaction-autoresponse-merchant-transaction-new"',
                             'url' => 'transaction/autoresponse/merchant-transaction-new'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Point Achievement',
+                            'required_features' => [],
+                            'url' => 'transaction/autoresponse/transaction-point-achievement'
                         ]
                     ],
                     'badge'=>[
