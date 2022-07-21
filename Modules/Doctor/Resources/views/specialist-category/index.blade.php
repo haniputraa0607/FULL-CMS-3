@@ -31,6 +31,11 @@ $configs     		= session('configs');
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+	<script>
+		$('#sample_1').on('draw.dt', function() {
+            $('[data-toggle=confirmation]').confirmation({ btnOkClass: 'btn btn-sm btn-success', btnCancelClass: 'btn btn-sm btn-danger'});
+        });
+	</script>
 @endsection
 
 @section('content')
@@ -60,7 +65,7 @@ $configs     		= session('configs');
 				@endif
 				<div class="portlet-body">
 					<div class="table-scrollable">
-						<table class="table table-striped table-bordered table-hover">
+						<table class="table table-striped table-bordered table-hover" id="sample_1">
 							<thead>
 							<tr>
 								<th scope="col" style="width:70px !important"> No </th>
@@ -78,12 +83,12 @@ $configs     		= session('configs');
 										@if(MyHelper::hasAccess([342], $grantedFeature))
 										<a href="{{ url('doctor/specialist-category', $value['id_doctor_specialist_category']) }}/{{'edit'}}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
 										@endif
-										{{--<a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_doctor_id_doctor_specialist_category'] }}"><i class="fa fa-trash-o"></i></a>--}}
+										{{--<a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_doctor_specialist_category'] }}"><i class="fa fa-trash-o"></i></a>--}}
 									
 										@if(MyHelper::hasAccess([343], $grantedFeature))
 										@csrf
 										@method('DELETE')
-										<button type="submit" class="btn btn-sm red"><i class="fa fa-trash-o"></i></button>
+										<button type="submit" class="btn btn-sm red delete" data-toggle="confirmation" data-popout="true" data-id="{{ $value['id_doctor_specialist_category'] }}"><i class="fa fa-trash-o"></i></button>
 										@endif
 									</form>
 								</td>

@@ -54,6 +54,7 @@ $grantedFeature     = session('granted_features');
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 	@yield('filter_script')
 <script>
     rules={
@@ -158,13 +159,17 @@ $grantedFeature     = session('granted_features');
 								<a href="{{url('doctor')}}/${value}/edit" class="btn yellow btn-sm" style="margin-bottom:5px">Edit</a>
 								@endif
 								@if(MyHelper::hasAccess([331], $grantedFeature))
-								${row.is_complete ? '' : `<a href="javascript:;" onclick="removeDoctor(this, ${value})" class="btn red btn-sm"> Remove </a>`}
+								${row.is_complete ? '' : `<a href="javascript:;" data-toggle="confirmation" data-popout="true" data-id="${value}" class="btn btn-sm red delete"> Remove </a>`}
 								@endif
 							`;
 						},
 					}
 				],
 				searching: false
+			});
+
+			$('#table-doctor').on('draw.dt', function() {
+				$('[data-toggle=confirmation]').confirmation({ btnOkClass: 'btn btn-sm btn-success', btnCancelClass: 'btn btn-sm btn-danger'});
 			});
 		})
 	</script>
