@@ -26,4 +26,5 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'doctor']
     Route::resource('specialist-category', 'DoctorSpecialistCategoryController');
 
     Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:93', 'uses' =>'DoctorController@autoResponse']);
+    Route::any('recommendation', ['uses' => 'DoctorController@doctorRecommendation']);
 }); 
