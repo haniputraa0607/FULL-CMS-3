@@ -94,16 +94,6 @@
                                     : <span class="badge" style="background-color: {{$color[$detail['transaction_status_code']]??'#cccccc'}};">{{$detail['transaction_status_text']}}</span>
                                 </div>
                             </div>
-                            @if(!empty($detail['image_recipe']))
-                                <div class="row">
-                                    <div class="col-md-4">Image Recipe</div>
-                                    <div class="col-md-7">:
-                                        <a href="{{$detail['image_recipe']}}" target="_blank">
-                                            {{$detail['image_recipe']}}
-                                        </a>
-                                    </div>
-                                </div>
-                            @endif
                             <br>
                             <br>
                             <div class="row">
