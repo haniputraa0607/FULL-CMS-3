@@ -272,6 +272,12 @@ return [
 							'url' => 'doctor/service',
 						],
 						[
+							'label' => 'Doctor Recommendation',
+							'required_features' => [],
+							'active' => '\View::shared("submenu_active") == "doctor-recommendation"',
+							'url' => 'doctor/recommendation'
+						],
+						[
                             'label' => '[Response] Pin Sent',
                             'required_features' => [93],
                             'active' => '\View::shared("submenu_active") == "doctor-autoresponse-pin-sent"',

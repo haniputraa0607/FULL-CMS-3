@@ -136,6 +136,8 @@ class DoctorController extends Controller
 
         if(isset($post['practice_experience_place']) && !empty($post['practice_experience_place'])){$post['practice_experience_place'] = implode(',' , $post['practice_experience_place']);} else {$post['practice_experience_place'] = null;}
 
+        //dd($post);
+
         $store = MyHelper::post('doctor/store', $post);
 
         if(($store['status']??'')=='success'){
@@ -341,4 +343,28 @@ class DoctorController extends Controller
 
         return view('users::response', $data);
 	}
+
+    public function doctorRecommendation(Request $request){
+        $post=$request->except('_token');
+
+        $data = [
+            'title'          => 'Doctor',
+            'sub_title'      => 'Doctor Recommendation',
+            'menu_active'    => 'doctor',
+            'submenu_active' => 'doctor-recommendation',
+        ];
+
+        if(empty($post)){
+            $post['doctor_recomendation_status'] = true;
+            $data['doctors'] = MyHelper::post('doctor', $post)['result']??[];
+            return view('doctor::doctor_recommendation', $data);
+        }else{
+            $save = MyHelper::post('doctor/recomendation/store', $post);
+            if (isset($save['status']) && $save['status'] == 'success') {
+                return redirect('doctor/recommendation')->with($save, $save['result']);
+            } else {
+                return back()->witherrors($save['messages']??['Something went wrong']);
+            }
+        }
+    }
 }
