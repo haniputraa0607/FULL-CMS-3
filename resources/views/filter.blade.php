@@ -1478,8 +1478,8 @@ $show=$show??false;
 													$parameterSelect = "";
 													$parameterSelect .= '<div id="parameter_select'.$q.$indexnya.'" style="display:none">';
 													$parameterSelect .= '<select name="conditions['.$q.']['.$indexnya.'][parameter_select]" class="form-control input-sm select2"  placeholder="Search Operator" style="width:100%">';
-													$parameterSelect .= '<option value="already_claim" '.($row['parameter_select'] == 'already_claim' ? 'selected' : '').'>Already Claim</option>';
-													$parameterSelect .= '<option value="not_yet_claim" '.($row['parameter_select'] == 'not_yet_claim' ? 'selected' : '').'>Not Yet Claim</option>';
+													$parameterSelect .= '<option value="already_claim" '.($row['parameter_select'] ?? null == 'already_claim' ? 'selected' : '').'>Already Claim</option>';
+													$parameterSelect .= '<option value="not_yet_claim" '.($row['parameter_select'] ?? null == 'not_yet_claim' ? 'selected' : '').'>Not Yet Claim</option>';
 													$parameterSelect .= '</select>';
 													$parameterSelect .= '</div>';
 

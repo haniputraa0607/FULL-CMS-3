@@ -316,162 +316,132 @@ class UsersController extends Controller
 		
 		return view('users::index-admin-outlet', $data);
 	}
-	
-    public function index(Request $request, $page = 1)
+
+    public function index(Request $request)
     {
-		$post = $request->except('_token');
-		if(!empty(Session::get('form'))){
-			if(isset($post['take'])) $takes = $post['take'];
-			if(isset($post['order_field'])) $order_fields = $post['order_field'];
-			if(isset($post['order_method'])) $order_methods = $post['order_method'];
-			$sessionnya = Session::get('form');
+        $post = $request->except('_token');
 
-			if(isset($post) && !empty($post)){
-				$post = $post;
-				if(isset($post['conditions'])){
-					$con = $post['conditions'];
-					$post['conditions'] = $con;
-				} else {
-					$post['conditions'] = [];
-					if(isset($sessionnya['conditions'])){
-						$post['conditions'] = $sessionnya['conditions'];
-					}
-					// if(isset($sessionnya['rule'])){
-					// 	$post['rule'] = $sessionnya['rule'];
-					// }
-				}
-				Session::put('form',$post);
-			} else{
-				$post = $sessionnya;
-			}
-			if(isset($takes) && isset($order_fields) && isset($order_methods)){
-				$post['take'] = $takes;
-				$post['order_field'] = $order_fields;
-				$post['order_method'] = $order_methods;
-				Session::put('form',$post);
-			}
-		}
-
-		if(!empty($post)){
-			if(isset($post['action']) && isset($post['users'])){
-				//Bulk action
-				$phone = [];
-				foreach($post['users'] as $key => $code){
-					array_push($phone, $key);
-				}
-				
-				if($post['action'] == 'delete'){
-					$action = MyHelper::post('users/delete', ['phone' => $phone]);
-					if($action['status'] == 'success'){
-						unset($post['action']);
-						Session::put('form',$post);
-						return back()->withSuccess($action['result']);
-					} else{
-						return back()->withErrors($action['messages']);
-					}
-				}
-				
-				if($post['action'] == 'phone verified'){
-					$action = MyHelper::post('users/phone/verified', ['phone' => $phone]);
-					if($action['status'] == 'success'){
-						unset($post['action']);
-						Session::put('form',$post);
-						return back()->withSuccess($action['result']);
-					} else{
-						return back()->withErrors($action['messages']);
-					}
-				}
-				
-				if($post['action'] == 'phone not verified'){
-					$action = MyHelper::post('users/phone/unverified', ['phone' => $phone]);
-					if($action['status'] == 'success'){
-						unset($post['action']);
-						Session::put('form',$post);
-						return back()->withSuccess($action['result']);
-					} else{
-						return back()->withErrors($action['messages']);
-					}
-				}
-				
-				if($post['action'] == 'email verified'){
-					$action = MyHelper::post('users/email/verified', ['phone' => $phone]);
-					if($action['status'] == 'success'){
-						unset($post['action']);
-						Session::put('form',$post);
-						return back()->withSuccess($action['result']);
-					} else{
-						return back()->withErrors($action['messages']);
-					}
-				}
-				
-				if($post['action'] == 'email not verified'){
-					$action = MyHelper::post('users/email/unverified', ['phone' => $phone]);
-					if($action['status'] == 'success'){
-						unset($post['action']);
-						Session::put('form',$post);
-						return back()->withSuccess($action['result']);
-					} else{
-						return back()->withErrors($action['messages']);
-					}
-				}
-			}
-				
-			Session::put('form',$post);
-		}
-
-		$data = [ 'title'             => 'User',
-				  'menu_active'       => 'user',
-				  'submenu_active'    => 'user-list'
-				];
-
-		if(!isset($post['order_field'])) $post['order_field'] = 'id';
-		if(!isset($post['order_method'])) $post['order_method'] = 'desc';
-		if(!isset($post['take'])) $post['take'] = 10;
-		$post['skip'] = 0 + (($page-1) * $post['take']);
-		
-		
-		// print_r($post);exit;
-		$getUser = MyHelper::post('users/list', $post);
-		// print_r($getUser);exit;
-        if ($getUser['status'] == 'success') {
-            $data['content'] = $getUser['result'];
-            $data['total'] = $getUser['total'];
-        }
-        else {
-            $data['content'] = null;
-            $data['total'] = null;
-        }
-		
-		$data['begin'] = $post['skip'] + 1;
-		$data['last'] = $post['take'] + $post['skip'];
-			if($data['total'] <= $data['last']) $data['last'] = $data['total'];
-		$data['page'] = $page;
-		if($data['content'])
-			$data['jumlah'] = count($data['content']);
-		else $data['jumlah'] = 0;
-		foreach($post as $key => $row){
-		    if($key !== 'page'){
-                $data[$key] = $row;
+        if(Session::has('form') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
             }
-		}
-		
-		$getCity = MyHelper::get('city/list?log_save=0');
-		if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
-		
-		$getProvince = MyHelper::get('province/list?log_save=0');
-		if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
-		
-		$getCourier = MyHelper::get('courier/list?log_save=0');
-		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
-		
-		$getOutlet = MyHelper::get('outlet/be/list?log_save=0');
-		if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
-			
-		$getProduct = MyHelper::get('product/be/list?log_save=0');
-		if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
-		
-		$getTag = MyHelper::get('product/tag/list?log_save=0');
-		if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
+
+            if(isset($post['order_field'])) $orderField = $post['order_field'];
+            if(isset($post['order_method'])) $orderMethod = $post['order_method'];
+            if(isset($post['take'])) $take = $post['take'];
+
+            $post = Session::get('form');
+            $post['page'] = $page;
+            if(isset($orderField)){
+                $post['order_field'] = $orderField;
+                $post['order_method'] = $orderMethod;
+                $post['take'] = $take;
+            }
+        }
+
+        if(!empty($post)){
+            if(isset($post['action']) && isset($post['users'])){
+                //Bulk action
+                $phone = [];
+                foreach($post['users'] as $key => $code){
+                    array_push($phone, $key);
+                }
+
+                if($post['action'] == 'delete'){
+                    $action = MyHelper::post('users/delete', ['phone' => $phone]);
+                    if($action['status'] == 'success'){
+                        unset($post['action']);
+                        return back()->withSuccess($action['result']);
+                    } else{
+                        return back()->withErrors($action['messages']);
+                    }
+                }
+
+                if($post['action'] == 'phone verified'){
+                    $action = MyHelper::post('users/phone/verified', ['phone' => $phone]);
+                    if($action['status'] == 'success'){
+                        unset($post['action']);
+                        return back()->withSuccess($action['result']);
+                    } else{
+                        return back()->withErrors($action['messages']);
+                    }
+                }
+
+                if($post['action'] == 'phone not verified'){
+                    $action = MyHelper::post('users/phone/unverified', ['phone' => $phone]);
+                    if($action['status'] == 'success'){
+                        unset($post['action']);
+                        return back()->withSuccess($action['result']);
+                    } else{
+                        return back()->withErrors($action['messages']);
+                    }
+                }
+
+                if($post['action'] == 'email verified'){
+                    $action = MyHelper::post('users/email/verified', ['phone' => $phone]);
+                    if($action['status'] == 'success'){
+                        unset($post['action']);
+                        return back()->withSuccess($action['result']);
+                    } else{
+                        return back()->withErrors($action['messages']);
+                    }
+                }
+
+                if($post['action'] == 'email not verified'){
+                    $action = MyHelper::post('users/email/unverified', ['phone' => $phone]);
+                    if($action['status'] == 'success'){
+                        unset($post['action']);
+                        return back()->withSuccess($action['result']);
+                    } else{
+                        return back()->withErrors($action['messages']);
+                    }
+                }
+            }
+        }
+
+        $data = [ 'title'             => 'User',
+            'menu_active'       => 'user',
+            'submenu_active'    => 'user-list'
+        ];
+
+        if(!isset($post['order_field'])) $post['order_field'] = 'id';
+        if(!isset($post['order_method'])) $post['order_method'] = 'desc';
+        if(!isset($post['take'])) $post['take'] = 10;
+        $post['page'] = $post['page']??1;
+
+        $getUser = MyHelper::post('users/list', $post);
+        if (isset($getUser['status']) && $getUser['status'] == "success") {
+            $data['dataUser']          = $getUser['result']['data'];
+            $data['dataUserTotal']     = $getUser['result']['total'];
+            $data['dataUserPerPage']   = $getUser['result']['from'];
+            $data['dataUserUpTo']      = $getUser['result']['from'] + count($getUser['result']['data'])-1;
+            $data['dataUserPaginator'] = new LengthAwarePaginator($getUser['result']['data'], $getUser['result']['total'], $getUser['result']['per_page'], $getUser['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['dataUser']          = [];
+            $data['dataUserTotal']     = 0;
+            $data['dataUserPerPage']   = 0;
+            $data['dataUserUpTo']      = 0;
+            $data['dataUserPaginator'] = false;
+        }
+
+        $getCity = MyHelper::get('city/list?log_save=0');
+        if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = [];
+
+        $getProvince = MyHelper::get('province/list?log_save=0');
+        if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = [];
+
+        $getCourier = MyHelper::get('courier/list?log_save=0');
+        if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = [];
+
+        $getOutlet = MyHelper::get('outlet/be/list?log_save=0');
+        if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
+
+        $getProduct = MyHelper::get('product/be/list?log_save=0');
+        if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result']; else $data['products'] = [];
+
+        $getTag = MyHelper::get('product/tag/list?log_save=0');
+        if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result']; else $data['tags'] = [];
 
 		$getMembership = MyHelper::post('membership/be/list?log_save=0',[]);
 		if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result']; else $data['memberships'] = [];
@@ -479,13 +449,19 @@ class UsersController extends Controller
         $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
         $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
         $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
+        $data['order_field'] = $post['order_field'];
+        $data['order_method'] = $post['order_method'];
+        $data['take'] = $post['take'];
+        $data['page'] = $post['page'];
+        $data['table_title'] = "User list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['dataUserTotal']." data)";
 
-		$data['table_title'] = "User list order by ".$data['order_field'].", ".$data['order_method']."ending (".$data['begin']." to ".$data['jumlah']." From ".$data['total']." data)";
-		
-		// print_r($data);exit;
-		// print_r(Session::get('form'));exit;
         $data['show'] = 1;
-		return view('users::index', $data);
+
+        if($post){
+            Session::put('form',$post);
+        }
+
+        return view('users::index', $data);
     }
 	
 	public function searchReset()
