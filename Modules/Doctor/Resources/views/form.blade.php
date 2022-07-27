@@ -167,7 +167,7 @@
 			</div>
 			<div class="portlet-body form">
 				@if(isset($doctor))
-				<form role="form" class="form-horizontal" action="{{ url('/doctor', $doctor['id_doctor'])}}/update"" method="POST">
+				<form role="form" class="form-horizontal" action="{{ url('/doctor', $doctor['id_doctor'])}}/update"" method="POST" enctype="multipart/form-data">
 					@method('PUT')
 					<input name="id_doctor" value="{{$doctor['id_doctor']}}" class="form-control hidden" />
 				@else 
@@ -487,13 +487,9 @@
 							<div class="col-md-9">
 								<div class="fileinput fileinput-new" data-provides="fileinput">
 									<div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-										<img src="https://www.cs.emory.edu/site/media/rg5">
+										<img src="@if(!empty($doctor['doctor_photo'])) {{env('STORAGE_URL_API').$doctor['doctor_photo']}} @else https://www.cs.emory.edu/site/media/rg5 @endif">
 									</div>
-									@if(isset($doctor))
-									<img src="{{ env('STORAGE_URL_API')}}{{$doctor['doctor_photo']}}?updated_at={{time()}}" alt="">
-									@else
 									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300px; max-height: 300px;"> </div>
-									@endif
 									<div>
 										<span class="btn default btn-file">
 											<span class="fileinput-new"> Select image </span>

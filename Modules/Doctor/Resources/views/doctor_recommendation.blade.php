@@ -47,7 +47,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">Product Recommendation</span>
+                <span class="caption-subject font-blue sbold uppercase">Doctor Recommendation</span>
             </div>
         </div>
         <div class="portlet-body form">
