@@ -190,6 +190,20 @@
                 <input type="text" class="form-control" name="outlet_email" value="{{ $val['outlet_email'] }}" placeholder="Outlet Email" required>
             </div>
         </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Referral Code
+                    <span class="required" aria-required="true"> * </span>
+                    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan kode referral outlet" maxlength="15" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <input type="text" class="form-control" name="outlet_referral_code" value="{{ $val['outlet_referral_code'] }}" required placeholder="Referral Code" required>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="col-md-3 control-label">
                 Image Logo Portrait <span class="required" aria-required="true">* <br>(300*300) </span>
