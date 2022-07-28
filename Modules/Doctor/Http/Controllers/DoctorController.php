@@ -361,7 +361,6 @@ class DoctorController extends Controller
         ];
 
         if(empty($post)){
-            $post['doctor_recomendation_status'] = true;
             $data['doctors'] = MyHelper::post('doctor', $post)['result']??[];
             return view('doctor::doctor_recommendation', $data);
         }else{
