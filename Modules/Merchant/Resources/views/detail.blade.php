@@ -261,17 +261,16 @@
                 </div>
                 <input type="hidden" name="action_type" id="action_type">
                 {{ csrf_field() }}
+                <div class="row" style="text-align: center">
                 @if($detail['merchant_status'] == 'Active' || $detail['merchant_status'] == 'Inactive')
-                    <div class="form-actions" style="text-align: center">
-                        <button onclick="submit()" class="btn blue">Submit</button>
-                    </div>
+                     <button onclick="submit()" class="btn blue">Submit</button>
                 @elseif($detail['merchant_status'] == 'Pending')
-                    <div class="row" style="text-align: center">
-                        {{ csrf_field() }}
-                        <a class="btn red save" data-name="{{ $detail['outlet_name'] }}" data-status="rejected"  @if($detail['merchant_completed_step'] == 0) disabled @endif>Reject</a>
-                        <a class="btn green-jungle save" data-name="{{ $detail['outlet_name'] }}" data-status="approve" @if($detail['merchant_completed_step'] == 0) disabled @endif>Approve</a>
-                    </div>
+                     <a class="btn red save" data-name="{{ $detail['outlet_name'] }}" data-status="rejected"  @if($detail['merchant_completed_step'] == 0) disabled @endif>Reject</a>
                 @endif
+                @if($detail['merchant_status'] == 'Pending' || $detail['merchant_status'] == 'Rejected')
+                    <a class="btn green-jungle save" data-name="{{ $detail['outlet_name'] }}" data-status="approve" @if($detail['merchant_completed_step'] == 0) disabled @endif>Approve</a>
+                @endif
+                </div>
             </form>
         </div>
     </div>
