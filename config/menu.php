@@ -2337,68 +2337,8 @@ return [
 				],
 			],
 		],
-		[
-			'type' => 'group',
-			'label' => 'CRM',
-			'children' => [
-				[
-					'label' => 'CRM Setting',
-					'required_features' => [],
-					'icon' => 'icon-settings',
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Text Replace',
-							'required_features' => [96],
-							'active' => '\View::shared("submenu_active") == "textreplace"',
-							'url' => 'textreplace'
-						],
-						[
-							'label' => 'Email Header & Footer',
-							'required_features' => [97],
-							'active' => '\View::shared("submenu_active") == "email"',
-							'url' => 'email-header-footer'
-						],
-						[
-							'label' => 'WhatsApp Setting',
-							'required_features' => [74,75],
-							'active' => '\View::shared("submenu_active") == "whatsapp"',
-							'url' => 'setting/whatsapp'
-						],
-					]
-				],
-				[
-					'label' => 'Enquiries',
-					'required_features' => [40],
-					'type' => 'tree',
-					'children' => [
-						[
-							'label' => 'Enquiry List',
-							'required_features' => [83,94],
-							'active' => '\View::shared("submenu_active") == "enquiries-list"',
-							'url' => 'enquiries'
-						],
-						[
-							'label' => '[Response] Kritik, Saran & Keluhan',
-							'required_features' => [],
-							'required_configs' => [46],
-							'url' => 'about/autoresponse/enquiry-kritik,-saran-&-keluhan'
-						],
-						[
-							'label' => '[Response] Pengubahan Data Diri',
-							'required_features' => [],
-							'required_configs' => [47],
-							'url' => 'about/autoresponse/enquiry-pengubahan-data-diri'
-						],
-						[
-							'label' => '[Response] Lain - Lain',
-							'required_configs' => [48],
-							'required_features' => [],
-							'url' => 'about/autoresponse/enquiry-lain-_-lain'
-						],
-					],
-					'icon' => 'icon-action-undo'
-				],
+        */
+        /*
 				[
 					'label' => 'User Feedback',
 					'required_configs' => [90],
@@ -2741,6 +2681,39 @@ return [
 				],
 			],
 		],
+        [
+            'type' => 'group',
+            'label' => 'CRM',
+            'children' => [
+                [
+                    'label' => 'CRM Setting',
+                    'required_features' => [],
+                    'icon' => 'icon-settings',
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'Text Replace',
+                            'required_features' => [96],
+                            'active' => '\View::shared("submenu_active") == "textreplace"',
+                            'url' => 'textreplace'
+                        ],
+                        [
+                            'label' => 'Email Header & Footer',
+                            'required_features' => [97],
+                            'active' => '\View::shared("submenu_active") == "email"',
+                            'url' => 'email-header-footer'
+                        ]
+                    ]
+                ],
+                [
+                    'label' => 'Contact Us',
+                    'required_features' => [83,84],
+                    'active' => '\View::shared("submenu_active") == "enquiries-list"',
+                    'url' => 'enquiries',
+                    'icon' => 'icon-action-undo'
+                ],
+            ]
+        ],
 		[
 			'type' => 'group',
 			'label' => 'About',
