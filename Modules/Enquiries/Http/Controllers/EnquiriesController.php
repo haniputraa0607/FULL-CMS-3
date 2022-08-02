@@ -8,6 +8,8 @@ use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 
 use App\Lib\MyHelper;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Session;
 
 class EnquiriesController extends Controller
 {
@@ -41,8 +43,9 @@ class EnquiriesController extends Controller
 		return response()->json($data);
 	}
 	
-    public function index()
+    public function index(Request $request)
     {
+        $post = $request->all();
         $data = [
             'title'          => 'Enquiries',
             'sub_title'      => 'List',
@@ -50,8 +53,34 @@ class EnquiriesController extends Controller
             'submenu_active' => 'enquiries-list',
         ];
 
+        if(Session::has('filter-list-enquiries') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-list-enquiries');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-list-enquiries');
+        }
+
+        $post['paginate'] = true;
         // get api
-        $data['enquiries']    = parent::getData(MyHelper::get('enquiries/list'));
+        $enquiries   = MyHelper::post('enquiries/list', $post);
+
+        if (isset($enquiries['status']) && $enquiries['status'] == "success")  {
+            $data['data']          = $enquiries['result']['data'];
+            $data['dataTotal']     = $enquiries['result']['total'];
+            $data['dataPerPage']   = $enquiries['result']['from'];
+            $data['dataUpTo']      = $enquiries['result']['from'] + count($enquiries['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($enquiries['result']['data'], $enquiries['result']['total'], $enquiries['result']['per_page'], $enquiries['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
 
         $replace = MyHelper::get('autocrm/textreplace');
         if($replace['status'] == 'success'){
@@ -64,6 +93,10 @@ class EnquiriesController extends Controller
         $data['textreplaces'][] = ['keyword' => '%enquiry_name%','reference' => 'enquiry name'];
         $data['textreplaces'][] = ['keyword' => '%enquiry_email%','reference' => 'enquiry email'];
         $data['textreplaces'][] = ['keyword' => '%visiting_time%','reference' => 'enquiry visiting time'];
+
+        if($post){
+            Session::put('filter-list-enquiries',$post);
+        }
 
         return view('enquiries::index', $data);
     }

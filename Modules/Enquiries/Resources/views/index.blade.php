@@ -20,7 +20,12 @@ $configs = session('configs');
     </style>
 @endsection
 
+@section('page-plugin')
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+@endsection
+
 @section('page-script')
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
@@ -105,23 +110,15 @@ $configs = session('configs');
 				data : "_token="+token+"&id_enquiry="+idnya,
 				success : function(result) {
 					//show detail
-					if(result[0]['id_brand'] != null){
-						$('#detail-brand').val(result[0]['brand']['brand_name'])
-					}
 					$('#detail-subject').val(result[0]['enquiry_subject'])
-					if(result[0]['id_outlet'] != null){
-						$('#detail-outlet').val(result[0]['outlet']['outlet_name'])
-					}
-					$('#detail-visit').val(result[0]['enquiry_visiting_time'])
-					$('#detail-message').val(result[0]['enquiry_content'])
 					$('#detail-message').val(result[0]['enquiry_content'])
 
 					if (typeof result[0]['files'][0] !== 'undefined') {
+						var attacment = '';
 						$.each( result[0]['files'], function( key, value ) {
-							$('#detail-attachment').append(
-								'<a href="'+value.url_enquiry_file+'">Attachment '+(key+1)+'</a>'
-							)
+							attacment +='<br><a target="_blank" href="'+value.url_enquiry_file+'">Attachment '+(key+1)+'</a>';
 						})
+						$('#detail-attachment').append(attacment);
 					}
 
 					if(result[0]['reply_email_subject'] != "" && result[0]['reply_email_subject'] != null){
@@ -193,74 +190,7 @@ $configs = session('configs');
 			});
 		}
 
-        $('.tablesData').dataTable({
-                language: {
-                    aria: {
-                        sortAscending: ": activate to sort column ascending",
-                        sortDescending: ": activate to sort column descending"
-                    },
-                    emptyTable: "No data available in table",
-                    info: "Showing _START_ to _END_ of _TOTAL_ entries",
-                    infoEmpty: "No entries found",
-                    infoFiltered: "(filtered1 from _MAX_ total entries)",
-                    lengthMenu: "_MENU_ entries",
-                    search: "Search:",
-                    zeroRecords: "No matching records found"
-                },
-                buttons: [{
-                    extend: "print",
-                    className: "btn dark btn-outline",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                  extend: "copy",
-                  className: "btn blue btn-outline",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                },{
-                  extend: "pdf",
-                  className: "btn yellow-gold btn-outline",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                }, {
-                    extend: "excel",
-                    className: "btn green btn-outline",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                    extend: "csv",
-                    className: "btn purple btn-outline ",
-                    exportOptions: {
-                         columns: "thead th:not(.noExport)"
-                    },
-                }, {
-                  extend: "colvis",
-                  className: "btn red",
-                  exportOptions: {
-                       columns: "thead th:not(.noExport)"
-                  },
-                }],
-                responsive: {
-                    /*details: {
-                        type: "column",
-                        target: "tr"
-                    }*/
-                    details: false
-                },
-                order: [],
-                lengthMenu: [
-                    [5, 10, 15, 20, -1],
-                    [5, 10, 15, 20, "All"]
-                ], "fnDrawCallback": function() {
-					$(".changeStatus").bootstrapSwitch();
-				},
-                pageLength: 10,
-                dom: "<'row' <'col-md-12'B>><'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r><'table-scrollable't><'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>"
-        });
+        $('.tablesData').dataTable({searching: false, "paging":   false, ordering: false});
 
         $('.tablesData').on('click', '.delete', function() {
 			var token   = "{{ csrf_token() }}";
@@ -276,6 +206,7 @@ $configs = session('configs');
                     if (result == "success") {
                         $('#tablesData'+subject).DataTable().row(column).remove().draw();
                         toastr.info("Enquiry has been deleted.");
+						location.reload();
                     }
                     else {
                         toastr.warning("Something went wrong. Failed to delete enquiry.");
@@ -577,511 +508,140 @@ $configs = session('configs');
 
     @include('layouts.notifications')
 
+	<?php
+	$date_start = '';
+	$date_end = '';
+
+	if(Session::has('filter-list-enquiries')){
+		$search_param = Session::get('filter-list-enquiries');
+		if(isset($search_param['date_start'])){
+			$date_start = $search_param['date_start'];
+		}
+
+		if(isset($search_param['date_end'])){
+			$date_end = $search_param['date_end'];
+		}
+
+		if(isset($search_param['rule'])){
+			$rule = $search_param['rule'];
+		}
+
+		if(isset($search_param['conditions'])){
+			$conditions = $search_param['conditions'];
+		}
+	}
+	?>
+
+	<form role="form" class="form-horizontal" action="{{url()->current()}}?filter=1" method="POST">
+		{{ csrf_field() }}
+		@include('enquiries::filter_list')
+	</form>
 
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">List Enquiry</span>
+                <span class="caption-subject sbold uppercase font-blue">List Contact Us</span>
             </div>
         </div>
-        <div class="portlet-body form">
-        	<div class="tabbable-custom ">
-    	      <ul class="nav nav-tabs ">
-				@if(MyHelper::hasAccess([58], $configs))
-					<li class="active">
-					<a href="#feedback" data-toggle="tab"> Kritik, Saran & Keluhan </a>
-					</li>
-				@endif
-				@if(MyHelper::hasAccess([60], $configs))
-					<li>
-					<a href="#marketing" data-toggle="tab"> Pengubahan Data Diri </a>
-					</li>
-				@endif
-				@if(MyHelper::hasAccess([59], $configs))
-					<li>
-					<a href="#development" data-toggle="tab"> Lain - Lain </a>
-					</li>
-				@endif
-    	      </ul>
-    	      <div class="tab-content">
-    	        <div class="portlet-body tab-pane active" id="feedback">
-    	        	<div class="portlet">
-	    	        	<div class="portlet-title">
-	    	        	    <div class="caption">
+		<div class="portlet-body form">
+			<div style="white-space: nowrap;">
+				<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataBusinessDevelopment" width="100%">
+					<thead>
+					<tr>
+						<th class="noExport show"> Action </th>
+						<th> Subject </th>
+						<th> Date </th>
+						<th> Name </th>
+						<th> Phone </th>
+						<th> Email </th>
+						<th> Status </th>
+					</tr>
+					</thead>
+					<tbody>
+					@if (!empty($data))
+						<?php $no = 1; ?>
+						@foreach($data as $key => $value)
+							<tr>
+								<td class="noExport show">
+									<a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
 
-	    	        	    </div>
-	    	        	</div>
-						<div class="portlet-body form">
-		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" width="100%" id="tablesDataCustomerFeedback">
-		    	        	    <thead>
-		    	        	        <tr>
-		    	        	            <th> Enquiry ID </th>
-		    	        	            <th> Date </th>
-		    	        	            <th> Name </th>
-		    	        	            <th> Phone </th>
-		    	        	            <th> Email </th>
-		    	        	            <th> Status </th>
-		    	        	            <th class="noExport show"> Action </th>
-		    	        	        </tr>
-		    	        	    </thead>
-		    	        	    <tbody>
-		    	        	       @if (!empty($enquiries))
-									<?php $no = 1; ?>
-   		    	        	            @foreach($enquiries as $key=>$value)
-   		    	        	            	@if ($value['enquiry_subject'] == "Kritik, Saran & Keluhan")
-   		    	        	                <tr>
-   		    	        	                    <td>{{ $value['id_enquiry'] }}</td>
-   		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
+									<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
+									@if(MyHelper::hasAccess([57], $configs))
+										<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
+									@endif
+								</td>
+								<td>{{$value['enquiry_subject']}}</td>
+								<td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
+								<td>{{ $value['enquiry_name'] }}</td>
+								<td>{{ $value['enquiry_phone'] }}</td>
+								<td>{{ $value['enquiry_email'] }}</td>
+								<td>
+									<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
+								</td>
+							</tr>
 
-   		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
-   		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
-   		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
-   		    	        	                    <td>
-   		    	        	                    	<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
-   		    	        	                    </td>
-   		    	        	                    <td class="noExport show">
-													@if(MyHelper::hasAccess([84], $grantedFeature))
-														<a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
-
-														<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace([" ",",","&"],"_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
-														@if(MyHelper::hasAccess([57], $configs))
-															<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
-														@endif
-													@endif
-												</td>
-   		    	        	                </tr>
-
-   		    	        	                <div id="{{ str_replace([" ",",","&"],"_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
-   		    	        	                   <div class="modal-dialog">
-   		    	        	                       <div class="modal-content">
-   		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
-   		    	        	                           </div>
-   		    	        	                           <div class="col-md-12" style="margin-top: 10px">
-   		    	        	                              <div class="portlet light portlet-fit bordered">
-   		    	        	                                <div class="portlet-body form">
-																<div class="form-horizontal form-bordered">
-																	<div class="form-body">
-																		<div class="form-group">
-																			<label class="control-label col-md-3">
-																				Brand
-																			</label>
-																			<div class="col-md-9">
-																				<input type="text" readonly value="{{ $value['brand']['name_brand'] }}" class="form-control" />
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label class="control-label col-md-3">
-																				Subject
-																			</label>
-																			<div class="col-md-9">
-																				<input type="text" readonly value="{{ $value['brand']['name_brand'] }}" class="form-control" />
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label class="control-label col-md-3">
-																				Outlet
-																			</label>
-																			<div class="col-md-9">
-																				<input type="text" readonly value="{{ $value['outlet']['outlet_name'] }}" class="form-control" />
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label class="control-label col-md-3">
-																				Visiting Time
-																			</label>
-																			<div class="col-md-9">
-																				<input type="text" readonly value="@if(!empty($value['visiting_time'])){{ date("d F Y H:i:s", strtotime($value['visiting_time'])) }}@endif" class="form-control" />
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label class="control-label col-md-3">
-																				Message
-																			</label>
-																			<div class="col-md-9">
-																				<textarea class="form-control" readonly>{{ $value['enquiry_content'] }}</textarea>
-																			</div>
-																		</div>
-																		<div class="form-group">
-																			<label class="control-label col-md-3">
-																				Attachment
-																			</label>
-																			<div class="col-md-9">
-																				@php
-																					$no = 1;
-																				@endphp
-																				@foreach ($value['files'] as $item)
-																					<a href="{{$item['url_enquiry_file']}}">Attachment {{$no++}}</a>
-																				@endforeach
-																			</div>
-																		</div>
-																	</div>
-																</div>
-   		    	        	                                </div>
-   		    	        	                              </div>
-   		    	        	                           </div>
-   		    	        	                           <div class="modal-footer">
-   		    	        	                               <button type="button" data-dismiss="modal" class="btn green">Close</button>
-   		    	        	                           </div>
-   		    	        	                       </div>
-   		    	        	                   </div>
-   		    	        	                </div>
-   		    	        	                <?php $no++; ?>
-   		    	        	                @endif
-   		    	        	            @endforeach
-   		    	        	        @endif
-		    	        	    </tbody>
-		    	        	</table>
-	    	        	</div>
-    	        	</div>
-    	        </div>
-    	        <div class="portlet-body tab-pane" id="marketing">
-    	        	<div class="portlet">
-	    	        	<div class="portlet-title">
-	    	        	    <div class="caption">
-
-	    	        	    </div>
-	    	        	</div>
-						<div class="portlet-body form">
-		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataMarketingPartnership" width="100%">
-		    	        	    <thead>
-		    	        	        <tr>
-		    	        	            <th> Enquiry ID </th>
-		    	        	            <th> Date </th>
-		    	        	            <th> Name </th>
-		    	        	            <th> Phone </th>
-		    	        	            <th> Email </th>
-		    	        	            <th> Status </th>
-		    	        	            <th class="noExport show"> Action </th>
-		    	        	        </tr>
-		    	        	    </thead>
-		    	        	    <tbody>
-		    	        	        @if (!empty($enquiries))
-										<?php $no = 1; ?>
-		    	        	            @foreach($enquiries as $key => $value)
-		    	        	            	@if ($value['enquiry_subject'] == "Pengubahan Data Diri")
-		    	        	                 <tr>
-												<td>{{ $value['id_enquiry'] }}</td>
-   		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
-   		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
-   		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
-   		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
-   		    	        	                    <td>
-   		    	        	                    	<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
-   		    	        	                    </td>
-   		    	        	                    <td class="noExport show">
-   		    	        	                       <a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
-
-													<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
-													@if(MyHelper::hasAccess([57], $configs))
-														<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
-													@endif
-   		    	        	                    </td>
-   		    	        	                </tr>
-
-   		    	        	                <div id="{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
-   		    	        	                   <div class="modal-dialog">
-   		    	        	                       <div class="modal-content">
-   		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
-   		    	        	                           </div>
-   		    	        	                           <div class="col-md-12" style="margin-top: 10px">
-															<div class="portlet light portlet-fit bordered">
-																<div class="portlet-body form">
-																	<div class="form-horizontal form-bordered">
-																		<div class="form-body">
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Brand
-																				</label>
-																				<div class="col-md-9">
-																					<input type="text" readonly value="{{ $value['brand']['name_brand'] }}" class="form-control" />
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Subject
-																				</label>
-																				<div class="col-md-9">
-																					<input type="text" readonly value="{{ $value['brand']['name_brand'] }}" class="form-control" />
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Message
-																				</label>
-																				<div class="col-md-9">
-																					<textarea class="form-control" readonly>{{ $value['enquiry_content'] }}</textarea>
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Attachment
-																				</label>
-																				<div class="col-md-9">
-																					@php
-																						$no = 1;
-																					@endphp
-																					@foreach ($value['files'] as $item)
-																						<a href="{{$item['url_enquiry_file']}}">Attachment {{$no++}}</a>
-																					@endforeach
-																				</div>
-																			</div>
-																		</div>
-																	</div>
+							<div id="{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
+										</div>
+										<div class="col-md-12" style="margin-top: 10px">
+											<div class="portlet light portlet-fit bordered">
+												<div class="portlet-body form">
+													<div class="form-horizontal form-bordered">
+														<div class="form-body">
+															<div class="form-group">
+																<label class="control-label col-md-3">
+																	Subject
+																</label>
+																<div class="col-md-9">
+																	<input type="text" readonly value="{{ $value['enquiry_subject'] }}" class="form-control" />
 																</div>
 															</div>
-   		    	        	                           </div>
-   		    	        	                           <div class="modal-footer">
-   		    	        	                               <button type="button" data-dismiss="modal" class="btn green">Close</button>
-   		    	        	                           </div>
-   		    	        	                       </div>
-   		    	        	                   </div>
-   		    	        	                </div>
-											<?php $no++; ?>
-		    	        	                @endif
-		    	        	            @endforeach
-		    	        	        @endif
-		    	        	    </tbody>
-		    	        	</table>
-	    	        	</div>
-    	        	</div>
-    	        </div>
-    	        <div class="portlet-body tab-pane" id="development">
-    	        	<div class="portlet">
-	    	        	<div class="portlet-title">
-	    	        	    <div class="caption">
-
-	    	        	    </div>
-	    	        	</div>
-						<div class="portlet-body form">
-		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataBusinessDevelopment" width="100%">
-		    	        	    <thead>
-		    	        	        <tr>
-		    	        	            <th> Enquiry ID </th>
-		    	        	            <th> Date </th>
-		    	        	            <th> Name </th>
-		    	        	            <th> Phone </th>
-		    	        	            <th> Email </th>
-		    	        	            <th> Status </th>
-		    	        	            <th class="noExport show"> Action </th>
-		    	        	        </tr>
-		    	        	    </thead>
-		    	        	    <tbody>
-		    	        	        @if (!empty($enquiries))
-										<?php $no = 1; ?>
-		    	        	            @foreach($enquiries as $key => $value)
-		    	        	            	@if ($value['enquiry_subject'] == "Lain - Lain")
-		    	        	                 <tr>
-												<td>{{ $value['id_enquiry'] }}</td>
-   		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
-   		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
-   		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
-   		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
-   		    	        	                    <td>
-   		    	        	                    	<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
-   		    	        	                    </td>
-   		    	        	                    <td class="noExport show">
-   		    	        	                       <a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
-
-													<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
-													@if(MyHelper::hasAccess([57], $configs))
-														<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
-													@endif
-   		    	        	                    </td>
-   		    	        	                </tr>
-
-   		    	        	                <div id="{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
-   		    	        	                   <div class="modal-dialog">
-   		    	        	                       <div class="modal-content">
-   		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
-   		    	        	                           </div>
-   		    	        	                           <div class="col-md-12" style="margin-top: 10px">
-															<div class="portlet light portlet-fit bordered">
-																<div class="portlet-body form">
-																	<div class="form-horizontal form-bordered">
-																		<div class="form-body">
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Brand
-																				</label>
-																				<div class="col-md-9">
-																					<input type="text" readonly value="{{ $value['brand']['name_brand'] }}" class="form-control" />
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Subject
-																				</label>
-																				<div class="col-md-9">
-																					<input type="text" readonly value="{{ $value['brand']['name_brand'] }}" class="form-control" />
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Message
-																				</label>
-																				<div class="col-md-9">
-																					<textarea class="form-control" readonly>{{ $value['enquiry_content'] }}</textarea>
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Attachment
-																				</label>
-																				<div class="col-md-9">
-																					@php
-																						$no = 1;
-																					@endphp
-																					@foreach ($value['files'] as $item)
-																						<a href="{{$item['url_enquiry_file']}}">Attachment {{$no++}}</a>
-																					@endforeach
-																				</div>
-																			</div>
-																		</div>
-																	</div>
+															<div class="form-group">
+																<label class="control-label col-md-3">
+																	Message
+																</label>
+																<div class="col-md-9">
+																	<textarea class="form-control" readonly>{{ $value['enquiry_content'] }}</textarea>
 																</div>
 															</div>
-   		    	        	                           </div>
-   		    	        	                           <div class="modal-footer">
-   		    	        	                               <button type="button" data-dismiss="modal" class="btn green">Close</button>
-   		    	        	                           </div>
-   		    	        	                       </div>
-   		    	        	                   </div>
-   		    	        	                </div>
-											<?php $no++; ?>
-		    	        	                @endif
-		    	        	            @endforeach
-		    	        	        @endif
-		    	        	    </tbody>
-		    	        	</table>
-	    	        	</div>
-    	        	</div>
-    	        </div>
-    	        <div class="portlet-body tab-pane" id="career">
-    	        	<div class="portlet">
-	    	        	<div class="portlet-title">
-	    	        	    <div class="caption">
-
-	    	        	    </div>
-	    	        	</div>
-						<div class="portlet-body form">
-		    	        	<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataCareer" width="100%">
-		    	        	    <thead>
-		    	        	        <tr>
-		    	        	            <th> Enquiry ID </th>
-		    	        	            <th> Date </th>
-		    	        	            <th> Name </th>
-		    	        	            <th> Phone </th>
-		    	        	            <th> Email </th>
-		    	        	            <th class="noExport"> Status </th>
-		    	        	            <th class="noExport show"> Action </th>
-		    	        	        </tr>
-		    	        	    </thead>
-		    	        	    <tbody>
-								<?php $no = 1; ?>
-		    	        	        @if (!empty($enquiries))
-		    	        	            @foreach($enquiries as $key => $value)
-		    	        	            	@if ($value['enquiry_subject'] == "Career")
-		    	        	                 <tr>
-												<td>{{ $value['id_enquiry'] }}</td>
-   		    	        	                    <td>{{ date('d F Y H:i:s', strtotime($value['created_at'])) }}</td>
-   		    	        	                    <td>{{ $value['enquiry_name'] }}</td>
-   		    	        	                    <td>{{ $value['enquiry_phone'] }}</td>
-   		    	        	                    <td>{{ $value['enquiry_email'] }}</td>
-   		    	        	                    <td class="noExport">
-   		    	        	                    	<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
-   		    	        	                    </td>
-   		    	        	                    <td class="noExport show">
-   		    	        	                        <a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
-
-													<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
-													@if(MyHelper::hasAccess([57], $configs))
-														<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
-													@endif
-												</td>
-   		    	        	                </tr>
-
-   		    	        	                <div id="{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
-   		    	        	                   <div class="modal-dialog">
-   		    	        	                       <div class="modal-content">
-   		    	        	                           <div class="modal-header">
-   		    	        	                               <h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
-   		    	        	                           </div>
-   		    	        	                           <div class="col-md-12" style="margin-top: 10px">
-															<div class="portlet light portlet-fit bordered">
-																<div class="portlet-body form">
-																	<div class="form-horizontal form-bordered">
-																		<div class="form-body">
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Brand
-																				</label>
-																				<div class="col-md-9">
-																					<input type="text" readonly value="{{ $value['brand']['name_brand'] }}" class="form-control" />
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Subject
-																				</label>
-																				<div class="col-md-9">
-																					<input type="text" readonly value="{{ $value['brand']['name_brand'] }}" class="form-control" />
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Position
-																				</label>
-																				<div class="col-md-9">
-																					<input type="text" readonly value="{{ $value['position'] }}" class="form-control" />
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Message
-																				</label>
-																				<div class="col-md-9">
-																					<textarea class="form-control" readonly>{{ $value['enquiry_content'] }}</textarea>
-																				</div>
-																			</div>
-																			<div class="form-group">
-																				<label class="control-label col-md-3">
-																					Attachment
-																				</label>
-																				<div class="col-md-9">
-																					@php
-																						$no = 1;
-																					@endphp
-																					@foreach ($value['files'] as $item)
-																						<a href="{{$item['url_enquiry_file']}}">Attachment {{$no++}}</a>
-																					@endforeach
-																				</div>
-																			</div>
-																		</div>
-																	</div>
+															<div class="form-group">
+																<label class="control-label col-md-3">
+																	Attachment
+																</label>
+																<div class="col-md-9">
+																	@php
+																		$no = 1;
+																	@endphp
+																	@foreach ($value['files'] as $item)
+																		<a target="_blank" href="{{$item['url_enquiry_file']}}">Attachment {{$no++}}</a>
+																	@endforeach
 																</div>
-																</div>
-   		    	        	                           </div>
-   		    	        	                           <div class="modal-footer">
-   		    	        	                               <button type="button" data-dismiss="modal" class="btn green">Close</button>
-   		    	        	                           </div>
-   		    	        	                       </div>
-   		    	        	                   </div>
-   		    	        	                </div>
-											<?php $no++; ?>
-		    	        	                @endif
-		    	        	            @endforeach
-		    	        	        @endif
-		    	        	    </tbody>
-		    	        	</table>
-	    	        	</div>
-    	        	</div>
-    	        </div>
-    	      </div>
-        	</div>
-        </div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" data-dismiss="modal" class="btn green">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<?php $no++; ?>
+						@endforeach
+					@endif
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<br>
+		@if ($dataPaginator)
+			{{ $dataPaginator->fragment('participate')->links() }}
+		@endif
     </div>
 
 <div class="modal fade bs-modal-lg" id="modalReply" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1099,34 +659,10 @@ $configs = session('configs');
 						<div class="form-body">
 							<div class="form-group">
 								<label class="control-label col-md-3">
-									Brand
-								</label>
-								<div class="col-md-9">
-									<input type="text" readonly id="detail-brand" class="form-control" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3">
 									Subject
 								</label>
 								<div class="col-md-9">
 									<input type="text" readonly id="detail-subject" class="form-control" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3">
-									Outlet
-								</label>
-								<div class="col-md-9">
-									<input type="text" readonly id="detail-outlet" class="form-control" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3">
-									Visiting Time
-								</label>
-								<div class="col-md-9">
-									<input type="text" readonly id="detail-visit" class="form-control" />
 								</div>
 							</div>
 							<div class="form-group">
