@@ -247,6 +247,25 @@ class DoctorController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+    public function updatePassword(Request $request, $id)
+    {
+        $post = $post = $request->except('_method');
+
+        $store = MyHelper::post('doctor/change-password', $post);
+
+        if(($store['status']??'')=='success'){
+            return redirect('doctor')->with('success',['Update Doctor Success']);
+        }else{
+            return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      * @param int $id
      * @return Response

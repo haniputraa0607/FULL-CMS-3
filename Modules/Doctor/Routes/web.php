@@ -19,6 +19,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'doctor']
     Route::post('/store', 'DoctorController@store');
     Route::get('/{id}/edit', 'DoctorController@edit');
     Route::put('/{id}/update', 'DoctorController@update');
+    Route::put('/{id}/update-password', 'DoctorController@updatePassword');
     Route::post('/delete', 'DoctorController@destroy');
 
     Route::resource('service', 'DoctorServiceController');
