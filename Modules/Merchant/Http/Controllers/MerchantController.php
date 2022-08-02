@@ -175,7 +175,7 @@ class MerchantController extends Controller
             'title'          => 'Merchant',
             'sub_title'      => 'Merchant Candidate Detail',
             'menu_active'    => 'merchant',
-            'submenu_active' => 'merchant-candidate'
+            'submenu_active' => 'merchant-list'
         ];
 
         $data['outlets'] = MyHelper::get('outlet/be/list/simple')['result']??[];
@@ -185,6 +185,9 @@ class MerchantController extends Controller
 
         if (isset($detail['status']) && $detail['status'] == "success") {
             $data['detail'] = $detail['result'];
+            if(in_array($detail['result']['merchant_status'], ['Pending', 'Rejected'])){
+                $data['submenu_active'] = 'merchant-candidate';
+            }
             return view('merchant::detail', $data);
         }else{
             return redirect('merchant/candidate')->withErrors($save['messages']??['Failed get data']);

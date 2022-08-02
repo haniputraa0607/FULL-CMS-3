@@ -170,7 +170,7 @@
                         <div class="col-md-6" style="text-align: right"></div>
                     </div>
                     @foreach($detail['payment_detail'] as $pd)
-                        @if(strpos($pd['text'],"Discount") === false)
+                        @if(strpos($pd['text'],"Discount") === false && strpos(strtolower($pd['text']),"point") === false)
                             <div class="row">
                                 <div class="col-md-6" style="text-align: left"><h5>{{$pd['text']}}</h5></div>
                                 <div class="col-md-6" style="text-align: right"><h5>{{$pd['value']}}</h5></div>
