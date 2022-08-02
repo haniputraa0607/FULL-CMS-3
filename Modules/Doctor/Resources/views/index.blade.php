@@ -165,7 +165,9 @@ $grantedFeature     = session('granted_features');
 						},
 					}
 				],
-				searching: false
+				searching: false,
+				ordering : true,
+				order: []
 			});
 
 			$('#table-doctor').on('draw.dt', function() {
