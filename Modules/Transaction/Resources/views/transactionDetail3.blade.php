@@ -76,7 +76,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">Time & date</div>
-                                <div class="col-md-7"><b>: {{date('d/m/Y H:i', strtotime($detail['transaction_date']))}}</b></div>
+                                <div class="col-md-7"><b>: {{$detail['transaction_date']}}</b></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">Order Status</div>
@@ -91,9 +91,19 @@
                                         6 => '#009900',
                                     ];
                                     ?>
-                                    : <span class="badge" style="background-color: {{$color[$detail['transaction_status_code']]??'#cccccc'}};">{{$detail['transaction_status_text']}}</span>
+                                    : <span class="badge" style="background-color: {{$codeColor[$detail['transaction_status_code']]??'#cccccc'}};">{{$detail['transaction_status_text']}}</span>
                                 </div>
                             </div>
+                            @if($detail['transaction_status_code'] == 1)
+                                <div class="row">
+                                    <div class="col-md-4">Reject at</div>
+                                    <div class="col-md-7"><b>: {{$detail['transaction_reject_at']}}</b></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">Reject reason</div>
+                                    <div class="col-md-7"><b>: {{$detail['transaction_reject_reason']}}</b></div>
+                                </div>
+                            @endif
                             <br>
                             <br>
                             <div class="row">

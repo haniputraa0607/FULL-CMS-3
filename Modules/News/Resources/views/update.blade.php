@@ -1160,14 +1160,14 @@
                         <div class="col-md-9">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
                                 <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                  <img src="{{ env('STORAGE_URL_API').$value['news_image_dalam'] }}" alt="Image Landscape">
+                                  <img src="{{ $value['url_news_image_dalam'] }}" alt="Image Landscape">
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 200px; max-height: 100px;"></div>
                                 <div>
                                     <span class="btn default btn-file">
                                     <span class="fileinput-new"> Select image </span>
                                     <span class="fileinput-exists"> Change </span>
-                                    <input type="file" id="field_image_landscape" accept="image/*" class="file" name="news_image_dalam" data-jenis="landscape">
+                                    <input type="file" id="field_image_landscape" accept="image/*" class="file" name="news_image_dalam" data-jenis="landscape" @if(empty($value['news_image_dalam'])) required @endif>
                                     </span>
 
                                     <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>

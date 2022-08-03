@@ -554,7 +554,7 @@ class PromoCampaignController extends Controller
 
         // featured promo campaign
         $data['featured_promo_campaigns'] = MyHelper::get('setting/featured_promo_campaign/list-merchant')['result'] ?? [];
-        $data['promo_campaigns'] = MyHelper::get('promo-campaign/active-campaign?featured=true&promo_use=Product')['result'] ?? [];
+        $data['promo_campaigns'] = MyHelper::get('promo-campaign/active-campaign?featured=true&promo_use=Product&featured_type=merchant')['result'] ?? [];
 
         return view('promocampaign::featured_promo_campaign', $data);
     }

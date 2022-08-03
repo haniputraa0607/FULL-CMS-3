@@ -679,7 +679,7 @@ class SettingController extends Controller
         $data['deals'] = $request['result']??[];
 
         // promo campaign
-        $data['promo_campaigns'] = MyHelper::get('promo-campaign/active-campaign?featured=true')['result'] ?? [];
+        $data['promo_campaigns'] = MyHelper::get('promo-campaign/active-campaign?featured=true&featured_type=home')['result'] ?? [];
 
         // news for banner
         $news_req = [
