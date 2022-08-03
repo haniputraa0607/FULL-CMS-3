@@ -533,6 +533,7 @@
 					</div>
 				</div>
 			</div>
+			@if(isset($doctor))
 			<div class="tab-pane" id="password">
 				<div class="portlet light bordered">
 					<div class="portlet-title">
@@ -589,6 +590,7 @@
 					</div>
 				</div>
 			</div>
+			@endif
 		</div>
 	</div>
 </div>
