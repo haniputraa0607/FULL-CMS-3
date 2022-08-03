@@ -738,6 +738,12 @@ return [
 							'required_features' => [353],
 						],
                         [
+                            'label' => 'User Rating Report Outlet',
+                            'required_features' => [352],
+                            'active' => '\View::shared("submenu_active") == "user-rating-report-outlet"',
+                            'url' => 'user-rating/report/outlet'
+                        ],
+                        [
                             'label' => 'User Rating Report Product',
                             'required_features' => [352],
                             'active' => '\View::shared("submenu_active") == "user-rating-report-product"',
