@@ -177,7 +177,7 @@
 <div class="portlet light bordered">
 	<div class="portlet-title">
 		<div class="caption">
-			<span class="caption-subject font-dark sbold uppercase font-blue">{{ $sub_title }} {{ $reportData['rating_data']['fullname'] ?? $reportData['rating_data']['outlet_name'] }}</span>
+			<span class="caption-subject font-dark sbold uppercase font-blue">{{ $sub_title }} {{ $reportData['rating_data']['fullname'] ?? $reportData['rating_data']['outlet_name'] ?? $reportData['rating_data']['product_name']}}</span>
 		</div>
 		<div class="actions">
         </div>

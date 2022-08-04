@@ -4,8 +4,9 @@ namespace Modules\UserRating\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Routing\Controller;
-
+use Session;
 use App\Lib\MyHelper;
 
 class UserRatingController extends Controller
@@ -136,56 +137,7 @@ class UserRatingController extends Controller
             return redirect('user-rating/setting#setting')->withInput()->withErrors(['Failed update setting']);
         }
     }
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function report(Request $request)
-    {
-        $data = [
-            'title'          => 'User Rating',
-            'sub_title'      => 'Report User Rating Outlet',
-            'menu_active'    => 'user-rating',
-            'submenu_active' => 'user-rating-report',
-            'filter_title'   => 'User Rating Filter'
-        ];
-        $date_start = date('Y-m-d H:i:s',strtotime(session('rating_date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('rating_date_end',date('Y-m-d H:i:s'))));
-        $post['photos_only'] = session('rating_photos_only',0);
-        $post['notes_only'] = session('rating_notes_only',0);
-        $post['transaction_type'] = session('rating_transaction_type', 'all');
-        $post['date_start'] = $date_start;
-        $post['date_end'] = $date_end;
-        $data['reportData'] = MyHelper::post('user-rating/report',$post)['result']??[];
-        if(!$data['reportData']){
-            return back()->withErrors(['Rating data not found']);
-        }
-        $ratingOk = [];
-        foreach ($data['reportData']['rating_item'] as $value) {
-            $ratingOk[$value['rating_value']] = $value;
-        }
-        $outletOk = [];
-        $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
-        foreach ($data['reportData']['rating_data'] as $value) {
-            if(!$colorRand){
-                $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
-            }
-            $randomNumber = array_rand($colorRand);
-            $outletOk[$value['rating_value']][] = [
-                'name' => $value['outlet_code'].' - '.$value['outlet_name'],
-                'total' => $value['total'],
-                'color' => $colorRand[$randomNumber]
-            ];
-            unset($colorRand[$randomNumber]);
-        }
-        $data['date_start'] = date('d F Y',strtotime($date_start));
-        $data['date_end'] = date('d F Y',strtotime($date_end));
-        $data['reportData']['rating_item'] = $ratingOk;
-        $data['reportData']['rating_data'] = $outletOk;
-        $data['redirect_url'] = url('user-rating/report/outlet');
-        $data['rating_target'] = 'outlet';
-        return view('userrating::report',$data+$post);
-    }
+
     public function setReportFilter(Request $request)
     {
         $post = $request->except('_token');
@@ -214,71 +166,7 @@ class UserRatingController extends Controller
         session($new_sess);
         return back();
     }
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function reportOutlet(Request $request)
-    {
-        $data = [
-            'title'          => 'User Rating',
-            'sub_title'      => 'Report User Rating Outlet',
-            'menu_active'    => 'user-rating',
-            'submenu_active' => 'user-rating-report',
-            'filter_title'   => 'User Rating Filter'
-        ];
-        $post = $request->except('_token');
-        $date_start = date('Y-m-d H:i:s',strtotime(session('rating_date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('rating_date_end',date('Y-m-d H:i:s'))));
-        $page = $request->get('page')?:1;
-        $post['date_start'] = $date_start;
-        $post['date_end'] = $date_end;
-        $post['order'] = session('rating_order','outlet_name');
-        $post['search'] = session('rating_search');
-        $post['page'] = $page;
-        $post['transaction_type'] = session('rating_transaction_type', 'all');
-        // return $post;
-        $data['rating_data'] = MyHelper::post('user-rating/report/outlet',$post)['result']??[];
-        $data['next_page'] = $data['rating_data']['next_page_url']?url()->current().'?page='.($page+1):'';
-        $data['prev_page'] = $data['rating_data']['prev_page_url']?url()->current().'?page='.($page-1):'';
-        $data['date_start'] = date('d F Y',strtotime($date_start));
-        $data['date_end'] = date('d F Y',strtotime($date_end));
-        $data['redirect_url'] = url('user-rating/report/outlet');
-        $data['rating_target'] = 'outlet';
-        return view('userrating::report_outlet',$data+$post);
-    }
-    /**
-     * Display a listing of the resource.
-     * @return Response
-     */
-    public function reportOutletDetail(Request $request,$outlet_code)
-    {
-        $data = [
-            'title'          => 'User Rating',
-            'sub_title'      => 'Report User Rating Outlet ',
-            'menu_active'    => 'user-rating',
-            'submenu_active' => 'user-rating-report',
-            'filter_title'   => 'User Rating Filter'
-        ];
-        $date_start = date('Y-m-d H:i:s',strtotime(session('rating_date_start',date('Y-m-01 H:i:s'))));
-        $date_end = date('Y-m-d H:i:s',strtotime(session('rating_date_end',date('Y-m-d H:i:s'))));
-        $post['photos_only'] = session('rating_photos_only',0);
-        $post['notes_only'] = session('rating_notes_only',0);
-        $post['date_start'] = $date_start;
-        $post['date_end'] = $date_end;
-        $post['outlet_code'] = $outlet_code;
-        $post['transaction_type'] = session('rating_transaction_type', 'all');
-        $data['reportData'] = MyHelper::post('user-rating/report/outlet',$post)['result']??[];
-        if(!$data['reportData']){
-            return back()->withErrors(['Rating data not found']);
-        }
-        $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
-        $data['date_start'] = date('d F Y',strtotime($date_start));
-        $data['date_end'] = date('d F Y',strtotime($date_end));
-        $data['redirect_url'] = url('user-rating/report/outlet');
-        $data['rating_target'] = 'outlet';
-        return view('userrating::report_outlet_detail',$data+$post);
-    }
+
     public function autoresponse(Request $request, $target = null) {
         $post = $request->except('_token');
 
@@ -371,13 +259,13 @@ class UserRatingController extends Controller
         return view('userrating::response',$data);
     }
 
-    public function reportProduct(Request $request)
+    public function reportProduct(Request $request, $id_outlet = null)
     {
         $data = [
             'title'          => 'User Rating',
-            'sub_title'      => 'Report User Rating Product',
+            'sub_title'      => 'Report User Rating',
             'menu_active'    => 'user-rating',
-            'submenu_active' => 'user-rating-report-product',
+            'submenu_active' => 'user-rating-report',
             'filter_title'   => 'User Rating Filter'
         ];
         $date_start = date('Y-m-d H:i:s',strtotime(session('rating_product_date_start',date('Y-m-01 H:i:s'))));
@@ -387,6 +275,7 @@ class UserRatingController extends Controller
         $post['transaction_type'] = session('rating_product_transaction_type', 'all');
         $post['date_start'] = $date_start;
         $post['date_end'] = $date_end;
+        $post['id_outlet'] = $id_outlet;
         $post['rating_target'] = 'product';
         $data['reportData'] = MyHelper::post('user-rating/report',$post)['result']??[];
         if(!$data['reportData']){
@@ -398,6 +287,7 @@ class UserRatingController extends Controller
         }
         $outletOk = [];
         $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
+        $outletName = $data['reportData']['outlet_name']??'';
         foreach ($data['reportData']['rating_data'] as $value) {
             if(!$colorRand){
                 $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
@@ -415,6 +305,14 @@ class UserRatingController extends Controller
         $data['reportData']['rating_item'] = $ratingOk;
         $data['reportData']['rating_data'] = $outletOk;
         $data['redirect_url'] = url('user-rating/report/product');
+
+        if(!empty($id_outlet)){
+            $data['sub_title'] = 'Report User Rating Outlet '.$outletName;
+            $data['submenu_active'] = 'user-rating-report-outlet';
+        }else{
+            $data['sub_title'] = 'Report User Rating Product';
+            $data['submenu_active'] = 'user-rating-report-product';
+        }
         return view('userrating::report',$data+$post);
     }
 
@@ -465,7 +363,7 @@ class UserRatingController extends Controller
         $page = $request->get('page')?:1;
         $post['date_start'] = $date_start;
         $post['date_end'] = $date_end;
-        $post['order'] = session('rating_product_order','fullname');
+        $post['order'] = session('rating_product_order','product_name');
         $post['search'] = session('rating_product_search');
         $post['page'] = $page;
         $post['transaction_type'] = session('rating_product_transaction_type', 'all');
@@ -476,7 +374,7 @@ class UserRatingController extends Controller
         $data['date_start'] = date('d F Y',strtotime($date_start));
         $data['date_end'] = date('d F Y',strtotime($date_end));
         $data['redirect_url'] = url('user-rating/report/product');
-        return view('userrating::report_outlet',$data+$post);
+        return view('userrating::report_list',$data+$post);
     }
     /**
      * Display a listing of the resource.
@@ -508,7 +406,7 @@ class UserRatingController extends Controller
         $data['date_start'] = date('d F Y',strtotime($date_start));
         $data['date_end'] = date('d F Y',strtotime($date_end));
         $data['redirect_url'] = url('user-rating/report/product');
-        return view('userrating::report_outlet_detail',$data+$post);
+        return view('userrating::report_detail',$data+$post);
     }
 
 
@@ -606,7 +504,7 @@ class UserRatingController extends Controller
         $page = $request->get('page')?:1;
         $post['date_start'] = $date_start;
         $post['date_end'] = $date_end;
-        $post['order'] = session('rating_doctor_order','fullname');
+        $post['order'] = session('rating_doctor_order','doctor_name');
         $post['search'] = session('rating_doctor_search');
         $post['page'] = $page;
         $post['transaction_type'] = session('rating_doctor_transaction_type', 'all');
@@ -617,7 +515,7 @@ class UserRatingController extends Controller
         $data['date_start'] = date('d F Y',strtotime($date_start));
         $data['date_end'] = date('d F Y',strtotime($date_end));
         $data['redirect_url'] = url('user-rating/report/doctor');
-        return view('userrating::report_outlet',$data+$post);
+        return view('userrating::report_list',$data+$post);
     }
     /**
      * Display a listing of the resource.
@@ -649,6 +547,49 @@ class UserRatingController extends Controller
         $data['date_start'] = date('d F Y',strtotime($date_start));
         $data['date_end'] = date('d F Y',strtotime($date_end));
         $data['redirect_url'] = url('user-rating/report/doctor');
-        return view('userrating::report_outlet_detail',$data+$post);
+        return view('userrating::report_detail',$data+$post);
+    }
+
+    public function reportOutlet(Request $request){
+        $post = $request->all();
+        $data = [
+            'title'          => 'User Rating',
+            'sub_title'      => 'Report User Rating Outlet',
+            'menu_active'    => 'user-rating',
+            'submenu_active' => 'user-rating-report-outlet'
+        ];
+
+        if(Session::has('filter-list-user-rating-outlet') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-list-user-rating-outlet');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-list-user-rating-outlet');
+        }
+
+        $outlets   = MyHelper::post('user-rating/report/outlet', $post);
+
+        if (isset($outlets['status']) && $outlets['status'] == "success")  {
+            $data['data']          = $outlets['result']['data'];
+            $data['dataTotal']     = $outlets['result']['total'];
+            $data['dataPerPage']   = $outlets['result']['from'];
+            $data['dataUpTo']      = $outlets['result']['from'] + count($outlets['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($outlets['result']['data'], $outlets['result']['total'], $outlets['result']['per_page'], $outlets['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-list-user-rating-outlet',$post);
+        }
+
+        return view('userrating::report_outlet', $data);
     }
 }

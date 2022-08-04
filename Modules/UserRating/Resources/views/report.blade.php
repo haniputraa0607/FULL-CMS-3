@@ -391,9 +391,6 @@
 				<div id="chartdiv5" style="height: 400px"></div>
 			</div>
 		</div>
-		<div class="form-group">
-			<a href="{{ $redirect_url.'/detail' }}" class="btn blue">Show Feedback by {{ ucfirst($rating_target) }}</a>
-		</div>
 		<div class="tabbable-line tab-custom">
 			<ul class="nav nav-tabs ">
 				<li class="active">

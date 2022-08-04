@@ -36,5 +36,12 @@ Route::prefix('user-rating')->middleware(['web', 'validate_session'])->group(fun
             Route::get('detail', 'UserRatingController@reportListDoctor');
             Route::get('detail/{id_doctor}', 'UserRatingController@reportDetailDoctor');
         });
+
+        Route::group(['prefix'=>'outlet'],function(){
+            Route::get('detail/{id_outlet}', 'UserRatingController@reportProduct');
+            Route::post('detail/{id_outlet}', 'UserRatingController@setReportFilterProduct');
+            Route::get('/', 'UserRatingController@reportOutlet');
+            Route::post('/', 'UserRatingController@reportOutlet');
+        });
 	});
 });
