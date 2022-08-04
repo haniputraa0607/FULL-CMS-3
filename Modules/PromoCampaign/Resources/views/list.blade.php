@@ -258,6 +258,7 @@
               <tr class="header-table">
                   <th>No</th>
                   <th>Name</th>
+                  <th>Title</th>
                   <th> Visibility </th>
                   <th>Creator</th>
                   <th>Periode</th>
@@ -284,6 +285,7 @@
                         <tr class="content-middle-center">
                         	<td>{{ $i++ }}</td>
                             <td>{{ $res['campaign_name'] }}</td>
+                            <td>{{ $res['promo_title'] }}</td>
                             <td>
                                 <div class="bootstrap-switch-container">
                                     <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>
