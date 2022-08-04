@@ -263,9 +263,9 @@ class UserRatingController extends Controller
     {
         $data = [
             'title'          => 'User Rating',
-            'sub_title'      => 'Report User Rating'.(empty($id_outlet) ? 'Product' : ' Outlet'),
+            'sub_title'      => 'Report User Rating',
             'menu_active'    => 'user-rating',
-            'submenu_active' => 'user-rating-report-'.(empty($id_outlet) ? 'product' : 'outlet'),
+            'submenu_active' => 'user-rating-report',
             'filter_title'   => 'User Rating Filter'
         ];
         $date_start = date('Y-m-d H:i:s',strtotime(session('rating_product_date_start',date('Y-m-01 H:i:s'))));
@@ -287,6 +287,7 @@ class UserRatingController extends Controller
         }
         $outletOk = [];
         $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
+        $outletName = $data['reportData']['outlet_name']??'';
         foreach ($data['reportData']['rating_data'] as $value) {
             if(!$colorRand){
                 $colorRand = ['#FF6600','#FCD202','#FF6600','#FCD202','#DADADA','#3598dc','#2C3E50','#1BBC9B','#94A0B2','#1BA39C','#e7505a','#D91E18'];
@@ -304,6 +305,14 @@ class UserRatingController extends Controller
         $data['reportData']['rating_item'] = $ratingOk;
         $data['reportData']['rating_data'] = $outletOk;
         $data['redirect_url'] = url('user-rating/report/product');
+
+        if(!empty($id_outlet)){
+            $data['sub_title'] = 'Report User Rating Outlet '.$outletName;
+            $data['submenu_active'] = 'user-rating-report-outlet';
+        }else{
+            $data['sub_title'] = 'Report User Rating Product';
+            $data['submenu_active'] = 'user-rating-report-product';
+        }
         return view('userrating::report',$data+$post);
     }
 
