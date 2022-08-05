@@ -47,24 +47,18 @@ $grantedFeature     = session('granted_features');
 	        </div>
 		    <div class="portlet-body form">
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<div class="profile-info">
-							<div class="row static-info">
-					            <div class="col-md-12 name"> Default Description :</div>
-					            <div class="col-md-12">
-					            	<blockquote style="font-size: 14px;margin-top: 12px"> {{ ($data_promo['description'] ?? '') }} </blockquote>
-					            </div>
-					        </div>
 						    <div class="row static-info">
-					            <div class="col-md-6 name"> Custom Description :</div>
+					            <div class="col-md-6 name"> Description :</div>
 					            <div class="col-md-6"></div>
 					        </div>
-							<form id="form-promo-description" class="form-horizontal" role="form" action="{{ url('promo-campaign/promo-description') }}" method="post" enctype="multipart/form-data">
+							<form id="form-promo-description" class="form-horizontal" role="form" action="{{ url('promo-campaign/promo-description') }}#promo-description" method="post" enctype="multipart/form-data">
 								{{ csrf_field() }}
 						        <div class="row static-info">
-						            <div class="col-md-6 value">
+						            <div class="col-md-8 value">
 						            	<div class="input-icon right">
-											<textarea name="promo_description" id="field_content_long" class="form-control" placeholder="Deals Description" style="width: 490px;
+											<textarea name="promo_description" id="field_content_long" class="form-control summernote" placeholder="Deals Description" style="width: 490px;
 				  height: 150px;">{{ old('promo_description')??$data_promo['promo_description']??'' }}</textarea>
 										</div>
 										<input type="hidden" value="{{ $data_promo['id_deals'] ?? null }}" name="id_deals" />
@@ -108,21 +102,25 @@ $grantedFeature     = session('granted_features');
 @endsection
 
 @section('promo-description-script')
-	{{-- <script type="text/javascript">
-		$('.summernote').summernote({
-			placeholder: true,
-            tabsize: 2,
-            height: 120,
-            toolbar: [],
-            callbacks: {
-                onInit: function(e) {
-                  this.placeholder
-                    ? e.editingArea.find(".note-placeholder").html(this.placeholder)
-                    : e.editingArea.remove(".note-placeholder");
-                }
-            }
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.summernote').summernote({
+				placeholder: 'Promo Description',
+				tabsize: 2,
+				height: 200,
+				toolbar: [
+					['style', ['style']],
+					['style', ['bold', 'italic', 'underline', 'clear']],
+					['fontsize', ['fontsize']],
+					['color', ['color']],
+					['para', ['ul', 'ol', 'paragraph']],
+					['insert', ['table']],
+					['insert', []],
+					['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+				]
+			});
 		});
-	</script> --}}
+	</script>
 	<script type="text/javascript">
 		$(".img-preview").on("click", function() {
 		   $('#image-preview').attr('src', $(this).data('src')); 

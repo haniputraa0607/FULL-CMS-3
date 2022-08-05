@@ -1497,7 +1497,7 @@ class ProductController extends Controller
         ];
 
         if(empty($post)){
-            $data['products'] = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
+            $data['products'] = MyHelper::post('product/be/list', ['admin_list' => 1, 'check_status' => 1])['result']??[];
             return view('product::product.product_recommendation', $data);
         }else{
             $save = MyHelper::post('product/recommendation/save', $post);

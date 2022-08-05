@@ -182,50 +182,56 @@
                 <span class="caption-subject font-dark sbold uppercase font-blue">List Rating</span>
             </div>
         </div>
-        <div class="portlet-body form">
-            <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="rating_table">
-                <thead>
-                    <tr>
-                        <th> Create Rating Date </th>
-                        <th> Receipt Number </th>
-                        <th> User </th>
-                        <th> Grand Total </th>
-                        <th> Target </th>
-                        <th> Star </th>
-                        <th> Selected Options </th>
-                        <th> Action </th>
-                    </tr>
-                </thead>
-                <tbody>
-                	@if(isset($ratingData['data']))
-                	@foreach($ratingData['data'] as $rating)
-                	<tr>
-                		<td>{{date('d M Y',strtotime($rating['created_at']))}}</td>
-                		<td><a href="{{url('transaction/detail'.'/'.$rating['transaction']['id_transaction'])}}">{{$rating['transaction']['transaction_receipt_number']}}</a></td>
-                		<td><a href="{{url('user/detail'.'/'.$rating['user']['phone'])}}">{{$rating['user']['name']}}</a></td>
-                		<td>Rp {{number_format($rating['transaction']['transaction_grandtotal'],0,',','.')}}</td>
-                		<td>{{ $rating['id_doctor'] ? 'Doctor' : 'Outlet' }}</td>
-                		<td>{{ $rating['rating_value'] }}</td>
-                        <td>{{ $rating['option_value'] }}</td>
-                		<td><a href="{{url('user-rating/detail/'.$rating['id_user_rating'])}}" class="btn blue">Detail</a></td>
-                	</tr>
-                	@endforeach
-                	@else
-                	<tr>
-                		<td colspan="6" class="text-center"><em class="text-muted">No Rating Found</em></td>
-                	</tr>
-                	@endif
-                </tbody>
-            </table>
-            <div class="col-md-offset-8 col-md-4 text-right">
-                <div class="pagination">
-                    <ul class="pagination">
-                         <li class="page-first{{$prev_page?'':' disabled'}}"><a href="{{$prev_page?:'javascript:void(0)'}}">«</a></li>
-                        
-                         <li class="page-last{{$next_page?'':' disabled'}}"><a href="{{$next_page?:'javascript:void(0)'}}">»</a></li>
-                    </ul>
-                </div>
+        <div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
+            <div class="portlet-body form">
+                <table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="rating_table">
+                    <thead>
+                        <tr>
+                            <th> Action </th>
+                            <th> Create Rating Date </th>
+                            <th> Receipt Number </th>
+                            <th> User </th>
+                            <th> Grand Total </th>
+                            <th> Target </th>
+                            <th> Name </th>
+                            <th> Star </th>
+                            <th> Selected Options </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(isset($data))
+                        @foreach($data as $rating)
+                        <tr>
+                            <td><a href="{{url('user-rating/detail/'.$rating['id_user_rating'])}}" class="btn blue btn-sm">Detail</a></td>
+                            <td>{{date('d M Y',strtotime($rating['created_at']))}}</td>
+                            <td><a href="{{url('transaction/detail'.'/'.$rating['transaction']['id_transaction'])}}">{{$rating['transaction']['transaction_receipt_number']}}</a></td>
+                            <td><a href="{{url('user/detail'.'/'.$rating['user']['phone'])}}">{{$rating['user']['name']}}</a></td>
+                            <td>Rp {{number_format($rating['transaction']['transaction_grandtotal'],0,',','.')}}</td>
+                            <td>{{ $rating['id_doctor'] ? 'Doctor' : 'Product' }}</td>
+                            <td>
+                                @if(!empty($rating['product']))
+                                    {{$rating['product']['product_name']}}
+                                @elseif(!empty($rating['doctor']))
+                                    {{$rating['doctor']['doctor_name']}}
+                                @endif
+                            </td>
+                            <td>{{ $rating['rating_value'] }}</td>
+                            <td>{{ $rating['option_value'] }}</td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td colspan="6" class="text-center"><em class="text-muted">No Rating Found</em></td>
+                        </tr>
+                        @endif
+                    </tbody>
+                </table>
             </div>
+        </div>
+        <div style="text-align: right">
+            @if ($dataPaginator)
+                {{ $dataPaginator->fragment('participate')->links() }}
+            @endif
         </div>
     </div>
 @endsection

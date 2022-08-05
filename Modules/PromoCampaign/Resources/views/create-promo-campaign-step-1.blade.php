@@ -12,6 +12,7 @@
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 	<style type="text/css">
 		.select2-results__option[aria-selected=true] {
 			display: none;
@@ -35,6 +36,7 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
 
 	@php
 		$code_type 			= null;
@@ -208,7 +210,6 @@
 				$('#multipleCode').show().find('input').prop('required', true);
 				$('#number_last_code, #totalCoupon, #total-tooltip-multiple').show()
 				$('#total-tooltip-single').hide()
-				$('input[name=total_coupon]').val('')
 				$('#multipleNumberLastCode').prop('required', true);
 				$('#multiplePrefixCode').keyup(function() {	
 					$('#multiplePrefixCode').val (function () {
@@ -240,7 +241,6 @@
 						});
 						$('#exampleMultipleCode').show()
 						$('#number_last_code').show()
-						$('#multipleNumberLastCode').val('')
 						$('#exampleCode').replaceWith("<span id='exampleCode'></span>")
 						$('#multipleNumberLastCode').attr('max', maxChar - this.value.length)
 						$('#digit-random-max').text(maxChar - this.value.length)
@@ -361,6 +361,22 @@
                 $(':input[type="submit"]').prop('disabled', false);
             }
         });
+
+		$('.summernote').summernote({
+			placeholder: 'Promo Description',
+			tabsize: 2,
+			height: 120,
+			toolbar: [
+				['style', ['style']],
+				['style', ['bold', 'italic', 'underline', 'clear']],
+				['fontsize', ['fontsize']],
+				['color', ['color']],
+				['para', ['ul', 'ol', 'paragraph']],
+				['insert', ['table']],
+				['insert', []],
+				['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
+			]
+		});
 	});
 
 	$("#file").change(function(e) {
@@ -546,7 +562,7 @@
 						<span class="required" aria-required="true"> * </span>
 						<i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Promo" data-container="body"></i>
 						<div class="input-group col-md-12">
-							<textarea required type="text" class="form-control" name="promo_description" placeholder="Promo Description">{{$result['promo_description']??old('promo_description')}}</textarea>
+							<textarea required type="text" class="form-control summernote" name="promo_description" placeholder="Promo Description">{{$result['promo_description']??old('promo_description')}}</textarea>
 						</div>
 					</div>
 
