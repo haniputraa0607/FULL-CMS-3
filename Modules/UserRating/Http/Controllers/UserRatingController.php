@@ -38,13 +38,20 @@ class UserRatingController extends Controller
             return [$var['id_outlet'],$var['outlet_name']];
         },$outlets);
 
-        if(isset($data['ratingData']['next_page_url'])){
-            $data['next_page'] = $data['ratingData']['next_page_url']?url()->current().'?page='.($page+1):'';
-            $data['prev_page'] = $data['ratingData']['prev_page_url']?url()->current().'?page='.($page-1):'';
-        } else {
-            $data['next_page'] = '';
-            $data['prev_page'] = '';
+        if (!empty($data['ratingData']['data']))  {
+            $data['data']          = $data['ratingData']['data'];
+            $data['dataTotal']     = $data['ratingData']['total'];
+            $data['dataPerPage']   = $data['ratingData']['from'];
+            $data['dataUpTo']      = $data['ratingData']['from'] + count($data['ratingData']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($data['ratingData']['data'], $data['ratingData']['total'], $data['ratingData']['per_page'], $data['ratingData']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
         }
+
         return view('userrating::index',$data);
     }
 
