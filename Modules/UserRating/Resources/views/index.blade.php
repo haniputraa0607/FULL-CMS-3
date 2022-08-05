@@ -204,7 +204,7 @@
                 		<td><a href="{{url('transaction/detail'.'/'.$rating['transaction']['id_transaction'])}}">{{$rating['transaction']['transaction_receipt_number']}}</a></td>
                 		<td><a href="{{url('user/detail'.'/'.$rating['user']['phone'])}}">{{$rating['user']['name']}}</a></td>
                 		<td>Rp {{number_format($rating['transaction']['transaction_grandtotal'],0,',','.')}}</td>
-                		<td>{{ $rating['id_doctor'] ? 'Doctor' : 'Outlet' }}</td>
+                		<td>{{ $rating['id_doctor'] ? 'Doctor' : 'Product' }}</td>
                 		<td>{{ $rating['rating_value'] }}</td>
                         <td>{{ $rating['option_value'] }}</td>
                 		<td><a href="{{url('user-rating/detail/'.$rating['id_user_rating'])}}" class="btn blue">Detail</a></td>
