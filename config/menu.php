@@ -725,7 +725,6 @@ return [
 					'label' => 'User Rating',
 					'type' => 'tree',
 					'icon' => 'icon-star',
-					'required_configs' => [],
 					'children' => [
 						[
 							'label' => 'User Rating List',
@@ -737,12 +736,12 @@ return [
 							'url' => 'user-rating/setting',
 							'required_features' => [353],
 						],
-                        [
-                            'label' => 'User Rating Report Outlet',
-                            'required_features' => [352],
-                            'active' => '\View::shared("submenu_active") == "user-rating-report-outlet"',
-                            'url' => 'user-rating/report/outlet'
-                        ],
+                        // [
+                        //     'label' => 'User Rating Report Outlet',
+                        //     'required_features' => [352],
+                        //     'active' => '\View::shared("submenu_active") == "user-rating-report-outlet"',
+                        //     'url' => 'user-rating/report/outlet'
+                        // ],
                         [
                             'label' => 'User Rating Report Product',
                             'required_features' => [352],
@@ -758,6 +757,7 @@ return [
 						[
 							'label' => '[Response] Rating Doctor',
 							'url' => 'user-rating/autoresponse/doctor',
+							'active' => '\View::shared("submenu_active") == "user-rating-response-doctor"',
 							'required_features' => [353],
 						],
                         [

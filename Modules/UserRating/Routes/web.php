@@ -18,8 +18,6 @@ Route::prefix('user-rating')->middleware(['web', 'validate_session'])->group(fun
     Route::post('/', 'UserRatingController@setFilter');
     Route::get('setting', 'UserRatingController@setting');
     Route::post('setting', 'UserRatingController@settingUpdate');
-    Route::get('setting', 'UserRatingController@setting');
-    Route::post('setting', 'UserRatingController@settingUpdate');
     Route::any('autoresponse/{target}', 'UserRatingController@autoresponse');
     Route::any('autoresponse', 'UserRatingController@autoresponse');
     Route::group(['prefix'=>'report'],function(){
@@ -27,7 +25,7 @@ Route::prefix('user-rating')->middleware(['web', 'validate_session'])->group(fun
             Route::get('/', 'UserRatingController@reportProduct');
             Route::post('/', 'UserRatingController@setReportFilterProduct');
             Route::get('detail', 'UserRatingController@reportListProduct');
-            Route::get('detail/{id_product}', 'UserRatingController@reportDetailProduct');
+            Route::get('detail/{id_product}', 'UserRatingController@reportDetailProduct'); 
         });
 
         Route::group(['prefix'=>'doctor'],function(){

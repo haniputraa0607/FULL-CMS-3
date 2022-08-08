@@ -117,7 +117,7 @@ class UserRatingController extends Controller
         $data['popup'] = [];
 
         $data['options'] = MyHelper::get('user-rating/option?outlet=true')['result']??[];
-        $data['options_hs'] = MyHelper::get('user-rating/option?hairstylist=true')['result']??[];
+        $data['options_dc'] = MyHelper::get('user-rating/option?doctor=true')['result']??[];
         $data['options_product'] = MyHelper::get('user-rating/option?product=true')['result']??[];
 
         foreach ($ratings as $rating) {
@@ -126,6 +126,7 @@ class UserRatingController extends Controller
         foreach ($popups as $popup) {
             $data['setting'][$popup['key']] = $popup;
         }
+
         return view('userrating::setting',$data);
     }
 
