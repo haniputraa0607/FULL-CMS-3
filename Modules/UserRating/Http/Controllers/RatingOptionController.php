@@ -23,6 +23,7 @@ class RatingOptionController extends Controller
     }
 
     public function store(Request $request){
+        //dd($request->all());
         $result = MyHelper::post('user-rating/option/update',$request->except('_token'));
         if(($result['status']??false)!='success'){
             return back()->withInput()->withErrors($result['messages']??['Something went wrong']);
