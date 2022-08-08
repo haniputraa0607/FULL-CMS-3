@@ -35,109 +35,9 @@ $configs    		= session('configs');
 @section('page-script')
 <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
 <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
-<script>
-    starsHs =['1','2','3','4','5'];
-    dbHs = {!!json_encode($options_hs)!!};
-    templateHs = '<tr>\
-    <td>\
-    <div class="form-inline" style="white-space: nowrap;">\
-    <select name="rule[::n::][value][]" multiple class="select2b form-control" style="width: 150px" data-placeholder="Star selected" required>\
-    ::starsHs::\
-    </select>\
-    </div>\
-    </td>\
-    <td>\
-    <div class="form-group">\
-    <input type="text" class="form-control" name="rule[::n::][question]" placeholder="Question for user" value="::question::" maxlength="40" required>\
-    </div>\
-    </td>\
-    <td style="width: 200px">\
-    ::options::\
-    ::addOptionHsBtn::\
-    <td width="1%">\
-    <button type="button" data-id="::n::" class="btn red deleteRule"><i class="fa fa-trash-o"></i> Delete Rule</button>\
-    </td>\
-    </tr>';
-    function getSelectedHs() {
-        let result = [];
-        for(let i=0;i<dbHs.length;i++){
-            let vrb = dbHs[i];
-            result = result.concat(vrb.value);
-        }
-        return result;
-    }
-    function replaceHs(templateHs,replacer,current) {
-        let last = current == dbHs.length;
-        let htmlStars = '';
-        let htmlOptions = '';
-        let selected = getSelectedHs();
-        for(let i=0;i<starsHs.length;i++){
-            let vrb = starsHs[i];
-            if(replacer.value !== null && replacer.value.includes(vrb)){
-                htmlStars+='<option value="'+vrb+'" selected>'+vrb+'</option>';
-            }else if(selected.indexOf(vrb)==-1){
-                htmlStars+='<option value="'+vrb+'">'+vrb+'</option>';
-            }
-        }
-        replacer.options.forEach(function(vrb,ix){
-            htmlOptions+=('<div class="input-group" style="margin-bottom: 5px">\
-                <input type="text" class="form-control" placeholder="Option" name="rule[::n::][options]['+ix+']" value="::option::" data-id-option="'+ix+'" maxlength="20" required>\
-                <div class="input-group-btn">\
-                <button type="button" data-id="'+(current-1)+'" data-id-option="'+ix+'" class="btn red deleteOption"><i class="fa fa-times"></i></button>\
-                </div>\
-                </div>').replace('::option::',vrb);
-        })                        
-        return templateHs.replace('::starsHs::',htmlStars).replace('::question::',replacer.question).replace('::options::',htmlOptions).replace('::addOptionHsBtn::',replacer.options.length<6?'<button type="button" data-id="::n::" class="btn blue addOptionHs"><i class="fa fa-plus"></i> Add Option</button></td>':'').replace(/::n::/g,current-1);
-    }
-    function renderHs() {
-        console.log('render');
-        if(!dbHs.length){
-            return addRuleHs();
-        }
-        starsHs = ['1','2','3','4','5'];
-        let html='';
-        current = 0;
-        dbHs.forEach(function(vrb){
-            current++;
-            html+=replaceHs(templateHs,vrb,current);
-        });
-        $('#questionBodyHs').html(html);
-        $('.select2b').select2();
-    }
-    function addRuleHs() {
-        if(!(document.getElementById('questionForm').reportValidity())){
-            return false;
-        }
-        if(getSelectedHs().length >= 5){
-            toastr.warning("All star already defined");
-            return false;
-        }
-        dbHs.push({
-            'value':[],
-            'question':'',
-            'options':['']
-        });
-        if(getSelectedHs().length >= 5){
-            $('#btnAddRuleHs').attr('disabled','disabled');
-        }else{
-            $('#btnAddRuleHs').removeAttr('disabled');
-        }
-        renderHs();
-    }
-    function addOptionHs(id) {
-        if(dbHs[id].options.length >= 6){
-            toastr.warning("Maximum options total already reached(6).");
-            return false;
-        }
-        dbHs[id].options.push('');
-        renderHs();
-    }
-    $(document).ready(function(){
-        $('.select2').select2();
-    });
-</script>
 
 <script>
+    //render outlet
     stars =['1','2','3','4','5'];
     db = {!!json_encode($options)!!};
     template = '<tr>\
@@ -233,6 +133,104 @@ $configs    		= session('configs');
         }
         db[id].options.push('');
         render();
+    }
+
+    // render doctor
+    starsDc =['1','2','3','4','5'];
+    dbDc = {!!json_encode($options_dc)!!};
+    templateDc = '<tr>\
+    <td>\
+    <div class="form-inline" style="white-space: nowrap;">\
+    <select name="rule[::n::][value][]" multiple class="select2b form-control" style="width: 150px" data-placeholder="Star selected" required>\
+    ::starsDc::\
+    </select>\
+    </div>\
+    </td>\
+    <td>\
+    <div class="form-group">\
+    <input type="text" class="form-control" name="rule[::n::][question]" placeholder="Question for user" value="::question::" maxlength="40" required>\
+    </div>\
+    </td>\
+    <td style="width: 200px">\
+    ::options::\
+    ::addOptionDcBtn::\
+    <td width="1%">\
+    <button type="button" data-id="::n::" class="btn red deleteRule"><i class="fa fa-trash-o"></i> Delete Rule</button>\
+    </td>\
+    </tr>';
+    function getSelectedDc() {
+        let result = [];
+        for(let i=0;i<dbDc.length;i++){
+            let vrb = dbDc[i];
+            result = result.concat(vrb.value);
+        }
+        return result;
+    }
+    function replaceDc(templateDc,replacer,current) {
+        let last = current == dbDc.length;
+        let htmlStars = '';
+        let htmlOptions = '';
+        let selected = getSelectedDc();
+        for(let i=0;i<starsDc.length;i++){
+            let vrb = starsDc[i];
+            if(replacer.value !== null && replacer.value.includes(vrb)){
+                htmlStars+='<option value="'+vrb+'" selected>'+vrb+'</option>';
+            }else if(selected.indexOf(vrb)==-1){
+                htmlStars+='<option value="'+vrb+'">'+vrb+'</option>';
+            }
+        }
+        replacer.options.forEach(function(vrb,ix){
+            htmlOptions+=('<div class="input-group" style="margin-bottom: 5px">\
+                <input type="text" class="form-control" placeholder="Option" name="rule[::n::][options]['+ix+']" value="::option::" data-id-option="'+ix+'" maxlength="20" required>\
+                <div class="input-group-btn">\
+                <button type="button" data-id="'+(current-1)+'" data-id-option="'+ix+'" class="btn red deleteOption"><i class="fa fa-times"></i></button>\
+                </div>\
+                </div>').replace('::option::',vrb);
+        })
+        return templateDc.replace('::starsDc::',htmlStars).replace('::question::',replacer.question).replace('::options::',htmlOptions).replace('::addOptionDcBtn::',replacer.options.length<6?'<button type="button" data-id="::n::" class="btn blue addOptionDc"><i class="fa fa-plus"></i> Add Option</button></td>':'').replace(/::n::/g,current-1);
+    }
+    function renderDc() {
+        if(!dbDc.length){
+            return addRuleDc();
+        }
+        starsDc = ['1','2','3','4','5'];
+        let html='';
+        current = 0;
+        dbDc.forEach(function(vrb){
+            current++;
+            html+=replaceDc(templateDc,vrb,current);
+        });
+
+        $('#questionBodyDc').html(html);
+        $('.select2b').select2();
+    }
+    function addRuleDc() {
+        if(!(document.getElementById('questionFormDc').reportValidity())){
+            return false;
+        }
+        if(getSelectedDc().length >= 5){
+            toastr.warning("All star already defined");
+            return false;
+        }
+        dbDc.push({
+            'value':[],
+            'question':'',
+            'options':['']
+        });
+        if(getSelectedDc().length >= 5){
+            $('#btnAddRuleDc').attr('disabled','disabled');
+        }else{
+            $('#btnAddRuleDc').removeAttr('disabled');
+        }
+        renderDc();
+    }
+    function addOptionDc(id) {
+        if(dbDc[id].options.length >= 6){
+            toastr.warning("Maximum options total already reached(6).");
+            return false;
+        }
+        dbDc[id].options.push('');
+        renderDc();
     }
 
     // render product
@@ -378,26 +376,26 @@ $configs    		= session('configs');
         });
 
         // doctor
-        renderHs();
-        $('#btnAddRuleHs').on('click',addRuleHs);
-        $('#questionBodyHs').on('click','.deleteRule',function(){
-            dbHs.splice($(this).data('id'),1);
-            renderHs();
+        renderDc();
+        $('#btnAddRuleDc').on('click',addRuleDc);
+        $('#questionBodyDc').on('click','.deleteRule',function(){
+            dbDc.splice($(this).data('id'),1);
+            renderDc();
         });
-        $('#questionBodyHs').on('click','.addOptionHs',function(){
-            addOptionHs($(this).data('id'));
+        $('#questionBodyDc').on('click','.addOptionDc',function(){
+            addOptionDc($(this).data('id'));
         });
-        $('#questionBodyHs').on('click','.deleteOption',function(){
-            var oldOption = dbHs[$(this).data('id')].options;
+        $('#questionBodyDc').on('click','.deleteOption',function(){
+            var oldOption = dbDc[$(this).data('id')].options;
             oldOption.splice($(this).data('id-option'),1);
-            dbHs[$(this).data('id')].options = oldOption;
-            if(!dbHs[$(this).data('id')].options.length){
-                return addOptionHs($(this).data('id'));
+            dbDc[$(this).data('id')].options = oldOption;
+            if(!dbDc[$(this).data('id')].options.length){
+                return addOptionDc($(this).data('id'));
             }
-            renderHs();
+            renderDc();
         });
-        $('#questionBodyHs').on('change','select,input',function(){
-            var cmd = $(this).attr('name').replace('rule','dbHs').replace(/\[([a-z]+)\]/g,"['$1']") + ' = ' + JSON.stringify($(this).val()) + ';';
+        $('#questionBodyDc').on('change','select,input',function(){
+            var cmd = $(this).attr('name').replace('rule','dbDc').replace(/\[([a-z]+)\]/g,"['$1']") + ' = ' + JSON.stringify($(this).val()) + ';';
             if(cmd.includes('[]')){
                 cmd = cmd.replace('[]','');
             }
@@ -405,16 +403,16 @@ $configs    		= session('configs');
             if(cmd.includes('value')){
                 console.log($(this).data('state'))
                 if($(this).data('state')!=='unselected'){
-                    renderHs();
+                    renderDc();
                 }
             }
         });
-        $('#questionBodyHs').on("select2:unselecting",'.select2b', function(e) {
+        $('#questionBodyDc').on("select2:unselecting",'.select2b', function(e) {
             $(this).data('state', 'unselected');
         }).on("select2:opening",'.select2b', function(e) {
             if($(this).data('state')==='unselected'){
                 $(this).data('state','');
-                renderHs();
+                renderDc();
                 return false;
             }
         });
@@ -506,7 +504,7 @@ $configs    		= session('configs');
             @endif
             @if(MyHelper::hasAccess([139], $configs))
             <li>
-                <a href="#tab_rating_option_hs" data-toggle="tab"> Rating Option Doctor </a>
+                <a href="#tab_rating_option_dc" data-toggle="tab"> Rating Option Doctor </a>
             </li>
             @endif
             @if(MyHelper::hasAccess([140], $configs))
@@ -538,8 +536,8 @@ $configs    		= session('configs');
                     </div>
                 </form>
             </div>
-            <div class="tab-pane fade" id="tab_rating_option_hs">
-                <form id="questionFormHs" action="{{url('user-rating/option')}}" method="POST">
+            <div class="tab-pane fade" id="tab_rating_option_dc">
+                <form id="questionFormDc" action="{{url('user-rating/option')}}" method="POST">
                     @csrf
                     <table class="table">
                         <thead>
@@ -550,13 +548,13 @@ $configs    		= session('configs');
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody id="questionBodyHs">
+                        <tbody id="questionBodyDc">
                         </tbody>
                     </table>
                     <div class="text-center">
                     	<input type="hidden" name="rating_target" value="doctor">
-                        <button class="btn blue" type="button" id="btnAddRuleHs"><i class="fa fa-plus"></i> Add Rule</button>
-                        <button class="btn yellow" type="submit" id="btnSaveHs"><i class="fa fa-check"></i> Save</button>
+                        <button class="btn blue" type="button" id="btnAddRuleDc"><i class="fa fa-plus"></i> Add Rule</button>
+                        <button class="btn yellow" type="submit" id="btnSaveDc"><i class="fa fa-check"></i> Save</button>
                     </div>
                 </form>
             </div>

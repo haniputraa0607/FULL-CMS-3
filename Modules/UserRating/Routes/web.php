@@ -12,14 +12,12 @@
 */
 
 Route::prefix('user-rating')->middleware(['web', 'validate_session'])->group(function() {
-	Route::post('option','RatingOptionController@store');
+	Route::post('option','RatingOptionController@store'); //dipake
     Route::get('/detail/{id}', 'UserRatingController@show');
-    Route::get('/', 'UserRatingController@index');
-    Route::post('/', 'UserRatingController@setFilter');
-    Route::get('setting', 'UserRatingController@setting');
-    Route::post('setting', 'UserRatingController@settingUpdate');
-    Route::get('setting', 'UserRatingController@setting');
-    Route::post('setting', 'UserRatingController@settingUpdate');
+    Route::get('/', 'UserRatingController@index'); //dipake
+    Route::post('/', 'UserRatingController@setFilter'); //dipake
+    Route::get('setting', 'UserRatingController@setting'); //dipake
+    Route::post('setting', 'UserRatingController@settingUpdate');//dipake
     Route::any('autoresponse/{target}', 'UserRatingController@autoresponse');
     Route::any('autoresponse', 'UserRatingController@autoresponse');
     Route::group(['prefix'=>'report'],function(){
@@ -27,7 +25,7 @@ Route::prefix('user-rating')->middleware(['web', 'validate_session'])->group(fun
             Route::get('/', 'UserRatingController@reportProduct');
             Route::post('/', 'UserRatingController@setReportFilterProduct');
             Route::get('detail', 'UserRatingController@reportListProduct');
-            Route::get('detail/{id_product}', 'UserRatingController@reportDetailProduct');
+            Route::get('detail/{id_product}', 'UserRatingController@reportDetailProduct'); 
         });
 
         Route::group(['prefix'=>'doctor'],function(){
