@@ -19,6 +19,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', '
         Route::post('import/save', 'UsersFranchiseController@importSave');
     });
 
+    Route::post('activate', ['uses' => 'UsersController@activateUserDeleted']);
 	Route::get('ajax/phone', 'UsersController@listPhoneUser');
 	Route::get('ajax/email', 'UsersController@listEmailUser');
 	Route::get('ajax/name', 'UsersController@listNameUser');

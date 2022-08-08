@@ -316,7 +316,11 @@ $configs     		= session('configs');
 													@endif
 
 													@if(MyHelper::hasAccess([5], $grantedFeature))
-														<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a>
+														@if($data['is_deleted'] == 0)
+															<a class="btn btn-block red btn-xs" href="{{ url('user/delete', $data['phone']) }}" data-toggle="confirmation" data-placement="top"><i class="icon-close"></i> Delete </a>
+														@else
+															<a data-toggle="modal" href="#active_{{$data['id']}}" class="btn btn-block green-dark btn-xs"><i class="fa fa-check"></i> Activate</a>
+														@endif
 													@endif
 												</td>
 												<td> {!!str_replace(" ","&nbsp;", $data['name'])!!} </td>
@@ -344,6 +348,61 @@ $configs     		= session('configs');
 												<td> @if($data['phone_verified'] == 0) Not Verified @else Verified @endif </td>
 												<td> @if($data['email_verified'] == 0) Not Verified @else Verified @endif </td>
 												<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
+												<div class="modal fade" id="active_{{$data['id']}}" tabindex="-1" role="basic" aria-hidden="true">
+						                                        <div class="modal-dialog">
+						                                            <div class="modal-content">
+						                                                <div class="modal-header">
+						                                                    <h4 class="modal-title">Activate User <b>{{$data['name']}}</b></h4>
+						                                                </div>
+						                                                <div class="modal-body">
+						                                                	<form class="form-horizontal" role="form" action="{{url('user/activate')}}" method="post">
+						                                                    @if($data['have_another_account'])
+							                                                    <div class="alert alert-warning">
+							                                                    	<p>Phone dan Email sudah terpakai untuk user lain, untuk mengaktifkan user kembali Anda wajib memperbaharui data phone dan email dibawah ini.</p>
+							                                                    </div>
+							                                                    <br>
+							                                                    @endif
+						                                                        <div class="form-group">
+						                                                            <label class="col-md-3 control-label" style="text-align: left">
+						                                                                Phone <span class="required" aria-required="true">*</span>
+						                                                            </label>
+						                                                            <div class="col-md-8">
+						                                                                <input class="form-control" maxlength="30" name="active_phone" value="{{$data['phone']}}" @if($data['have_another_account']) required @else readonly @endif>
+						                                                            </div>
+						                                                        </div>
+						                                                        <br>
+						                                                        <br>
+						                                                        <div class="form-group">
+						                                                            <label class="col-md-3 control-label" style="text-align: left">
+						                                                                Email <span class="required" aria-required="true">*</span>
+						                                                            </label>
+						                                                            <div class="col-md-8">
+						                                                                <input class="form-control" maxlength="30" name="active_email" value="{{$data['email']}}" @if($data['have_another_account']) required @else readonly @endif>
+						                                                            </div>
+						                                                        </div>
+						                                                        <br>
+						                                                        <br>
+						                                                        <div class="form-group">
+						                                                            <label class="col-md-3 control-label" style="text-align: left">
+						                                                                Current Password <span class="required" aria-required="true">*</span>
+						                                                            </label>
+						                                                            <div class="col-md-8">
+						                                                                <input class="form-control" type="password" maxlength="50" name="active_current_pin" required>
+						                                                            </div>
+						                                                        </div>
+						                                                        <br>
+						                                                        <br>
+						                                                    <input type="hidden" name="id_user" value="{{$data['id']}}">
+						                                                    <div class="modal-footer" style="text-align: center">
+						                                                        {{ csrf_field() }}
+						                                                        <button type="button" class="btn dark btn-outline" data-dismiss="modal">Close</button>
+						                                                        <button type="submit" class="btn green-dark">Activate</button>
+						                                                    </div>
+						                                                </form>
+						                                                </div>
+						                                            </div>
+						                                        </div>
+						                                    </div>
 											</tr>
 							@endforeach
 							@endif
