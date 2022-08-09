@@ -636,10 +636,18 @@ $configs    		= session('configs');
                         </div>
                     </div>
                     <div class="row">
-                        <label class="col-md-3 control-label text-right">Rating Question <i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan di atas pilihan bintang. Klik ikon ini untuk melihat detail." data-container="body" data-toggle="modal" data-target="#modalInfo2"></i></label>
+                        <label class="col-md-3 control-label text-right">Rating Question Doctor <i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan di atas pilihan bintang. Klik ikon ini untuk melihat detail." data-container="body" data-toggle="modal" data-target="#modalInfo2"></i></label>
                         <div class="col-md-5">
                             <div class="form-group">
                                 <input type="text" class="form-control" name="rating_question_text" required  value="{{old('rating_question_text',$setting['rating_question_text']['value_text']??'')}}" maxlength="40" /><br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-3 control-label text-right">Rating Question Product <i class="fa fa-question-circle tooltips" data-original-title="Teks yang akan ditampilkan di atas pilihan bintang. Klik ikon ini untuk melihat detail." data-container="body" data-toggle="modal" data-target="#modalInfo2"></i></label>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="product_rating_question_text" required  value="{{old('product_rating_question_text',$setting['product_rating_question_text']['value_text']??'')}}" maxlength="40" /><br/>
                             </div>
                         </div>
                     </div>
