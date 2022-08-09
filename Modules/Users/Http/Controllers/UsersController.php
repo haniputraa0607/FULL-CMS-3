@@ -931,4 +931,16 @@ class UsersController extends Controller
             return view('users::favorite', $data);
         }
     }
+
+    public function activateUserDeleted(Request $request)
+    {
+    	$post = $request->except('_token');
+    	$activate = MyHelper::post('users/activate', $post);
+    	
+    	if(isset($activate['status']) && $activate['status'] == 'success'){
+			return redirect('user')->with('success',['Activated success']);
+		}else{
+			return redirect('user')->withErrors($activate['messages']??['Activated Failed']);
+		}
+    }
 }
