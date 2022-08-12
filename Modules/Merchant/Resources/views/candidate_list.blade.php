@@ -170,8 +170,8 @@
                             @endif
                         </td>
                         <td>
-                            @if($val['merchant_status'] == 'Candidate')
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #9b9e9c;padding: 5px 12px;color: #fff;">Candidate</span>
+                            @if($val['merchant_status'] == 'Pending')
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ffe066;padding: 5px 12px;color: #fff;">Pending</span>
                             @elseif($val['merchant_status'] == 'Rejected')
                                 <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #E7505A;padding: 5px 12px;color: #fff;">Rejected</span>
                             @else
