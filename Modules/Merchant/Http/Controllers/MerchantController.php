@@ -173,7 +173,7 @@ class MerchantController extends Controller
     public function detail($id){
         $data = [
             'title'          => 'Merchant',
-            'sub_title'      => 'Merchant Candidate Detail',
+            'sub_title'      => 'Merchant Detail',
             'menu_active'    => 'merchant',
             'submenu_active' => 'merchant-list'
         ];
