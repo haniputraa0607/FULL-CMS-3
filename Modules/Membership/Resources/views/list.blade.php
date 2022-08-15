@@ -479,9 +479,7 @@
 
 						<select class="form-control" name="membership_type" onChange="typeChange(this.value)">
 							<option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
-							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option>
 							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By {{env('POINT_NAME', 'Points')}} Received </option>
-							<option value="achievement"@if(isset($value) && $value == 'achievement') selected @endif>By Achievement Reward </option>
 						</select>
 					</div>
 				</div>
@@ -841,64 +839,6 @@
 												<br>
 											</div>
 										</div>
-
-										<div class="col-md-12" style="margin-top:20px">
-											<div class="input-icon right">
-												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-													POS Promo ID
-													<i class="fa fa-question-circle tooltips" data-original-title="Kode Promo dari Raptor" data-container="body"></i>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<!-- <div class="input-icon right">
-													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea>
-												</div> -->
-												<div class="inner-repeater">
-          											<div data-repeater-list="benefit_promo_id">
-														@if(count($membership['membership_promo_id']) > 0)
-															@foreach($membership['membership_promo_id'] as $promo_id)
-																<div data-repeater-item="" class="row" style="margin-bottom:15px">
-																	<input type="hidden" name="id_membership_promo_id" value="{{$promo_id['id_membership_promo_id']}}">
-																	<div class="col-md-5">
-																		<label class="control-label">Promo Name</label>
-																		<input type="text" placeholder="Promo Name" class="form-control" name="promo_name" value="{{$promo_id['promo_name']}}" > </div>
-																	<div class="col-md-5">
-																		<label class="control-label">Promo ID</label>
-																		<input type="text" placeholder="Promo ID" class="form-control" name="promo_id"  value="{{$promo_id['promo_id']}}" required> </div>
-																	<div class="col-md-1">
-																		<label class="control-label">&nbsp;</label>
-																		<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
-																			<i class="fa fa-close"></i>
-																		</a>
-																	</div>
-																</div>
-															@endforeach
-														@else
-															<div data-repeater-item="" class="row" style="margin-bottom:15px">
-																<div class="col-md-5">
-																	<label class="control-label">Promo Name</label>
-																	<input type="text" placeholder="Promo Name" class="form-control" name="promo_name"> </div>
-																<div class="col-md-5">
-																	<label class="control-label">Promo ID</label>
-																	<input type="text" placeholder="Promo ID" class="form-control" name="promo_id"> </div>
-																<div class="col-md-1">
-																	<label class="control-label">&nbsp;</label>
-																	<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
-																		<i class="fa fa-close"></i>
-																	</a>
-																</div>
-															</div>
-														@endif
-													</div>
-													<hr>
-													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
-														<i class="fa fa-plus"></i> Add Promo ID</a>
-													<br>
-												</div>
-												<br>
-											</div>
-										</div>
-
 									@endif
 								</div>
 							</div>
@@ -1152,41 +1092,6 @@
 													<br>
 												</div>
 												<br>
-											</div>
-										</div>
-										<div class="col-md-12" style="margin-top:20px">
-											<div class="input-icon right">
-												<div class="col-md-offset-2 col-md-3" style="padding-top: 5px;">
-													POS Promo ID
-													<i class="fa fa-question-circle tooltips" data-original-title="Kode Promo dari POS" data-container="body"></i>
-												</div>
-											</div>
-											<div class="col-md-6">
-												<!-- <div class="input-icon right">
-													<textarea class="form-control" name="benefit_promo_id"  placeholder="Promo ID Received"> @if(empty($membership['benefit_promo_id']))  @else {{$membership['benefit_promo_id']}} @endif</textarea>
-												</div> -->
-												<div class="inner-repeater">
-          											<div data-repeater-list="benefit_promo_id">
-														<div data-repeater-item="" class="row" style="margin-bottom:15px">
-															<div class="col-md-5">
-																<label class="control-label">Promo Name</label>
-																<input type="text" placeholder="Promo Name" class="form-control" name="promo_name"> </div>
-															<div class="col-md-5">
-																<label class="control-label">Promo ID</label>
-																<input type="text" placeholder="Promo ID" class="form-control" name="promo_id" > </div>
-															<div class="col-md-1">
-																<label class="control-label">&nbsp;</label>
-																<a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
-																	<i class="fa fa-close"></i>
-																</a>
-															</div>
-														</div>
-													</div>
-													<hr>
-													<a href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
-														<i class="fa fa-plus"></i> Add Promo ID</a>
-													<br>
-                                                </div>
 											</div>
 										</div>
 									@endif
