@@ -106,11 +106,12 @@ $grantedFeature     = session('granted_features');
     var table;
 </script>
 	<script>
-		function removeDoctor(params, data) {
-			var btn = $(params).parent().parent().parent().before().children()
-			$.blockUI({ message: '<h1> Please Wait...</h1>' })
-			console.log("test");
-			$.post( "{{ url('doctor/delete') }}", { id_doctor: data, _token: "{{ csrf_token() }}" })
+		$('#table-doctor').on('click', '.delete', function() {
+            var token  = "{{ csrf_token() }}";
+            var column = $(this).parents('tr');
+            var id     = $(this).data('id');
+
+            $.post( "{{ url('doctor/delete') }}", { id_doctor: id, _token: token })
 			.done(function( data ) {
 				if (data.status == 'success') {
 					toastr.info("Success delete");
@@ -120,7 +121,8 @@ $grantedFeature     = session('granted_features');
 				$('#table-doctor').DataTable().ajax.reload(null, false);
 				$.unblockUI();
 			});
-		}
+        });
+
 
 		$(document).ready(function() {
 			$('#table-doctor').dataTable({
@@ -160,7 +162,7 @@ $grantedFeature     = session('granted_features');
 								@endif
 								@if(MyHelper::hasAccess([331], $grantedFeature))
 								${row.is_complete ? '' : `<a href="javascript:;" data-toggle="confirmation" data-popout="true" data-id="${value}" class="btn btn-sm red delete"> Remove </a>`}
-								@endif
+								@endif 
 							`;
 						},
 					}
