@@ -1845,7 +1845,8 @@ class TransactionController extends Controller
                 $services[] = [
                     "code" => $s['code'],
                     "service_name" => $s['service_name'],
-                    "available_status" => $s['available_status']??0
+                    "available_status" => $s['available_status']??0,
+                    "drop_counter_status" => $s['drop_counter_status']??0
                 ];
             }
 
