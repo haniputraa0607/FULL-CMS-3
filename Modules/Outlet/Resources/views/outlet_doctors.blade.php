@@ -21,7 +21,7 @@ $configs    		= session('configs');
             <tr>
                 <td>{{ $value['doctor_name'] }}</td>
                 <td>{{ $value['doctor_phone'] }}</td>
-                <td>{{ $value['doctor_email'] }}</td>
+                <td>{{ $value['doctor_email']??null }}</td>
                 @if(MyHelper::hasAccess([330], $grantedFeature))
                     <td style="width: 80px;">
                         <a target="_blank" href="{{url('doctor').'/'.$value['id_doctor'].'/edit'}}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
