@@ -174,8 +174,8 @@
             }
         }
 
-		var countJ = parseInt($("#count_array").val());
-		var j=countJ + 1;
+		var countJ = parseInt($("#count_array").val()) + 1;
+		var j=countJ;
 		function addSchedule() {
             var html =  '<div class="form-group" id="div_schedule_child_'+j+'">'+
 						'<div class="col-md-1" style="text-align: right">'+
@@ -200,7 +200,7 @@
 						'<div class="form-group">'+
 						'<div class="col-md-3"></div>'+
 						'<div class="col-md-4">'+
-						'<a class="btn btn-primary" onclick="addShift('+j+')">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>'+
+						'<a class="btn btn-primary" onclick="addShiftPreparation('+j+')">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>'+
 						'</div>'+
 						'</div>'+
 						'<div class="form-group">'+
@@ -217,7 +217,7 @@
 						'<div class="col-md-3">'+
 						'<input type="text" style="background-color: white" data-placeholder="select time" id="time_end_0" name="schedules['+j+'][session_time][0][end_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>'+
 						'</div>'+
-						'<input type="hidden" name="schedules[0][is_active]" value="1">'+
+						'<input type="hidden" name="schedules['+j+'][is_active]" value="1">'+
 						'<div class="col-md-3">'+
 						'<a class="btn btn-danger" onclick="deleteChild('+j+', 0)">&nbsp;<i class="fa fa-trash"></i></a>'+
 						'</div>'+
@@ -236,8 +236,19 @@
             j++;
         }
         
-        var i=1;
-        function addShift(j) {
+        function addShiftPreparation(j) {
+			var countTime = parseInt($('#count_array_time_'+j).val());
+			var i=1;
+			if(countTime > 0) {
+				var i=countTime+1; 
+			}
+
+			console.log("iii"+i);
+
+			addShift(j, i);
+		}
+
+        function addShift(j, i) {
             var html =  '<div class="form-group" id="div_shift_child_'+j+'_'+i+'">'+
 						'<div class="col-md-3"></div>'+
 						'<div class="col-md-3">'+
@@ -250,8 +261,6 @@
                         '<a class="btn btn-danger" onclick="deleteChild('+j+', '+i+')">&nbsp;<i class="fa fa-trash"></i></a>'+
                         '</div>'+
                         '</div>';
-
-			console.log(j);
 
             $('#div_shift_child_'+j).append(html);
             $('.timepicker').timepicker({
@@ -822,12 +831,12 @@
 												<option value="sunday" {{$schedule['day'] == "sunday" ? 'selected' : ''}}>Minggu</option>
 											</select>
 										</div>
-										<div>
+										<input type="hidden" name="schedules[{{$key}}][is_active]" value="1">
 										<div id="use_shift_0">
 											<div class="form-group">
 												<div class="col-md-3"></div>
 												<div class="col-md-4">
-													<a class="btn btn-primary" onclick="addShift(0)">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
+													<a class="btn btn-primary" onclick="addShiftPreparation({{$key}})">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
 												</div>
 											</div>
 											<div class="form-group">
@@ -836,8 +845,10 @@
 												<div class="col-md-3">Session End</div>
 											</div>
 											@if(!empty($schedule['schedule_time']))
+											@php $count = count($schedule['schedule_time']);@endphp
+											<input type="hidden" id="count_array_time_{{$key}}" value="{{$count}}">
+											<div id="div_shift_child_{{$key}}">
 											@foreach($schedule['schedule_time'] as $key2 => $time)
-											<div id="div_shift_child_{{$key2}}">
 												<div class="form-group" id="div_shift_child_{{$key}}_{{$key2}}">
 													<div class="col-md-3"></div>
 													<div class="col-md-3">
@@ -846,17 +857,15 @@
 													<div class="col-md-3">
 														<input type="text" style="background-color: white" data-placeholder="select time" id="time_end_{{$key2}}" name="schedules[{{$key}}][session_time][{{$key2}}][end_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="{{$time['end_time']}}" readonly>
 													</div>
-													<input type="hidden" name="schedules[{{$key2}}][is_active]" value="1">
 													<div class="col-md-3">
 														<a class="btn btn-danger" onclick="deleteChild({{$key}}, {{$key2}})">&nbsp;<i class="fa fa-trash"></i></a>
 													</div>
 												</div>
-											</div>
 											@endforeach
+											</div>
 											@endif
 										</div>
 									<div>
-								</div>
 								</div>
 							</div>
 							@endforeach
@@ -887,12 +896,12 @@
 												<option value="sunday">Minggu</option>
 											</select>
 										</div>
-										<div>
+										<input type="hidden" name="schedules[0][is_active]" value="1">
 										<div id="use_shift_0">
 											<div class="form-group">
 												<div class="col-md-3"></div>
 												<div class="col-md-4">
-													<a class="btn btn-primary" onclick="addShift(0)">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
+													<a class="btn btn-primary" onclick="addShiftPreparation(0)">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
 												</div>
 											</div>
 											<div class="form-group">
@@ -914,8 +923,6 @@
 													</div>
 												</div>
 											</div>
-											<input type="hidden" name="schedules[0][is_active]" value="1">
-										</div>
 										<div>
 									</div>
 								</div>
