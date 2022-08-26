@@ -88,7 +88,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">{{$sub_title??""}}</span>
+                <span class="caption-subject font-blue sbold uppercase">{{ (($detail['merchant_status'] == 'Active' || $detail['merchant_status'] == 'Inactive') ? $sub_title: 'Merchant Candidate Detail')}}</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -117,7 +117,7 @@
                         <label for="multiple" class="control-label col-md-3">Status</label>
                         <div class="col-md-8">
                             @if($detail['merchant_status'] == 'Pending')
-                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #9b9e9c;padding: 5px 12px;color: #fff;">Candidate</span>
+                                <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #ffe066;padding: 5px 12px;color: #fff;">Pending</span>
                             @elseif($detail['merchant_status'] == 'Active')
                                 <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: #26C281;padding: 5px 12px;color: #fff;">Active</span>
                             @elseif($detail['merchant_status'] == 'Rejected')

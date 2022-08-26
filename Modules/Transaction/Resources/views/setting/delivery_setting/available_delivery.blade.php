@@ -55,6 +55,7 @@
                         <tr>
                             <th>Delivery Method</th>
                             <th>Delivery Name</th>
+                            <th>Drop to Counter</th>
                             <th>Available Status</th>
                         </tr>
                     </thead>
@@ -76,6 +77,9 @@
                                     </td>
                                     <td>
                                         <input name="delivery[{{$val['delivery_method']}}][service][{{$index}}][service_name]" class="form-control" value="{{$service['service_name']}}">
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="delivery[{{$val['delivery_method']}}][service][{{$index}}][drop_counter_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Available" data-off-color="default" data-off-text="Unavailable" value="1" @if(($service['drop_counter_status']??1) == 1) checked @endif>
                                     </td>
                                     <td>
                                         <input type="checkbox" name="delivery[{{$val['delivery_method']}}][service][{{$index}}][available_status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disable" value="1" @if($service['available_status'] == 1) checked @endif>
