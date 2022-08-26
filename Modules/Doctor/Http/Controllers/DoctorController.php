@@ -132,9 +132,17 @@ class DoctorController extends Controller
             $post['doctor_photo'] = MyHelper::encodeImage($post['doctor_photo']);
         }
 
-        if(isset($post['doctor_service']) && !empty($post['doctor_service'])){$post['doctor_service'] = implode(',' , $post['doctor_service']);} else {$post['doctor_service'] = null;}
+        if(isset($post['doctor_service']) && !empty($post['doctor_service'])) {
+            $post['doctor_service'] = '["'.implode('","', $post['doctor_service']).'"]';
+        } else {
+            $post['doctor_service'] = null;
+        }
 
-        if(isset($post['practice_experience_place']) && !empty($post['practice_experience_place'])){$post['practice_experience_place'] = implode(',' , $post['practice_experience_place']);} else {$post['practice_experience_place'] = null;}
+        if(isset($post['practice_experience_place']) && !empty($post['practice_experience_place'])) {
+            $post['practice_experience_place'] = '["'.implode('","', $post['practice_experience_place']).'"]';
+        } else {
+            $post['practice_experience_place'] = null;
+        }
 
         //dd($post);
 
