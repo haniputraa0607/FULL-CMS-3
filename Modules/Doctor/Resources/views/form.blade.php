@@ -126,6 +126,23 @@
 				$(this).parent('div').parent('div').remove();
 				x--;
 			})
+
+			var _URL = window.URL || window.webkitURL;
+			$("#field_image").change(function (e) {
+			    var file, img;
+			    if ((file = this.files[0])) {
+			        img = new Image();
+			        var objectUrl = _URL.createObjectURL(file);
+			        img.onload = function () {
+			            if (this.width != 300 && this.height != 300) {
+			            	alert(this.width + " " + this.height);
+			            	$('#removeImage').click();
+			            }
+			            _URL.revokeObjectURL(objectUrl);
+			        };
+			        img.src = objectUrl;
+			    }
+			});
 		});
 	</script>
 @endsection
@@ -222,7 +239,7 @@
 										</label>
 									</div>
 									<div class="col-md-7">
-										<input type="text" name="id_card_number" placeholder="Id Card Number (Required)" value="{{isset($doctor) ? $doctor['id_card_number'] : ''}}" class="form-control" required />
+										<input type="text" name="id_card_number" placeholder="Id Card Number (Required)" value="{{isset($doctor) ? $doctor['id_card_number'] : ''}}" class="form-control" required onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" pattern='.{16}' />
 									</div>
 								</div>
 								<div class="form-group">
@@ -234,7 +251,7 @@
 										</label>
 									</div>
 									<div class="col-md-7">
-										<textarea type="text" name="address" placeholder="Input your address here..." class="form-control">{{isset($doctor) ? $doctor['address'] : ''}}</textarea> 
+										<textarea type="text" name="address" placeholder="Input your address here..." class="form-control" required>{{isset($doctor) ? $doctor['address'] : ''}}</textarea> 
 									</div>
 								</div>
 								<div class="form-group">
@@ -262,8 +279,8 @@
 										</label>
 									</div>
 									<div class="col-md-7">
-										<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-											<input type="text" class="form-control form-filter input-sm date-picker" name="birthday" placeholder="Birthday Date" required>
+										<div class="input-group date date-picker margin-bottom-5" data-date-format="dd/mm/yyyy">
+											<input type="text" value="{{isset($doctor) ? $doctor['birthday'] ? date('d/m/Y', strtotime($doctor['birthday'])) : '' : ''}}" class="form-control form-filter input-sm date-picker" name="birthday" placeholder="Birthday Date" required>
 											<span class="input-group-btn">
 												<button class="btn btn-sm default" type="button">
 													<i class="fa fa-calendar"></i>
