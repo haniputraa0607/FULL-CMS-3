@@ -22,7 +22,7 @@ class DoctorSpecialistCategoryController extends Controller
             'submenu_active' => 'doctor-specialist-category'
         ];
 
-        $category = MyHelper::get('doctor/specialist-category');
+        $category = MyHelper::get('doctor/be/specialist-category');
 
         if (isset($category['status']) && $category['status'] == "success") {
             $data['category'] = $category['result'];

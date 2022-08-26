@@ -34,6 +34,16 @@
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-multi-select.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-confirmations.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/ui-sweetalert.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('js/global.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
 	<script>
 		$(document).ready(function() {
             // library initialization
@@ -128,6 +138,162 @@
 			})
 		});
 	</script>
+	<script>
+        $('.timepicker').timepicker({
+            autoclose: true,
+            showSeconds: false,
+        });
+
+        var tmp = [0];
+        function changeType(value) {
+			console.log("typeee");
+            if(value != ''){
+                $('#use_shift').show();
+                $('#without_shift').hide();
+
+                if(tmp.length == 0){
+                    addShift();
+                }
+            }
+        }
+
+		var countJ = parseInt($("#count_array").val());
+		var j=countJ + 1;
+		function addSchedule() {
+            var html =  '<div class="form-group" id="div_schedule_child_'+j+'">'+
+						'<div class="col-md-1" style="text-align: right">'+
+                        '<a class="btn btn-danger" onclick="deleteChildSchedule('+j+')">&nbsp;<i class="fa fa-trash"></i></a>'+
+                        '</div>'+
+						'<label for="multiple" class="control-label col-md-2">Hari <span class="required" aria-required="true"> * </span>'+
+						'<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>'+
+						'</label>'+
+						'<div class="col-md-3">'+
+						'<select class="form-control select2" id="office_hour_type" name="schedules['+j+'][day]" onchange="changeType('+this.value+')" required>'+
+						'<option></option>'+
+						'<option value="monday">Senin</option>'+
+						'<option value="tuesday">Selasa</option>'+
+						'<option value="wednesday">Rabu</option>'+
+						'<option value="thursday">Kamis</option>'+
+						'<option value="friday">Jumat</option>'+
+						'<option value="saturday">Sabtu</option>'+
+						'<option value="sunday">Minggu</option>'+
+						'</select>'+
+						'</div>'+
+						'<div id="use_shift_'+j+'">'+
+						'<div class="form-group">'+
+						'<div class="col-md-3"></div>'+
+						'<div class="col-md-4">'+
+						'<a class="btn btn-primary" onclick="addShift('+j+')">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>'+
+						'</div>'+
+						'</div>'+
+						'<div class="form-group">'+
+						'<div class="col-md-3"></div>'+
+						'<div class="col-md-3">Session Start</div>'+
+						'<div class="col-md-3">Session End</div>'+
+						'</div>'+
+						'<div id="div_shift_child_'+j+'">'+
+						'<div class="form-group" id="div_shift_child_'+j+'_0">'+
+						'<div class="col-md-3"></div>'+
+						'<div class="col-md-3">'+
+						'<input type="text" style="background-color: white" data-placeholder="select time" id="time_start_0"  name="schedules['+j+'][session_time][0][start_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>'+
+						'</div>'+
+						'<div class="col-md-3">'+
+						'<input type="text" style="background-color: white" data-placeholder="select time" id="time_end_0" name="schedules['+j+'][session_time][0][end_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>'+
+						'</div>'+
+						'<input type="hidden" name="schedules[0][is_active]" value="1">'+
+						'<div class="col-md-3">'+
+						'<a class="btn btn-danger" onclick="deleteChild('+j+', 0)">&nbsp;<i class="fa fa-trash"></i></a>'+
+						'</div>'+
+						'</div>'+
+						'</div>'+
+						'</div>'+
+						'</div>';
+
+			console.log(html);
+            $("#div_schedule_parent").append(html);
+            $('.timepicker').timepicker({
+                autoclose: true,
+                showSeconds: false,
+            });
+            tmp.push(j);
+            j++;
+        }
+        
+        var i=1;
+        function addShift(j) {
+            var html =  '<div class="form-group" id="div_shift_child_'+j+'_'+i+'">'+
+						'<div class="col-md-3"></div>'+
+						'<div class="col-md-3">'+
+                        '<input type="text" style="background-color: white" id="time_start_'+i+'" data-placeholder="select time" name="schedules['+j+'][session_time]['+i+'][start_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>'+
+                        '</div>'+
+                        '<div class="col-md-3">'+
+                        '<input type="text" style="background-color: white" id="time_end_'+i+'" data-placeholder="select time" name="schedules['+j+'][session_time]['+i+'][end_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>'+
+                        '</div>'+
+						'<div class="col-md-3">'+
+                        '<a class="btn btn-danger" onclick="deleteChild('+j+', '+i+')">&nbsp;<i class="fa fa-trash"></i></a>'+
+                        '</div>'+
+                        '</div>';
+
+			console.log(j);
+
+            $('#div_shift_child_'+j).append(html);
+            $('.timepicker').timepicker({
+                autoclose: true,
+                showSeconds: false,
+            });
+            tmp.push(i);
+            i++;
+        }
+
+        function deleteChild(j, i){
+            $('#div_shift_child_'+j+'_'+i).remove();
+            var index = tmp.indexOf(i);
+            if(index >= 0){
+                tmp.splice(index, 1);
+            }
+        }
+
+		function deleteChildSchedule(number){
+			console.log("hereeee");
+			console.log(number);
+            $('#div_schedule_child_'+number).remove();
+            var index = tmp.indexOf(number);
+            if(index >= 0){
+                tmp.splice(index, 1);
+            }
+        }
+        
+        function submit() {
+            var type = $("#office_hour_type").val();
+
+            var err = '';
+            if(name.trim().length === 0){
+                err += 'Please input data name.\n';
+            }
+
+            if(type === ''){
+                err += 'Please select type.\n';
+            }
+
+            if(!empty(type)){
+                for (var j=0;j<tmp.length;j++){
+                    var time_start = $('#time_start_'+tmp[j]).val();
+                    var time_end = $('#time_end_'+tmp[j]).val();
+
+                    if(time_start == '0:00' && time_end == '0:00'){
+                        err += 'Time can not be 0:00 - 0:00\n';
+                        break;
+                    }
+                }
+            }
+
+            if(err !== ''){
+                swal("Error!", err, "error");
+            }else{
+                $('form#form_submit').submit();
+            }
+        }
+    </script>
 @endsection
 
 @section('content')
@@ -163,6 +329,11 @@
 					@if(isset($doctor))
 					<li>
 						<a href="#password" data-toggle="tab"> Change Password </a>
+					</li>
+					@endif
+					@if(isset($doctor))
+					<li>
+						<a href="#schedule" data-toggle="tab"> Doctor Schedule </a>
 					</li>
 					@endif
 				</ul>
@@ -539,11 +710,11 @@
 					<div class="portlet-title">
 						<div class="caption font-blue ">
 							<i class="icon-settings font-blue "></i>
-								<span class="caption-subject bold uppercase">Detail Doctor</span>
+								<span class="caption-subject bold uppercase">Doctor Password</span>
 						</div>
 					</div>
 					<div class="portlet-body form">
-						<form role="form" class="form-horizontal" action="{{ url('/doctor', $doctor['id_doctor'])}}/update-password"" method="POST" enctype="multipart/form-data">
+						<form role="form" class="form-horizontal" action="{{ url('/doctor', $doctor['id_doctor'])}}/update-password" method="POST" enctype="multipart/form-data">
 							@method('PUT')
 							<input name="id_doctor" value="{{$doctor['id_doctor']}}" class="form-control hidden" />
 							{{ csrf_field() }}
@@ -588,6 +759,156 @@
 							</div>
 						</form>
 					</div>
+				</div>
+			</div>
+			@endif
+			@if(isset($doctor))
+			<div class="tab-pane" id="schedule">
+				<div class="portlet light bordered">
+					<div class="portlet-title">
+						<div class="caption">
+							<span class="caption-subject font-blue sbold uppercase">Doctor Schedule</span>
+						</div>
+					</div>
+					<div class="portlet-body form">
+						<form class="form-horizontal" id="form_submit" role="form" action="{{ url('/doctor', $doctor['id_doctor'])}}/update-schedule" method="post">
+							@method('PUT')
+							{{ csrf_field() }}
+							@if(!empty($doctor['schedules']))
+							<div class="form-body">
+								<div class="form-group">
+									<div class="col-md-1">
+										<a class="btn btn-primary" onclick="addSchedule()">&nbsp;<i class="fa fa-plus-circle"></i> Add Schedule </a>
+									</div>
+								</div>
+								@php $count = count($doctor['schedules_raw']);@endphp
+								<input type="hidden" id="count_array" value="{{$count}}">
+								<div id="div_schedule_parent">
+									@foreach($doctor['schedules_raw'] as $key => $schedule)
+									<div class="form-group" id="div_schedule_child_{{$key}}">
+										<div class="col-md-1" style="text-align: right">
+											<a class="btn btn-danger" onclick="deleteChildSchedule(0)">&nbsp;<i class="fa fa-trash"></i></a>
+										</div>
+										<label for="multiple" class="control-label col-md-2">Hari <span class="required" aria-required="true"> * </span>
+											<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
+										</label>
+										<input type="hidden" name="schedules[{{$key}}][id_doctor_schedule]" value="{{$schedule['id_doctor_schedule']}}">
+										<div class="col-md-3">
+											<select class="form-control select" id="office_hour_type[0]" name="schedules[{{$key}}][day]" required>
+												<option></option>
+												<option value="monday" {{$schedule['day'] == "monday" ? 'selected' : ''}}>Senin</option>
+												<option value="tuesday" {{$schedule['day'] == "tuesday" ? 'selected' : ''}}>Selasa</option>
+												<option value="wednesday" {{$schedule['day'] == "wednesday" ? 'selected' : ''}}>Rabu</option>
+												<option value="thursday" {{$schedule['day'] == "thursday" ? 'selected' : ''}}>Kamis</option>
+												<option value="friday" {{$schedule['day'] == "friday" ? 'selected' : ''}}>Jumat</option>
+												<option value="saturday" {{$schedule['day'] == "saturday" ? 'selected' : ''}}>Sabtu</option>
+												<option value="sunday" {{$schedule['day'] == "sunday" ? 'selected' : ''}}>Minggu</option>
+											</select>
+										</div>
+										<div>
+										<div id="use_shift_0">
+											<div class="form-group">
+												<div class="col-md-3"></div>
+												<div class="col-md-4">
+													<a class="btn btn-primary" onclick="addShift(0)">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-md-3"></div>
+												<div class="col-md-3">Session Start</div>
+												<div class="col-md-3">Session End</div>
+											</div>
+											@if(!empty($schedule['schedule_time']))
+											@foreach($schedule['schedule_time'] as $key2 => $time)
+											<div id="div_shift_child_{{$key2}}">
+												<div class="form-group" id="div_shift_child_{{$key}}_{{$key2}}">
+													<div class="col-md-3"></div>
+													<div class="col-md-3">
+														<input type="text" style="background-color: white" data-placeholder="select time" id="time_start_{{$key2}}"  name="schedules[{{$key}}][session_time][{{$key2}}][start_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="{{$time['start_time']}}" readonly>
+													</div>
+													<div class="col-md-3">
+														<input type="text" style="background-color: white" data-placeholder="select time" id="time_end_{{$key2}}" name="schedules[{{$key}}][session_time][{{$key2}}][end_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="{{$time['end_time']}}" readonly>
+													</div>
+													<input type="hidden" name="schedules[{{$key2}}][is_active]" value="1">
+													<div class="col-md-3">
+														<a class="btn btn-danger" onclick="deleteChild({{$key}}, {{$key2}})">&nbsp;<i class="fa fa-trash"></i></a>
+													</div>
+												</div>
+											</div>
+											@endforeach
+											@endif
+										</div>
+									<div>
+								</div>
+								</div>
+							</div>
+							@endforeach
+							@else
+							<div class="form-body">
+								<div class="form-group">
+									<div class="col-md-1">
+										<a class="btn btn-primary" onclick="addSchedule()">&nbsp;<i class="fa fa-plus-circle"></i> Add Schedule </a>
+									</div>
+								</div>
+								<div id="div_schedule_parent">
+									<div class="form-group" id="div_schedule_child_0">
+										<div class="col-md-1" style="text-align: right">
+											<a class="btn btn-danger" onclick="deleteChildSchedule(0)">&nbsp;<i class="fa fa-trash"></i></a>
+										</div>
+										<label for="multiple" class="control-label col-md-2">Hari <span class="required" aria-required="true"> * </span>
+											<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
+										</label>
+										<div class="col-md-3">
+											<select class="form-control select" id="office_hour_type[0]" name="schedules[0][day]" onchange="changeType(this.value)" required>
+												<option></option>
+												<option value="monday">Senin</option>
+												<option value="tuesday">Selasa</option>
+												<option value="wednesday">Rabu</option>
+												<option value="thursday">Kamis</option>
+												<option value="friday">Jumat</option>
+												<option value="saturday">Sabtu</option>
+												<option value="sunday">Minggu</option>
+											</select>
+										</div>
+										<div>
+										<div id="use_shift_0">
+											<div class="form-group">
+												<div class="col-md-3"></div>
+												<div class="col-md-4">
+													<a class="btn btn-primary" onclick="addShift(0)">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-md-3"></div>
+												<div class="col-md-3">Session Start</div>
+												<div class="col-md-3">Session End</div>
+											</div>
+											<div id="div_shift_child_0">
+												<div class="form-group" id="div_shift_child_0_0">
+													<div class="col-md-3"></div>
+													<div class="col-md-3">
+														<input type="text" style="background-color: white" data-placeholder="select time" id="time_start_0"  name="schedules[0][session_time][0][start_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>
+													</div>
+													<div class="col-md-3">
+														<input type="text" style="background-color: white" data-placeholder="select time" id="time_end_0" name="schedules[0][session_time][0][end_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>
+													</div>
+													<div class="col-md-3">
+														<a class="btn btn-danger" onclick="deleteChild(0, 0)">&nbsp;<i class="fa fa-trash"></i></a>
+													</div>
+												</div>
+											</div>
+											<input type="hidden" name="schedules[0][is_active]" value="1">
+										</div>
+										<div>
+									</div>
+								</div>
+							</div>
+							@endif
+						</form>
+					</div>
+					<div class="form-actions" style="text-align: center">
+							<button class="btn blue">Submit</button>
+						</div>
 				</div>
 			</div>
 			@endif
