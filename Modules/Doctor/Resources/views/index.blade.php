@@ -40,6 +40,7 @@ $grantedFeature     = session('granted_features');
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/js/clockface.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery-repeater/jquery.repeater.js') }}" type="text/javascript"></script>
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
@@ -55,6 +56,7 @@ $grantedFeature     = session('granted_features');
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/jquery.blockui.min.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
 	@yield('filter_script')
 <script>
     rules={
@@ -104,6 +106,54 @@ $grantedFeature     = session('granted_features');
         },
     };
     var table;
+
+	var SweetAlert = function() {
+        	return {
+	        	init: function() {
+			    	$(".sweetalert-delete").each(function() {
+			    		var token  	= "{{ csrf_token() }}";
+			    		let column 	= $(this).parents('tr');
+			            let id     	= $(this).data('id');
+			            let name    = $(this).data('name');
+			            $(this).click(function() {
+			                swal({
+								title: name+"\n\nAre you sure want to delete this outlet?",
+								text: "Your will not be able to recover this data!",
+								type: "warning",
+								showCancelButton: true,
+								confirmButtonClass: "btn-danger",
+								confirmButtonText: "Yes, delete it!",
+								closeOnConfirm: false
+							},
+							function(){
+								$.ajax({
+					                type : "POST",
+					                url : "{{ url('doctor/delete') }}",
+					                data : "_token="+token+"&id_doctor="+id,
+					                success : function(result) {
+					                    if (result == "success") {
+					                        $('#table-doctor').DataTable().row(column).remove().draw();
+											swal("Deleted!", "Doctor has been deleted.", "success")
+											SweetAlert.init()
+					                    }
+					                    else if(result == "fail"){
+											swal("Error!", "Failed to delete doctor. Doctor has been used.", "error")
+					                    }
+					                    else {
+											swal("Error!", "Something went wrong. Failed to delete outlet.", "error")
+					                    }
+					                }
+					            });
+							});
+			            })
+			        })
+		    	}
+		    }
+		}();
+
+        jQuery(document).ready(function() {
+		    SweetAlert.init()
+		});
 </script>
 	<script>
 		$('#table-doctor').on('click', '.delete', function() {
@@ -158,10 +208,10 @@ $grantedFeature     = session('granted_features');
 						render: function(value, type, row) {
 							return `
 								@if(MyHelper::hasAccess([330], $grantedFeature))
-								<a href="{{url('doctor')}}/${value}/edit" class="btn yellow btn-sm" style="margin-bottom:5px">Edit</a>
+								<a href="{{url('doctor')}}/${value}/edit" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
 								@endif
 								@if(MyHelper::hasAccess([331], $grantedFeature))
-								${row.is_complete ? '' : `<a href="javascript:;" data-toggle="confirmation" data-popout="true" data-id="${value}" class="btn btn-sm red delete"> Remove </a>`}
+								${row.is_complete ? '' : `<a class="btn btn-sm red delete btn-primary" data-id="${value}" data-name="${value['doctor_name'] }"><i class="fa fa-trash-o"></i></a>`}
 								@endif 
 							`;
 						},
