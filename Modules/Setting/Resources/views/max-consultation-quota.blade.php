@@ -113,7 +113,7 @@
 			})
 
             var max_fields2 = 10;
-			var wrapper2 = $(".container1");
+			var wrapper2 = $(".container2");
 			var add_button2 = $(".add_form_field_time");
 
 			var x = 1;
@@ -134,7 +134,7 @@
 			})
 
             var max_fields3 = 10;
-			var wrapper3 = $(".container1");
+			var wrapper3 = $(".container3");
 			var add_button3 = $(".add_form_field_additional_time");
 
 			var x = 1;
@@ -155,7 +155,7 @@
 			})
 
             var max_fields4 = 10;
-			var wrapper4 = $(".container1");
+			var wrapper4 = $(".container4");
 			var add_button4 = $(".add_form_field_diagnosis");
 
 			var x = 1;
@@ -447,7 +447,6 @@
 							<div class="col-md-12">
 								<div class="row">
 									<div class="col-md-12" style="margin-top:30px">
-										<h4 class="font-blue sbold uppercase">Transaction Detail</h4>
 											<div class="tabbable-line tabbable-full-width">
 												<ul class="nav nav-tabs">
 													<li class="active">
@@ -467,7 +466,7 @@
 													</li>
 												</ul>
 											</div>
-											<div class="tab-content">
+											<div class="tab-content" style="margin-top:20px">
 												<div class="tab-pane active" id="max_consultation_quota">
 													<!-- BEGIN: Comments -->
 													<div class="mt-comments">
@@ -551,8 +550,8 @@
                                                                                 </label>
                                                                             </div>
                                                                             <div class="col-md-8">
-                                                                                <div class="container1">
-                                                                                    <button class="btn btn-primary add_form_field_diagnosis" style="margin-bottom:10px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
+                                                                                <div class="container4">
+                                                                                    <button class="btn btn-primary add_form_field_diagnosis" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
                                                                                     <br>
                                                                                     @if(isset($result['diagnosis']) && $result['diagnosis'] != null)
                                                                                         <input type="hidden" name="id_setting" value="{{$result['diagnosis']['id_setting']}}"/>
@@ -604,7 +603,7 @@
                                                                             </div>
                                                                             <div class="col-md-8">
                                                                                 <div class="container1">
-                                                                                    <button class="btn btn-primary add_form_field" style="margin-bottom:10px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
+                                                                                    <button class="btn btn-primary add_form_field" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
                                                                                     <br>
                                                                                     @if(isset($result['usage_rules']) && $result['usage_rules'] != null)
                                                                                         <input type="hidden" name="id_setting" value="{{$result['usage_rules']['id_setting']}}"/>
@@ -655,8 +654,8 @@
                                                                                 </label>
                                                                             </div>
                                                                             <div class="col-md-8">
-                                                                                <div class="container1">
-                                                                                    <button class="btn btn-primary add_form_field_time" style="margin-bottom:10px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
+                                                                                <div class="container2">
+                                                                                    <button class="btn btn-primary add_form_field_time" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
                                                                                     <br>
                                                                                     @if(isset($result['usage_rules_time']) && $result['usage_rules_time'] != null)
                                                                                         <input type="hidden" name="id_setting" value="{{$result['usage_rules_time']['id_setting']}}"/>
@@ -707,8 +706,8 @@
                                                                                 </label>
                                                                             </div>
                                                                             <div class="col-md-8">
-                                                                                <div class="container1">
-                                                                                    <button class="btn btn-primary add_form_field_additional_time" style="margin-bottom:10px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
+                                                                                <div class="container3">
+                                                                                    <button class="btn btn-primary add_form_field_additional_time" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
                                                                                     <br>
                                                                                     @if(isset($result['usage_rules_additional_time']) && $result['usage_rules_additional_time'] != null)
                                                                                         <input type="hidden" name="id_setting" value="{{$result['usage_rules_additional_time']['id_setting']}}"/>

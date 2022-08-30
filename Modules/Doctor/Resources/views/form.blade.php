@@ -174,8 +174,11 @@
             }
         }
 
-		var countJ = parseInt($("#count_array").val()) + 1;
-		var j=countJ;
+		var countJ = parseInt($("#count_array").val());
+		var j = 1;
+		if(countJ > 0){
+			var j=countJ + 1;
+		}
 		function addSchedule() {
             var html =  '<div class="form-group" id="div_schedule_child_'+j+'">'+
 						'<div class="col-md-1" style="text-align: right">'+
@@ -200,7 +203,7 @@
 						'<div class="form-group">'+
 						'<div class="col-md-3"></div>'+
 						'<div class="col-md-4">'+
-						'<a class="btn btn-primary" onclick="addShiftPreparation('+j+')">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>'+
+						'<a class="btn btn-primary" onclick="addShift('+j+')">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>'+
 						'</div>'+
 						'</div>'+
 						'<div class="form-group">'+
@@ -236,19 +239,20 @@
             j++;
         }
         
-        function addShiftPreparation(j) {
-			var countTime = parseInt($('#count_array_time_'+j).val());
-			var i=1;
-			if(countTime > 0) {
-				var i=countTime+1; 
-			}
+        // function addShiftPreparation(j) {
+		// 	var countTime = parseInt($('#count_array_time_'+j).val());
+		// 	var i=1;
+		// 	if(countTime > 0) {
+		// 		var i=countTime+1; 
+		// 	}
 
-			console.log("iii"+i);
+		// 	console.log("iii"+i);
 
-			addShift(j, i);
-		}
+		// 	addShift(j, i);
+		// }
 
-        function addShift(j, i) {
+		var i = 20;
+        function addShift(j) {
             var html =  '<div class="form-group" id="div_shift_child_'+j+'_'+i+'">'+
 						'<div class="col-md-3"></div>'+
 						'<div class="col-md-3">'+
@@ -836,7 +840,7 @@
 											<div class="form-group">
 												<div class="col-md-3"></div>
 												<div class="col-md-4">
-													<a class="btn btn-primary" onclick="addShiftPreparation({{$key}})">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
+													<a class="btn btn-primary" onclick="addShift({{$key}})">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
 												</div>
 											</div>
 											<div class="form-group">
@@ -901,7 +905,7 @@
 											<div class="form-group">
 												<div class="col-md-3"></div>
 												<div class="col-md-4">
-													<a class="btn btn-primary" onclick="addShiftPreparation(0)">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
+													<a class="btn btn-primary" onclick="addShift(0)">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
 												</div>
 											</div>
 											<div class="form-group">
