@@ -142,7 +142,7 @@
 				e.preventDefault();
 				if (x < max_fields3) {
 					x++;
-					$(wrapper).append('<div><div class="col-md-8" style="margin-top:10px;"><input type="text" name="value[]" placeholder="Aturan Tambahan Penggunaan ex: Sebelum Tidur" class="form-control" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div> </div>'); //add input box
+					$(wrapper3).append('<div><div class="col-md-8" style="margin-top:10px;"><input type="text" name="value[]" placeholder="Aturan Tambahan Penggunaan ex: Sebelum Tidur" class="form-control" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div> </div>'); //add input box
 				} else {
 					alert('You Reached the limits')
 				}
