@@ -415,11 +415,11 @@
 										<label class="col-md-3 control-label">
 										ID Card Number
 										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Masukkan Nomor Kartu Identitas" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="Masukkan Nomor Kartu Identitas dengan 16 digit karakter" data-container="body"></i>
 										</label>
 									</div>
 									<div class="col-md-7">
-										<input type="text" name="id_card_number" placeholder="Id Card Number (Required)" value="{{isset($doctor) ? $doctor['id_card_number'] : ''}}" class="form-control" required onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" pattern='.{16}' />
+										<input type="text" name="id_card_number" placeholder="Id Card Number (Required) Must Contain 16 Digit Characters" value="{{isset($doctor) ? $doctor['id_card_number'] : ''}}" class="form-control" required onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" pattern='.{16}' />
 									</div>
 								</div>
 								<div class="form-group">
@@ -617,11 +617,11 @@
 										<label class="col-md-3 control-label">
 										Practice Experience
 										<span class="required" aria-required="true"> * </span>
-										<i class="fa fa-question-circle tooltips" data-original-title="Masukkan jumlah tahun praktek" data-container="body"></i>
+										<i class="fa fa-question-circle tooltips" data-original-title="Masukkan jumlah tahun dan bulan praktek" data-container="body"></i>
 										</label>
 									</div>
 									<div class="col-md-7">
-										<input type="text" name="practice_experience" placeholder="Practice Experience Years / Months (Required)" value="{{isset($doctor) ? $doctor['practice_experience'] : ''}}" class="form-control" required />
+										<input type="text" name="practice_experience" placeholder="Practice Experience (Required) ex: 4 years 7 month" value="{{isset($doctor) ? $doctor['practice_experience'] : ''}}" class="form-control" required />
 									</div>
 								</div>
 								<div class="form-group">

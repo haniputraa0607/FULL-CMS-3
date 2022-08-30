@@ -94,6 +94,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
+    Route::post('consultation/{type}/update', 'SettingController@updateConsultationSetting');
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()

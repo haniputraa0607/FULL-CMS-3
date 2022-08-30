@@ -1144,11 +1144,23 @@ return [
 				],
 				[
                     'label' => 'Consultation',
-                    'required_features' => [351],
-                    'active' => '\View::shared("menu_active") == "consultation"',
-                    'url' => 'consultation/be',
-                    'icon' => 'fa fa-user'
-                ],
+                    'icon' => 'fa fa-user',
+					'required_features' => [351],
+                    'children' => [
+                        [
+                            'label' => 'List Consultation',
+                            'required_features' => [351],
+                            'active' => '\View::shared("menu_active") == "consultation"',
+                            'url' => 'consultation/be'
+                        ],
+                        [
+                            'label' => 'Setting Consultation',
+                            'required_features' => [348],
+                            'active' => '\View::shared("menu_active") == "consultation-settings"',
+                            'url' => 'setting/consultation_setting',
+						]
+                    ]
+				]
             ]
         ],
 
@@ -2681,12 +2693,12 @@ return [
 					'url' => 'setting/time-expired',
 					'icon' => 'fa fa-envelope'
 				],
-				[
-					'label' => 'Settings Max Quota Consultations',
-					'required_features' => [348],
-					'url' => 'setting/max_consultation_quota',
-					'icon' => 'fa fa-file'
-				],
+				// [
+				// 	'label' => 'Settings Max Quota Consultations',
+				// 	'required_features' => [348],
+				// 	'url' => 'setting/max_consultation_quota',
+				// 	'icon' => 'fa fa-file'
+				// ],
 			],
 		],
         [
