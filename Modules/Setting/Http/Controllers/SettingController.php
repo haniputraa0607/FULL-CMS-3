@@ -162,10 +162,10 @@ class SettingController extends Controller
             $span = 'credit_card_payment_gateway';
             $colInput = 4;
             $colLabel = 3;
-        } elseif ($key == 'max_consultation_quota') {
-            $sub = 'max-consultation-quota';
-            $active = 'max-consultation-quota';
-            $subTitle = 'Maximum Consultation Quota';
+        } elseif ($key == 'consultation_setting') {
+            $sub = 'consultation-setting';
+            $active = 'consultation-setting';
+            $subTitle = 'Consultation Setting';
         } elseif ($key == 'privacypolicy') {
             $sub = 'about-privacy-policy';
             $active = 'privacy-policy';
@@ -208,14 +208,43 @@ class SettingController extends Controller
             $data['value'] = $result['value'];
             $data['key'] = 'value';
             return view('setting::default_outlet', $data);
-        } elseif ($key == 'max_consultation_quota') {
-            $request = MyHelper::post('setting', ['key-like' => $key]);
-            if (isset($request['status']) && $request['status'] == 'success') {
-                $data['result'] = $request['result'];
-                return view('setting::max-consultation-quota', $data);
-            } else {
-                return view('setting::max-consultation-quota',$data);
+        } elseif ($key == 'consultation_setting') {
+            $result = [];
+            $max_consultation = MyHelper::post('setting', ['key' => 'max_consultation_quota']);
+            $diagnosis = MyHelper::post('setting', ['key' => 'diagnosis']);
+            $usage_rules = MyHelper::post('setting', ['key' => 'usage_rules']);
+            $usage_rules_time = MyHelper::post('setting', ['key' => 'usage_rules_time']);
+            $usage_rules_additional_time = MyHelper::post('setting', ['key' => 'usage_rules_additional_time']);
+
+            if (isset($max_consultation['status']) && $max_consultation['status'] == 'success') {
+                $result['max_consultation_quota'] = $max_consultation['result'];
             }
+
+            if (isset($diagnosis['status']) && $diagnosis['status'] == 'success') {
+                $result['diagnosis'] = $diagnosis['result'];
+                $result['diagnosis']['value'] = json_decode($diagnosis['result']['value']);
+            }
+
+            if (isset($usage_rules['status']) && $usage_rules['status'] == 'success') {
+                $result['usage_rules'] = $usage_rules['result'];
+                $result['usage_rules']['value'] = json_decode($usage_rules['result']['value']);
+            }
+
+            if (isset($usage_rules_time['status']) && $usage_rules_time['status'] == 'success') {
+                $result['usage_rules_time'] = $usage_rules_time['result'];
+                $result['usage_rules_time']['value'] = json_decode($usage_rules_time['result']['value']);
+            }
+
+            if (isset($usage_rules_additional_time['status']) && $usage_rules_additional_time['status'] == 'success') {
+                $result['usage_rules_additional_time'] = $usage_rules_additional_time['result'];
+                $result['usage_rules_additional_time']['value'] = json_decode($usage_rules_additional_time['result']['value']);
+            }
+
+            if (!empty($result)) {
+                $data['result'] = $result;
+            }
+
+            return view('setting::max-consultation-quota',$data);
         } else{
             $request = MyHelper::post('setting', ['key' => $key]);
 
@@ -233,6 +262,7 @@ class SettingController extends Controller
             } else {
                 return view('setting::index', $data)->withErrors($request['messages']);
             }
+            
             return view('setting::index', $data);
         }
     }
@@ -251,6 +281,18 @@ class SettingController extends Controller
         $post = $request->except('_token');
 
         $update = MyHelper::post('setting/reset/'.$type.'/update', $post);
+        return parent::redirect($update, 'Setting data has been updated.');
+    }
+
+    public function updateConsultationSetting(Request $request, $type)
+    {
+        $post = $request->except('_token');
+
+        if (strpos($type, 'usage_rules') !== false || strpos($type, 'diagnosis') !== false) {
+            $post['value'] = json_encode($post['value']);
+        }
+
+        $update = MyHelper::post('setting/consultation/'.$type.'/update', $post);
         return parent::redirect($update, 'Setting data has been updated.');
     }
 
