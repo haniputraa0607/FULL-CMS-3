@@ -1765,12 +1765,7 @@ return [
                                     'label' => '[Forward] Update Promo Campaign',
                                     'required_features' => [],
                                     'url' => 'autoresponse/promo-campaign/update-promo-campaign'
-                                ],
-                                [
-                                    'label' => 'Share Promo Code Message',
-                                    'required_features' => [],
-                                    'url' => 'promo-campaign/share-promo'
-                                ],
+                                ]
                             ],
                         ],
                     ],
