@@ -212,6 +212,7 @@ class SettingController extends Controller
             $result = [];
             $max_consultation = MyHelper::post('setting', ['key' => 'max_consultation_quota']);
             $diagnosis = MyHelper::post('setting', ['key' => 'diagnosis']);
+            $complaints = MyHelper::post('setting', ['key' => 'complaints']);
             $usage_rules = MyHelper::post('setting', ['key' => 'usage_rules']);
             $usage_rules_time = MyHelper::post('setting', ['key' => 'usage_rules_time']);
             $usage_rules_additional_time = MyHelper::post('setting', ['key' => 'usage_rules_additional_time']);
@@ -223,6 +224,11 @@ class SettingController extends Controller
             if (isset($diagnosis['status']) && $diagnosis['status'] == 'success') {
                 $result['diagnosis'] = $diagnosis['result'];
                 $result['diagnosis']['value'] = json_decode($diagnosis['result']['value']);
+            }
+
+            if (isset($complaints['status']) && $complaints['status'] == 'success') {
+                $result['complaints'] = $complaints['result'];
+                $result['complaints']['value'] = json_decode($complaints['result']['value']);
             }
 
             if (isset($usage_rules['status']) && $usage_rules['status'] == 'success') {
@@ -288,7 +294,7 @@ class SettingController extends Controller
     {
         $post = $request->except('_token');
 
-        if (strpos($type, 'usage_rules') !== false || strpos($type, 'diagnosis') !== false) {
+        if (str_contains($type, 'usage_rules') !== false || strpos($type, 'diagnosis') !== false || strpos($type, 'complaints') !== false) {
             $post['value'] = json_encode($post['value']);
         }
 

@@ -174,6 +174,27 @@
 				$(this).parent('div').parent('div').remove();
 				x--;
 			})
+
+            var max_fields5 = 10;
+			var wrapper5 = $(".container5");
+			var add_button5 = $(".add_form_field_complaints");
+
+			var x = 1;
+			$(add_button5).click(function(e) {
+				e.preventDefault();
+				if (x < max_fields5) {
+					x++;
+					$(wrapper5).append('<div><div class="col-md-8" style="margin-top:10px;"><input type="text" name="value[]" placeholder="Pilihan Keluhan , ex: Kulit Perih dan Gatal" class="form-control" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div> </div>'); //add input box
+				} else {
+					alert('You Reached the limits')
+				}
+			});
+
+			$(wrapper5).on("click", ".delete", function(e) {
+				e.preventDefault();
+				$(this).parent('div').parent('div').remove();
+				x--;
+			})
         })
     </script>
 	<script>
@@ -455,6 +476,9 @@
                                                     <li>
 														<a href="#diagnosis" data-toggle="tab"> Diagnosa </a>
 													</li>
+                                                    <li>
+														<a href="#complaints" data-toggle="tab"> Keluhan </a>
+													</li>
 													<li>
 														<a href="#usage_rules" data-toggle="tab"> Aturan Penggunaan </a>
 													</li>
@@ -560,6 +584,58 @@
                                                                                         @endforeach
                                                                                     @else
                                                                                         <div><div class="col-md-8"><input type="text" name="value[]" placeholder="Pilihan Diagnosis , ex: Kulit Kusam" class="form-control" /></div></div>
+                                                                                    @endif
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-actions">
+                                                                        <div class="row">
+                                                                            <div class="col-md-offset-3 col-md-10">
+                                                                                <button type="submit" class="btn green">
+                                                                                    <i class="fa fa-check"></i> Update</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+													</div>
+													<!-- END: Comments -->
+                                                </div>
+                                                <div class="tab-pane" id="complaints">
+                                                    <!-- BEGIN: Comments -->
+													<div class="mt-comments">
+                                                        <div class="portlet light form-fit bordered">
+                                                            <div class="portlet-title">
+                                                                <div class="caption">
+                                                                    <i class=" icon-layers font-green"></i>
+                                                                    <span class="caption-subject font-green bold uppercase">{{ $subTitle }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="portlet-body form">
+                                                                <form class="form-horizontal" action="{{ url('setting/consultation/complaints/update') }}" method="post">
+                                                                {{ csrf_field() }}
+                                                                <div class="form-body">
+                                                                    <div class="form-group">
+                                                                        <div class="input-icon right">
+                                                                                <label class="col-md-4 control-label">
+                                                                                    Opsi Keluhan
+                                                                                <span class="required" aria-required="true"> * </span>
+                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Opsi complaints hasil konsultasi" data-container="body"></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="container5">
+                                                                                    <button class="btn btn-primary add_form_field_complaints" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
+                                                                                    <br>
+                                                                                    @if(isset($result['complaints']) && $result['complaints'] != null)
+                                                                                        <input type="hidden" name="id_setting" value="{{$result['complaints']['id_setting']}}"/>
+                                                                                        @foreach($result['complaints']['value'] as $value)
+                                                                                            <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value[]" placeholder="Pilihan Keluhan , ex: Kulit Gatal dan Perih" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
+                                                                                        @endforeach
+                                                                                    @else
+                                                                                        <div><div class="col-md-8"><input type="text" name="value[]" placeholder="Pilihan Keluhan , ex: Kulit Gatal dan Perih" class="form-control" /></div></div>
                                                                                     @endif
                                                                                 </div>
                                                                             </div>
