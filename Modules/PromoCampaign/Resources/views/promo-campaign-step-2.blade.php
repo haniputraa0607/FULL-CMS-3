@@ -834,11 +834,6 @@
 									<input type="radio" value="Selected" name="filter_outlet" @if(empty($result['is_all_outlet']) && !empty($result['outlets'])) checked @endif required/>
 									<span></span>
 								</label>
-								<label class="mt-radio mt-radio-outline">
-									<i class="fa fa-question-circle tooltips" data-original-title="Promo code hanya berlaku untuk outlet yang terdapat dalam outlet group filter" data-container="body"></i> Outlet Group Filter
-									<input type="radio" value="Outlet Group" name="filter_outlet" @if(empty($result['is_all_outlet']) && !empty($result['outlet_groups'])) checked @endif required/>
-									<span></span>
-								</label>
 
 								{{-- list outlet --}}
 								<div id="selectOutlet" class="form-group" @if($result['is_all_outlet'] == 1  || empty($result['outlets']) ) style="display: none;" @endif>
