@@ -37,11 +37,6 @@
 			],
 			opsi:[]
 		},
-		id_outlet:{
-			display:'Outlet',
-			operator:[],
-			opsi:{!!json_encode($outlets ?? [])!!}
-		},
 		device_type:{
 			display:'Device Type',
 			operator:[
@@ -49,30 +44,6 @@
 			['like','like']
 			],
 			opsi:[]
-		},
-		outlet_count:{
-			display:'Outlet Used Count',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
-		},
-		user_count:{
-			display:'User Used Count',
-			operator:[
-			['=','='],
-			['<','<'],
-			['>','>'],
-			['<=','<='],
-			['>=','>=']
-			],
-			opsi:[],
-			type:'number'
 		}
 	};
 	database={

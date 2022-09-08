@@ -67,7 +67,7 @@
             </label>
             <div class="col-md-8">
                 <div class="input-icon right">
-                    <input type="text" class="form-control" name="product_code" value="{{ $syu['product_code'] }}" required>
+                    <input type="text" class="form-control" name="product_code" value="{{ $syu['product_code'] }}" readonly>
                 </div>
             </div>
         </div>
@@ -80,22 +80,6 @@
                     <input type="text" class="form-control price" name="product_global_price" value="@if(isset($syu['global_price'][0]['product_global_price'])) {{number_format($syu['global_price'][0]['product_global_price'])}} @endif"  @if($product[0]['product_variant_status'] == 1) disabled @endif required>
                     <input type="hidden" id="old_global_price" value="@if(isset($syu['global_price'][0]['product_global_price'])) {{number_format($syu['global_price'][0]['product_global_price'])}} @endif">
                 </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                Brand
-                <span class="required" aria-required="true"> * </span>
-                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-8">
-                <select class="select2 form-control" name="product_brands[]">
-                    @foreach($brands as $brand)
-                    <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('product_brands',array_column($syu['brands'],'id_brand')))) selected="selected" @endif>{{$brand['name_brand']}}</option>
-                    @endforeach
-                </select>
             </div>
         </div>
         <div class="form-group">

@@ -43,6 +43,14 @@
 					 			 		<div>{{ $featured_promo['promo_campaign']['promo_title'] }}</div>
 					 			 		<div>{!! date('d M Y H:i:s',strtotime($featured_promo['date_start']))."<br> - <br>".date('d M Y H:i:s',strtotime($featured_promo['date_end'])) !!}</div>
 					 			 	</div>
+									<div style="text-align: right;">
+										<br>
+										@if(!empty($featured_promo['date_end']) && strtotime(date('Y-m-d H:i:s')) > strtotime($featured_promo['date_end']))
+											<span class="badge badge-dark badge-sm">Expired</span>
+										@else
+											<span class="badge badge-primary badge-sm">Active</span>
+										@endif
+									</div>
 					 			</div>
 					 			@endforeach
 							</div>
