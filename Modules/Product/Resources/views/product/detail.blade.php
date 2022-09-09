@@ -1039,6 +1039,10 @@
         <div class="portlet-title tabbable-line">
             <div class="caption">
                 <span class="caption-subject bold uppercase font-blue">{{ $product[0]['product_name'] }}</span>
+                @if(!empty($product[0]['outlet']['outlet_name']))
+                    <br>
+                    <span class="caption-subject bold uppercase font-blue">Outlet : {{ $product[0]['outlet']['outlet_name'] }}</span>
+                @endif
             </div>
             <ul class="nav nav-tabs">
 

@@ -9,7 +9,6 @@
             <th>Used By</th>
             <th>Used At</th>
             <th>Receipt Number</th>
-            <th>Outlet</th>
             <th>Device</th>
         </tr>
     </thead>

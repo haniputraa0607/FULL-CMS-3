@@ -214,7 +214,6 @@ class PromoCampaignController extends Controller
                     $x['user_name'].' ('.$x['user_phone'].')',
                     $x['created_at'],
                     "<a href='$trxUrl' target='_blank'>{$x['transaction']['transaction_receipt_number']}</a>",
-                    $x['outlet']['outlet_name'],
                     $x['device_type']
                 ];
             },$getPromoCampaignReport['result']);

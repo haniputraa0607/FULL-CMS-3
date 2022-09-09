@@ -224,10 +224,9 @@
                 <thead>
                     <tr>
                         <th> Code </th>
+                        <th> Outlet </th>
                         <th> Category </th>
                         <th> Name </th>
-                        <th> Brand </th>
-                        <!-- <th> Allow Sync </th> -->
                         <th >Visibility Product</th>
                         @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
                             <th> Action </th>
@@ -239,17 +238,15 @@
                         @foreach($product as $key => $value)
                             <tr>
                                 <td>{{ $value['product_code'] }}</td>
+                                <td>
+                                    {{$value['outlet']['outlet_name']??''}}
+                                </td>
                                 @if (empty($value['category']))
                                     <td>Uncategorize</td>
                                 @else
                                     <td>{{ $value['category'][0]['product_category_name']??'Uncategories' }}</td>
                                 @endif
                                 <td>{{ $value['product_name'] }}</td>
-                                <td>
-                                    @foreach ($value['brands'] as $item)
-                                        {{$item['name_brand']}}
-                                    @endforeach
-                                </td>
                                 {{-- <td>
                                     <div class="bootstrap-switch-container">
                                         <span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 35px;"></span>

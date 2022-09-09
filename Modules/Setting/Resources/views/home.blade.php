@@ -899,9 +899,9 @@
 					 			 		@endif
 										<div style="text-align: right;">
 											@if(!empty($banner['banner_end']) && strtotime(date('Y-m-d H:i:s')) > strtotime($banner['banner_end']))
-												<span class="badge badge-primary badge-sm">Expired</span>
+												<span class="badge badge-dark badge-sm">Expired</span>
 											@else
-												<p></p>
+												<span class="badge badge-primary badge-sm">Active</span>
 											@endif
 										</div>
 					 			 	</div>
