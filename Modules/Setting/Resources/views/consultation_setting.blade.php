@@ -127,7 +127,7 @@
 				}
 			});
 
-			$(wrapper2).on("click", ".delete-time", function(e) {
+			$(wrapper2).on("click", ".delete", function(e) {
 				e.preventDefault();
 				$(this).parent('div').parent('div').remove();
 				x--;
@@ -148,7 +148,7 @@
 				}
 			});
 
-			$(wrapper3).on("click", ".delete-time", function(e) {
+			$(wrapper3).on("click", ".delete", function(e) {
 				e.preventDefault();
 				$(this).parent('div').parent('div').remove();
 				x--;
@@ -474,23 +474,14 @@
 														<a href="#max_consultation_quota" data-toggle="tab"> Maks. Kuota Konsultasi </a>
 													</li>
                                                     <li>
-														<a href="#diagnosis" data-toggle="tab"> Diagnosa </a>
+														<a href="#consultation_starts_late" data-toggle="tab"> Maks. Terlambat Konsultasi </a>
 													</li>
                                                     <li>
-														<a href="#complaints" data-toggle="tab"> Keluhan </a>
-													</li>
-													<li>
-														<a href="#usage_rules" data-toggle="tab"> Aturan Penggunaan </a>
-													</li>
-													<li>
-														<a href="#usage_rules_time" data-toggle="tab"> Waktu Penggunaan </a>
-													</li>
-													<li>
-														<a href="#usage_rules_additional_time" data-toggle="tab"> Tambahan Penggunaan </a>
+														<a href="#consultation_starts_early" data-toggle="tab"> Akses Awal Konsultasi </a>
 													</li>
 												</ul>
 											</div>
-											<div class="tab-content" style="margin-top:20px">
+											<div class="tab-content">
 												<div class="tab-pane active" id="max_consultation_quota">
 													<!-- BEGIN: Comments -->
 													<div class="mt-comments">
@@ -551,111 +542,7 @@
 													</div>
 													<!-- END: Comments -->
 												</div>
-                                                <div class="tab-pane" id="diagnosis">
-                                                    <!-- BEGIN: Comments -->
-													<div class="mt-comments">
-                                                        <div class="portlet light form-fit bordered">
-                                                            <div class="portlet-title">
-                                                                <div class="caption">
-                                                                    <i class=" icon-layers font-green"></i>
-                                                                    <span class="caption-subject font-green bold uppercase">{{ $subTitle }}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="portlet-body form">
-                                                                <form class="form-horizontal" action="{{ url('setting/consultation/diagnosis/update') }}" method="post">
-                                                                {{ csrf_field() }}
-                                                                <div class="form-body">
-                                                                    <div class="form-group">
-                                                                        <div class="input-icon right">
-                                                                                <label class="col-md-4 control-label">
-                                                                                    Opsi Diagnosis
-                                                                                <span class="required" aria-required="true"> * </span>
-                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Opsi diagnosis hasil konsultasi" data-container="body"></i>
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="col-md-8">
-                                                                                <div class="container4">
-                                                                                    <button class="btn btn-primary add_form_field_diagnosis" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
-                                                                                    <br>
-                                                                                    @if(isset($result['diagnosis']) && $result['diagnosis'] != null)
-                                                                                        <input type="hidden" name="id_setting" value="{{$result['diagnosis']['id_setting']}}"/>
-                                                                                        @foreach($result['diagnosis']['value'] as $value)
-                                                                                            <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value[]" placeholder="Pilihan Diagnosis , ex: Kulit Kusam" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
-                                                                                        @endforeach
-                                                                                    @else
-                                                                                        <div><div class="col-md-8"><input type="text" name="value[]" placeholder="Pilihan Diagnosis , ex: Kulit Kusam" class="form-control" /></div></div>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-actions">
-                                                                        <div class="row">
-                                                                            <div class="col-md-offset-3 col-md-10">
-                                                                                <button type="submit" class="btn green">
-                                                                                    <i class="fa fa-check"></i> Update</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-													</div>
-													<!-- END: Comments -->
-                                                </div>
-                                                <div class="tab-pane" id="complaints">
-                                                    <!-- BEGIN: Comments -->
-													<div class="mt-comments">
-                                                        <div class="portlet light form-fit bordered">
-                                                            <div class="portlet-title">
-                                                                <div class="caption">
-                                                                    <i class=" icon-layers font-green"></i>
-                                                                    <span class="caption-subject font-green bold uppercase">{{ $subTitle }}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="portlet-body form">
-                                                                <form class="form-horizontal" action="{{ url('setting/consultation/complaints/update') }}" method="post">
-                                                                {{ csrf_field() }}
-                                                                <div class="form-body">
-                                                                    <div class="form-group">
-                                                                        <div class="input-icon right">
-                                                                                <label class="col-md-4 control-label">
-                                                                                    Opsi Keluhan
-                                                                                <span class="required" aria-required="true"> * </span>
-                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Opsi complaints hasil konsultasi" data-container="body"></i>
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="col-md-8">
-                                                                                <div class="container5">
-                                                                                    <button class="btn btn-primary add_form_field_complaints" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
-                                                                                    <br>
-                                                                                    @if(isset($result['complaints']) && $result['complaints'] != null)
-                                                                                        <input type="hidden" name="id_setting" value="{{$result['complaints']['id_setting']}}"/>
-                                                                                        @foreach($result['complaints']['value'] as $value)
-                                                                                            <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value[]" placeholder="Pilihan Keluhan , ex: Kulit Gatal dan Perih" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
-                                                                                        @endforeach
-                                                                                    @else
-                                                                                        <div><div class="col-md-8"><input type="text" name="value[]" placeholder="Pilihan Keluhan , ex: Kulit Gatal dan Perih" class="form-control" /></div></div>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-actions">
-                                                                        <div class="row">
-                                                                            <div class="col-md-offset-3 col-md-10">
-                                                                                <button type="submit" class="btn green">
-                                                                                    <i class="fa fa-check"></i> Update</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-													</div>
-													<!-- END: Comments -->
-                                                </div>
-												<div class="tab-pane" id="usage_rules">
+                                                <div class="tab-pane" id="consultation_starts_late">
 													<!-- BEGIN: Comments -->
 													<div class="mt-comments">
                                                         <div class="portlet light form-fit bordered">
@@ -666,29 +553,37 @@
                                                                 </div>
                                                             </div>
                                                             <div class="portlet-body form">
-                                                                <form class="form-horizontal" action="{{ url('setting/consultation/usage_rules/update') }}" method="post">
+                                                                <form class="form-horizontal" action="{{ url('setting/consultation/consultation_starts_late/update') }}" method="post">
                                                                 {{ csrf_field() }}
                                                                 <div class="form-body">
                                                                     <div class="form-group">
                                                                         <div class="input-icon right">
                                                                                 <label class="col-md-4 control-label">
-                                                                                    Opsi Aturan Penggunaan (Dosis)
+                                                                                    Maks. Terlambat Konsultasi
                                                                                 <span class="required" aria-required="true"> * </span>
-                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Opsi aturan penggunaan dosis obat" data-container="body"></i>
+                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Maksimal terlambat konsultasi dalam menit" data-container="body"></i>
                                                                                 </label>
                                                                             </div>
                                                                             <div class="col-md-8">
-                                                                                <div class="container1">
-                                                                                    <button class="btn btn-primary add_form_field" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
-                                                                                    <br>
-                                                                                    @if(isset($result['usage_rules']) && $result['usage_rules'] != null)
-                                                                                        <input type="hidden" name="id_setting" value="{{$result['usage_rules']['id_setting']}}"/>
-                                                                                        @foreach($result['usage_rules']['value'] as $value)
-                                                                                            <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value[]" placeholder="Aturan Penggunaan Dosis, ex: 3 x 1" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
-                                                                                        @endforeach
+                                                                                <div class="repeat">
+                                                                                    <div data-repeater-list="setting">
+                                                                                    @if(isset($result['consultation_starts_late']) && is_array($result['consultation_starts_late']))
+                                                                                        <div data-repeater-item class="row" style="padding-bottom:20px;">
+                                                                                            <input type="hidden" name="id_setting" value="{{$result['consultation_starts_late']['id_setting']}}"/>
+                                                                                            <div class="col-md-5">
+                                                                                                <input type="text" class="form-control" placeholder="Maks. Terlambat Konsultasi" name="value" value="{{$result['consultation_starts_late']['value']}}"/>
+                                                                                            </div>
+                                                                                            <br>
+                                                                                        </div>
                                                                                     @else
-                                                                                        <div><div class="col-md-8"><input type="text" name="value[]" placeholder="Aturan Penggunaan Dosis ex: 2 x 1" class="form-control" /></div></div>
+                                                                                    <div data-repeater-item class="row" style="padding-bottom:20px;">
+                                                                                            <div class="col-md-5">
+                                                                                                <input type="text" class="form-control" placeholder="Maks. Terlambat Konsultasi" name="value"/>
+                                                                                            </div>
+                                                                                            <br>
+                                                                                        </div>
                                                                                     @endif
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -707,8 +602,8 @@
 													</div>
 													<!-- END: Comments -->
 												</div>
-                                                <div class="tab-pane" id="usage_rules_time">
-                                                    <!-- BEGIN: Comments -->
+                                                <div class="tab-pane" id="consultation_starts_early">
+													<!-- BEGIN: Comments -->
 													<div class="mt-comments">
                                                         <div class="portlet light form-fit bordered">
                                                             <div class="portlet-title">
@@ -718,29 +613,37 @@
                                                                 </div>
                                                             </div>
                                                             <div class="portlet-body form">
-                                                                <form class="form-horizontal" action="{{ url('setting/consultation/usage_rules_time/update') }}" method="post">
+                                                                <form class="form-horizontal" action="{{ url('setting/consultation/consultation_starts_early/update') }}" method="post">
                                                                 {{ csrf_field() }}
                                                                 <div class="form-body">
                                                                     <div class="form-group">
                                                                         <div class="input-icon right">
                                                                                 <label class="col-md-4 control-label">
-                                                                                    Opsi Waktu Penggunaan
+                                                                                    Awal Akses Konsultasi
                                                                                 <span class="required" aria-required="true"> * </span>
-                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Opsi waktu penggunaan obat" data-container="body"></i>
+                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Dapat mengakses konsultasi lebih awal dalam menit" data-container="body"></i>
                                                                                 </label>
                                                                             </div>
                                                                             <div class="col-md-8">
-                                                                                <div class="container2">
-                                                                                    <button class="btn btn-primary add_form_field_time" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
-                                                                                    <br>
-                                                                                    @if(isset($result['usage_rules_time']) && $result['usage_rules_time'] != null)
-                                                                                        <input type="hidden" name="id_setting" value="{{$result['usage_rules_time']['id_setting']}}"/>
-                                                                                        @foreach($result['usage_rules_time']['value'] as $value)
-                                                                                            <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value[]" placeholder="Aturan Waktu Penggunaan ex: Siang" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
-                                                                                        @endforeach
+                                                                                <div class="repeat">
+                                                                                    <div data-repeater-list="setting">
+                                                                                    @if(isset($result['consultation_starts_early']) && is_array($result['consultation_starts_early']))
+                                                                                        <div data-repeater-item class="row" style="padding-bottom:20px;">
+                                                                                            <input type="hidden" name="id_setting" value="{{$result['consultation_starts_early']['id_setting']}}"/>
+                                                                                            <div class="col-md-5">
+                                                                                                <input type="text" class="form-control" placeholder="Awal Akses Konsultasi" name="value" value="{{$result['consultation_starts_early']['value']}}"/>
+                                                                                            </div>
+                                                                                            <br>
+                                                                                        </div>
                                                                                     @else
-                                                                                        <div><div class="col-md-8"><input type="text" name="value[]" placeholder="Aturan Waktu Penggunaan ex: Siang" class="form-control" /></div></div>
+                                                                                    <div data-repeater-item class="row" style="padding-bottom:20px;">
+                                                                                            <div class="col-md-5">
+                                                                                                <input type="text" class="form-control" placeholder="Awal Akses Konsultasi" name="value"/>
+                                                                                            </div>
+                                                                                            <br>
+                                                                                        </div>
                                                                                     @endif
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -758,59 +661,7 @@
                                                         </div>
 													</div>
 													<!-- END: Comments -->
-                                                </div>
-												<div class="tab-pane" id="usage_rules_additional_time">
-                                                    <!-- BEGIN: Comments -->
-													<div class="mt-comments">
-                                                        <div class="portlet light form-fit bordered">
-                                                            <div class="portlet-title">
-                                                                <div class="caption">
-                                                                    <i class=" icon-layers font-green"></i>
-                                                                    <span class="caption-subject font-green bold uppercase">{{ $subTitle }}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="portlet-body form">
-                                                                <form class="form-horizontal" action="{{ url('setting/consultation/usage_rules_additional_time/update') }}" method="post">
-                                                                {{ csrf_field() }}
-                                                                <div class="form-body">
-                                                                    <div class="form-group">
-                                                                        <div class="input-icon right">
-                                                                                <label class="col-md-4 control-label">
-                                                                                    Opsi Tambahan Penggunaan
-                                                                                <span class="required" aria-required="true"> * </span>
-                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Opsi tambahan keterangan waktu penggunaan obat" data-container="body"></i>
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="col-md-8">
-                                                                                <div class="container3">
-                                                                                    <button class="btn btn-primary add_form_field_additional_time" style="margin-bottom:10px; margin-left:15px;">&nbsp;<i class="fa fa-plus-circle"></i> Add </a></button>
-                                                                                    <br>
-                                                                                    @if(isset($result['usage_rules_additional_time']) && $result['usage_rules_additional_time'] != null)
-                                                                                        <input type="hidden" name="id_setting" value="{{$result['usage_rules_additional_time']['id_setting']}}"/>
-                                                                                        @foreach($result['usage_rules_additional_time']['value'] as $value)
-                                                                                            <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value[]" placeholder="Aturan Tambahan Penggunaan ex: Sebelum Tidur" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
-                                                                                        @endforeach
-                                                                                    @else
-                                                                                        <div><div class="col-md-8"><input type="text" name="value[]" placeholder="Aturan Tambahan Penggunaan ex: Sebelum Tidur" class="form-control" /></div></div>
-                                                                                    @endif
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-actions">
-                                                                        <div class="row">
-                                                                            <div class="col-md-offset-3 col-md-10">
-                                                                                <button type="submit" class="btn green">
-                                                                                    <i class="fa fa-check"></i> Update</button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-													</div>
-													<!-- END: Comments -->
-                                                </div>
+												</div>
 											</div>
 										</div>
 								</div>

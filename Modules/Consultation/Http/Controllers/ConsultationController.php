@@ -5,6 +5,7 @@ namespace Modules\Consultation\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Auth;
 
 use App\Lib\MyHelper;
 
@@ -174,5 +175,30 @@ class ConsultationController extends Controller
         //dd($data['result']);
         
         return view('consultation::detail', $data);
+    }
+
+    public function editStatusConsultation($id)
+    {
+        $data = [
+            'title'          => 'Consultation',
+            'sub_title'      => 'Manage Consultation',
+            'menu_active'    => 'consultation',
+            'submenu_active' => 'consultation-list',
+        ];
+
+        $consultation = MyHelper::get('be/consultation/detail/'.$id);
+
+        if($consultation['status'] == 'success') $data['result'] = $consultation['result']; else $data['result'] = null;
+        
+        return view('consultation::edit', $data);
+    }
+
+    public function updateStatusConsultation(Request $request)
+    {
+        $post = $request->except('_token');
+        unset($post['use_reason']);
+
+        $update = MyHelper::post('be/consultation/update', $post);
+        return redirect('consultation/be/'.$post['id_transaction'].'/detail')->with('success',['Update Status Consultation Success']);
     }
 }
