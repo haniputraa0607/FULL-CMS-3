@@ -243,11 +243,9 @@
                                 <td>{{ $value['outlet_name'] }}</td>
                                 @if(MyHelper::hasAccess([95], $configs))
                                 <td>
-                                    <ul style="padding-left: 20px;">
-                                        @foreach ($value['brands'] as $item)
-                                            <li>{{$item['name_brand']}}</li>
-                                        @endforeach
-                                    </ul>
+                                    @foreach ($value['brands'] as $item)
+                                        {{$item['name_brand']}}
+                                    @endforeach
                                 </td>
                                 @endif
                                 @if (empty($value['city']))
