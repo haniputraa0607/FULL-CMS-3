@@ -269,11 +269,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($result['consultation']['disease_complaint'] as $complaint)
+                                        @if(!empty($result['consultation']['disease_complaint']))
+                                            @foreach($result['consultation']['disease_complaint'] as $complaint)
+                                            <tr>
+                                                <td>{{$complaint}}</td>
+                                            </tr>
+                                            @endforeach
+                                        @else
                                         <tr>
-                                            <td>{{$complaint}}</td>
+                                            <td>-</td>
                                         </tr>
-                                        @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                                 <table class="table table-striped table-bordered table-hover dt-responsive" width="100%">
@@ -283,11 +289,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($result['consultation']['disease_analysis'] as $analysis)
+                                        @if(!empty($result['consultation']['disease_analysis']))
+                                            @foreach($result['consultation']['disease_analysis'] as $analysis)
+                                            <tr>
+                                                <td>{{$analysis}}</td>
+                                            </tr>
+                                            @endforeach
+                                        @else
                                         <tr>
-                                            <td>{{$analysis}}</td>
+                                            <td>-</td>
                                         </tr>
-                                        @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                                 <table class="table table-striped table-bordered table-hover dt-responsive" width="100%">
@@ -335,7 +347,7 @@
                                             <td>{{$res['product']['variants'] != null ? $res['product']['variants']['childs'][0]['product_variant_name'] : '-' }}</td>
                                             @php
                                             $product_price = $res['product']['product_price'];
-                                            if($res['product']['variants'] != null){
+                                            if($res['product']['variants'] != null && isset($res['product']['variants']['childs'][0]['product_variant_group_price'])){
                                                 $product_price = $res['product']['variants']['childs'][0]['product_variant_group_price'];
                                             }
                                             @endphp
