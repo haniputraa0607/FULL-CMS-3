@@ -162,9 +162,13 @@ class SettingController extends Controller
             $span = 'credit_card_payment_gateway';
             $colInput = 4;
             $colLabel = 3;
+        } elseif ($key == 'consultation_option_setting') {
+            $sub = 'consultation-option-settings';
+            $active = 'consultation-option-settings';
+            $subTitle = 'Consultation Option Setting';
         } elseif ($key == 'consultation_setting') {
-            $sub = 'consultation-setting';
-            $active = 'consultation-setting';
+            $sub = 'consultation-settings';
+            $active = 'consultation-settings';
             $subTitle = 'Consultation Setting';
         } elseif ($key == 'privacypolicy') {
             $sub = 'about-privacy-policy';
@@ -208,49 +212,67 @@ class SettingController extends Controller
             $data['value'] = $result['value'];
             $data['key'] = 'value';
             return view('setting::default_outlet', $data);
-        } elseif ($key == 'consultation_setting') {
+        } elseif ($key == 'consultation_option_setting') {
             $result = [];
-            $max_consultation = MyHelper::post('setting', ['key' => 'max_consultation_quota']);
             $diagnosis = MyHelper::post('setting', ['key' => 'diagnosis']);
             $complaints = MyHelper::post('setting', ['key' => 'complaints']);
             $usage_rules = MyHelper::post('setting', ['key' => 'usage_rules']);
             $usage_rules_time = MyHelper::post('setting', ['key' => 'usage_rules_time']);
             $usage_rules_additional_time = MyHelper::post('setting', ['key' => 'usage_rules_additional_time']);
 
-            if (isset($max_consultation['status']) && $max_consultation['status'] == 'success') {
-                $result['max_consultation_quota'] = $max_consultation['result'];
-            }
-
             if (isset($diagnosis['status']) && $diagnosis['status'] == 'success') {
                 $result['diagnosis'] = $diagnosis['result'];
-                $result['diagnosis']['value'] = json_decode($diagnosis['result']['value']);
+                $result['diagnosis']['value_text'] = json_decode($diagnosis['result']['value_text']);
             }
 
             if (isset($complaints['status']) && $complaints['status'] == 'success') {
                 $result['complaints'] = $complaints['result'];
-                $result['complaints']['value'] = json_decode($complaints['result']['value']);
+                $result['complaints']['value_text'] = json_decode($complaints['result']['value_text']);
             }
 
             if (isset($usage_rules['status']) && $usage_rules['status'] == 'success') {
                 $result['usage_rules'] = $usage_rules['result'];
-                $result['usage_rules']['value'] = json_decode($usage_rules['result']['value']);
+                $result['usage_rules']['value_text'] = json_decode($usage_rules['result']['value_text']);
             }
 
             if (isset($usage_rules_time['status']) && $usage_rules_time['status'] == 'success') {
                 $result['usage_rules_time'] = $usage_rules_time['result'];
-                $result['usage_rules_time']['value'] = json_decode($usage_rules_time['result']['value']);
+                $result['usage_rules_time']['value_text'] = json_decode($usage_rules_time['result']['value_text']);
             }
 
             if (isset($usage_rules_additional_time['status']) && $usage_rules_additional_time['status'] == 'success') {
                 $result['usage_rules_additional_time'] = $usage_rules_additional_time['result'];
-                $result['usage_rules_additional_time']['value'] = json_decode($usage_rules_additional_time['result']['value']);
+                $result['usage_rules_additional_time']['value_text'] = json_decode($usage_rules_additional_time['result']['value_text']);
             }
 
             if (!empty($result)) {
                 $data['result'] = $result;
             }
 
-            return view('setting::max-consultation-quota',$data);
+            return view('setting::consultation_option_setting',$data);
+        } elseif ($key == 'consultation_setting') {
+            $result = [];
+            $max_consultation = MyHelper::post('setting', ['key' => 'max_consultation_quota']);
+            $consultation_starts_early = MyHelper::post('setting', ['key' => 'consultation_starts_early']);
+            $consultation_starts_late = MyHelper::post('setting', ['key' => 'consultation_starts_late']);
+
+            if (isset($max_consultation['status']) && $max_consultation['status'] == 'success') {
+                $result['max_consultation_quota'] = $max_consultation['result'];
+            }
+
+            if (isset($consultation_starts_early['status']) && $consultation_starts_early['status'] == 'success') {
+                $result['consultation_starts_early'] = $consultation_starts_early['result'];
+            }
+
+            if (isset($consultation_starts_late['status']) && $consultation_starts_late['status'] == 'success') {
+                $result['consultation_starts_late'] = $consultation_starts_late['result'];
+            }
+
+            if (!empty($result)) {
+                $data['result'] = $result;
+            }
+
+            return view('setting::consultation_setting',$data);
         } else{
             $request = MyHelper::post('setting', ['key' => $key]);
 
@@ -295,7 +317,7 @@ class SettingController extends Controller
         $post = $request->except('_token');
 
         if (str_contains($type, 'usage_rules') !== false || strpos($type, 'diagnosis') !== false || strpos($type, 'complaints') !== false) {
-            $post['value'] = json_encode($post['value']);
+            $post['value_text'] = json_encode($post['value_text']);
         }
 
         $update = MyHelper::post('setting/consultation/'.$type.'/update', $post);

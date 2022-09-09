@@ -114,29 +114,68 @@ $grantedFeature     = session('granted_features');
 				serverSide: true,
 				columns: [
 					{
+						data: "id_transaction",
+						render: function(value, type, row) {
+							return `
+								@if(MyHelper::hasAccess([330], $grantedFeature))
+								<a href="{{url('consultation/be')}}/${value}/detail" class="btn btn-block yellow btn-xs"><i class="icon-pencil"></i> Detail</a>
+								@endif
+							`;
+						},
+					},
+					// {
+					// 	data: "consultation.consultation_status",
+					// 	render: function(data){return `<span class="badge badge-default badge-sm" style="background-color:#ff0000">${data}</span>`;}
+					// },
+					{ 
+						data: 'consultation.consultation_status',
+						render: function(data){
+							console.log('Content of data is : '+data);
+							sev='';
+							switch (data){
+							case 'soon':
+							sev = '<span class="badge badge-default badge-sm" style="background-color:#cccccc">'+data+'</span>';
+							break;
+							case 'ongoing':
+							sev = '<span class="badge badge-default badge-sm" style="background-color:#ffd633">'+data+'</span>';
+							break;
+							case 'done':
+							sev = '<span class="badge badge-default badge-sm" style="background-color:#009900">'+data+'</span>';
+							break;
+							case 'completed':
+							sev = '<span class="badge badge-default badge-sm" style="background-color:#009900">'+data+'</span>';
+							break;
+							case 'missed':
+							sev = '<span class="badge badge-default badge-sm" style="background-color:#ff0000">'+data+'</span>';
+							break;
+							}
+							return sev;
+							console.log('Content of sev is : '+data);
+						},
+					},
+					{
 						data: "transaction_receipt_number",
+						render: function(data) {return `TRX${data}`;},
 					},
 					{
 						data: "transaction_date",
+						render: function(data) {return moment(data).format('DD MMMM YYYY HH:mm');},
 					},
 					{
 						data: "outlet.outlet_name",
 					},
 					{
-						data: "consultation.consultation_type"
+						data: "consultation.doctor.doctor_name",
 					},
 					{
-						data: "id_transaction",
-						render: function(value, type, row) {
-							return `
-								@if(MyHelper::hasAccess([330], $grantedFeature))
-								<a href="{{url('consultation/be')}}/${value}/detail" class="btn yellow btn-sm" style="margin-bottom:5px">Detail</a>
-								@endif
-							`;
-						},
+						data: "consultation.user.name",
+					},
+					{
+						data: "consultation.consultation_type"
 					}
 				],
-				searching: false
+				searching: false,
+				ordering: false
 			});
 		})
 	</script>
@@ -174,22 +213,23 @@ $grantedFeature     = session('granted_features');
 					</div>
 				</div>
 				<div class="portlet-body">
-					<div class="table-scrollable">
-						<table class="table table-striped table-bordered table-hover" id="table-consultation">
-							<thead>
-							<tr>
-								<th scope="col"> Transaction Receipt Number </th>
-								<th scope="col"> Date </th>
-                                <th scope="col"> Outlet </th>
-								<th scope="col"> Consultation Type </th>
-								<th> </th>
-							</tr>
-							</thead>
-							<tbody>
-	
-							</tbody>
-						</table>
-					</div>
+					<table class="table table-striped table-bordered table-hover" id="table-consultation">
+						<thead>
+						<tr>
+							<th> </th>
+							<th scope="col"> Consulation Status </th>
+							<th scope="col"> Transaction Receipt Number </th>
+							<th scope="col"> Date </th>
+							<th scope="col"> Outlet </th>
+							<th scope="col"> Doctor </th>
+							<th scope="col"> Customer </th>
+							<th scope="col"> Consultation Type </th>
+						</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

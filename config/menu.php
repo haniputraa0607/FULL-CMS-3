@@ -1154,6 +1154,12 @@ return [
                             'url' => 'consultation/be'
                         ],
                         [
+                            'label' => 'Option Consultation',
+                            'required_features' => [348],
+                            'active' => '\View::shared("menu_active") == "consultation-option-settings"',
+                            'url' => 'setting/consultation_option_setting',
+						],
+                        [
                             'label' => 'Setting Consultation',
                             'required_features' => [348],
                             'active' => '\View::shared("menu_active") == "consultation-settings"',
@@ -2629,7 +2635,7 @@ return [
 				],
 				[
 					'label' => 'Version Control',
-					'required_features' => [471],
+					'required_features' => [354],
 					'active' => '\View::shared("menu_active") == "setting-version"',
 					'url' => 'version',
 					'icon' => 'fa fa-info-circle'

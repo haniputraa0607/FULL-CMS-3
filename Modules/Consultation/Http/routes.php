@@ -9,4 +9,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'consulta
     Route::get('/be', 'ConsultationController@index');
     Route::post('/be', 'ConsultationController@filter');
     Route::get('be/{id}/detail', 'ConsultationController@detail');
+    Route::get('be/{id}/edit', 'ConsultationController@editStatusConsultation');
+    Route::post('be/{id}/update', 'ConsultationController@updateStatusConsultation');
 });
