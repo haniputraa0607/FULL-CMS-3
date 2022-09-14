@@ -330,10 +330,10 @@ class DoctorController extends Controller
                 break;
             default:
                 $data['click_inbox'] = [
-                    ['value' => "History Transaction",'title' => 'History Transaction']
+                    ['value' => "Doctor Pin Sent",'title' => 'Doctor Pin Sent']
                 ];
                 $data['click_notification'] = [
-                    ['value' => 'History Transaction','title' => 'History Transaction']
+                    ['value' => 'Doctor Pin Sent','title' => 'Doctor Pin Sent']
                 ];
                 break;
         }
@@ -375,10 +375,6 @@ class DoctorController extends Controller
 			$data['textreplaces'] = $test['result'];
 			$data['subject'] = $subject;
 		}
-
-        if($subject == 'merchant-transaction-new'){
-            $data['textreplaces'] = [];
-        }
 
         $custom = [];
         if (isset($data['data']['custom_text_replace'])) {

@@ -72,6 +72,32 @@
                 tmp.splice(index, 1);
             }
         }
+
+        
+        $('.schedule_date').change(function () {
+            var id = $(this).find(':selected')[0].id;
+            $.ajax({
+                type: 'POST',
+                url: '{{ url('consultation/be/get-schedule-time') }}',
+                data: {
+                    '_token': '{{csrf_token()}}',
+                    'id_doctor_schedule': id
+                },
+                success: function (data) {
+                    var $schedule_start_time = $('.schedule_start_time');
+                    $schedule_start_time.empty();
+                    $schedule_start_time.append('<option value="">-</option>');
+                    for (var i = 0; i < data.length; i++) {
+                        $schedule_start_time.append('<option id="' + data[i].end_time + '" value="' + data[i].start_time + '">' + data[i].start_time + '</option>');
+                    }
+                }
+            });
+        });
+
+        $('.schedule_start_time').change(function () {
+            var id = $(this).find(':selected')[0].id;
+            document.getElementById("schedule_end_time").value = id;
+        });
     </script>
 @endsection
 
@@ -96,62 +122,90 @@
         </ul>
     </div><br>
 
-    @include('layouts.notifications')
-    <div class="portlet light bordered">
-        <div class="portlet-title">
-            <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">{{$sub_title??""}}</span>
-            </div>
-        </div>
-        <div class="portlet-body form">
-            <form class="form-horizontal" id="form_submit" role="form" action="{{url('consultation/be', $result['transaction']['id_transaction'])}}/update" method="POST">
-                {{ csrf_field() }}
-                <div class="form-body">
-                    <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Consultation Status <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
-                        </label>
-                        <div class="col-md-3">
-                            <input type="hidden" name="id_transaction" value="{{$result['transaction']['id_transaction']}}">
-                            <select class="form-control select2" name="consultation_status" required>
-                                <option></option>
-                                <option value="soon">Soon</option>
-                                <option value="ongoing">Ongoing</option>
-                                <option value="done">Done</option>
-                                <option value="completed">Completed</option>
-                                <option value="missed">Missed</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-12">
-                        <center>
-                            <label for="multiple" style="padding-top:8px;">Perubahan Data Konsultasi akan tercatat sebagai user pengubah adalah <b>{{$result['modifier_user']['name']}}</b><label>
-                                <input type="hidden" name="id_user_modifier" value="{{$result['modifier_user']['id']}}">
-                            </div>
-                        </center>
-                    </div>
-                    <div class="form-group">
-                        <label for="multiple" class="control-label col-md-3">Use Reason</label>
-                        <div class="col-md-8" style="margin-top: 0.7%">
-                            <label><input type="checkbox" class="use_reason" name="use_reason" value="1" onClick="valueChanged()"></label>
-                        </div>
-                    </div>
-                    <div id="use_reason_field" style="display: none">
-                        <div class="form-group">
-                            <label for="multiple" class="control-label col-md-3">Consultation Status <span class="required" aria-required="true"> * </span>
-                                <i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
-                            </label>
-                            <div class="col-md-7">
-                                <textarea type="text" name="reason_status_change" placeholder="Input your address here..." class="form-control" required>{{isset($doctor) ? $doctor['address'] : ''}}</textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-actions" style="text-align: center">
-                    <button class="btn blue">Submit</button>
-                </div>
-            </form>
+@include('layouts.notifications')
+<div class="portlet light bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <span class="caption-subject font-blue sbold uppercase">{{$sub_title??""}}</span>
         </div>
     </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal" id="form_submit" role="form" action="{{url('consultation/be', $result['transaction']['id_transaction'])}}/update" method="POST">
+            {{ csrf_field() }}
+            <div class="form-body">
+                <div class="form-group">
+                    <label for="multiple" class="control-label col-md-3"> Doctor Schedule <span class="required" aria-required="true"> * </span>
+                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
+                    </label>
+                    <div class="col-md-4">
+                        <input type="hidden" name="id_transaction" value="{{$result['transaction']['id_transaction']}}">
+                        @php $dateFormatted = date('d-m-Y', strtotime($result['consultation']['schedule_date'])); @endphp
+                        <select class="form-control select2 schedule_date" name="schedule_date" required>
+                            @if(!empty($result['schedule']))
+                                @foreach($result['schedule'] as $schedule)
+                                    <option id="{{$schedule['id_doctor_schedule']}}" value="{{$schedule['date']}}" {{$dateFormatted == $schedule['date'] ? 'selected' : ''}}>[{{$schedule['day']}}] {{$schedule['date']}}</option>
+                                @endforeach
+                            @else
+                                <option>-</option>
+                            @endif
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        @php $timeFormatted = date('H:i', strtotime($result['consultation']['schedule_start_time'])); @endphp
+                        <select class="form-control select2 schedule_start_time" name="schedule_start_time" required>
+                        @if(!empty($result['selected_schedule_time']))
+                            @foreach($result['selected_schedule_time'] as $time)
+                                <option id="{{$time['end_time']}}" value="{{$time['start_time']}}" {{$timeFormatted == $time['start_time'] ? 'selected' : ''}}>{{$time['start_time']}}</option>
+                            @endforeach
+                        @else
+                            <option>-</option>
+                        @endif
+                        </select>
+                        <input type="hidden" id="schedule_end_time" name="schedule_end_time" value="{{$result['consultation']['schedule_end_time']}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="multiple" class="control-label col-md-3">Consultation Status <span class="required" aria-required="true"> * </span>
+                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
+                    </label>
+                    <div class="col-md-3">
+                        <select class="form-control select2" name="consultation_status" required>
+                            <option></option>
+                            <option value="soon" {{$result['consultation']['consultation_status'] == "soon" ? 'selected' : ''}}>Soon</option>
+                            <option value="ongoing" {{$result['consultation']['consultation_status'] == "ongoing" ? 'selected' : ''}}>Ongoing</option>
+                            <option value="done" {{$result['consultation']['consultation_status'] == "done" ? 'selected' : ''}}>Done</option>
+                            <option value="completed" {{$result['consultation']['consultation_status'] == "completed" ? 'selected' : ''}}>Completed</option>
+                            <option value="missed" {{$result['consultation']['consultation_status'] == "missed" ? 'selected' : ''}}>Missed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                    <center>
+                        <label for="multiple" style="padding-top:8px;">Perubahan Data Konsultasi akan tercatat sebagai user pengubah adalah <b>{{$result['modifier_user']['name']}}</b><label>
+                            <input type="hidden" name="id_user_modifier" value="{{$result['modifier_user']['id']}}">
+                        </div>
+                    </center>
+                </div>
+                <div class="form-group">
+                    <label for="multiple" class="control-label col-md-3">Use Reason</label>
+                    <div class="col-md-8" style="margin-top: 0.7%">
+                        <label><input type="checkbox" class="use_reason" name="use_reason" value="1" onClick="valueChanged()"></label>
+                    </div>
+                </div>
+                <div id="use_reason_field" style="display: none">
+                    <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3">Change Status Reason</label>
+                        <div class="col-md-7">
+                            <textarea type="text" name="reason_status_change" placeholder="Input your address here..." class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions" style="text-align: center">
+                <button class="btn blue">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
 @endsection

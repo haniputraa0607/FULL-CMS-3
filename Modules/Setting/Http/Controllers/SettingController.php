@@ -255,6 +255,7 @@ class SettingController extends Controller
             $max_consultation = MyHelper::post('setting', ['key' => 'max_consultation_quota']);
             $consultation_starts_early = MyHelper::post('setting', ['key' => 'consultation_starts_early']);
             $consultation_starts_late = MyHelper::post('setting', ['key' => 'consultation_starts_late']);
+            $max_reschedule_settings = MyHelper::post('setting', ['key' => 'max_reschedule_settings']);
 
             if (isset($max_consultation['status']) && $max_consultation['status'] == 'success') {
                 $result['max_consultation_quota'] = $max_consultation['result'];
@@ -266,6 +267,10 @@ class SettingController extends Controller
 
             if (isset($consultation_starts_late['status']) && $consultation_starts_late['status'] == 'success') {
                 $result['consultation_starts_late'] = $consultation_starts_late['result'];
+            }
+
+            if (isset($max_reschedule_settings['status']) && $max_reschedule_settings['status'] == 'success') {
+                $result['max_reschedule_settings'] = $max_reschedule_settings['result'];
             }
 
             if (!empty($result)) {

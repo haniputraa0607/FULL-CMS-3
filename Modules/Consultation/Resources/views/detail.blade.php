@@ -148,7 +148,7 @@
                                     <tbody>
                                             <tr>
                                                 <td>Nomor Transaksi</td>
-                                                <td>{{$result['transaction']['transaction_receipt_number']}}</td>
+                                                <td>TRX{{$result['transaction']['transaction_receipt_number']}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Tanggal Transaksi</td>
@@ -176,11 +176,11 @@
                                             </tr>
                                             <tr>	
                                                 <td>Waktu Mulai</td>
-                                                <td>{{$result['consultation']['schedule_start_time']}}</td>
+                                                <td>{{date('H:i', strtotime($result['consultation']['schedule_start_time']))}}</td>
                                             </tr>
                                             <tr>	
                                                 <td>Waktu Selesai</td>
-                                                <td>{{$result['consultation']['schedule_end_time']}}</td>
+                                                <td>{{date('H:i', strtotime($result['consultation']['schedule_end_time']))}}</td>
                                             </tr>
                                             <tr>	
                                                 <td>Status Konsultasi</td>
