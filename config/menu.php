@@ -1151,7 +1151,7 @@ return [
                             'label' => 'List Consultation',
                             'required_features' => [351],
                             'active' => '\View::shared("menu_active") == "consultation"',
-                            'url' => 'consultation/be'
+                            'url' => 'consultation/be',
                         ],
                         [
                             'label' => 'Option Consultation',
@@ -1164,8 +1164,48 @@ return [
                             'required_features' => [348],
                             'active' => '\View::shared("menu_active") == "consultation-settings"',
                             'url' => 'setting/consultation_setting',
-						]
-                    ]
+						],
+						[
+                            'label' => '[Response] Receive Message',
+                            'required_features' => [],
+                            'active' => '\View::shared("submenu_active") == "consultation-autoresponse-received-chat"',
+                            'url' => 'consultation/autoresponse/received-chat'
+                        ],
+						[
+                            'label' => '[Response] Consultation Reschedule',
+                            'required_features' => [],
+                            'active' => '\View::shared("submenu_active") == "consultation-autoresponse-reschedule-consultation"',
+                            'url' => 'consultation/autoresponse/reschedule-consultation'
+                        ],
+						[
+                            'label' => '[Response] Consultation Has Started',
+                            'required_features' => [],
+                            'active' => '\View::shared("submenu_active") == "consultation-autoresponse-consultation-has-started"',
+                            'url' => 'consultation/autoresponse/consultation-has-started'
+                        ],
+						[
+                            'label' => '[Response] Consultation Done',
+                            'required_features' => [],
+                            'active' => '\View::shared("submenu_active") == "consultation-autoresponse-consultation-done"',
+                            'url' => 'consultation/autoresponse/consultation-done'
+                        ],
+						[
+                            'label' => '[Response] Consultation Completed',
+                            'required_features' => [],
+                            'active' => '\View::shared("submenu_active") == "consultation-autoresponse-consultation-completed"',
+                            'url' => 'consultation/autoresponse/consultation-completed'
+                        ],
+						[
+                            'label' => '[Response] Consultation Missed',
+                            'required_features' => [],
+                            'active' => '\View::shared("submenu_active") == "consultation-autoresponse-consultation-missed"',
+                            'url' => 'consultation/autoresponse/consultation-missed'
+                        ],
+                    ],
+					'badge'=>[
+						'type'=>'warning',
+						'value'=>'transaction_consultation_pending',
+					]
 				]
             ]
         ],

@@ -201,4 +201,99 @@ class ConsultationController extends Controller
         $update = MyHelper::post('be/consultation/update', $post);
         return redirect('consultation/be/'.$post['id_transaction'].'/detail')->with('success',['Update Status Consultation Success']);
     }
+
+    public function getScheduleTime(Request $request)
+    {
+        $post = $request->except('_token');
+
+        $consultation = MyHelper::post('be/consultation/get-schedule-time', $post);
+
+        if($consultation['status'] == 'success') $data = $consultation['result']; else $data = null;
+        
+        return $data;
+    }
+
+    public function autoResponse(Request $request, $subject){
+        $autocrmSubject = ucwords(str_replace('-',' ',$subject));
+		$data = [ 'title'             => 'Consultation Auto Response '.$autocrmSubject,
+				  'menu_active'       => 'doctor',
+                  'submenu_active'    => 'consultation-autoresponse-'.$subject,
+				];
+
+        switch ($subject) {
+            case 'receive-inject-voucher':
+                $data['menu_active'] = 'inject-voucher';
+                $data['submenu_active'] = 'deals-autoresponse-receive-inject-voucher';
+                $data['click_inbox'] = [
+                    ['value' => "Voucher",'title' => 'Voucher']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Voucher','title' => 'Voucher']
+                ];
+                break;
+            default:
+                $data['click_inbox'] = [
+                    ['value' => "Receive New Chat",'title' => 'Receive New Chat']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'Receive New Chat','title' => 'Receive New Chat']
+                ];
+                break;
+        }
+
+        $autocrmSubject = ucwords(str_replace('-',' ',$subject));
+
+        $query = MyHelper::post('autocrm/list', ['autocrm_title' => $autocrmSubject]);
+		$test = MyHelper::get('autocrm/textreplace');
+		$auto = null;
+		$post = $request->except('_token');
+		if(!empty($post)){
+			if (isset($post['autocrm_push_image'])) {
+				$post['autocrm_push_image'] = MyHelper::encodeImage($post['autocrm_push_image']);
+            }
+            
+            if(isset($post['files'])){
+                unset($post['files']);
+            }
+			
+			$query = MyHelper::post('autocrm/update', $post);
+			return back()->withSuccess(['Response updated']);
+        }
+        
+        $getApiKey = MyHelper::get('setting/whatsapp');
+		if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+			$data['api_key_whatsapp'] = $getApiKey['result']['value'];
+		}else{
+			$data['api_key_whatsapp'] = null;
+		}
+        
+		if(isset($query['result'])){
+			$auto = $query['result'];
+		}else{
+			return back()->withErrors(['No such response']);
+        }
+        
+		$data['data'] = $auto;
+		if($test['status'] == 'success'){
+			$data['textreplaces'] = $test['result'];
+			$data['subject'] = $subject;
+		}
+
+        $custom = [];
+        if (isset($data['data']['custom_text_replace'])) {
+            $custom = explode(';', $data['data']['custom_text_replace']);
+
+            unset($custom[count($custom) - 1]);
+        }
+
+        if(stristr($request->url(), 'deals')||stristr($request->url(), 'voucher')){
+            $data['deals'] = true;
+            $custom[] = '%outlet_name%';
+            $custom[] = '%outlet_code%';
+        }
+        
+        $data['custom'] = $custom;
+
+        return view('users::response', $data);
+	}
 }

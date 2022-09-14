@@ -479,6 +479,9 @@
                                                     <li>
 														<a href="#consultation_starts_early" data-toggle="tab"> Akses Awal Konsultasi </a>
 													</li>
+                                                    <li>
+														<a href="#max_reschedule_settings" data-toggle="tab"> Maks. Reschedule Konsultasi </a>
+													</li>
 												</ul>
 											</div>
 											<div class="tab-content">
@@ -639,6 +642,66 @@
                                                                                     <div data-repeater-item class="row" style="padding-bottom:20px;">
                                                                                             <div class="col-md-5">
                                                                                                 <input type="text" class="form-control" placeholder="Awal Akses Konsultasi" name="value"/>
+                                                                                            </div>
+                                                                                            <br>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-actions">
+                                                                        <div class="row">
+                                                                            <div class="col-md-offset-3 col-md-10">
+                                                                                <button type="submit" class="btn green">
+                                                                                    <i class="fa fa-check"></i> Update</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+													</div>
+													<!-- END: Comments -->
+												</div>
+                                                <div class="tab-pane" id="max_reschedule_settings">
+													<!-- BEGIN: Comments -->
+													<div class="mt-comments">
+                                                        <div class="portlet light form-fit bordered">
+                                                            <div class="portlet-title">
+                                                                <div class="caption">
+                                                                    <i class=" icon-layers font-green"></i>
+                                                                    <span class="caption-subject font-green bold uppercase">{{ $subTitle }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="portlet-body form">
+                                                                <form class="form-horizontal" action="{{ url('setting/consultation/max_reschedule_settings/update') }}" method="post">
+                                                                {{ csrf_field() }}
+                                                                <div class="form-body">
+                                                                    <div class="form-group">
+                                                                        <div class="input-icon right">
+                                                                                <label class="col-md-4 control-label">
+                                                                                    Maks. Reschedule Konsultasi
+                                                                                <span class="required" aria-required="true"> * </span>
+                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Maksimal Reschedule Sebelum Konsultasi (hari)" data-container="body"></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="repeat">
+                                                                                    <div data-repeater-list="setting">
+                                                                                    @if(isset($result['max_reschedule_settings']) && is_array($result['max_reschedule_settings']))
+                                                                                        <div data-repeater-item class="row" style="padding-bottom:20px;">
+                                                                                            <input type="hidden" name="id_setting" value="{{$result['max_reschedule_settings']['id_setting']}}"/>
+                                                                                            <div class="col-md-4">
+                                                                                                <input type="text" class="form-control" placeholder="quota maximum" name="value" value="{{$result['max_reschedule_settings']['value']}}"/>
+                                                                                            </div>
+                                                                                            <br>
+                                                                                        </div>
+                                                                                    @else
+                                                                                    <div data-repeater-item class="row" style="padding-bottom:20px;">
+                                                                                            <div class="col-md-4">
+                                                                                                <input type="text" class="form-control" placeholder="reschedule maximum" name="value"/>
                                                                                             </div>
                                                                                             <br>
                                                                                         </div>
