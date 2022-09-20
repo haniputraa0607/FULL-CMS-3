@@ -544,25 +544,58 @@ class ProductController extends Controller
      * list
      */
     function listProduct(Request $request) {
+        $post = $request->all();
         $data = [
             'title'          => 'Product',
             'sub_title'      => 'List Product',
             'menu_active'    => 'product',
-            'submenu_active' => 'product-list',
+            'submenu_active' => 'product-list'
         ];
 
-        $product = MyHelper::post('product/be/list', ['admin_list' => 1]);
-		// print_r($product);exit;
-        if (isset($product['status']) && $product['status'] == "success") {
-            $data['product'] = $product['result'];
+        if(Session::has('filter-products') && !empty($post) && !isset($post['filter'])){
+            $page = 1;
+            if(isset($post['page'])){
+                $page = $post['page'];
+            }
+            $post = Session::get('filter-products');
+            $post['page'] = $page;
+        }else{
+            Session::forget('filter-products');
         }
-        else {
-            $data['product'] = [];
-        }
-        // dd($data);
 
+        $post['admin_list'] = 1;
+        $post['pagination'] = true;
+        $getList =  MyHelper::post('product/be/list', $post);
+
+        if (isset($getList['status']) && $getList['status'] == "success") {
+            $data['data']          = $getList['result']['data'];
+            $data['dataTotal']     = $getList['result']['total'];
+            $data['dataPerPage']   = $getList['result']['from'];
+            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data'])-1;
+            $data['dataPaginator'] = new LengthAwarePaginator($getList['result']['data'], $getList['result']['total'], $getList['result']['per_page'], $getList['result']['current_page'], ['path' => url()->current()]);
+        }else{
+            $data['data']          = [];
+            $data['dataTotal']     = 0;
+            $data['dataPerPage']   = 0;
+            $data['dataUpTo']      = 0;
+            $data['dataPaginator'] = false;
+        }
+
+        if($post){
+            Session::put('filter-products',$post);
+        }
+
+        $data['outlets'] = MyHelper::get('outlet/be/list')['result']??[];
+        $categories = $this->category();
+        $resCat = [];
+        foreach ($categories as $category){
+            if(!empty($category['id_parent_category']) && empty($category['category_child'])){
+                $resCat[] = $category;
+            }
+        }
+
+        $data['categories'] = $resCat;
         return view('product::product.list', $data);
-
     }
 
     function addImage(Request $request) {
