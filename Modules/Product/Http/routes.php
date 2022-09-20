@@ -6,6 +6,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	 * product
 	 */
 	Route::get('/', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProduct']);
+    Route::post('/', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProduct']);
 	Route::any('/image/add', ['middleware' => 'feature_control:54', 'uses' => 'ProductController@addImage']);
 	Route::any('/image/detail', ['middleware' => 'feature_control:53', 'uses' => 'ProductController@addImageDetail']);
 	Route::any('/image/list', ['middleware' => 'feature_control:53', 'uses' => 'ProductController@listImage']);
