@@ -229,7 +229,7 @@
                         <th> Name </th>
                         <th >Visibility Product</th>
                         @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
-                            <th style="white-space: nowrap"> Action </th>
+                            <th> Action </th>
                         @endif
                     </tr>
                 </thead>
@@ -264,12 +264,12 @@
                                     </div>
                                 </td>
                                 @if(MyHelper::hasAccess([49,51,52], $grantedFeature))
-                                    <td style="width: 80px;white-space: nowrap">
+                                    <td style="width: 80px;">
                                         @if(MyHelper::hasAccess([52], $grantedFeature))
                                             <a data-toggle="confirmation" data-popout="true" class="btn btn-sm red delete" data-id="{{ $value['id_product'] }}"><i class="fa fa-trash-o"></i></a>
                                         @endif
                                         @if(MyHelper::hasAccess([49,51], $grantedFeature))
-                                            <a href="{{ url('product/detail') }}/{{ $value['product_code'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
+                                            <a href="{{ url('product/detail') }}/{{ $value['product_code'] }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
                                         @endif
                                     </td>
                                 @endif
