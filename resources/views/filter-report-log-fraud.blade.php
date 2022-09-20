@@ -290,7 +290,7 @@ $configs = session('configs');
 													@if($type == 'device')
 													<option value="device_type">Device Type</option>
 													@endif
-													@if($type != 'device' && $type != 'suspend')
+													@if($type != 'device' && $type != 'suspend' && !$type = 'transaction-between')
 													<option value="outlet">Outlet</option>
 													<option value="number_of_breaking">Number of breaking</option>
 													@endif
