@@ -163,7 +163,7 @@
                     <tr>
                         <td>
                             @if(MyHelper::hasAccess([324,326], $grantedFeature))
-                                <a class="btn btn-sm btn-info" href="{{ url('merchant/candidate/detail', $val['id_merchant']) }}"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-sm btn-info" href="{{ url('merchant/candidate/detail', $val['id_merchant']) }}"><i class="fa fa-search"></i></a>
                             @endif
                             @if(MyHelper::hasAccess([327], $grantedFeature))
                                 <a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $val['id_merchant'] }}" data-name="{{ $val['outlet_name'] }}"><i class="fa fa-trash-o"></i></a>

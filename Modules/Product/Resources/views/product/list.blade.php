@@ -206,7 +206,7 @@ $grantedFeature     = session('granted_features');
                                         <a class="btn btn-sm red sweetalert-delete" data-id="{{ $value['id_product'] }}" data-name="{{ $value['product_name'] }}"><i class="fa fa-trash-o"></i></a>
                                     @endif
                                     @if(MyHelper::hasAccess([49,51], $grantedFeature))
-                                        <a href="{{ url('product/detail') }}/{{ $value['product_code'] }}" class="btn btn-sm blue"><i class="fa fa-edit"></i></a>
+                                        <a href="{{ url('product/detail') }}/{{ $value['product_code'] }}" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
                                     @endif
                                 </td>
                             @endif
