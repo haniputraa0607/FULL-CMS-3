@@ -92,7 +92,7 @@ $configs = session('configs');
                                         <div class="col-md-6">
                                             <div class="input-group">
                                                 <span class="input-group-addon">
-                                                    maximum
+                                                    max
                                                 </span>
                                                 <input type="number" class="form-control field_transaction_in_between price" min="1" name="auto_suspend_value" value="{{$result[3]['auto_suspend_value']}}">
                                             </div>

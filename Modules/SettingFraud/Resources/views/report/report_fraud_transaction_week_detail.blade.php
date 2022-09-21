@@ -162,6 +162,7 @@
                         <thead>
                         <tr>
                             <th scope="col"> Status Fraud </th>
+                            <th scope="col"> Receipt Number Group </th>
                             <th scope="col"> Order ID </th>
                             <th scope="col"> User Name </th>
                             <th scope="col"> User Phone </th>
@@ -188,6 +189,7 @@
                                         }
 
                                         ?></td>
+                                    <td>{{ $val['receipt_number_group'] }}</td>
                                     <td>
                                         @if(strtolower($val['trasaction_type']) == 'offline')
                                             <a target="_blank" href="{{ url('transaction/detail/') }}/{{ $val['id_transaction'] }}/offline">{{$val['transaction_receipt_number']}}</a>

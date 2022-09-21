@@ -209,7 +209,7 @@
         </div>
         <div class="portlet-body form">
             <div class="form-group row">
-                <p class="col-md-5"><b>Transaction Date : &nbsp;{{date('Y-m-d', strtotime($result['detail_log'][0]['transaction_date']))}}</b></p>
+                <p class="col-md-5"><b>Transaction Date : &nbsp;{{date('Y-m-d', strtotime($result['detail_log'][0]['transaction_group_date']))}}</b></p>
             </div>
 
             <div class="container">
@@ -224,28 +224,22 @@
 
                     for($i=0;$i<$count-1;$i++){
 
-                        $toTime = strtotime($data[$i]['transaction_date']);
-                        $fromTime = strtotime($data[$i+1]['transaction_date']);
+                        $toTime = strtotime($data[$i]['transaction_group_date']);
+                        $fromTime = strtotime($data[$i+1]['transaction_group_date']);
                         $differentTime = abs($toTime - $fromTime) / 60;
 
-                        if(strtolower($data[$i]['trasaction_type']) == 'offline'){
-                            $url = url("transaction/detail/").'/'.$data[$i]['id_transaction']."/offline";
-                            $a = '<a target="_blank" href="'.$url.'">'.$data[$i]['transaction_receipt_number'].'</a>';
-                        }else{
-                            $url = url("transaction/detail/").'/'.$data[$i]['id_transaction']."/pickup order";
-                            $a = '<a target="_blank" href="'.$url.'">'.$data[$i]['transaction_receipt_number'].'</a>';
-                        }
+                        $a = $data[$i]['transaction_receipt_number'];
 
-                        $html .= '<li class="line-left">'.$a.'<br><b>Time : </b>'.date('H:i', strtotime($data[$i]['transaction_date'])).'</li>';
+                        $html .= '<li class="line-left">'.$a.'<br><b>Time : </b>'.date('H:i', strtotime($data[$i]['transaction_group_date'])).'</li>';
                         $html .= '<li class="line-right">';
                         $html .= '<div class="lr-content" style="color: red">';
                         $html .= 'Different time : <b style="color: black">'.$differentTime.' minute</b>';
                         $html .= '</div>';
                         $html .= '</li>';
                     }
-                        $url = url("transaction/detail/").'/'.$data[$count-1]['id_transaction']."/offline";
-                        $a = '<a target="_blank" href="'.$url.'">'.$data[$count-1]['transaction_receipt_number'].'</a>';
-                        $html .= '<li class="line-left">'.$a.'<br><b>Time : </b>'.date('H:i', strtotime($data[$count-1]['transaction_date'])).'</li>';
+                        $url = url("transaction/detail/").'/'.$data[$count-1]['id_transaction_group']."/offline";
+                        $a = $data[$count-1]['transaction_receipt_number'];
+                        $html .= '<li class="line-left">'.$a.'<br><b>Time : </b>'.date('H:i', strtotime($data[$count-1]['transaction_group_date'])).'</li>';
                     echo $html;
                     ?>
                 </ul>
@@ -265,10 +259,9 @@
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th scope="col"> Order ID </th>
+                            <th scope="col"> Receipt Number Group </th>
                             <th scope="col"> User Name </th>
                             <th scope="col"> User Phone </th>
-                            <th scope="col"> Outlet </th>
                             <th scope="col"> Grand Total </th>
                         </tr>
                         </thead>
@@ -279,7 +272,6 @@
                                     <td><b>{{$val['transaction_receipt_number']}}</b></td>
                                     <td>{{$val['user']['name']}}</td>
                                     <td>{{$val['user']['phone']}}</td>
-                                    <td>{{$val['outlet_name']}}</td>
                                     <td>{{ number_format($val['transaction_grandtotal'], 2) }}</td>
                                 </tr>
                             @endforeach
