@@ -856,7 +856,7 @@ class MyHelper
         }
       }
 
-      $url = substr($menu['url'] ?? '', 0, 4) == 'http' ? $menu['url'] : ($menu['url'] ?? '') ? url($menu['url']) : 'javascript:void(0)';
+      $url = (substr($menu['url'] ?? '', 0, 4) == 'http' ? $menu['url'] : ($menu['url'] ?? '')) ? url($menu['url']) : 'javascript:void(0)';
       $icon = ($menu['icon'] ?? '') ? '<i class="' . $menu['icon'] . '"></i>' : '';
 
       if (!($menu['type'] ?? false) && ($menu['children'] ?? false)) {

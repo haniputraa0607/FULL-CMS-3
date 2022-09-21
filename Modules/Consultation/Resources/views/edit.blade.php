@@ -76,20 +76,28 @@
         
         $('.schedule_date').change(function () {
             var id = $(this).find(':selected')[0].id;
+            var date = $(this).val();
             $.ajax({
                 type: 'POST',
                 url: '{{ url('consultation/be/get-schedule-time') }}',
                 data: {
                     '_token': '{{csrf_token()}}',
-                    'id_doctor_schedule': id
+                    'id_doctor_schedule': id,
+                    'date' : date
                 },
                 success: function (data) {
+                                
+            console.log(data);
                     var $schedule_start_time = $('.schedule_start_time');
                     $schedule_start_time.empty();
                     $schedule_start_time.append('<option value="">-</option>');
-                    for (var i = 0; i < data.length; i++) {
-                        $schedule_start_time.append('<option id="' + data[i].end_time + '" value="' + data[i].start_time + '">' + data[i].start_time + '</option>');
-                    }
+                    $.each(data, function( key, value ) {
+                      $schedule_start_time.append('<option id="' + value.end_time + '" value="' + value.start_time + '">' + value.start_time + '</option>');
+                    });
+                    // deleteSoon
+                    // for (var i = 0; i < data.length; i++) {
+                    //     $schedule_start_time.append('<option id="' + data[i].end_time + '" value="' + data[i].start_time + '">' + data[i].start_time + '</option>');
+                    // }
                 }
             });
         });
