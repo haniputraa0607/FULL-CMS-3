@@ -62,8 +62,14 @@
                         <a href="#tab_IOS" data-toggle="tab" aria-expanded="false"> IOS Setting </a>
                     </li>
                     <li class="">
-                        <a href="#tab_OutletApps" data-toggle="tab" aria-expanded="false"> Outlet Apps Setting </a>
+                        <a href="#tab_Android_doctor" data-toggle="tab" aria-expanded="false"> Android Setting Doctor Apps</a>
                     </li>
+                    <li class="">
+                        <a href="#tab_IOS_doctor" data-toggle="tab" aria-expanded="false"> IOS Setting Doctor Apps</a>
+                    </li>
+                    {{--<li class="">
+                        <a href="#tab_OutletApps" data-toggle="tab" aria-expanded="false"> Outlet Apps Setting </a>
+                    </li>--}}
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> Display Setting
                             <i class="fa fa-angle-down"></i>
@@ -72,9 +78,9 @@
                             <li>
                                 <a href="#tab_display_androidios" tabindex="-1" data-toggle="tab"> Android & IOS </a>
                             </li>
-                            <li>
+                           {{--<li>
                                 <a href="#tab_display_outletapps" tabindex="-1" data-toggle="tab"> Outlet Apps </a>
-                            </li>
+                            </li>--}}
                         </ul>
                     </li>
                 </ul>
@@ -156,6 +162,158 @@
                         </form>
                     </div>
                     <div class="tab-pane fade" id="tab_IOS">
+                        <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
+                            <div class="portlet light">
+                                <div id="addIOS">
+                                    <div class="mt-repeater" id="IOS0">
+                                        <div class="mt-repeater-item mt-overflow">
+                                            <div class="mt-repeater-cell">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-1">
+                                                        <a href="javascript:;" data-repeater-delete="" class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteCondition('IOS0')">
+                                                            <i class="fa fa-close"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="IOS[0][app_version]" required placeholder="IOS Version">
+                                                            <span class="input-group-addon">
+                                                                <i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Versi aplikasi IOS terbaru" data-container="body"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group">
+                                                            <select name="IOS[0][rules]" class="form-control" placeholder="Rules For Different Verion" required>
+                                                                <option disabled selected value="">Rules For Different Verion</option>
+                                                                <option value="1">Allowed</option>
+                                                                <option value="0">Not Allowed</option>
+                                                            </select>
+                                                            <span class="input-group-addon">
+                                                                <i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Aturan jika versi aplikasi IOS yang digunakan berbeda dengan versi aplikasi IOS terbaru" data-container="body"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="javascript:;" class="btn btn-success mt-repeater-add" onclick="addVersion('IOS')">
+                                <i class="fa fa-plus"></i> Add New Version</a>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-icon right">
+                                    <label class="col-md-4 control-label">
+                                        Appstore Link
+                                        <!-- <span class="required" aria-required="true"> * </span>   -->
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Link di appstore untuk download aplikasi IOS terbaru" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" name="IOS[version_appstore]" value="@if(isset($version['version_appstore'])){{ $version['version_appstore'] }}@endif">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-icon right">
+                                    <label class="col-md-4 control-label">
+                                        Jumlah Versi Disupport
+                                        <!-- <span class="required" aria-required="true"> * </span>   -->
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimum versi aplikasi yang disupport" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="number" value="@if(isset($version['version_max_ios'])){{ $version['version_max_ios'] }}@endif" class="form-control" name="IOS[version_max_ios]" placeholder="Input Jumlah">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                {{ csrf_field() }}
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-8">
+                                        <button type="submit" class="btn green">Save</button>
+                                        <button type="button" class="btn default">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="tab_Android_doctor">
+                        <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
+                            <div class="portlet light">
+                                <div id="addAndroid">
+                                    <div class="mt-repeater" id="Android0">
+                                        <div class="mt-repeater-item mt-overflow">
+                                            <div class="mt-repeater-cell">
+                                                <div class="col-md-12">
+                                                    <div class="col-md-1">
+                                                        <a href="javascript:;" data-repeater-delete="" class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteCondition('Android0')">
+                                                            <i class="fa fa-close"></i>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="DoctorAndroid[0][app_version]" required placeholder="Android Version">
+                                                            <span class="input-group-addon">
+                                                                <i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Versi aplikasi Android terbaru" data-container="body"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="input-group">
+                                                            <select name="DoctorAndroid[0][rules]" class="form-control" placeholder="Rules For Different Verion" required>
+                                                                <option disabled selected value="">Rules For Different Version</option>
+                                                                <option value="1">Allowed</option>
+                                                                <option value="0">Not Allowed</option>
+                                                            </select>
+                                                            <span class="input-group-addon">
+                                                                <i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Aturan jika versi aplikasi Android yang digunakan berbeda dengan versi aplikasi Android terbaru" data-container="body"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="javascript:;" class="btn btn-success mt-repeater-add" onclick="addVersion('Android')">
+                                <i class="fa fa-plus"></i> Add New Version</a>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-icon right">
+                                    <label class="col-md-4 control-label">
+                                        Playstore Link
+                                        <!-- <span class="required" aria-required="true"> * </span>   -->
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Link di playstore untuk download aplikasi Android terbaru" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="text" value="@if(isset($version['version_playstore'])){{ $version['version_playstore'] }}@endif" class="form-control" name="DoctorAndroid[version_playstore]" placeholder="Playstore Link">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-icon right">
+                                    <label class="col-md-4 control-label">
+                                        Jumlah Versi Disupport
+                                        <!-- <span class="required" aria-required="true"> * </span>   -->
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Jumlah maksimum versi aplikasi yang disupport" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input type="number" value="@if(isset($version['version_max_android'])){{ $version['version_max_android'] }}@endif" class="form-control" name="DoctorAndroid[version_max_android]" placeholder="Input Jumlah">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                {{ csrf_field() }}
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-8">
+                                        <button type="submit" class="btn green">Save</button>
+                                        <button type="button" class="btn default">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="tab_IOS_doctor">
                         <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                             <div class="portlet light">
                                 <div id="addIOS">
@@ -481,11 +639,13 @@
                 var noAndroid = 1;
                 var noIOS = 1;
                 var noOutletApp = 1;
+                var noDoctorAndroid = 1;
 
                 window.onload = function(event) {
                     var android = JSON.parse('{!! json_encode($version["Android"]) !!}');
                     var ios = JSON.parse('{!! json_encode($version["IOS"]) !!}');
                     var outlet = JSON.parse('{!! json_encode($version["OutletApp"]) !!}');
+                    var doctorAndroid = JSON.parse('{!! json_encode($version["doctorAndroid"]) !!}');
                     if (android.length != 0) {
                         android.forEach(function(entry) {
                             $('#Android0').remove()
@@ -502,6 +662,12 @@
                         outlet.forEach(function(entry) {
                             $('#OutletApp0').remove()
                             appendData('OutletApp', 'Outlet Apps', noOutletApp, 'version_outletapp', entry.app_version, entry.rules);
+                            noOutletApp++;
+                        });
+                    } if (doctorAndroid.length != 0) {
+                        outlet.forEach(function(entry) {
+                            $('#DoctorAndroid0').remove()
+                            appendData('DoctorAndroid', 'DoctorAndroid', noAndroid, 'version_doctor_android', entry.app_version, entry.rules);
                             noOutletApp++;
                         });
                     }
