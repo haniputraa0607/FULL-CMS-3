@@ -41,7 +41,7 @@ class VersionController extends Controller
         if (isset($version['status']) && $version['status'] == "success") {
             $data['version'] = $version['result'];
         } else {
-            $data['version'] = ['Android' => [], 'IOS' => [], 'OutletApp' => []];
+            $data['version'] = ['Android' => [], 'IOS' => [], 'OutletApp' => [], 'DoctorAndroid' => [], 'DoctorIOS' => []];
         }
         return view('setting::version.setting-version', $data);
     }
