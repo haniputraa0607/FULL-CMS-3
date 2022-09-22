@@ -240,8 +240,8 @@
                     <div class="tab-pane fade" id="tab_Android_doctor">
                         <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                             <div class="portlet light">
-                                <div id="addAndroid">
-                                    <div class="mt-repeater" id="Android0">
+                                <div id="addDoctorAndroid">
+                                    <div class="mt-repeater" id="DoctorAndroid0">
                                         <div class="mt-repeater-item mt-overflow">
                                             <div class="mt-repeater-cell">
                                                 <div class="col-md-12">
@@ -287,7 +287,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" value="@if(isset($version['version_playstore'])){{ $version['version_playstore'] }}@endif" class="form-control" name="DoctorAndroid[version_playstore]" placeholder="Playstore Link">
+                                    <input type="text" value="@if(isset($version['version_playstore_doctor'])){{ $version['version_playstore_doctor'] }}@endif" class="form-control" name="DoctorAndroid[version_playstore_doctor]" placeholder="Playstore Link">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -299,7 +299,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="number" value="@if(isset($version['version_max_android'])){{ $version['version_max_android'] }}@endif" class="form-control" name="DoctorAndroid[version_max_android]" placeholder="Input Jumlah">
+                                    <input type="number" value="@if(isset($version['version_max_android_doctor'])){{ $version['version_max_android_doctor'] }}@endif" class="form-control" name="DoctorAndroid[version_max_android_doctor]" placeholder="Input Jumlah">
                                 </div>
                             </div>
                             <div class="form-actions">
@@ -316,8 +316,8 @@
                     <div class="tab-pane fade" id="tab_IOS_doctor">
                         <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                             <div class="portlet light">
-                                <div id="addIOS">
-                                    <div class="mt-repeater" id="IOS0">
+                                <div id="addDoctorIOS">
+                                    <div class="mt-repeater" id="DoctorIOS0">
                                         <div class="mt-repeater-item mt-overflow">
                                             <div class="mt-repeater-cell">
                                                 <div class="col-md-12">
@@ -363,7 +363,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="IOS[version_appstore]" value="@if(isset($version['version_appstore'])){{ $version['version_appstore'] }}@endif">
+                                    <input type="text" class="form-control" name="DoctorIOS[version_appstore_doctor]" value="@if(isset($version['version_appstore_doctor'])){{ $version['version_appstore_doctor'] }}@endif">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -375,7 +375,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="number" value="@if(isset($version['version_max_ios'])){{ $version['version_max_ios'] }}@endif" class="form-control" name="IOS[version_max_ios]" placeholder="Input Jumlah">
+                                    <input type="number" value="@if(isset($version['version_max_ios'])){{ $version['version_max_ios'] }}@endif" class="form-control" name="DoctorIOS[version_max_ios]" placeholder="Input Jumlah">
                                 </div>
                             </div>
                             <div class="form-actions">
@@ -640,12 +640,15 @@
                 var noIOS = 1;
                 var noOutletApp = 1;
                 var noDoctorAndroid = 1;
+                var noDoctorIOS = 1;
 
                 window.onload = function(event) {
                     var android = JSON.parse('{!! json_encode($version["Android"]) !!}');
                     var ios = JSON.parse('{!! json_encode($version["IOS"]) !!}');
                     var outlet = JSON.parse('{!! json_encode($version["OutletApp"]) !!}');
-                    var doctorAndroid = JSON.parse('{!! json_encode($version["doctorAndroid"]) !!}');
+                    var doctorAndroid = JSON.parse('{!! json_encode($version["DoctorAndroid"]) !!}');
+                    var doctorIOS = JSON.parse('{!! json_encode($version["DoctorIOS"]) !!}');
+                    console.log(doctorAndroid);
                     if (android.length != 0) {
                         android.forEach(function(entry) {
                             $('#Android0').remove()
@@ -665,10 +668,18 @@
                             noOutletApp++;
                         });
                     } if (doctorAndroid.length != 0) {
-                        outlet.forEach(function(entry) {
+                        doctorAndroid.forEach(function(entry) {
                             $('#DoctorAndroid0').remove()
-                            appendData('DoctorAndroid', 'DoctorAndroid', noAndroid, 'version_doctor_android', entry.app_version, entry.rules);
-                            noOutletApp++;
+                            console.log(entry.app_version);
+                            appendData('DoctorAndroid', 'Doctor Android', noDoctorAndroid, 'version_doctor_android', entry.app_version, entry.rules);
+                            noDoctorAndroid++;
+                        });
+                    } if (doctorIOS.length != 0) {
+                        doctorIOS.forEach(function(entry) {
+                            $('#DoctorIOS0').remove()
+                            console.log(entry.app_version);
+                            appendData('DoctorIOS', 'Doctor IOS', noDoctorIOS, 'version_doctor_ios', entry.app_version, entry.rules);
+                            noDoctorIOS++;
                         });
                     }
                 };
@@ -730,6 +741,12 @@
                     } if (item.app_type == "OutletApp") {
                         appendDiv('OutletApp', 'Outlet Apps', noOutletApp, 'version_outletapp')
                         noOutletApp++;
+                    } if (item.app_type == "DoctorAndroid") {
+                        appendDiv('DoctorAndroid', 'Doctor Android', noDoctorAndroid, 'version_doctor_android')
+                        noDoctorAndroid++;
+                    } if (item.app_type == "DoctorIOS") {
+                        appendDiv('DoctorIOS', 'Doctor IOS', noDoctorIOS, 'version_doctor_ios')
+                        noDoctorIOS++;
                     }
                 }
 
@@ -743,6 +760,12 @@
                     } if (id == "OutletApp") {
                         appendDiv('OutletApp', 'Outlet Apps', noOutletApp, 'version_outletapp')
                         noOutletApp++;
+                    } if (item.app_type == "DoctorAndroid") {
+                        appendDiv('DoctorAndroid', 'Doctor Android', noDoctorAndroid, 'version_doctor_android')
+                        noDoctorAndroid++;
+                    } if (item.app_type == "DoctorIOS") {
+                        appendDiv('DoctorIOS', 'Doctor IOS', noDoctorIOS, 'version_doctor_ios')
+                        noDoctorIOS++;
                     }
                 }
 
