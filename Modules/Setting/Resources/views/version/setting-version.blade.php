@@ -252,7 +252,7 @@
                                                     </div>
                                                     <div class="col-md-5">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" name="DoctorAndroid[0][app_version]" required placeholder="Android Version">
+                                                            <input type="text" class="form-control" name="DoctorAndroid[0][app_version]" required placeholder="Doctor Android Version">
                                                             <span class="input-group-addon">
                                                                 <i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Versi aplikasi Android terbaru" data-container="body"></i>
                                                             </span>
@@ -275,7 +275,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="javascript:;" class="btn btn-success mt-repeater-add" onclick="addVersion('Android')">
+                                <a href="javascript:;" class="btn btn-success mt-repeater-add" onclick="addVersion('DoctorAndroid')">
                                 <i class="fa fa-plus"></i> Add New Version</a>
                             </div>
                             <div class="form-group">
@@ -328,7 +328,7 @@
                                                     </div>
                                                     <div class="col-md-5">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" name="IOS[0][app_version]" required placeholder="IOS Version">
+                                                            <input type="text" class="form-control" name="IOS[0][app_version]" required placeholder="Doctor IOS Version">
                                                             <span class="input-group-addon">
                                                                 <i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Versi aplikasi IOS terbaru" data-container="body"></i>
                                                             </span>
@@ -351,7 +351,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a href="javascript:;" class="btn btn-success mt-repeater-add" onclick="addVersion('IOS')">
+                                <a href="javascript:;" class="btn btn-success mt-repeater-add" onclick="addVersion('DoctorIOS')">
                                 <i class="fa fa-plus"></i> Add New Version</a>
                             </div>
                             <div class="form-group">
@@ -760,10 +760,10 @@
                     } if (id == "OutletApp") {
                         appendDiv('OutletApp', 'Outlet Apps', noOutletApp, 'version_outletapp')
                         noOutletApp++;
-                    } if (item.app_type == "DoctorAndroid") {
+                    } if (id == "DoctorAndroid") {
                         appendDiv('DoctorAndroid', 'Doctor Android', noDoctorAndroid, 'version_doctor_android')
                         noDoctorAndroid++;
-                    } if (item.app_type == "DoctorIOS") {
+                    } if (id == "DoctorIOS") {
                         appendDiv('DoctorIOS', 'Doctor IOS', noDoctorIOS, 'version_doctor_ios')
                         noDoctorIOS++;
                     }
