@@ -285,10 +285,19 @@ class DoctorController extends Controller
 
         $post['id_doctor'] = $id;
 
+        foreach($post['schedules'] as $key => $val){
+            usort($val['session_time'], function($a, $b) {
+                return strtotime($a['start_time']) <=> strtotime($b['start_time']);
+            });
+
+            $post['schedules'][$key]['session_time'] = $val['session_time'];
+        }
+
         $store = MyHelper::post('doctor/schedule/store', $post);
 
         if(($store['status']??'')=='success'){
-            return redirect('doctor')->with('success',['Update Doctor Schedule Success']);
+            //return redirect('product/detail/'.$product_code.'#variant-group')->with('success',['Update Product Variant Group Success']);
+            return redirect('doctor/'.$id.'/edit#schedule')->with('success',['Update Doctor Schedule Success']);
         }else{
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }

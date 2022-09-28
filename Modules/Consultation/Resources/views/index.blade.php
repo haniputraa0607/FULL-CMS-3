@@ -73,24 +73,26 @@ $grantedFeature     = session('granted_features');
         },
 		outlet:{
             display:'Outlet',
-            operator:[
-                ['=','='],
-                ['like','like'],
-            ],
-            opsi:[],
+            operator:[],
+            opsi:{!!json_encode(array_map(function($outlet) {
+                return [$outlet, $outlet];
+            }, $outlet))!!},
             placeholder:'Outlet Clinic'
         },
 		consultation_type:{
             display:'Consultation Type',
             operator:[
                 ['=','='],
-                ['<','<'],
-                ['>','>'],
-                ['<=','<='],
-                ['>=','>=']
+                ['like','like'],
             ],
-            opsi:[],
-            placeholder:'Consultation Type'
+			opsi:[
+                ['soon', 'Scheduled'],
+                ['done', 'Done'],
+				['completed', 'Completed'],
+				['missed', 'Missed'],
+				['canceled', 'Canceled'],
+            ],
+            placeholder: 'Select Quest Benefit'
         },
     };
     var table;
@@ -134,19 +136,22 @@ $grantedFeature     = session('granted_features');
 							sev='';
 							switch (data){
 							case 'soon':
-							sev = '<span class="badge badge-default badge-sm" style="background-color:#cccccc">'+data+'</span>';
+							sev = '<span class="badge badge-default badge-sm bg-grey-silver">'+data+'</span>';
 							break;
 							case 'ongoing':
-							sev = '<span class="badge badge-default badge-sm" style="background-color:#ffd633">'+data+'</span>';
+							sev = '<span class="badge badge-default badge-sm bg-yellow-saffron">'+data+'</span>';
 							break;
 							case 'done':
-							sev = '<span class="badge badge-default badge-sm" style="background-color:#009900">'+data+'</span>';
+							sev = '<span class="badge badge-default badge-sm bg-green-jungle">'+data+'</span>';
 							break;
 							case 'completed':
-							sev = '<span class="badge badge-default badge-sm" style="background-color:#009900">'+data+'</span>';
+							sev = '<span class="badge badge-default badge-sm bg-green-jungle">'+data+'</span>';
+							break;
+							case 'canceled':
+							sev = '<span class="badge badge-default badge-sm bg-red-thunderbird">'+data+'</span>';
 							break;
 							case 'missed':
-							sev = '<span class="badge badge-default badge-sm" style="background-color:#ff0000">'+data+'</span>';
+							sev = '<span class="badge badge-default badge-sm bg-red-thunderbird">'+data+'</span>';
 							break;
 							}
 							return sev;

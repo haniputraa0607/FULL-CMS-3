@@ -783,10 +783,12 @@ class SettingController extends Controller
         }
 
         $data['default_home'] = parent::getData(MyHelper::get('setting/default_home'));
+        $data['default_home_doctor'] = parent::getData(MyHelper::get('setting/default_home_doctor'));
         $data['app_logo'] = parent::getData(MyHelper::get('setting/app_logo'));
         $data['app_sidebar'] = parent::getData(MyHelper::get('setting/app_sidebar'));
         $data['app_navbar'] = parent::getData(MyHelper::get('setting/app_navbar'));
         $data['inbox_max_days'] = parent::getData(MyHelper::post('setting',['key'=>'inbox_max_days']))['value']??30;
+        //dd($data);
 		return view('setting::home', $data);
 	}
 
@@ -936,6 +938,26 @@ class SettingController extends Controller
 		// print_r($post);exit;
         $result = MyHelper::post('setting/default_home', $post);
         return parent::redirect($result, 'Default Home Background has been updated.');
+    }
+
+    function defaultDoctorHomeSave(Request $request){
+        $post = $request->except('_token');
+        if(isset($post['default_home_doctor_image'])){
+            $post['default_home_doctor_image'] = MyHelper::encodeImage($post['default_home_doctor_image']);
+        }
+		if(isset($post['default_home_doctor_splash_screen'])){
+            $post['default_home_doctor_splash_screen'] = MyHelper::encodeImage($post['default_home_doctor_splash_screen']);
+        }
+
+        if(isset($post['default_home_doctor_splash_duration'])){
+            if($post['default_home_doctor_splash_duration']<1){
+                $post['default_home_doctor_splash_duration']=1;
+            }
+        }
+
+		// print_r($post);exit;
+        $result = MyHelper::post('setting/default_home_doctor', $post);
+        return parent::redirect($result, 'Default Doctor Home Background has been updated.');
     }
 
 	function dashboardSetting(Request $request){
