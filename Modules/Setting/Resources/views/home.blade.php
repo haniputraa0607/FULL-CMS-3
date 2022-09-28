@@ -546,6 +546,9 @@
         <li class="active">
             <a href="#splash-screen" data-toggle="tab">Splash Screen</a>
         </li>
+		<li>
+            <a href="#doctor-splash-screen" data-toggle="tab">Doctor Splash Screen</a>
+        </li>
 		@if(MyHelper::hasAccess([144], $grantedFeature))
         <li>
             <a href="#banner" data-toggle="tab">Banner</a>
@@ -819,6 +822,64 @@
 												<span class="fileinput-new"> Select image </span>
 												<span class="fileinput-exists"> Change </span>
 												<input type="file" class="file file-splash" id="field_splash" accept="image/*" name="default_home_splash_screen">
+												</span>
+												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+											</div>
+										</div>
+									</div>
+							</div>
+							<div class="form-actions" style="text-align:center">
+								{{ csrf_field() }}
+								<button type="submit" class="btn blue" id="checkBtn">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{{-- Doctor splash screen --}}
+    <div class="tab-pane" id="doctor-splash-screen">
+		<div class="row" style="margin-top:20px">
+			<div class="col-md-12">
+				<div class="portlet light bordered">
+					<div class="portlet-title">
+						<div class="caption font-blue ">
+							<i class="icon-settings font-blue "></i>
+							<span class="caption-subject bold uppercase">Default Doctor Splash Screen</span>
+						</div>
+					</div>
+					<div class="portlet-body">
+						<form role="form" class="form-horizontal" action="{{url('setting/default_home_doctor')}}" method="POST" enctype="multipart/form-data">
+							<div class="form-body">
+								<div class="form-group col-md-12">
+									<label class="text-right col-md-4">Splash Screen Duration
+										<span class="required" aria-required="true"> * </span>
+									</label>
+									<div class="col-md-4">
+										<input type="number" class="form-control" name="default_home_doctor_splash_duration" value="{{$default_home_doctor['default_home_doctor_splash_duration']??''}}" min="1" required>
+									</div>
+								</div>
+								<div class="form-group col-md-12">
+										<label class="control-label col-md-4">Splash Screen
+											<br>
+											<span class="required" aria-required="true"> (1080*1920)/(540*960) </span>
+										</label><br>
+										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
+											<div class="fileinput-new thumbnail">
+												@if(isset($default_home_doctor['default_home_doctor_splash_screen']))
+													<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_doctor_splash_screen']}}?updated_at={{time()}}" alt="">
+												@else
+													<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+												@endif
+											</div>
+											<div class="fileinput-preview fileinput-exists thumbnail" id="div_splash" style="max-width: 500px; max-height: 250px;"></div>
+											<div>
+												<span class="btn default btn-file">
+												<span class="fileinput-new"> Select image </span>
+												<span class="fileinput-exists"> Change </span>
+												<input type="file" class="file file-splash" id="field_splash" accept="image/*" name="default_home_doctor_splash_screen">
 												</span>
 												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 											</div>

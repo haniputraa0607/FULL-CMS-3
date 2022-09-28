@@ -59,6 +59,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('greeting/delete', ['middleware' => 'config_control:30,31', 'uses' => 'SettingController@deleteGreetings']);
 
     Route::post('default_home', 'SettingController@defaultHomeSave');
+    Route::post('default_home_doctor', 'SettingController@defaultDoctorHomeSave');
     
     Route::any('home/user', 'SettingController@dashboardSetting');
     Route::post('dashboard/delete', 'SettingController@deleteDashboard');

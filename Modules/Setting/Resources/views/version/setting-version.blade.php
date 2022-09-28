@@ -17,6 +17,10 @@
                 var textvalue = $('#display_text_outlet').val();
                 var textvaluebaru = textvalue+" "+param;
                 $('#display_text_outlet').val(textvaluebaru);
+            } else if (id == 'doctor') {
+                var textvalue = $('#display_text_doctor_mobile').val();
+                var textvaluebaru = textvalue+" "+param;
+                $('#display_text_doctor_mobile').val(textvaluebaru);
             }
         }
     </script>
@@ -77,6 +81,9 @@
                         <ul class="dropdown-menu" role="menu">
                             <li>
                                 <a href="#tab_display_androidios" tabindex="-1" data-toggle="tab"> Android & IOS </a>
+                            </li>
+                            <li>
+                                <a href="#tab_display_doctor_androidios" tabindex="-1" data-toggle="tab"> Doctor Android & IOS </a>
                             </li>
                            {{--<li>
                                 <a href="#tab_display_outletapps" tabindex="-1" data-toggle="tab"> Outlet Apps </a>
@@ -533,6 +540,90 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <input type="text" class="form-control" name="Display[version_text_button_mobile]" value="@if(isset($version['version_text_button_mobile'])){{ $version['version_text_button_mobile'] }}@endif" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                {{ csrf_field() }}
+                                <div class="row">
+                                    <div class="col-md-offset-4 col-md-8">
+                                        <button type="submit" class="btn green">Save</button>
+                                        <button type="button" class="btn default">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="tab_display_doctor_androidios">
+                        <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
+                            <div class="portlet light">
+                                <div class="portlet-body form">
+                                    <div class="form-body">
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <label class="col-md-4 control-label">
+                                                Image
+                                                <span class="required" aria-required="true"> * </span>
+                                                <!--<br>-->
+                                                <!-- <span class="required" aria-required="true"> (500*500) </span>  -->
+                                                <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran persegi ditampilkan pada aplikasi" data-container="body"></i>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                                    @if(isset($version['version_image_doctor_mobile']))
+                                                    <img src="{{ env('STORAGE_URL_API')}}{{$version['version_image_doctor_mobile']}}" alt="">
+                                                    @else
+                                                    <img src="https://www.placehold.it/500x500/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                    @endif
+                                                    </div>
+                                                    <div class="fileinput-preview fileinput-exists thumbnail" id="image_square" style="max-width: 200px; max-height: 200px;"></div>
+                                                    <div>
+                                                        <span class="btn default btn-file">
+                                                        <span class="fileinput-new"> Select image </span>
+                                                        <span class="fileinput-exists"> Change </span>
+                                                        <input type="file" id="field_image_square" class="file" accept="image/*" data-jenis="square" name="Display[version_image_doctor_mobile]">
+
+                                                        </span>
+
+                                                        <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <label class="col-md-4 control-label">
+                                                    Text
+                                                    <span class="required" aria-required="true"> * </span>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Kalimat yang akan ditampilkan pada aplikasi ketika versi aplikasi yang digunakan berbeda dengan versi terbaru" data-container="body"></i>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <textarea class="form-control" name="Display[version_text_alert_doctor_mobile]" required id="display_text_doctor_mobile">@if(isset($version['version_text_alert_doctor_mobile'])){{ $version['version_text_alert_doctor_mobile'] }}@endif</textarea>
+                                                <br>
+                                                You can use this variables to display version app :
+                                                <br><br>
+                                                <div class="row">
+                                                    <div class="col-md-3" style="margin-bottom:5px;">
+                                                        <span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '%version_app%' with the latest version for the device used" onClick="addTextReplace('doctor', '%version_app%');">version app</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-icon right">
+                                                <label class="col-md-4 control-label">
+                                                    Button Text
+                                                    <span class="required" aria-required="true"> * </span>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Teks pada button yang akan langsung menuju ke playstore / appstore" data-container="body"></i>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <input type="text" class="form-control" name="Display[version_text_button_doctor_mobile]" value="@if(isset($version['version_text_button_doctor_mobile'])){{ $version['version_text_button_doctor_mobile'] }}@endif" required>
                                             </div>
                                         </div>
                                     </div>
