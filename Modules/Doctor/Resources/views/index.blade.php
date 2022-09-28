@@ -207,12 +207,12 @@ $grantedFeature     = session('granted_features');
 						data: "id_doctor",
 						render: function(value, type, row) {
 							return `
+								@if(MyHelper::hasAccess([331], $grantedFeature))
+									${row.is_complete ? '' : `<a class="btn btn-sm red delete" data-toggle="confirmation" data-popout="true" data-id="${value}" data-name="${value['doctor_name'] }"><i class="fa fa-trash-o"></i></a>`}
+								@endif 
 								@if(MyHelper::hasAccess([330], $grantedFeature))
 								<a href="{{url('doctor')}}/${value}/edit" class="btn btn-sm blue"><i class="fa fa-search"></i></a>
 								@endif
-								@if(MyHelper::hasAccess([331], $grantedFeature))
-								${row.is_complete ? '' : `<a class="btn btn-sm red delete btn-primary" data-id="${value}" data-name="${value['doctor_name'] }"><i class="fa fa-trash-o"></i></a>`}
-								@endif 
 							`;
 						},
 					}
