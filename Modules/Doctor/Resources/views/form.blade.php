@@ -13,6 +13,7 @@
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/css/profile-2.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-plugin')
@@ -152,6 +153,32 @@
 			        };
 			        img.src = objectUrl;
 			    }
+			});
+
+			$(".file").change(function(e) {
+				var type      = $(this).data('jenis');
+				var widthImg  = 0;
+				var heightImg = 0;
+				var _URL = window.URL || window.webkitURL;
+				var image, file;
+
+				if ((file = this.files[0])) {
+					image = new Image();
+
+					image.onload = function() {
+						if (type == "doctor_photo") {
+							if ($(".file").val().split('.').pop().toLowerCase() != 'png') {
+								toastr.warning("Please check type of your photo.");
+								$("#removeLogo").trigger( "click" );
+							}
+							if (this.width != 300 || this.height != 300) {
+								toastr.warning("Please check dimension of your photo.");
+								$("#removeLogo").trigger( "click" );
+							}
+						}
+					};
+					image.src = _URL.createObjectURL(file);
+				}
 			});
 		});
 	</script>
@@ -703,17 +730,17 @@
 									</div>
 									<div class="col-md-9">
 										<div class="fileinput fileinput-new" data-provides="fileinput">
-											<div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-												<img src="@if(!empty($doctor['doctor_photo'])) {{env('STORAGE_URL_API').$doctor['doctor_photo']}} @else https://www.cs.emory.edu/site/media/rg5 @endif">
+											<div class="fileinput-new thumbnail" style="width: 100px; height: 100px;">
+												<img style="margin-top:18px;" src="@if(!empty($doctor['doctor_photo'])) {{env('STORAGE_URL_API').$doctor['doctor_photo']}} @else https://www.cs.emory.edu/site/media/rg5 @endif">
 											</div>
 											<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 300px; max-height: 300px;"> </div>
 											<div>
 												<span class="btn default btn-file">
 													<span class="fileinput-new"> Select image </span>
 													<span class="fileinput-exists"> Change </span>
-													<input type="file" accept="image/*" id="field_image" class="file" name="doctor_photo" value="{{isset($doctor) ? $doctor['doctor_photo'] : ''}}">
+													<input type="file" accept="image/*" class="file" name="doctor_photo" value="{{isset($doctor) ? $doctor['doctor_photo'] : ''}}" data-jenis="doctor_photo">
 												</span>
-												<a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+												<a href="javascript:;" id="removeLogo" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 											</div>
 										</div>
 									</div>
