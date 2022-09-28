@@ -2,12 +2,12 @@
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
     $codeColor = [
-            1 => '#ff0000',
-            2 => '#ffd633',
-            3 => '#cccccc',
-            4 => '#ffd633',
-            5 => '#ffd633',
-            6 => '#009900',
+            1 => 'badge-danger',
+            2 => 'badge-warning',
+            3 => 'badge-secondary',
+            4 => 'badge-warning',
+            5 => 'badge-warning',
+            6 => 'badge-success',
         ];
 @endphp
 
@@ -119,7 +119,7 @@
                                         <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail', $res['id_transaction']) }}"><i class="icon-pencil"></i> Detail </a>
                                     @endif
                                 </td>
-                                <td><span class="badge badge-default badge-sm" style="background-color: {{$codeColor[$res['transaction_status_code']]??'#cccccc'}}">{{ $res['transaction_status_text'] }}</span></td>
+                                <td><span class="badge badge-sm {{$codeColor[$res['transaction_status_code']]??'badge-default'}}" @if($res['transaction_status_code'] == 6) style="background-color: #28a745;" @endif>{{ $res['transaction_status_text'] }}</span></td>
                                 <td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
                                 <td>Rp {{number_format($res['transaction_grandtotal'],0,",",".")}}</td>
                                 <td>{{ $res['transaction_group_receipt_number'] }}</td>
