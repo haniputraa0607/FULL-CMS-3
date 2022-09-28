@@ -135,6 +135,18 @@ class ConsultationController extends Controller
             return $data;
         }
 
+        // outlets
+        $outlets = MyHelper::post('outlet/be/list', ['all_outlet' => 1])['result'] ?? [];
+
+        $outletOption = [];
+        if(!empty($outlets)){
+            foreach($outlets as $key => $outlet){
+                $outletOption[] = $outlet['outlet_name'];
+            }
+        }
+
+        $data['outlet'] = $outletOption;
+
         return view('consultation::index', $data);
     }
 
