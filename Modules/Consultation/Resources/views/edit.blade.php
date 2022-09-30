@@ -179,8 +179,8 @@
                     <div class="col-md-3">
                         <select class="form-control select2" name="consultation_status" required>
                             <option></option>
-                            <option value="soon" {{$result['consultation']['consultation_status'] == "soon" ? 'selected' : ''}}>Soon</option>
-                            <option value="ongoing" {{$result['consultation']['consultation_status'] == "ongoing" ? 'selected' : ''}}>Ongoing</option>
+                            <option value="soon" {{$result['consultation']['consultation_status'] == "soon" ? 'selected' : ''}}>Terjadwal</option>
+                            <option value="ongoing" {{$result['consultation']['consultation_status'] == "ongoing" ? 'selected' : ''}}>Online</option>
                             <option value="done" {{$result['consultation']['consultation_status'] == "done" ? 'selected' : ''}}>Done</option>
                             <option value="completed" {{$result['consultation']['consultation_status'] == "completed" ? 'selected' : ''}}>Completed</option>
                             <option value="missed" {{$result['consultation']['consultation_status'] == "missed" ? 'selected' : ''}}>Missed</option>

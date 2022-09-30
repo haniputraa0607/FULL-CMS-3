@@ -152,7 +152,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Tanggal Transaksi</td>
-                                                <td>{{$result['transaction']['transaction_date']}}</td>
+                                                <td>{{ date('d F Y', strtotime($result['transaction']['transaction_date'])) }} | {{ date('H:i', strtotime($result['transaction']['transaction_date'])) }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Doctor</td>
@@ -195,7 +195,20 @@
                         <!-- END: Comments -->
 					</div>
                     <div class="form-actions">
-                        <a href="{{url('consultation/be', $result['transaction']['id_transaction'])}}/edit" class="btn yellow">Manage Status</a>
+                        <form class="form-horizontal" role="form" action="{{ url('consultation/be/detail/export') }}" method="post">
+                            <input type="hidden" name="id_transaction" class="md-radiobtn" value="{{$result['transaction']['id_transaction']}}" required checked>
+                            <div class="form-actions">
+                                {{ csrf_field() }}
+                                <div class="row">
+                                    <div class="col-md-12" style="margin-left:15px;">
+                                        <div class="form-group">
+                                            <a href="{{url('consultation/be', $result['transaction']['id_transaction'])}}/edit" class="btn yellow">Manage Status</a>
+                                            <button type="submit" id="export_btn" class="btn green">Export</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
 				</div>
 			</div>
