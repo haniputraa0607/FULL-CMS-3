@@ -171,11 +171,12 @@
                     <div class="col-md-3">
                         <select class="form-control select2" name="consultation_status" required>
                             <option></option>
-                            <option value="soon" {{$result['consultation']['consultation_status'] == "soon" ? 'selected' : ''}}>Terjadwal</option>
-                            <option value="ongoing" {{$result['consultation']['consultation_status'] == "ongoing" ? 'selected' : ''}}>Online</option>
-                            <option value="done" {{$result['consultation']['consultation_status'] == "done" ? 'selected' : ''}}>Done</option>
+                            <option value="soon" {{$result['consultation']['consultation_status'] == "soon" ? 'selected' : ''}}>Scheduled</option>
+                            <option value="ongoing" {{$result['consultation']['consultation_status'] == "ongoing" ? 'selected' : ''}}>Ongoing</option>
+                            <option value="done" {{$result['consultation']['consultation_status'] == "done" ? 'selected' : ''}}>Waiting Result</option>
                             <option value="completed" {{$result['consultation']['consultation_status'] == "completed" ? 'selected' : ''}}>Completed</option>
                             <option value="missed" {{$result['consultation']['consultation_status'] == "missed" ? 'selected' : ''}}>Missed</option>
+                            <option value="canceled" {{$result['consultation']['consultation_status'] == "canceled" ? 'selected' : ''}}>Canceled</option>
                         </select>
                     </div>
                 </div>
