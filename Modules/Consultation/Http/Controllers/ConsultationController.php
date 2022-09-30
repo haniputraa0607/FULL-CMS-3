@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Auth;
+use Excel;
+use App\Exports\MultisheetExport;
 
 use App\Lib\MyHelper;
 
@@ -380,4 +382,16 @@ class ConsultationController extends Controller
 
         return view('users::response', $data);
 	}
+
+    function exportData(Request $request) {
+        $post=$request->except('_token');
+        $consultation = MyHelper::post('be/consultation/detail/export',$post);
+        if (isset($consultation['status']) && $consultation['status'] == "success") {
+            $res = $consultation['result'];
+            $data = new MultisheetExport($res);
+            return Excel::download($data,'Data_Consultation_'.date('Ymdhis').'.xls');
+        }else {
+            return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+        }
+    }
 }

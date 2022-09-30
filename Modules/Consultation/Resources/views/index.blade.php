@@ -136,22 +136,22 @@ $grantedFeature     = session('granted_features');
 							sev='';
 							switch (data){
 							case 'soon':
-							sev = '<span class="badge badge-default badge-sm bg-grey-silver">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-secondary">'+data+'</span>';
 							break;
 							case 'ongoing':
-							sev = '<span class="badge badge-default badge-sm bg-yellow-saffron">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-warning">'+data+'</span>';
 							break;
 							case 'done':
-							sev = '<span class="badge badge-default badge-sm bg-green-jungle">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-success" style="background-color: #28a745;">'+data+'</span>';
 							break;
 							case 'completed':
-							sev = '<span class="badge badge-default badge-sm bg-green-jungle">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-success" style="background-color: #28a745;">'+data+'</span>';
 							break;
 							case 'canceled':
-							sev = '<span class="badge badge-default badge-sm bg-red-thunderbird">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-danger">'+data+'</span>';
 							break;
 							case 'missed':
-							sev = '<span class="badge badge-default badge-sm bg-red-thunderbird">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-danger">'+data+'</span>';
 							break;
 							}
 							return sev;
