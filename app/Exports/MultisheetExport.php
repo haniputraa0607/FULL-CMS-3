@@ -26,7 +26,11 @@ class MultisheetExport implements WithMultipleSheets
 
         foreach ($this->data as $key => $value) {
             // sheet title maksimal 31 caracter
-            $sheets[] = new ArrayExport($value, substr($key,0,30));
+            if($key == 'Rekomendasi Obat'){
+                $sheets[] = new DrugRecomendationExport($value, substr($key,0,30));
+            } else {
+                $sheets[] = new ArrayExport($value, substr($key,0,30));
+            }
         }
 
         return $sheets;

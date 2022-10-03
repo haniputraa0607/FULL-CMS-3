@@ -1152,6 +1152,10 @@ return [
                             'required_features' => [351],
                             'active' => '\View::shared("menu_active") == "consultation"',
                             'url' => 'consultation/be',
+							'badge'=>[
+								'type'=>'warning',
+								'value'=>'transaction_consultation_pending',
+							]
                         ],
                         [
                             'label' => 'Option Consultation',
