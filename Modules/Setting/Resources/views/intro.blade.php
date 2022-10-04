@@ -154,6 +154,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" style="border: none;">
+                                    <img class="img-responsive" src="{{env('STORAGE_URL_VIEW').'img/setting/previous.png'}}" alt="">
+                                    <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
+                                        <input maxlength="11" type="text" name="text_previous" @if(isset($value['text_previous'])) value="{{$value['text_previous']}}" @endif class="form-control">
+                                        <span class="input-group-addon">
+                                            <i style="color:#333;" class="fa fa-question-circle tooltips" data-original-title="Input ini akan menggantikan text Lewati (Default), di tampilkan di bagian bawah kiri" data-container="body"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" style="border: none;">
                                     <img class="img-responsive" src="{{env('STORAGE_URL_VIEW').'img/setting/skip.png'}}" alt="">
                                     <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
                                         <input maxlength="11" type="text" name="text_skip" @if(isset($value['text_skip'])) value="{{$value['text_skip']}}" @endif class="form-control">
@@ -163,7 +174,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{--<div class="col-md-6">
                                 <div class="form-group" style="border: none;">
                                     <img class="img-responsive" src="{{env('STORAGE_URL_VIEW').'img/setting/last_button.png'}}" alt="">
                                     <div class="input-group" style="border: none;border: none;width: 60%;margin: auto;">
@@ -173,7 +184,7 @@
                                         </span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                     <div class="form-group">

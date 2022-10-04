@@ -63,8 +63,8 @@ class TutorialController extends Controller
             'active'        => (isset($post['active']) && $post['active'] == 'on') ? 1 : 0,
             'skippable'     => (isset($post['skippable']) && $post['skippable'] == 'on') ? 1 : 0,
             'text_next'     => $post['text_next'],
-            'text_skip'     => $post['text_skip'],
-            'text_last'     => $post['text_last']
+            'text_previous' => $post['text_previous'],
+            'text_skip'     => $post['text_skip']
         ]);
 
         if (isset($post['value_text']) && $post['value_text'] != null) {
