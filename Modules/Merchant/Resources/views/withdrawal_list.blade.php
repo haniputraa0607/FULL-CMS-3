@@ -130,6 +130,24 @@
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div style="margin-top: 2%"></div>
+                                                    Rp {{number_format(abs($val['fee']+$val['nominal']),0,",",".")}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group" style="color: red">
+                                                <label class="col-md-4 control-label">
+                                                    Fee
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <div style="margin-top: 2%"></div>
+                                                    Rp - {{number_format(abs($val['fee']),0,",",".")}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">
+                                                    <b>Final Amount</b>
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <div style="margin-top: 2%;"></div>
                                                     <b>Rp {{number_format(abs($val['nominal']),0,",",".")}}</b>
                                                 </div>
                                             </div>

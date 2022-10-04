@@ -258,4 +258,43 @@ class TransactionSettingController extends Controller
             }
     	}
     }
+
+    public function settingAllFee(Request $request, $type = null){
+        $post = $request->all();
+
+        if(empty($post)){
+            $data = [
+                'title'          => 'Order',
+                'menu_active'    => 'order',
+                'sub_title'      => 'Setting Fee',
+                'submenu_active' => 'setting-fee'
+            ];
+
+            $data['service'] = MyHelper::post('setting', ['key' => 'service'])['result']['value']??0;
+            $data['mdr_charged'] = MyHelper::post('setting', ['key' => 'mdr_charged'])['result']['value']??'';
+            $mdrFormula = MyHelper::post('setting', ['key' => 'mdr_formula'])['result']['value_text']??'';
+            $data['mdr_formula'] = (array)json_decode($mdrFormula);
+            $data['withdrawal_fee_global'] = MyHelper::post('setting', ['key' => 'withdrawal_fee_global'])['result']['value']??0;
+            $data['banks'] = MyHelper::post('disburse/bank',$post)['result']??[];
+
+            return view('transaction::setting.all_fee', $data);
+        }else{
+            if($type == 'service'){
+                $sendData = [
+                    'service' => ['value', $post['service']]
+                ];
+                $update = MyHelper::post('setting/update2', ['update' => $sendData]);
+            }elseif ($type == 'mdr'){
+                $update = MyHelper::post('transaction/setting/mdr', $post);
+            }elseif ($type == 'withdrawal'){
+                $update = MyHelper::post('transaction/setting/withdrawal', $post);
+            }
+
+            if (($update['status']??false) == 'success') {
+                return redirect('transaction/setting/all-fee#'.$type.'_fee')->withSuccess(['Success update']);
+            } else{
+                return back()->withErrors(['Update failed']);
+            }
+        }
+    }
 }
