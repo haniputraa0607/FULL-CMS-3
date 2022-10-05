@@ -2737,11 +2737,7 @@ return [
 						[
 							'label' => 'Intro First Install',
 							'url' => 'setting/intro/first'
-						],
-						[
-							'label' => 'Tutorial In Home',
-							'url' => 'setting/intro/home'
-						],
+						]
 					],
 					'icon' => 'icon-screen-tablet'
 				],
