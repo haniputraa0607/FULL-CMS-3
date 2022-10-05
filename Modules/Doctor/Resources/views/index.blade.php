@@ -250,7 +250,10 @@ $grantedFeature     = session('granted_features');
 		</ul>
 	</div>
 	@include('layouts.notifications')
+	
+	<div style="margin-top:20px">
 	@yield('filter_view')
+	</div>
 
 	<div class="row" style="margin-top:20px">
 		<div class="col-md-12">
@@ -261,22 +264,20 @@ $grantedFeature     = session('granted_features');
 					</div>
 				</div>
 				<div class="portlet-body">
-					<div class="table-scrollable">
-						<table class="table table-striped table-bordered table-hover" id="table-doctor">
-							<thead>
-							<tr>
-								<th scope="col"> Name </th>
-								<th scope="col"> Phone </th>
-								<th scope="col"> Outlet </th>
-								<th scope="col"> Session Price</th>
-								<th> </th>
-							</tr>
-							</thead>
-							<tbody>
-	
-							</tbody>
-						</table>
-					</div>
+					<table class="table table-striped table-bordered table-hover" id="table-doctor">
+						<thead>
+						<tr>
+							<th scope="col"> Name </th>
+							<th scope="col"> Phone </th>
+							<th scope="col"> Outlet </th>
+							<th scope="col"> Session Price</th>
+							<th> </th>
+						</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>

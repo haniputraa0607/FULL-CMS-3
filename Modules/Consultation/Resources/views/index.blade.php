@@ -87,7 +87,7 @@ $grantedFeature     = session('granted_features');
             ],
 			opsi:[
                 ['soon', 'Scheduled'],
-                ['done', 'Done'],
+                ['done', 'Waiting Result'],
 				['completed', 'Completed'],
 				['missed', 'Missed'],
 				['canceled', 'Canceled'],
@@ -136,22 +136,22 @@ $grantedFeature     = session('granted_features');
 							sev='';
 							switch (data){
 							case 'soon':
-							sev = '<span class="badge badge-sm badge-secondary">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-secondary">Scheduled</span>';
 							break;
 							case 'ongoing':
-							sev = '<span class="badge badge-sm badge-warning">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-warning">Ongoing</span>';
 							break;
 							case 'done':
-							sev = '<span class="badge badge-sm badge-success" style="background-color: #28a745;">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-success" style="background-color: #28a745;">Waiting Result</span>';
 							break;
 							case 'completed':
-							sev = '<span class="badge badge-sm badge-success" style="background-color: #28a745;">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-success" style="background-color: #28a745;">Completed</span>';
 							break;
 							case 'canceled':
-							sev = '<span class="badge badge-sm badge-danger">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-danger">Canceled</span>';
 							break;
 							case 'missed':
-							sev = '<span class="badge badge-sm badge-danger">'+data+'</span>';
+							sev = '<span class="badge badge-sm badge-danger">Missed</span>';
 							break;
 							}
 							return sev;
@@ -207,7 +207,10 @@ $grantedFeature     = session('granted_features');
 		</ul>
 	</div>
 	@include('layouts.notifications')
-	@yield('filter_view')
+
+	<div style="margin-top:20px">
+		@yield('filter_view')
+	</div>
 
 	<div class="row" style="margin-top:20px">
 		<div class="col-md-12">
