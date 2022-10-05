@@ -1117,6 +1117,12 @@ return [
                     'icon' => 'fa fa-cogs',
                     'children' => [
                         [
+                            'label' => 'Setting Fee',
+                            'required_features' => [250],
+                            'active' => '\View::shared("submenu_active") == "setting-fee"',
+                            'url' => 'transaction/setting/all-fee'
+                        ],
+                        [
                             'label' => 'Available Payment Method',
                             'required_features' => [250],
                             'active' => '\View::shared("submenu_active") == "setting-payment-method"',
@@ -1128,12 +1134,6 @@ return [
                             'active' => '\View::shared("submenu_active") == "delivery-setting-available"',
                             'url' => 'transaction/setting/available-delivery'
                         ],
-//                        [
-//                            'label' => 'Upload Logo Delivery',
-//                            'required_features' => [320],
-//                            'active' => '\View::shared("submenu_active") == "delivery-setting-upload-image"',
-//                            'url' => 'transaction/setting/delivery-upload-image'
-//                        ],
                         [
                             'label' => 'Setting Refund Reject Order',
                             'required_features' => [250],
