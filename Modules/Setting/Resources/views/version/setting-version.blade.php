@@ -253,7 +253,7 @@
                                             <div class="mt-repeater-cell">
                                                 <div class="col-md-12">
                                                     <div class="col-md-1">
-                                                        <a href="javascript:;" data-repeater-delete="" class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteCondition('Android0')">
+                                                        <a href="javascript:;" data-repeater-delete="" class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteCondition('DoctorAndroid0')">
                                                             <i class="fa fa-close"></i>
                                                         </a>
                                                     </div>
@@ -329,13 +329,13 @@
                                             <div class="mt-repeater-cell">
                                                 <div class="col-md-12">
                                                     <div class="col-md-1">
-                                                        <a href="javascript:;" data-repeater-delete="" class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteCondition('IOS0')">
+                                                        <a href="javascript:;" data-repeater-delete="" class="btn btn-danger mt-repeater-delete mt-repeater-del-right mt-repeater-btn-inline" onclick="deleteCondition('DoctorIOS0')">
                                                             <i class="fa fa-close"></i>
                                                         </a>
                                                     </div>
                                                     <div class="col-md-5">
                                                         <div class="input-group">
-                                                            <input type="text" class="form-control" name="IOS[0][app_version]" required placeholder="Doctor IOS Version">
+                                                            <input type="text" class="form-control" name="DoctorIOS[0][app_version]" required placeholder="Doctor IOS Version">
                                                             <span class="input-group-addon">
                                                                 <i style="color:#333" class="fa fa-question-circle tooltips" data-original-title="Versi aplikasi IOS terbaru" data-container="body"></i>
                                                             </span>
@@ -343,7 +343,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="input-group">
-                                                            <select name="IOS[0][rules]" class="form-control" placeholder="Rules For Different Verion" required>
+                                                            <select name="DoctorIOS[0][rules]" class="form-control" placeholder="Rules For Different Verion" required>
                                                                 <option disabled selected value="">Rules For Different Verion</option>
                                                                 <option value="1">Allowed</option>
                                                                 <option value="0">Not Allowed</option>
