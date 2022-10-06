@@ -33,6 +33,25 @@ $configs     = session('configs');
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 
     <script type="text/javascript">
+        $('input[name=service]').keypress(function (e) {
+            var regex = new RegExp("^[0-9]+$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+            var check_browser = navigator.userAgent.search("Firefox");
+
+            if(check_browser == -1){
+                if (regex.test(str) || e.which == 8) {
+                    return true;
+                }
+            }else{
+                if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+                    return true;
+                }
+            }
+
+            e.preventDefault();
+            return false;
+        });
     </script>
 @endsection
 
@@ -84,11 +103,14 @@ $configs     = session('configs');
                                     <label class="col-md-3 control-label">
                                         Service Fee
                                         <span class="required" aria-required="true"> * </span>
-                                        <i class="fa fa-question-circle tooltips" data-original-title="Example format 0.01 (0.01 * transaction subtotal)" data-container="body"></i>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Example format 1-100" data-container="body"></i>
                                     </label>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" placeholder="Insert fee" class="form-control" name="service" value="{{$service}}" required>
+                                    <div class="input-group">
+                                        <input type="number" maxlength="3" min="0" max="100" placeholder="Insert fee" class="form-control" name="service" value="{{$service}}" required>
+                                        <span class="input-group-addon">%</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +182,7 @@ $configs     = session('configs');
                             <div class="form-group">
                                 <div class="input-icon right">
                                     <label class="col-md-5 control-label">
-                                        Withdrawal Global
+                                        Withdrawal Global Fee
                                         <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Example formula 0.01 * amount or 1000" data-container="body"></i>
                                     </label>
