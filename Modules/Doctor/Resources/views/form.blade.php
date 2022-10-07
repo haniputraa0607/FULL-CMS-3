@@ -785,7 +785,7 @@
 										</label>
 									</div>
 									<div class="col-md-7">
-										<input type="password" name="pin" placeholder="Minimum 8 digits karakter (Leave empty to autogenerate)" minlength="8" class="form-control mask_number" autocomplete="new-password" required />
+										<input type="password" name="password_new" placeholder="Minimum 8 digits karakter (Leave empty to autogenerate)" minlength="8" class="form-control mask_number" autocomplete="new-password" required />
 									</div>
 								</div>
 							</div>
@@ -799,7 +799,7 @@
 										</label>
 									</div>
 									<div class="col-md-7">
-										<input type="password" name="pin" placeholder="Minimum 8 digits karakter (Leave empty to autogenerate)" minlength="8" class="form-control mask_number" required />
+										<input type="password" name="password_new_confirmation" placeholder="Minimum 8 digits karakter (Leave empty to autogenerate)" minlength="8" class="form-control mask_number" required />
 									</div>
 								</div>
 							</div>

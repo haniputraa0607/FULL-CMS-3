@@ -83,7 +83,7 @@
 		<div class="portlet light bordered" >
 			<div class="portlet-title">
 				<div class="caption">
-					<span class="caption-subject font-red sbold uppercase"><i class="fa fa-list"></i> Please Input Your PIN to access this feature</span>
+					<span class="caption-subject font-red sbold uppercase"><i class="fa fa-list"></i> Please Input Your Password to access this feature</span>
 				</div>
 			</div>
 			<div class="portlet-body form">
