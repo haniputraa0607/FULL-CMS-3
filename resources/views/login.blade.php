@@ -68,8 +68,8 @@
                     <label class="control-label visible-ie8 visible-ie9">Username</label>
                     <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" value="{{ old('username') }}" /> </div>
                 <div class="form-group">
-                    <label class="control-label visible-ie8 visible-ie9">PIN</label>
-                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="PIN" name="password" required/>
+                    <label class="control-label visible-ie8 visible-ie9">Password</label>
+                    <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" required/>
 				</div>
 				<div class="form-group" style="margin-bottom: 0">
                     {!!  GoogleReCaptchaV3::renderField('captcha_div','login', 'captcha_div') !!}

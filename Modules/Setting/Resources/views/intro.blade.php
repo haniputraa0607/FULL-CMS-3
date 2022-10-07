@@ -82,6 +82,32 @@
                 }
             });
         });
+
+        $(".file").change(function(e) {
+            var type      = $(this).data('jenis');
+            var widthImg  = 0;
+            var heightImg = 0;
+            var _URL = window.URL || window.webkitURL;
+            var image, file;
+
+            if ((file = this.files[0])) {
+                image = new Image();
+
+                image.onload = function() {
+                    if (type == "landscape") {
+                        if ($(".file").val().split('.').pop().toLowerCase() != 'png') {
+                            toastr.warning("Please check type of your photo.");
+                            $("#removeLogo").trigger( "click" );
+                        }
+                        if (this.width != 1080 || this.height != 1920) {
+                            toastr.warning("Please check dimension of your photo.");
+                            $("#removeLogo").trigger( "click" );
+                        }
+                    }
+                };
+                image.src = _URL.createObjectURL(file);
+            }
+        });
     </script>
 @endsection
 
@@ -275,7 +301,7 @@
                                                                 <span class="fileinput-exists"> Change </span>
                                                                 <input type="file" accept="image/*" class="file form-control demo featureImageForm" name="value_text" data-jenis="landscape">
                                                                 </span>
-                                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                <a href="javascript:;" id="removeLogo" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
                                                             </div>
                                                         </div>
                                                     </div>
