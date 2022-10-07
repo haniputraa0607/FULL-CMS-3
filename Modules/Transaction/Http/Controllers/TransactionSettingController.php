@@ -271,6 +271,7 @@ class TransactionSettingController extends Controller
             ];
 
             $data['service'] = MyHelper::post('setting', ['key' => 'service'])['result']['value']??0;
+            $data['service'] = $data['service'] * 100;
             $data['mdr_charged'] = MyHelper::post('setting', ['key' => 'mdr_charged'])['result']['value']??'';
             $mdrFormula = MyHelper::post('setting', ['key' => 'mdr_formula'])['result']['value_text']??'';
             $data['mdr_formula'] = (array)json_decode($mdrFormula);
@@ -281,7 +282,7 @@ class TransactionSettingController extends Controller
         }else{
             if($type == 'service'){
                 $sendData = [
-                    'service' => ['value', $post['service']]
+                    'service' => ['value', ($post['service']/100)]
                 ];
                 $update = MyHelper::post('setting/update2', ['update' => $sendData]);
             }elseif ($type == 'mdr'){
