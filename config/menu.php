@@ -434,6 +434,11 @@ return [
                             'url' => 'autoresponse/merchant/rejected-merchant',
                             'required_features' => [326],
                         ],
+                        [
+                            'label' => '[Response] Merchant Withdrawal',
+                            'url' => 'autoresponse/merchant/merchant-withdrawal',
+                            'required_features' => [326],
+                        ],
                     ],
                     'badge'=>[
                         'type'=>'warning',

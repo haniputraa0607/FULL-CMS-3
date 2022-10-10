@@ -209,6 +209,7 @@ class AutocrmController extends Controller
             case 'register-merchant':
             case 'rejected-merchant':
             case 'approve-merchant':
+            case 'merchant-withdrawal':
                 $data['menu_active'] = 'merchant';
                 $data['submenu_active'] = 'merchant-autoresponse-'.$subject;
                 break;
