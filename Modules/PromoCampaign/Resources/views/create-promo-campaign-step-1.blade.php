@@ -331,35 +331,25 @@
 		}
 
 		$('input[name=charged_central]').keyup(function () {
-            var outlet = $('input[name=charged_outlet]').val();
             var central = $('input[name=charged_central]').val();
 
-            var check = Number(outlet) + Number(central);
-            if(check !== 100){
-                document.getElementById('label_central').style.display = 'block';
-                document.getElementById('label_outlet').style.display = 'block';
-                $(':input[type="submit"]').prop('disabled', true);
+            if(central >= 100){
+				$('#charged_central').val(100);
+				$('#charged_outlet').val(0);
             }else{
-                document.getElementById('label_central').style.display = 'none';
-                document.getElementById('label_outlet').style.display = 'none';
-                $(':input[type="submit"]').prop('disabled', false);
+				$('#charged_outlet').val(100 - central);
             }
         });
 
         $('input[name=charged_outlet]').keyup(function (e) {
             var outlet = $('input[name=charged_outlet]').val();
-            var central = $('input[name=charged_central]').val();
 
-            var check = Number(outlet) + Number(central);
-            if(check !== 100){
-                document.getElementById('label_central').style.display = 'block';
-                document.getElementById('label_outlet').style.display = 'block';
-                $(':input[type="submit"]').prop('disabled', true);
-            }else{
-                document.getElementById('label_central').style.display = 'none';
-                document.getElementById('label_outlet').style.display = 'none';
-                $(':input[type="submit"]').prop('disabled', false);
-            }
+			if(outlet >= 100){
+				$('#charged_outlet').val(100);
+				$('#charged_central').val(0);
+			}else{
+				$('#charged_central').val(100 - outlet);
+			}
         });
 
 		$('.summernote').summernote({
@@ -646,7 +636,7 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak pusat" data-container="body"></i>
 						<div class="input-group col-md-12">
 							<div class="input-group">
-								<input required type="text" class="form-control disable-input onlynumber" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
+								<input required type="number" min="0" max="100" id="charged_central" class="form-control disable-input onlynumber" name="charged_central" placeholder="Charged Central" @if(isset($result['charged_central']) && $result['charged_central'] != "") value="{{$result['charged_central']}}" @elseif(old('charged_central') != "") value="{{old('charged_central')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
 							<p style="color: red;display: none" id="label_central">Invalid value, charged central + charged outlet total must be 100</p>
@@ -659,7 +649,7 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Percent fee yang akan dibebankan ke pihak outlet" data-container="body"></i>
 						<div class="input-group col-md-12">
 							<div class="input-group">
-								<input required type="text" class="form-control disable-input onlynumber" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
+								<input required type="number" min="0" max="100" type="text" id="charged_outlet" class="form-control disable-input onlynumber" name="charged_outlet" placeholder="Charged Outlet" @if(isset($result['charged_outlet']) && $result['charged_outlet'] != "") value="{{$result['charged_outlet']}}" @elseif(old('charged_outlet') != "") value="{{old('charged_outlet')}}" @endif>
 								<span class="input-group-addon">%</span>
 							</div>
 							<p style="color: red;display: none" id="label_outlet">Invalid value, charged central + charged outlet total must be 100</p>

@@ -434,6 +434,11 @@ return [
                             'url' => 'autoresponse/merchant/rejected-merchant',
                             'required_features' => [326],
                         ],
+                        [
+                            'label' => '[Response] Merchant Withdrawal',
+                            'url' => 'autoresponse/merchant/merchant-withdrawal',
+                            'required_features' => [326],
+                        ],
                     ],
                     'badge'=>[
                         'type'=>'warning',
@@ -561,17 +566,6 @@ return [
 							'active' => '\View::shared("submenu_active") == "product-category-list"',
 							'url' => 'product/category',
 							'required_features' => [43],
-						],
-						[
-							'label' => 'New Promo Category',
-							'url' => 'product/promo-category/create',
-							'required_features' => [239],
-						],
-						[
-							'label' => 'Promo Category List',
-							'active' => '\View::shared("submenu_active") == "product-promo-category-list"',
-							'url' => 'product/promo-category',
-							'required_features' => [236],
 						],
 						[
 							'label' => 'Tag List',
@@ -2800,12 +2794,6 @@ return [
 			'label' => 'About',
 			'children' => [
 				[
-					'label' => 'About Us',
-					'required_features' => [85],
-					'url' => 'setting/about',
-					'icon' => 'icon-info'
-				],
-				[
 					'label' => 'FAQ',
 					'required_features' => [],
 					'type' => 'tree',
@@ -2829,12 +2817,6 @@ return [
 						],
 					],
 					'icon' => 'icon-question'
-				],
-				[
-					'label' => 'Ketentuan Layanan',
-					'required_features' => [86],
-					'url' => 'setting/tos',
-					'icon' => 'icon-note'
 				],
 				[
 					'label' => 'Privacy Policy',
