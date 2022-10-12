@@ -725,6 +725,8 @@
 										<label class="col-md-3 control-label">
 											Id Photo
 											<span class="required" aria-required="true"> (300*300) </span>
+											<br>
+											<span class="required" aria-required="true"> (ONLY PNG) </span>
 											<i class="fa fa-question-circle tooltips" data-original-title="Foto Professional Dokter" data-container="body"></i>
 										</label>
 									</div>
