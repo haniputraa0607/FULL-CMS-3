@@ -186,14 +186,6 @@ class OutletController extends Controller
 
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
-                $product = MyHelper::get('product/list/product-detail/'.$outlet['result'][0]['id_outlet']);
-
-                if (isset($product['status']) && $product['status'] == "success") {
-                    $data['product']    = $product['result'];
-                }
-                else {
-                    $data['product'] = [];
-                }
             }
             else {
                 $e = ['e' => 'Data outlet not found'];
@@ -252,7 +244,20 @@ class OutletController extends Controller
                 $data['tipe'] = 'list_payment';
             }
 
-            $data['products'] = MyHelper::post('product/be/list', ['id_outlet' => $data['outlet'][0]['id_outlet'], 'outlet_detail' => 1])['result']??[];
+            $conditions = [
+                "conditions" => [
+                    [
+                      "subject" => "id_outlet",
+                      "operator" => $data['outlet'][0]['id_outlet'],
+                      "parameter" => null
+                    ]
+                ],
+                "rule" => "and",
+                "filter" => "1",
+                "admin_list" => 1
+            ];
+
+            $data['products'] = MyHelper::post('product/be/list', $conditions)['result']??[];
             $data['doctors'] = MyHelper::post('doctor/list/outlet', ['id_outlet' => $data['outlet'][0]['id_outlet']])['result']??[];
             $data['id_outlet'] = $data['outlet'][0]['id_outlet'];
             return view('outlet::detail', $data);
