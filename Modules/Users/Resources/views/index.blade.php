@@ -279,12 +279,7 @@ $configs     		= session('configs');
 								<th scope="col"> Provider </th>
 								<th scope="col"> Birthday </th>
 								<th scope="col"> Age </th>
-								@if(MyHelper::hasAccess([18], $configs))
-									<th scope="col"> Points </th>
-								@endif
-								@if(MyHelper::hasAccess([19], $configs))
-									<th scope="col"> Balances </th>
-								@endif
+								<th scope="col"> Points </th>
 								<th scope="col"> Phone Verified </th>
 								<th scope="col"> Email Verified </th>
 								<th scope="col"> Register Date </th>
@@ -334,17 +329,12 @@ $configs     		= session('configs');
 												<td> {{$data['email']}} </td>
 												<td> {!!str_replace(" ","&nbsp;", $data['city_name'])!!} </td>
 												<td> {!!str_replace(" ","&nbsp;", $data['province_name'])!!} </td>
-												<td> {{$data['city_postal_code']}} </td>
+												<td> {{$data['address_postal_code']}} </td>
 												<td> {{$data['gender']}} </td>
 												<td> {{$data['provider']}} </td>
 												<td> @if($data['birthday'] != ""){!!str_replace(" ","&nbsp;", date('d F Y', strtotime($data['birthday'])))!!}@else - @endif </td>
 												<td> {!!str_replace(" ","&nbsp;", $data['age'])!!} </td>
-												@if(MyHelper::hasAccess([18], $configs))
-													<td> {{$data['points']}} </td>
-												@endif
-												@if(MyHelper::hasAccess([19], $configs))
-													<td> {{$data['balance']}} </td>
-												@endif
+												<td> {{$data['balance']}} </td>
 												<td> @if($data['phone_verified'] == 0) Not Verified @else Verified @endif </td>
 												<td> @if($data['email_verified'] == 0) Not Verified @else Verified @endif </td>
 												<td> {!!str_replace(" ","&nbsp;", date('d F Y H:i', strtotime($data['created_at'])))!!} </td>
@@ -427,7 +417,6 @@ $configs     		= session('configs');
 							<option value="phone not verified">Set Phone Not Verified</option>
 							<option value="email verified">Set Email Verified</option>
 							<option value="email not verified">Set Email Not Verified</option>
-							<option value="campaign">Compose Campaign</option>
 						</select>
 					</div>
 					<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
