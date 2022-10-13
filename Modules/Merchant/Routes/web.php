@@ -23,6 +23,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant
 
     //merchant management
     Route::any('/', 'MerchantController@list');
+    Route::get('create', 'MerchantController@create');
+    Route::post('store', 'MerchantController@store');
     Route::get('detail/{id}', 'MerchantController@detail');
     Route::post('update/{id}', 'MerchantController@update');
     Route::any('candidate', 'MerchantController@candidate');

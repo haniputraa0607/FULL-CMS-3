@@ -114,7 +114,7 @@
                         <option value="">Select Province</option>
                         @if (!empty($province))
                             @foreach($province as $suw)
-                                <option value="{{ $suw['id_province'] }}" @if ($suw['id_province'] == $val['city']['id_province']) selected @endif ) >{{ $suw['province_name'] }}</option>
+                                <option value="{{ $suw['id_province'] }}" @if ($suw['id_province'] == $val['city']['id_province']) selected @endif >{{ $suw['province_name'] }}</option>
                             @endforeach
                         @endif
                     </optgroup>
@@ -131,9 +131,43 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <select id="city" class="form-control select2-multiple" data-placeholder="Select City" disabled required>
-                    <optgroup label="Province List">
-                        <option value="{{ $val['city']['city_name'] }}">{{ $val['city']['city_name'] }}</option>
+                <select id="city" name="id_city" class="form-control select2-multiple" data-placeholder="Select City" disabled required>
+                    <optgroup label="City List">
+                        <option value="{{ $val['city']['id_city'] }}">{{ $val['city']['city_name'] }}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Disctrict
+                    <span class="required" aria-required="true"> * </span>
+                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih kecamatan outlet" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <select id="district" class="form-control select2-multiple" data-placeholder="Select Disctrict" disabled required>
+                    <optgroup label="Disctrict List">
+                        <option value="{{ $val['subdistrict']['id_district'] }}">{{ $val['subdistrict']['district']['district_name'] }}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Subdisctrict
+                    <span class="required" aria-required="true"> * </span>
+                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih kelurahan outlet" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <select id="subdistrict" name="id_subdistrict" class="form-control select2-multiple" data-placeholder="Select Subdisctrict" disabled required>
+                    <optgroup label="Subdisctrict List">
+                        <option value="{{ $val['subdistrict']['id_subdistrict'] }}">{{ $val['subdistrict']['subdistrict_name'] }}</option>
                     </optgroup>
                 </select>
             </div>
@@ -161,7 +195,7 @@
                 </label>
             </div>
             <div class="col-md-9">
-                <input type="text" class="form-control" name="outlet_postal_code" value="{{ $val['outlet_postal_code'] }}" required placeholder="Postal Code" required>
+                <input type="text" class="form-control" id="outlet_postal_code" name="outlet_postal_code" value="{{ $val['outlet_postal_code'] }}" required placeholder="Postal Code" readonly>
             </div>
         </div>
 
@@ -230,8 +264,8 @@
 
         <div class="form-group">
             <label class="col-md-3 control-label">
-                Image Cover<span class="required" aria-required="true">* <br>(720*360) </span>
-                <i class="fa fa-question-circle tooltips" data-original-title="Cover outlet ukuran 730px x 360 px" data-container="body"></i>
+                Image Cover<span class="required" aria-required="true">* <br>(720*375) </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Cover outlet ukuran 730px x 375 px" data-container="body"></i>
             </label>
             <div class="col-md-8">
                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -350,7 +384,6 @@
                 @if(MyHelper::hasAccess([27], $grantedFeature))
                     <button type="submit" class="btn green">Submit</button>
                 @endif
-                <input type="hidden" name="id_city" id="id_city" value="{{ $val['city']['id_city'] }}">
                 <input type="hidden" name="id_outlet" value="{{ $val['id_outlet'] }}">
                 <!-- <button type="button" class="btn default">Cancel</button> -->
             </div>
