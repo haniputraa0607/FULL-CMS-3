@@ -280,6 +280,7 @@
 
 		var i = 20;
         function addShift(j) {
+			console.log(j);
             var html =  '<div class="form-group" id="div_shift_child_'+j+'_'+i+'">'+
 						'<div class="col-md-3"></div>'+
 						'<div class="col-md-3">'+
@@ -837,7 +838,7 @@
 							<div class="form-body">
 								<div class="form-group">
 									<div class="col-md-1">
-										<a class="btn btn-primary" onclick="addSchedule()">&nbsp;<i class="fa fa-plus-circle"></i> Add Schedule </a>
+										<a class="btn btn-primary hidden" onclick="addSchedule()">&nbsp;<i class="fa fa-plus-circle"></i> Add Schedule </a>
 									</div>
 								</div>
 								@php $count = count($doctor['schedules_raw']);@endphp
@@ -846,14 +847,14 @@
 									@foreach($doctor['schedules_raw'] as $key => $schedule)
 									<div class="form-group" id="div_schedule_child_{{$key}}">
 										<div class="col-md-1" style="text-align: right">
-											<a class="btn btn-danger" onclick="deleteChildSchedule(0)">&nbsp;<i class="fa fa-trash"></i></a>
+											<a class="btn btn-danger hidden" onclick="deleteChildSchedule(0)">&nbsp;<i class="fa fa-trash"></i></a>
 										</div>
 										<label for="multiple" class="control-label col-md-2">Hari <span class="required" aria-required="true"> * </span>
 											<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
 										</label>
 										<input type="hidden" name="schedules[{{$key}}][id_doctor_schedule]" value="{{$schedule['id_doctor_schedule']}}">
 										<div class="col-md-3">
-											<select class="form-control select" id="office_hour_type[0]" name="schedules[{{$key}}][day]" required>
+											<select disabled="true" class="form-control select" id="office_hour_type[0]" name="schedules[{{$key}}][day]" required>
 												<option></option>
 												<option value="monday" {{$schedule['day'] == "monday" ? 'selected' : ''}}>Senin</option>
 												<option value="tuesday" {{$schedule['day'] == "tuesday" ? 'selected' : ''}}>Selasa</option>
@@ -864,12 +865,14 @@
 												<option value="sunday" {{$schedule['day'] == "sunday" ? 'selected' : ''}}>Minggu</option>
 											</select>
 										</div>
-										<input type="hidden" name="schedules[{{$key}}][is_active]" value="1">
+										<input type="hidden" name="schedules[{{$key}}][day]" value="{{$schedule['day']}}">
+										{{--<input type="hidden" name="schedules[{{$key}}][is_active]" value="1">--}}
 										<div id="use_shift_0">
 											<div class="form-group">
 												<div class="col-md-3"></div>
 												<div class="col-md-4">
 													<a class="btn btn-primary" onclick="addShift({{$key}})">&nbsp;<i class="fa fa-plus-circle"></i> Add Session </a>
+													<input type="checkbox" name="schedules[{{$key}}][is_active]" @if($schedule['is_active'] == '1') checked @endif class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
 												</div>
 											</div>
 											<div class="form-group">
@@ -895,6 +898,23 @@
 													</div>
 												</div>
 											@endforeach
+											</div>
+											@else
+											@php $count = count($schedule['schedule_time']);@endphp
+											<input type="hidden" id="count_array_time_{{$key}}" value="{{$count}}">
+											<div id="div_shift_child_{{$key}}">
+												<div class="form-group" id="div_shift_child_{{$key}}_0">
+													<div class="col-md-3"></div>
+													<div class="col-md-3">
+														<input type="text" style="background-color: white" data-placeholder="select time" id="time_start_0"  name="schedules[{{$key}}][session_time][0][start_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>
+													</div>
+													<div class="col-md-3">
+														<input type="text" style="background-color: white" data-placeholder="select time" id="time_end_0" name="schedules[{{$key}}][session_time][0][end_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>
+													</div>
+													<div class="col-md-3">
+														<a class="btn btn-danger" onclick="deleteChild(0, 0)">&nbsp;<i class="fa fa-trash"></i></a>
+													</div>
+												</div>
 											</div>
 											@endif
 										</div>

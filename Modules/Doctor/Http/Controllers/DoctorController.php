@@ -126,8 +126,6 @@ class DoctorController extends Controller
     {
         $post = $request->all();
 
-        //dd($post);
-
         if(isset($post['doctor_photo']) && !empty($post['doctor_photo'])){
             $post['doctor_photo'] = MyHelper::encodeImage($post['doctor_photo']);
         }
@@ -143,8 +141,6 @@ class DoctorController extends Controller
         } else {
             $post['practice_experience_place'] = null;
         }
-
-        //dd($post);
 
         $store = MyHelper::post('doctor/store', $post);
 
@@ -281,16 +277,24 @@ class DoctorController extends Controller
      */
     public function updateSchedule(Request $request, $id)
     {
-        $post = $post = $request->except('_method');
+        $post = $request->except('_method');
 
         $post['id_doctor'] = $id;
 
         foreach($post['schedules'] as $key => $val){
-            usort($val['session_time'], function($a, $b) {
-                return strtotime($a['start_time']) <=> strtotime($b['start_time']);
-            });
+            if(isset($val['is_active']) && $val['is_active'] == 'on'){
+                $post['schedules'][$key]['is_active'] = 1;
+            } else{
+                $post['schedules'][$key]['is_active'] = 0;
+            }
 
-            $post['schedules'][$key]['session_time'] = $val['session_time'];
+            if(isset($val['session_time'])){
+                usort($val['session_time'], function($a, $b) {
+                    return strtotime($a['start_time']) <=> strtotime($b['start_time']);
+                });
+
+                $post['schedules'][$key]['session_time'] = $val['session_time'];
+            }
         }
 
         $store = MyHelper::post('doctor/schedule/store', $post);
