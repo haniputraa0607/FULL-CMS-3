@@ -834,7 +834,7 @@
 						<form class="form-horizontal" id="form_submit" role="form" action="{{ url('/doctor', $doctor['id_doctor'])}}/update-schedule" method="post">
 							@method('PUT')
 							{{ csrf_field() }}
-							@if(!empty($doctor['schedules']))
+							@if(!empty($doctor['schedules_raw']))
 							<div class="form-body">
 								<div class="form-group">
 									<div class="col-md-1">
@@ -856,13 +856,13 @@
 										<div class="col-md-3">
 											<select disabled="true" class="form-control select" id="office_hour_type[0]" name="schedules[{{$key}}][day]" required>
 												<option></option>
-												<option value="monday" {{$schedule['day'] == "monday" ? 'selected' : ''}}>Senin</option>
-												<option value="tuesday" {{$schedule['day'] == "tuesday" ? 'selected' : ''}}>Selasa</option>
-												<option value="wednesday" {{$schedule['day'] == "wednesday" ? 'selected' : ''}}>Rabu</option>
-												<option value="thursday" {{$schedule['day'] == "thursday" ? 'selected' : ''}}>Kamis</option>
-												<option value="friday" {{$schedule['day'] == "friday" ? 'selected' : ''}}>Jumat</option>
-												<option value="saturday" {{$schedule['day'] == "saturday" ? 'selected' : ''}}>Sabtu</option>
-												<option value="sunday" {{$schedule['day'] == "sunday" ? 'selected' : ''}}>Minggu</option>
+												<option value="monday" {{strtolower($schedule['day']) == "monday" ? 'selected' : ''}}>Senin</option>
+												<option value="tuesday" {{strtolower($schedule['day']) == "tuesday" ? 'selected' : ''}}>Selasa</option>
+												<option value="wednesday" {{strtolower($schedule['day']) == "wednesday" ? 'selected' : ''}}>Rabu</option>
+												<option value="thursday" {{strtolower($schedule['day']) == "thursday" ? 'selected' : ''}}>Kamis</option>
+												<option value="friday" {{strtolower($schedule['day']) == "friday" ? 'selected' : ''}}>Jumat</option>
+												<option value="saturday" {{strtolower($schedule['day']) == "saturday" ? 'selected' : ''}}>Sabtu</option>
+												<option value="sunday" {{strtolower($schedule['day']) == "sunday" ? 'selected' : ''}}>Minggu</option>
 											</select>
 										</div>
 										<input type="hidden" name="schedules[{{$key}}][day]" value="{{$schedule['day']}}">
