@@ -80,23 +80,24 @@
                 });
             }
 
-             $.ajax({
-                type : "POST",
-                url : "{{ url('setting/dashboard/order-section') }}",
-                data: {
-                    order:order,
-                    _token: token
-                },
-                success : function(result) {
-                    if (result == "success") {
-                        toastr.info("Section order dashboard has been updated.");
+            if(order.length > 0){
+                $.ajax({
+                    type : "POST",
+                    url : "{{ url('setting/dashboard/order-section') }}",
+                    data: {
+                        order:order,
+                        _token: token
+                    },
+                    success : function(result) {
+                        if (result == "success") {
+                            toastr.info("Section order dashboard has been updated.");
+                        }
+                        else {
+                            toastr.warning("Something went wrong. Failed to update order section dashboard.");
+                        }
                     }
-                    else {
-                        toastr.warning("Something went wrong. Failed to update order section dashboard.");
-                    }
-                }
-            });
-
+                });
+            }
         } );
         $('table').on('switchChange.bootstrapSwitch','.section_visibility',function(){
             if(!manual){

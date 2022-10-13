@@ -480,28 +480,42 @@ class UsersController extends Controller
 
         if (!isset($post['order_field'])) $post['order_field'] = 'id';
         if (!isset($post['order_method'])) $post['order_method'] = 'desc';
-        if (!isset($post['take'])) $post['take'] = 999999999;
+        $post['take'] = 999999999;
         $post['skip'] = 0;
 
 
-        // print_r($post);exit;
         $export = MyHelper::post('users/list', $post);
         // print_r($export);exit;
         if ($export['status'] == 'success') {
-            $data = $export['result'];
+            $data = $export['result']['data']??[];
             $x = 1;
-            foreach ($data as $key => $row) {
-                unset($data[$key]['id']);
-                unset($data[$key]['password_k']);
-                unset($data[$key]['id_city']);
-                unset($data[$key]['id_province']);
-                unset($data[$key]['level_range_start']);
-                unset($data[$key]['level_range_end']);
-                unset($data[$key]['id_level']);
-                unset($data[$key]['level_name']);
-                unset($data[$key]['level_parameters']);
+            $res = [];
+
+            foreach ($data as $row) {
+                if($row['android_device'] == "" && $row['ios_device'] == "") $device = 'None';
+                if($row['android_device'] != "" && $row['ios_device'] == "") $device = 'Android';
+                if($row['android_device'] == "" && $row['ios_device'] != "") $device = 'IOS';
+                if($row['android_device'] != "" && $row['ios_device'] != "") $device = 'Both';
+
+                $res[] = [
+                    'Register Date' => date('d F Y H:i', strtotime($row['created_at'])),
+                    'Name' => $row['name'],
+                    'Phone' => $row['phone'],
+                    'Device' => $device,
+                    'Email' => $row['email'],
+                    'City' => $row['city_name'],
+                    'Province' => $row['province_name'],
+                    'Postal Code' => $row['address_postal_code'],
+                    'Gender' => $row['gender'],
+                    'Provider' => $row['provider'],
+                    'Birthday' => (!empty($row['birthday']) ? date('d F Y', strtotime($row['birthday'])) : ''),
+                    'Age' => $row['age'],
+                    'Points' => $row['balance'],
+                    'Phone Verified' => ($row['phone_verified'] == 0 ? 'Not Verified' : 'Verified'),
+                    'Email Verified' => ($row['email_verified'] == 0 ? 'Not Verified' : 'Verified')
+                ];
             }
-            return Excel::download(new ArrayExport($data, 'Users List-'.date('Y-m-d')),'Users List-'.date('Y-m-d').'.xls');
+            return Excel::download(new ArrayExport($res, 'Users List-'.date('Y-m-d')),'Users List-'.date('Y-m-d').'.xls');
         }
     }
 
