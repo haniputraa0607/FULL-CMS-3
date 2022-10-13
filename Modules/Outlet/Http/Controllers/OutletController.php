@@ -480,6 +480,22 @@ class OutletController extends Controller
         return $query;
     }
 
+    function getDistrict(Request $request) {
+        $post = $request->except('_token');
+
+        $query = MyHelper::post('district/list', $post);
+
+        return $query;
+    }
+
+    function getSubdistrict(Request $request) {
+        $post = $request->except('_token');
+
+        $query = MyHelper::post('subdistrict/list', $post);
+
+        return $query;
+    }
+
     /**
      * delete photo
      */

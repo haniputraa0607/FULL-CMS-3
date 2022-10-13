@@ -123,6 +123,30 @@ class MerchantController extends Controller
         }
     }
 
+    public function create(){
+        $data = [
+            'title'          => 'Merchant',
+            'sub_title'      => 'Merchant',
+            'menu_active'    => 'merchant',
+            'submenu_active' => 'merchant-new'
+        ];
+
+        $data['province'] = MyHelper::get('province/list')['result']??[];
+        $data['users'] = MyHelper::get('merchant/user/list-not-register')['result']??[];
+        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+        return view('merchant::create', $data);
+    }
+
+    public function store(Request $request){
+        $post = $request->all();
+        $create = MyHelper::post('merchant/store', $post);
+        if (isset($create['status']) && $create['status'] == "success") {
+            return redirect('merchant/candidate')->withSuccess(['Success save data']);
+        }else{
+            return redirect('merchant/create')->withErrors($create['messages']??['Failed save data']);
+        }
+    }
+
     public function list(Request $request){
         $post = $request->all();
 

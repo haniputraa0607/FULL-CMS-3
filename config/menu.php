@@ -399,15 +399,21 @@ return [
                             'required_features' => [326],
                         ],
                         [
+                            'label' => 'Merchant New',
+                            'url' => 'merchant/create',
+                            'active' => '\View::shared("submenu_active") == "merchant-new"',
+                            'required_features' => [325],
+                        ],
+                        [
                             'label' => 'Merchant List',
                             'url' => 'merchant',
                             'active' => '\View::shared("submenu_active") == "merchant-list"',
-                            'required_features' => [323,324,325,326,327],
+                            'required_features' => [323,324,326,327],
                         ],
                         [
                             'label' => 'Candidate List',
                             'url' => 'merchant/candidate',
-                            'required_features' => [323,324,325,326,327],
+                            'required_features' => [323,324,326,327],
                             'active' => '\View::shared("submenu_active") == "merchant-candidate"',
                             'badge'=>[
                                 'type'=>'warning',

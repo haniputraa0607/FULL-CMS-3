@@ -14,6 +14,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'outlet',
     Route::post('manage-location', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@manageLocationPost']);
     Route::post('update/status', ['middleware' => 'feature_control:27', 'uses' => 'OutletController@updateStatus']);
     Route::post('get/city', 'OutletController@getCity');
+    Route::post('get/district', 'OutletController@getDistrict');
+    Route::post('get/subdistrict', 'OutletController@getSubdistrict');
     Route::post('delete', ['middleware' => 'feature_control:28', 'uses' => 'OutletController@delete']);
     Route::get('export', ['middleware' => ['feature_control:33', 'config_control:3'], 'uses' => 'OutletController@exportForm']);
     Route::post('export', ['middleware' => ['feature_control:33', 'config_control:3'], 'uses' => 'OutletController@exportData']);

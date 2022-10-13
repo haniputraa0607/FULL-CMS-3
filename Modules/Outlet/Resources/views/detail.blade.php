@@ -237,6 +237,14 @@
             });
 
             $('#province').change(function() {
+                $('#city').empty();
+                $('#city').prop('disabled', true);
+                $('#district').empty();
+                $('#district').prop('disabled', true);
+                $('#subdistrict').empty();
+                $('#subdistrict').prop('disabled', true);
+                $('#outlet_postal_code').val('');
+
                 var isi         = $('#province').val();
 
                 $.ajax({
@@ -251,7 +259,7 @@
                             var selectCity = '<option value=""></option>';
 
                             for (var i = 0; i < city.length; i++) {
-                                selectCity += '<option value="'+city[i]['id_city']+'|'+city[i]['city_postal_code']+'" >'+city[i]['city_name']+'</option>';
+                                selectCity += '<option value="'+city[i]['id_city']+'" >'+city[i]['city_name']+'</option>';
                             }
 
                             $('#city').html(selectCity);
@@ -264,11 +272,76 @@
             });
 
             $('#city').change(function() {
-                var isi = $('#city').val();
+                $('#district').empty();
+                $('#district').prop('disabled', true);
+                $('#subdistrict').empty();
+                $('#subdistrict').prop('disabled', true);
+                $('#outlet_postal_code').val('');
 
+                var isi   = $('#city').val();
+                let token = "{{ csrf_token() }}";
+
+                $.ajax({
+                    type    : "POST",
+                    url     : "<?php echo url('outlet/get/district')?>",
+                    data    : "_token="+token+"&id_city="+isi,
+                    success : function(result) {
+                        if (result['status'] == "success") {
+                            $('#district').prop('disabled', false);
+
+                            var district           = result['result'];
+                            var selectDistrict = '<option value=""></option>';
+
+                            for (var i = 0; i < district.length; i++) {
+                                selectDistrict += '<option value="'+district[i]['id_district']+'">'+district[i]['district_name']+'</option>';
+                            }
+
+                            $('#district').html(selectDistrict);
+                        }
+                        else {
+                            $('#district').prop('disabled', true);
+                        }
+                    }
+                });
+            });
+
+            $('#district').change(function() {
+                $('#subdistrict').empty();
+                $('#subdistrict').prop('disabled', true);
+                $('#outlet_postal_code').val('');
+
+                var isi = $('#district').val();
+                let token = "{{ csrf_token() }}";
+
+                $.ajax({
+                    type    : "POST",
+                    url     : "<?php echo url('outlet/get/subdistrict')?>",
+                    data    : "_token="+token+"&id_district="+isi,
+                    success : function(result) {
+                        if (result['status'] == "success") {
+                            $('#subdistrict').prop('disabled', false);
+
+                            var subdistrict           = result['result'];
+                            var selectSubdistrict = '<option value=""></option>';
+
+                            for (var i = 0; i < subdistrict.length; i++) {
+                                selectSubdistrict += '<option value="'+subdistrict[i]['id_subdistrict']+'|'+subdistrict[i]['subdistrict_postal_code']+'">'+subdistrict[i]['subdistrict_name']+'</option>';
+                            }
+
+                            $('#subdistrict').html(selectSubdistrict);
+                        }
+                        else {
+                            $('#subdistrict').prop('disabled', true);
+                        }
+                    }
+                });
+            });
+
+            $('#subdistrict').change(function() {
+                var isi = $('#subdistrict').val();
                 var isi = isi.split('|');
 
-                $('#id_city').val(isi[0]);
+                $('#outlet_postal_code').val(isi[1]);
             });
 
             @foreach($products as $key => $pro)
@@ -451,9 +524,9 @@
                 image = new Image();
 
                 image.onload = function() {
-                    if (this.height > 300) {
-                        toastr.warning("Please check dimension of your photo. Maximum height is 300 px");
-                        $('#imageDetail').children('img').attr('src', 'https://www.placehold.it/720x360/EFEFEF/AAAAAA&amp;text=no+image');
+                    if (this.height != 375 && this.width != 720) {
+                        toastr.warning("Please check dimension of your photo. Maximum height is 375 px");
+                        $('#imageDetail').children('img').attr('src', 'https://www.placehold.it/720x375/EFEFEF/AAAAAA&amp;text=no+image');
                         $("#remove_fieldphotodetail").trigger( "click" );
                     }
                 };
@@ -465,7 +538,7 @@
 
         $(".filePhotoCover").change(function(e) {
             var widthImg  = 720;
-            var heightImg = 360;
+            var heightImg = 375;
 
             var _URL = window.URL || window.webkitURL;
             var image, file;
@@ -474,13 +547,9 @@
                 image = new Image();
 
                 image.onload = function() {
-                    if (this.width == widthImg && this.height == heightImg) {
-                        // image.src = _URL.createObjectURL(file);
-                        //    $('#formimage').submit()
-                    }
-                    else {
+                    if (this.width != widthImg && this.height != heightImg) {
                         toastr.warning("Please check dimension of your photo.");
-                        $('#imageCover').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $('#imageCover').children('img').attr('src', 'https://www.placehold.it/720x375/EFEFEF/AAAAAA&amp;text=no+image');
                         $("#remove_fieldphotocover").trigger( "click" );
 
                     }
