@@ -126,7 +126,7 @@ class MerchantController extends Controller
     public function create(){
         $data = [
             'title'          => 'Merchant',
-            'sub_title'      => 'Merchant',
+            'sub_title'      => 'New Merchant',
             'menu_active'    => 'merchant',
             'submenu_active' => 'merchant-new'
         ];

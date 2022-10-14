@@ -201,6 +201,9 @@ class OutletController extends Controller
             if($type == 'log-balance'){
                 $pageBalance = $post['page']??1;
             }
+            if(!empty(Session::get('search_log_balance')) && empty($post['reset']) && empty($post['search_log_balance'])){
+                $post['search_log_balance'] = Session::get('search_log_balance');
+            }
             $logBalance = MyHelper::post('merchant/balance/list', ['id_outlet' => $data['outlet'][0]['id_outlet'], 'page' => $pageBalance, 'search_key' => $post['search_log_balance']??'']);
             if (isset($logBalance['status']) && $logBalance['status'] == "success") {
                 $data['data_log_balance']          = $logBalance['result']['data'];
@@ -226,6 +229,9 @@ class OutletController extends Controller
             $pagePayment = 1;
             if($type == 'list-payment'){
                 $pagePayment = $post['page']??1;
+            }
+            if(!empty(Session::get('search_list_payment')) && empty($post['reset']) && empty($post['search_list_payment'])){
+                $post['search_list_payment'] = Session::get('search_list_payment');
             }
             $listPayment = MyHelper::post('transaction/outlet/list-payment', ['id_outlet' => $data['outlet'][0]['id_outlet'], 'page' => $pagePayment, 'search_key' => $post['search_list_payment']??'']);
             if (isset($listPayment['status']) && $listPayment['status'] == "success") {
@@ -260,6 +266,7 @@ class OutletController extends Controller
             $data['products'] = MyHelper::post('product/be/list', $conditions)['result']??[];
             $data['doctors'] = MyHelper::post('doctor/list/outlet', ['id_outlet' => $data['outlet'][0]['id_outlet']])['result']??[];
             $data['id_outlet'] = $data['outlet'][0]['id_outlet'];
+            $data['outlet_code'] = $code;
             return view('outlet::detail', $data);
         }
         else {

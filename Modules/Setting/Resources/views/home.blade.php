@@ -63,6 +63,51 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 	<script>
 
+	$(document).ready(function(){
+		$('#form_banner_create').on('submit', function(e) {
+			var date_start = new Date($('#create_banner_start').val()).getTime();
+			var date_end = new Date($('#create_banner_end').val()).getTime();
+
+			if(date_end < date_start) {
+				$('#validation').remove();
+				$('#note_end_create').append('End date must be greater than start date');
+				e.preventDefault();
+				$('#create_banner_end').focus();
+				focusSet = true;
+			}
+		});
+
+		$('#form_banner_edit').on('submit', function(e) {
+			var date_start = new Date($('#banner_start').val()).getTime();
+			var date_end = new Date($('#banner_end').val()).getTime();
+
+			if(date_end < date_start) {
+				$('#validation').remove();
+				$('#note_end_edit').append('End date must be greater than start date');
+				e.preventDefault();
+				$('#banner_end').focus();
+				focusSet = true;
+			}
+		});
+	});
+
+	$('#create_banner_start').on('change', function() {
+		$('#note_end_create').empty();
+	});
+
+	$('#create_banner_end').on('change', function() {
+		$('#note_end_create').empty();
+	});
+
+	$('#banner_start').on('change', function() {
+		$('#note_end_edit').empty();
+	});
+
+	$('#banner_end').on('change', function() {
+		$('#note_end_edit').empty();
+	});
+
+
 	$(function () {
         $('.time_picker').datetimepicker({
             format: 'HH:mm',
@@ -1267,7 +1312,7 @@
 				<h4 class="modal-title">New Banner</h4>
 			</div>
 			<div class="modal-body form">
-				<form role="form" action="{{url('setting/banner/create')}}" method="POST" enctype="multipart/form-data">
+				<form role="form" id="form_banner_create" action="{{url('setting/banner/create')}}" method="POST" enctype="multipart/form-data">
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label">Banner Image <span class="required" aria-required="true"> * (750*375)</span></label><br>
@@ -1362,7 +1407,7 @@
 						<label class="col-md-3 control-label">Date Start</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" name="banner_start" size="16" class="form-control" required>
+								<input type="text" autocomplete="off" id="create_banner_start" name="banner_start" size="16" class="form-control" required>
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
@@ -1376,13 +1421,14 @@
 						<label class="col-md-3 control-label">Date End</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" name="banner_end" size="16" class="form-control" required>
+								<input type="text" autocomplete="off" id="create_banner_end" name="banner_end" size="16" class="form-control" required>
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
 									</button>
 								</span>
 							</div>
+							<p id="note_end_create" style="color: red;margin-top: -0.1%"></p>
 						</div>
 					</div>
         			
@@ -1436,7 +1482,7 @@
 				<h4 class="modal-title">Edit Banner</h4>
 			</div>
 			<div class="modal-body form">
-				<form role="form" action="{{url('setting/banner/update')}}" method="POST" enctype="multipart/form-data">
+				<form role="form" id="form_banner_edit" action="{{url('setting/banner/update')}}" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="id_banner" id="id_banner">
 					<div class="form-body">
 						<div class="form-group">
@@ -1532,7 +1578,7 @@
 						<label class="col-md-3 control-label">Date Start</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" id="banner_start" name="banner_start" size="16" class="form-control">
+								<input type="text" autocomplete="off" id="banner_start" name="banner_start" size="16" class="form-control" required>
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
@@ -1546,13 +1592,14 @@
 						<label class="col-md-3 control-label">Date End</label>
 						<div class="col-md-6">
 							<div class="input-group date form_datetime form_datetime bs-datetime">
-								<input type="text" autocomplete="off" id="banner_end" name="banner_end" size="16" class="form-control">
+								<input type="text" autocomplete="off" id="banner_end" name="banner_end" size="16" class="form-control" required>
 								<span class="input-group-addon">
 									<button class="btn default date-set" type="button">
 										<i class="fa fa-calendar"></i>
 									</button>
 								</span>
 							</div>
+							<p id="note_end_edit" style="color: red;margin-top: -0.1%"></p>
 						</div>
 					</div>
 					

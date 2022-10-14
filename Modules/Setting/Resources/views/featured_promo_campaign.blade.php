@@ -75,7 +75,7 @@
 				</div>
 				<div class="modal-body form">
 					<br>
-					<form role="form" action="{{url('setting/featured_promo_campaign/update')}}" method="POST" enctype="multipart/form-data">
+					<form role="form" id="form_featured_promo_edit" action="{{url('setting/featured_promo_campaign/update')}}" method="POST" enctype="multipart/form-data">
 						<input type="hidden" name="id_featured_promo_campaign" id="id_featured_promo_campaign">
 						<div class="row">
 							<div class="col-md-3 text-right">
@@ -83,7 +83,7 @@
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
-									<select class="select2 form-control" name="id_promo_campaign" id="id_promo_campaign" style="width: 100%">
+									<select class="select2 form-control" name="id_promo_campaign" id="id_promo_campaign" style="width: 100%" required>
 										<option></option>
 										@foreach($promo_campaigns as $val)
 										<option value="{{$val['id_promo_campaign']}}">{{$val['promo_title']}}</option>
@@ -98,7 +98,7 @@
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
-									<input type="text" class="datetime form-control" name="date_start" id="date_start" autocomplete="off">
+									<input type="text" class="datetime form-control" name="date_start" id="date_start" autocomplete="off" required>
 								</div>
 							</div>
 						</div>
@@ -108,7 +108,7 @@
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
-									<input type="text" class="datetime form-control" name="date_end" id="date_end" autocomplete="off">
+									<input type="text" class="datetime form-control" name="date_end" id="date_end" autocomplete="off" required>
 								</div>
 							</div>
 						</div>
@@ -132,14 +132,14 @@
 				</div>
 				<div class="modal-body form">
 					<br>
-					<form role="form" action="{{url('setting/featured_promo_campaign/create')}}" method="POST" enctype="multipart/form-data">
+					<form role="form" id="form_featured_promo_create" action="{{url('setting/featured_promo_campaign/create')}}" method="POST" enctype="multipart/form-data">
 						<div class="row">
 							<div class="col-md-3 text-right">
 								<label>Promo Campaign</label>
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
-									<select class="select2 form-control" name="id_promo_campaign" style="width: 100%">
+									<select class="select2 form-control" name="id_promo_campaign" style="width: 100%" required>
 										<option></option>
 										@foreach($promo_campaigns as $val)
 										<option value="{{$val['id_promo_campaign']}}">{{$val['promo_title']}}</option>
@@ -154,7 +154,7 @@
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
-									<input type="text" class="datetime form-control" name="date_start" autocomplete="off">
+									<input type="text" id="create_date_start" class="datetime form-control" name="date_start" autocomplete="off" required>
 								</div>
 							</div>
 						</div>
@@ -164,7 +164,7 @@
 							</div>
 							<div class="col-md-8">
 								<div class="form-group">
-									<input type="text" class="datetime form-control" name="date_end" autocomplete="off">
+									<input type="text" id="create_date_end" class="datetime form-control" name="date_end" autocomplete="off" required>
 								</div>
 							</div>
 						</div>
@@ -182,6 +182,54 @@
 
 @section('featured-promo-campaign-script')
 	<script>
+		$(document).ready(function(){
+			$('#form_featured_promo_create').on('submit', function(e) {
+				var date_start = new Date($('#create_date_start').val()).getTime();
+				var date_end = new Date($('#create_date_end').val()).getTime();
+
+				if(date_end < date_start) {
+					$('#validation').remove();
+					$('#create_date_end').parent().append('<p id="validation" style="color: red;margin-top: -0.1%">End date must be greater than start date</p>');
+					e.preventDefault();
+					$('#create_date_end').focus();
+					focusSet = true;
+				}
+			});
+
+			$('#form_featured_promo_edit').on('submit', function(e) {
+				var date_start = new Date($('#date_start').val()).getTime();
+				var date_end = new Date($('#date_end').val()).getTime();
+
+				if(date_end < date_start) {
+					$('#validation').remove();
+					$('#date_end').parent().append('<p id="validation" style="color: red;margin-top: -0.1%">End date must be greater than start date</p>');
+					e.preventDefault();
+					$('#date_end').focus();
+					focusSet = true;
+				}
+			});
+		});
+
+		$('#create_date_start').on('change', function() {
+			removeValidation();
+		});
+
+		$('#create_date_end').on('change', function() {
+			removeValidation();
+		});
+
+		$('#date_start').on('change', function() {
+			removeValidation();
+		});
+
+		$('#date_end').on('change', function() {
+			removeValidation();
+		});
+
+		function removeValidation(){
+			$('#validation').remove();
+		}
+
 	    $( "#sortable-ft-promo" ).sortable();
 	    $( "#sortable-ft-promo" ).disableSelection();
 
