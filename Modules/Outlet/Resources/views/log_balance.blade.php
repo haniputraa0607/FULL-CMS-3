@@ -7,12 +7,12 @@
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-7" style="text-align: right">
-        <form class="form-horizontal" role="form" action="{{ url()->current()}}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" role="form" action="{{url('outlet/detail', $outlet_code)}}/log-balance" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <div class="input-icon right">
                     <label class="col-md-3 control-label">
                         Search
-                        <i class="fa fa-question-circle tooltips" data-original-title="Search by transaction receipt number/beneficiary name/beneficiary number" data-container="body"></i>
+                        <i class="fa fa-question-circle tooltips" data-original-title="Search by transaction receipt number/beneficiary name/beneficiary number/source" data-container="body"></i>
                     </label>
                 </div>
                 <div class="col-md-7">
@@ -26,7 +26,7 @@
         </form>
     </div>
     <div class="col-md-1" style="margin-left: -2%">
-        <a class="btn btn-sm btn-default" href="{{ url()->current()}}?reset=1" type="submit">Reset</a>
+        <a class="btn btn-sm btn-default" href="{{url('outlet/detail', $outlet_code)}}/log-balance?reset=1" type="submit">Reset</a>
     </div>
 </div>
 
@@ -37,8 +37,8 @@
     <tr>
         <th scope="col"> Source </th>
         <th scope="col"> Nominal </th>
-        <th scope="col"> Description </th>
         <th scope="col"> Date </th>
+        <th scope="col"> Description </th>
     </tr>
     </thead>
     <tbody>
