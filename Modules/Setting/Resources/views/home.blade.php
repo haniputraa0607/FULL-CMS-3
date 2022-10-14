@@ -65,11 +65,16 @@
 
 	$(document).ready(function(){
 		$('#form_banner_create').on('submit', function(e) {
-			var date_start = new Date($('#create_banner_start').val()).getTime();
-			var date_end = new Date($('#create_banner_end').val()).getTime();
+			var date_start = $('#create_banner_start').val();
+			date_start = date_start.replace(" - ", ' ');
+			date_start = new Date(date_start).getTime();
+
+			var date_end = $('#create_banner_end').val();
+			date_end = date_end.replace(" - ", ' ');
+			date_end = new Date(date_end).getTime();
 
 			if(date_end < date_start) {
-				$('#validation').remove();
+				$('#note_end_create').empty();
 				$('#note_end_create').append('End date must be greater than start date');
 				e.preventDefault();
 				$('#create_banner_end').focus();
@@ -78,11 +83,16 @@
 		});
 
 		$('#form_banner_edit').on('submit', function(e) {
-			var date_start = new Date($('#banner_start').val()).getTime();
-			var date_end = new Date($('#banner_end').val()).getTime();
+			var date_start = $('#banner_start').val();
+			date_start = date_start.replace(" - ", ' ');
+			date_start = new Date(date_start).getTime();
+
+			var date_end = $('#banner_end').val();
+			date_end = date_end.replace(" - ", ' ');
+			date_end = new Date(date_end).getTime();
 
 			if(date_end < date_start) {
-				$('#validation').remove();
+				$('#note_end_edit').empty();
 				$('#note_end_edit').append('End date must be greater than start date');
 				e.preventDefault();
 				$('#banner_end').focus();
