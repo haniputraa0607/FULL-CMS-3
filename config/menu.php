@@ -399,7 +399,7 @@ return [
                             'required_features' => [326],
                         ],
                         [
-                            'label' => 'Merchant New',
+                            'label' => 'New Merchant',
                             'url' => 'merchant/create',
                             'active' => '\View::shared("submenu_active") == "merchant-new"',
                             'required_features' => [325],
@@ -566,45 +566,18 @@ return [
 					'label' => 'Product',
 					'icon' => 'icon-wallet',
 					'type' => 'tree',
+                    'required_features' => [43,44,45,46,47,48,49,50,51,52],
 					'children' => [
 						[
 							'label' => 'Category List',
 							'active' => '\View::shared("submenu_active") == "product-category-list"',
 							'url' => 'product/category',
-							'required_features' => [43],
-						],
-						[
-							'label' => 'Tag List',
-							'active' => '\View::shared("submenu_active") == "product-tag-list"',
-							'url' => 'product/tag',
-							'required_configs' => [135],
-							'required_features' => [458],
+							'required_features' => [43,44,45,46,47],
 						],
 						[
 							'label' => 'New Product',
 							'url' => 'product/create',
-							'required_configs' => [1],
 							'required_features' => [50],
-						],
-						[
-							'type' => 'tree',
-							'label' => 'Export & Import Product',
-							'required_configs' => [10,11],
-							'required_features' => [56,57],
-							'children' => [
-								[
-									'label' => 'Global',
-									'url' => 'product/import/global',
-								],
-								[
-									'label' => 'Product Detail',
-									'url' => 'product/import/detail',
-								],
-								[
-									'label' => 'Product Price',
-									'url' => 'product/import/price',
-								],
-							],
 						],
 						[
 							'label' => 'Product List',
@@ -613,112 +586,35 @@ return [
 							'required_features' => [48],
 						],
 						[
-							'type' => 'group',
-							'required_configs' => [136],
-							'children' => [
-								[
-									'label' => 'Product ICount List',
-									'required_features' => [392],
-									'active' => '\View::shared("submenu_active") == "product-icount-list"',
-									'url' => 'product/icount'
-								],
-								[
-									'label' => 'Product Catalog',
-									'type' => 'tree',
-									'children' => [
-										[
-											'label' => 'Create Product Catalog',
-											'required_features' => [461],
-											'url' => 'product/catalog/create'
-										],
-										[
-											'label' => 'List Product Catalog',
-											'required_features' => [459],
-											'active' => '\View::shared("child_active") == "product-catalog-list"',
-											'url' => 'product/catalog'
-										],
-									],
-								],
-							],
-						],
-//						[
-//							'label' => 'Image Product',
-//							'required_features' => [51],
-//							'type' => 'tree',
-//							'children' => [
-//								[
-//									'label' => 'Upload Image',
-//									'required_features' => [],
-//									'url' => 'product/image/add'
-//								],
-//								[
-//									'label' => 'Image List',
-//									'required_features' => [],
-//									'active' => '\View::shared("child_active") == "product-image-list"',
-//									'url' => 'product/image/list'
-//								],
-//							],
-//						],
-						[
 							'required_features' => [48],
 							'type' => 'group',
 							'children' => [
 								[
 									'label' => 'Visible Product List',
-									'required_features' => [],
+									'required_features' => [51],
 									'active' => '\View::shared("submenu_active") == "product-list-visible"',
 									'url' => 'product/visible'
 								],
 								[
 									'label' => 'Hidden Product List',
-									'required_features' => [],
+									'required_features' => [51],
 									'active' => '\View::shared("submenu_active") == "product-list-hidden"',
 									'url' => 'product/hidden'
 								],
-//								[
-//									'label' => 'Manage Product Category',
-//									'required_features' => [43],
-//									'active' => '\View::shared("submenu_active") == "product-category"',
-//									'url' => 'product/position/assign'
-//								],
-//								[
-//									'label' => 'Manage Position',
-//									'required_features' => [],
-//									'active' => '\View::shared("submenu_active") == "product-position"',
-//									'url' => 'product/position/assign'
-//								],
 								[
 									'label' => 'Product Photo Default',
-									'required_features' => [],
+									'required_features' => [51],
 									'active' => '\View::shared("submenu_active") == "product-photo-default"',
 									'url' => 'product/photo/default'
 								],
                                 [
                                     'label' => 'Product Recommendation',
-                                    'required_features' => [43],
+                                    'required_features' => [51],
                                     'active' => '\View::shared("submenu_active") == "product-recommendation"',
                                     'url' => 'product/recommendation'
                                 ],
 							],
-						],
-						[
-							'type' => 'group',
-							'required_features' => [384, 385, 386, 387, 388],
-							'children' => [
-								[
-									'label' => 'Product Group',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "product-group"',
-									'url' => 'product/product-group'
-								],
-								[
-									'label' => 'Featured Product Group',
-									'required_features' => [],
-									'active' => '\View::shared("submenu_active") == "featured-product-group"',
-									'url' => 'product/product-group/featured'
-								],
-							]
-						],
+						]
 					]
 				],
 				[
