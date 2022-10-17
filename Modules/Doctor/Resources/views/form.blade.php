@@ -212,7 +212,7 @@
                         '<a class="btn btn-danger" onclick="deleteChildSchedule('+j+')">&nbsp;<i class="fa fa-trash"></i></a>'+
                         '</div>'+
 						'<label for="multiple" class="control-label col-md-2">Hari <span class="required" aria-required="true"> * </span>'+
-						'<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>'+
+						'<i class="fa fa-question-circle tooltips" data-original-title="Aktifkan Jadwal dan Tambahkan Sesi konsultasi" data-container="body"></i>'+
 						'</label>'+
 						'<div class="col-md-3">'+
 						'<select class="form-control select2" id="office_hour_type" name="schedules['+j+'][day]" onchange="changeType('+this.value+')" required>'+
@@ -850,7 +850,7 @@
 											<a class="btn btn-danger hidden" onclick="deleteChildSchedule(0)">&nbsp;<i class="fa fa-trash"></i></a>
 										</div>
 										<label for="multiple" class="control-label col-md-2">Hari <span class="required" aria-required="true"> * </span>
-											<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
+											<i class="fa fa-question-circle tooltips" data-original-title="Aktifkan Jadwal dan Tambahkan Sesi konsultasi" data-container="body"></i>
 										</label>
 										<input type="hidden" name="schedules[{{$key}}][id_doctor_schedule]" value="{{$schedule['id_doctor_schedule']}}">
 										<div class="col-md-3">
@@ -935,7 +935,7 @@
 											<a class="btn btn-danger" onclick="deleteChildSchedule(0)">&nbsp;<i class="fa fa-trash"></i></a>
 										</div>
 										<label for="multiple" class="control-label col-md-2">Hari <span class="required" aria-required="true"> * </span>
-											<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe jam kerja" data-container="body"></i>
+											<i class="fa fa-question-circle tooltips" data-original-title="Aktifkan Jadwal dan Tambahkan Sesi konsultasi" data-container="body"></i>
 										</label>
 										<div class="col-md-3">
 											<select class="form-control select" id="office_hour_type[0]" name="schedules[0][day]" onchange="changeType(this.value)" required>

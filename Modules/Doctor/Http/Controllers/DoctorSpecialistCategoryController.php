@@ -57,7 +57,7 @@ class DoctorSpecialistCategoryController extends Controller
     public function store(Request $request)
     {
         $post = $request->all();
-        $store = MyHelper::post('doctor/specialist-category/store', $post);
+        $store = MyHelper::post('doctor/be/specialist-category/store', $post);
 
         if(($store['status']??'')=='success'){
             return redirect('doctor/specialist-category')->with('success',['Create Category Success']);
@@ -90,7 +90,7 @@ class DoctorSpecialistCategoryController extends Controller
             'submenu_active' => 'doctor-specialist-category'
         ];
 
-        $category = MyHelper::get('doctor/specialist-category/'.$id);
+        $category = MyHelper::get('doctor/be/specialist-category/'.$id);
 
         if (isset($category['status']) && $category['status'] == "success") {
             $data['category'] = $category['result'];
@@ -110,7 +110,7 @@ class DoctorSpecialistCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $post = $post = $request->except('_method');
-        $store = MyHelper::post('doctor/specialist-category/store', $post);
+        $store = MyHelper::post('doctor/be/specialist-category/store', $post);
 
         if(($store['status']??'')=='success'){
             return redirect('doctor/specialist-category')->with('success',['Update Specialist Category Success']);
@@ -126,7 +126,7 @@ class DoctorSpecialistCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $result = MyHelper::post('doctor/specialist-category/delete', ['id_doctor_specialist_category' => $id]);
+        $result = MyHelper::post('doctor/be/specialist-category/delete', ['id_doctor_specialist_category' => $id]);
         if(($result['status']??'')=='success'){
             return redirect('doctor/specialist-category')->with('success',['Delete Service Success']);
         }else{
