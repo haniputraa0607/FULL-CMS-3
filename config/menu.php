@@ -259,12 +259,12 @@ return [
 							'active' => '\View::shared("submenu_active") == "doctor-specialist"',
 							'url' => 'doctor/specialist',
 						],
-						[
-							'label' => '[Master] Specialist Category',
-							'required_features' => [340],
-							'active' => '\View::shared("submenu_active") == "doctor-specialist-category"',
-							'url' => 'doctor/specialist-category',
-						],
+						// [
+						// 	'label' => '[Master] Specialist Category',
+						// 	'required_features' => [340],
+						// 	'active' => '\View::shared("submenu_active") == "doctor-specialist-category"',
+						// 	'url' => 'doctor/specialist-category',
+						// ],
 						[
 							'label' => '[Master] Service',
 							'required_features' => [344],

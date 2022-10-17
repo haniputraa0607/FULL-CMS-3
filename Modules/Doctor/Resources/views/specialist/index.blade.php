@@ -70,7 +70,7 @@ $configs     		= session('configs');
 							<tr>
 								<th scope="col" style="width:70px !important"> No </th>
 								<th scope="col"> Name </th>
-								<th scope="col"> Specialist Category </th>
+								<th scope="col"> </th>
 							</tr>
 							</thead>
 							<tbody>
@@ -79,7 +79,6 @@ $configs     		= session('configs');
 							<tr>
 								<td>{{$key+1}}</td>
 								<td>{{$value['doctor_specialist_name']}}</td>
-								<td>{{$value['category']['doctor_specialist_category_name']}}</td>
 								<td>
 									<form action="{{ url('doctor/specialist', $value['id_doctor_specialist']) }}" method="POST">
 										@if(MyHelper::hasAccess([338], $grantedFeature))

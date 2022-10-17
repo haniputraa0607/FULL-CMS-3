@@ -33,7 +33,7 @@
 						@else 
 						<form role="form" class="form-horizontal" action="{{url('doctor/specialist')}}" method="POST">
 						@endif
-							<div class="form-group">
+							{{--<div class="form-group">
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Specialist Category Name
 										<span class="required" aria-required="true"> * </span>
@@ -52,7 +52,7 @@
 									</select>
 									</div>
 								</div>
-							</div>
+							</div>--}}
 							<div class="form-group">
 								<div class="form-group col-md-12">
 									<label class="control-label col-md-4">Specialist Name
