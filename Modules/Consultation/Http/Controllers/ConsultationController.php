@@ -47,15 +47,6 @@ class ConsultationController extends Controller
 
         $getList = MyHelper::get('consultation');
         if($getList['status'] == 'success') $data['list'] = $getList['result']; else $data['list'] = null;
-
-        $getCity = MyHelper::get('city/list');
-        if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
-
-        $getProvince = MyHelper::get('province/list');
-        if($getProvince['status'] == 'success') $data['province'] = $getProvince['result']; else $data['province'] = null;
-        
-		$getCourier = MyHelper::get('courier/list');
-		if($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result']; else $data['couriers'] = null;
 		
 		// return $data;
         return view('consultation::consultationSearch', $data);
