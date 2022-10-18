@@ -426,6 +426,8 @@
 				}
 				else {
 					toastr.warning("Please check dimension of your image.");
+					$("#removeSplash").trigger( "click" );
+					$("#removeSplashDoctor").trigger( "click" );
 					$(this).val("");
 					// $('#remove_square').click()
 					// image.src = _URL.createObjectURL();
@@ -821,9 +823,9 @@
 												<span class="btn default btn-file">
 												<span class="fileinput-new"> Select image </span>
 												<span class="fileinput-exists"> Change </span>
-												<input type="file" class="file file-splash" id="field_splash" accept="image/*" name="default_home_splash_screen">
+												<input type="file" class="file-splash" id="field_splash" accept="image/*" name="default_home_splash_screen">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+												<a href="javascript:;" id="removeSplash" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 											</div>
 										</div>
 									</div>
@@ -879,9 +881,9 @@
 												<span class="btn default btn-file">
 												<span class="fileinput-new"> Select image </span>
 												<span class="fileinput-exists"> Change </span>
-												<input type="file" class="file file-splash" id="field_splash" accept="image/*" name="default_home_doctor_splash_screen">
+												<input type="file" class="file-splash" id="field_splash" accept="image/*" name="default_home_doctor_splash_screen">
 												</span>
-												<a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+												<a href="javascript:;" id="removeSplashDoctor" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
 											</div>
 										</div>
 									</div>

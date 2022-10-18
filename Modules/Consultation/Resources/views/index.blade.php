@@ -62,8 +62,8 @@ $grantedFeature     = session('granted_features');
             operator:[],
             opsi:[]
         },
-        transaction_receipt:{
-            display:'Transaction Receipt',
+        transaction_receipt_number:{
+            display:'Transaction Receipt Number',
             operator:[
                 ['=','='],
                 ['like','like'],
@@ -82,8 +82,18 @@ $grantedFeature     = session('granted_features');
 		consultation_type:{
             display:'Consultation Type',
             operator:[
-                ['=','='],
-                ['like','like'],
+                ['=','=']
+            ],
+			opsi:[
+                ['scheduled', 'Scheduled Consultation'],
+                ['now', 'Now [Instant] Consultation']
+            ],
+            placeholder: 'Select Quest Benefit'
+        },
+		consultation_status:{
+            display:'Consultation Status',
+            operator:[
+                ['=','=']
             ],
 			opsi:[
                 ['soon', 'Scheduled'],
@@ -160,7 +170,7 @@ $grantedFeature     = session('granted_features');
 					},
 					{
 						data: "transaction_receipt_number",
-						render: function(data) {return `TRX${data}`;},
+						render: function(data) {return `${data}`;},
 					},
 					{
 						data: "transaction_date",

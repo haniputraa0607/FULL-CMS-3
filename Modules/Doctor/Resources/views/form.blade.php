@@ -280,7 +280,10 @@
 
 		var i = 20;
         function addShift(j) {
-			console.log(j);
+			console.log('this is value of j:'+j);
+			// console.log(i);
+			// $('#header_child_'+j).show();
+			// $('#header_child_'+j).removeClass("hidden");
             var html =  '<div class="form-group" id="div_shift_child_'+j+'_'+i+'">'+
 						'<div class="col-md-3"></div>'+
 						'<div class="col-md-3">'+
@@ -875,12 +878,12 @@
 													<input type="checkbox" name="schedules[{{$key}}][is_active]" @if($schedule['is_active'] == '1') checked @endif class="make-switch switch-change" data-size="small" data-on-text="Active" data-off-text="Inactive">
 												</div>
 											</div>
+											@if(!empty($schedule['schedule_time']))
 											<div class="form-group">
 												<div class="col-md-3"></div>
 												<div class="col-md-3">Session Start</div>
 												<div class="col-md-3">Session End</div>
 											</div>
-											@if(!empty($schedule['schedule_time']))
 											@php $count = count($schedule['schedule_time']);@endphp
 											<input type="hidden" id="count_array_time_{{$key}}" value="{{$count}}">
 											<div id="div_shift_child_{{$key}}">
@@ -901,21 +904,13 @@
 											</div>
 											@else
 											@php $count = count($schedule['schedule_time']);@endphp
-											<input type="hidden" id="count_array_time_{{$key}}" value="{{$count}}">
-											<div id="div_shift_child_{{$key}}">
-												<div class="form-group" id="div_shift_child_{{$key}}_0">
-													<div class="col-md-3"></div>
-													<div class="col-md-3">
-														<input type="text" style="background-color: white" data-placeholder="select time" id="time_start_0"  name="schedules[{{$key}}][session_time][0][start_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>
-													</div>
-													<div class="col-md-3">
-														<input type="text" style="background-color: white" data-placeholder="select time" id="time_end_0" name="schedules[{{$key}}][session_time][0][end_time]" class="form-control mt-repeater-input-inline timepicker timepicker-no-seconds" data-show-meridian="false" value="00:00" readonly>
-													</div>
-													<div class="col-md-3">
-														<a class="btn btn-danger" onclick="deleteChild(0, 0)">&nbsp;<i class="fa fa-trash"></i></a>
-													</div>
-												</div>
+											<div class="form-group hidden" id="header_child_{{$key}}">
+												<div class="col-md-3"></div>
+												<div class="col-md-3">Session Start</div>
+												<div class="col-md-3">Session End</div>
 											</div>
+											<input type="hidden" id="count_array_time_{{$key}}" value="{{$count}}">
+											<div id="div_shift_child_{{$key}}"></div>
 											@endif
 										</div>
 									<div>

@@ -288,12 +288,22 @@ class DoctorController extends Controller
                 $post['schedules'][$key]['is_active'] = 0;
             }
 
-            if(isset($val['session_time'])){
+            if(isset($val['session_time'])){                
                 usort($val['session_time'], function($a, $b) {
                     return strtotime($a['start_time']) <=> strtotime($b['start_time']);
                 });
 
                 $post['schedules'][$key]['session_time'] = $val['session_time'];
+            }
+
+            if(isset($val['session_time'])){
+                $check = [];
+                foreach ($val['session_time'] as $key => $time) {
+                    if(in_array($time['start_time'] ,$check)){
+                        return back()->withInput()->withErrors(['Start time can not be the same in one day']);
+                    }
+                    $check[] = $time['start_time'];
+                }
             }
         }
 
