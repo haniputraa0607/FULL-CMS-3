@@ -248,16 +248,11 @@ class ConsultationController extends Controller
                 $data['click_inbox'] = [
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
-                    ['value' => "consultation_summary",'title' => 'Consultation Summary'],
-                    ['value' => "consultation_product_recomendation",'title' => 'Consultation Product Recomendation'],
-                    ['value' => "consultation_prescription",'title' => 'Consultation Prescription']
+                    ['value' => "history_consultation",'title' => 'History Consultation']
                 ];
                 $data['click_notification'] = [
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
-                    ['value' => "consultation_chat",'title' => 'Consultation Chat'],
-                    ['value' => "consultation_summary",'title' => 'Consultation Summary'],
-                    ['value' => "consultation_product_recomendation",'title' => 'Consultation Product Recomendation'],
-                    ['value' => "consultation_prescription",'title' => 'Consultation Prescription']
+                    ['value' => "consultation_chat",'title' => 'Consultation Chat']
                 ];
                 break;
             case 'consultation-done':
@@ -265,15 +260,13 @@ class ConsultationController extends Controller
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
                     ['value' => "consultation_summary",'title' => 'Consultation Summary'],
-                    ['value' => "consultation_product_recomendation",'title' => 'Consultation Product Recomendation'],
-                    ['value' => "consultation_prescription",'title' => 'Consultation Prescription']
+                    ['value' => "history_consultation",'title' => 'History Consultation']
                 ];
                 $data['click_notification'] = [
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
                     ['value' => "consultation_summary",'title' => 'Consultation Summary'],
-                    ['value' => "consultation_product_recomendation",'title' => 'Consultation Product Recomendation'],
-                    ['value' => "consultation_prescription",'title' => 'Consultation Prescription']
+                    ['value' => "history_consultation",'title' => 'History Consultation']
                 ];
                 break;
             case 'consultation-completed':
@@ -282,38 +275,44 @@ class ConsultationController extends Controller
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
                     ['value' => "consultation_summary",'title' => 'Consultation Summary'],
                     ['value' => "consultation_product_recomendation",'title' => 'Consultation Product Recomendation'],
-                    ['value' => "consultation_prescription",'title' => 'Consultation Prescription']
+                    ['value' => "consultation_product_prescription",'title' => 'Consultation Prescription'],
+                    ['value' => "history_consultation",'title' => 'History Consultation']
                 ];
                 $data['click_notification'] = [
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
                     ['value' => "consultation_summary",'title' => 'Consultation Summary'],
                     ['value' => "consultation_product_recomendation",'title' => 'Consultation Product Recomendation'],
-                    ['value' => "consultation_prescription",'title' => 'Consultation Prescription']
+                    ['value' => "consultation_product_prescription",'title' => 'Consultation Prescription'],
+                    ['value' => "history_consultation",'title' => 'History Consultation']
                 ];
                 break;
             case 'consultation-missed':
                 $data['click_inbox'] = [
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
-                    ['value' => "consultation_chat",'title' => 'Consultation Chat'],
-                    ['value' => "consultation_summary",'title' => 'Consultation Summary'],
-                    ['value' => "consultation_product_recomendation",'title' => 'Consultation Product Recomendation'],
-                    ['value' => "consultation_prescription",'title' => 'Consultation Prescription']
+                    ['value' => "history_consultation",'title' => 'History Consultation']
                 ];
                 $data['click_notification'] = [
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
-                    ['value' => "consultation_chat",'title' => 'Consultation Chat'],
-                    ['value' => "consultation_summary",'title' => 'Consultation Summary'],
-                    ['value' => "consultation_product_recomendation",'title' => 'Consultation Product Recomendation'],
-                    ['value' => "consultation_prescription",'title' => 'Consultation Prescription']
+                    ['value' => "history_consultation",'title' => 'History Consultation']
+                ];
+                break;
+            case 'doctor-received-chat':
+                $data['click_inbox'] = [
+                    ['value' => "consultation_detail",'title' => 'Consultation Detail'],
+                    ['value' => "consultation_chat",'title' => 'Consultation Chat']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "consultation_detail",'title' => 'Consultation Detail'],
+                    ['value' => "consultation_chat",'title' => 'Consultation Chat']
                 ];
                 break;
             default:
                 $data['click_inbox'] = [
-                    ['value' => "doctor_received_chat",'title' => 'Doctor Received Chat']
+                    ['value' => 'consultation_chat','title' => 'Consultation Chat'],
                 ];
                 $data['click_notification'] = [
-                    ['value' => 'doctor_received_chat','title' => 'Doctor Received Chat']
+                    ['value' => 'consultation_chat','title' => 'Consultation Chat']
                 ];
                 break;
         }
