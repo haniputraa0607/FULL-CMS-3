@@ -9,10 +9,11 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/skins/all.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('page-script')
-    {{-- <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.min.js') }}" type="text/javascript"></script> --}}
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
@@ -20,62 +21,10 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-select/js/bootstrap-select.js') }}"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-bootstrap-select.min.js') }}"  type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
+    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
 
-        $('#select_tag').change(function(){
-			var value = $(this).val();
-            console.log(value)
-            if(value !== null){
-                value.forEach(function(tag_selected,i){
-                    if(tag_selected == '+'){
-                        $('.bootstrap-select').removeClass('open')
-                        $('#m_modal_5').modal('show');
-                        value.splice (i, 1);
-                    }
-                })
-                $('#select_tag').val(value)
-                $('#select_tag').selectpicker('refresh')
-            }
-		})
-
-		$('#new_tag').click(function(){
-			var tag_name = $('#tag_name').val();
-			var token  = "{{ csrf_token() }}";
-            var tag_selected = $('#select_tag').val()
-            console.log(tag_selected)
-			$.ajax({
-                type : "POST",
-                url : "{{ url('product/tag/create') }}",
-                data : "_token="+token+"&tag_name="+tag_name+"&ajax=1",
-                success : function(result) {
-                    if (result.status == "success") {
-                        toastr.info("New tag has been created.");
-                        $('#option_new_tag').after(
-							'<option value="'+result.result.id_tag+'">'+result.result.tag_name+'</option>'
-						);
-                        if(tag_selected !== null){
-                            tag_selected.splice (0, 0, result.result.id_tag);
-                            $('#select_tag').val(tag_selected)
-                        }else{
-                            $('#select_tag').val(result.result.id_tag)
-                        }
-						$('#select_tag').selectpicker('refresh');
-                    }
-                    else if(result.status == "fail"){
-                        toastr.error(result.messages[0]);
-                    }else{
-                        toastr.warning('Failed to create tag.');
-                    }
-                    $('#m_modal_5').modal('hide');
-                }
-            });
-		})
-	$('#close_modal').click(function(){
-        var value = $('#select_tag').val();
-        value.splice (0, 0);
-        $('#select_tag').val(value)
-        $('#select_tag').selectpicker('refresh')
-	})
     $(document).ready(function() {
         $('.summernote').summernote({
             placeholder: 'Product Description',
@@ -112,6 +61,26 @@
     });
 
 
+    $('.onlynumber').keypress(function (e) {
+        var regex = new RegExp("^[0-9]");
+        var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+        var check_browser = navigator.userAgent.search("Firefox");
+
+        if(check_browser == -1){
+            if (regex.test(str) || e.which == 8) {
+                return true;
+            }
+        }else{
+            if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+                return true;
+            }
+        }
+
+        e.preventDefault();
+        return false;
+    });
+
     function sendFile(file, id){
         token = "<?php echo csrf_token(); ?>";
         var data = new FormData();
@@ -139,63 +108,6 @@
         })
     }
 
-    $(".file").change(function(e) {
-        var widthImg  = 300;
-        var heightImg = 300;
-
-        var _URL = window.URL || window.webkitURL;
-        var image, file;
-
-        if ((file = this.files[0])) {
-            image = new Image();
-
-            image.onload = function() {
-                if (this.width == widthImg && this.height == heightImg) {
-                    // image.src = _URL.createObjectURL(file);
-                }
-                else {
-                    toastr.warning("Please check dimension of your photo.");
-                    $(this).val("");
-                    // $('#remove_square').click()
-                    // image.src = _URL.createObjectURL();
-
-                    $('#fieldphoto').val("");
-                    $('#imageproduct').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
-                    console.log($(this).val())
-                }
-            };
-
-            image.src = _URL.createObjectURL(file);
-        }
-
-    });
-    $(".filePhotoDetail").change(function(e) {
-        var widthImg  = 720;
-        var heightImg = 360;
-
-        var _URL = window.URL || window.webkitURL;
-        var image, file;
-
-        if ((file = this.files[0])) {
-            image = new Image();
-
-            image.onload = function() {
-                if (this.width == widthImg && this.height == heightImg) {
-                    // image.src = _URL.createObjectURL(file);
-                //    $('#formimage').submit()
-                }
-                else {
-                    toastr.warning("Please check dimension of your photo.");
-                    $('#imageproductDetail').children('img').attr('src', 'https://www.placehold.it/720x360/EFEFEF/AAAAAA&amp;text=no+image');
-                    $('#filePhotoDetail').val("");
-
-                }
-            };
-
-            image.src = _URL.createObjectURL(file);
-        }
-
-    });
     $('.price').each(function() {
         var input = $(this).val();
         var input = input.replace(/[\D\s\._\-]+/g, "");
@@ -233,6 +145,294 @@
             $( this ).val("");
         }
     }
+
+    $('#checkbox-variant').on('ifChanged', function(event) {
+        if(this.checked) {
+            $('#variants').show();
+            $("input[name=base_price]").val('');
+            $("input[name=base_price]").prop('disabled', true);
+            $('input[name=base_price]').prop('required',false);
+
+            $('input[name=stock]').val('');
+            $('input[name=stock]').prop('disabled', true);
+            $('input[name=stock]').prop('required',false);
+            $('#stock').hide();
+
+            $('#wholesaler').empty();
+            $('#div_wholesaler').hide();
+        }else{
+            $('#variants').hide();
+            $('#data_variant_price').val('');
+            $("input[name=base_price]").val(0);
+            $("input[name=base_price]").prop('disabled', false);
+            $('input[name=base_price]').prop('required',true);
+
+            $('input[name=stock]').val('');
+            $('input[name=stock]').prop('disabled', false);
+            $('input[name=stock]').prop('required',true);
+            $('#stock').show();
+            $('#div_wholesaler').show();
+        }
+    });
+
+    var array_color = [];
+    var array_size = [];
+
+    function addVariantColor(){
+        $('#data_variant_price').val('');
+        $('#variant_price').empty();
+        var name = $('#variant_name_color').val();
+        var check = false;
+        for (var i=0;i<array_color.length;i++){
+            if(name.toLowerCase() == array_color[i].toLowerCase()){
+                check = true;
+            }
+        }
+
+        if(!check){
+            array_color.push(name);
+            var id = name.replace(" ", "_");
+            var html = '<div class="row" id="variant_color_'+id+'" style="margin-bottom: 0.5%">' +
+                '<div class="col-md-4"><input type="text" class="form-control" name="variant_color[]" value="'+name+'" readonly></div>'+
+                '<div class="col-md-4"><a class="btn btn-danger" onclick="deleteVariantColor(`'+name+'`)"><i class="fa fa-trash"></i></a></div>'+
+                '</div>';
+
+            $('#variant_color').append(html);
+        }
+
+        $('#variant_name_color').val('');
+        $('#modalVariantColor').modal('hide');
+    }
+
+    function deleteVariantColor(name){
+        $('#data_variant_price').val('');
+        $('#variant_price').empty();
+        var id = name.replace(" ", "_");
+        for (var i=0;i<array_color.length;i++){
+            if(name.toLowerCase() == array_color[i].toLowerCase()){
+                array_color.splice(i, 1);
+            }
+        }
+        $('#variant_color_'+id).empty();
+    }
+
+    function addVariantSize(){
+        $('#data_variant_price').val('');
+        $('#variant_price').empty();
+        var name = $('#variant_name_size').val();
+        var check = false;
+        for (var i=0;i<array_size.length;i++){
+            if(name.toLowerCase() == array_size[i].toLowerCase()){
+                check = true;
+            }
+        }
+
+        if(!check){
+            array_size.push(name);
+            var id = name.replace(" ", "_");
+            var html = '<div class="row" id="variant_size_'+id+'" style="margin-bottom: 0.5%">' +
+                '<div class="col-md-4"><input type="text" class="form-control" name="variant_size[]" value="'+name+'" readonly></div>'+
+                '<div class="col-md-4"><a class="btn btn-danger" onclick="deleteVariantSize(`'+name+'`)"><i class="fa fa-trash"></i></a></div>'+
+                '</div>';
+
+            $('#variant_size').append(html);
+        }
+
+        $('#variant_name_size').val('');
+        $('#modalVariantSize').modal('hide');
+    }
+
+    function deleteVariantSize(name){
+        $('#data_variant_price').val('');
+        $('#variant_price').empty();
+        var id = name.replace(" ", "_");
+        for (var i=0;i<array_size.length;i++){
+            if(name.toLowerCase() == array_size[i].toLowerCase()){
+                array_size.splice(i, 1);
+            }
+        }
+        $('#variant_size_'+id).empty();
+    }
+
+    var array_variant_price = [];
+    function showVariantPrice(){
+        array_variant_price = [];
+        $('#data_variant_price').val('');
+        $.ajax({
+            type : "POST",
+            url : "{{ url('product/variant-combination') }}",
+            data : {
+                "_token" : "{{ csrf_token() }}",
+                "array_color" : array_color,
+                "array_size" : array_size
+            },
+            success : function(result) {
+                if (result.status == "success") {
+                    var data_price = result.result.variants_price;
+                    array_variant_price = data_price;
+
+                    var html = '';
+                    for (var i =0;i<data_price.length;i++){
+                        var price = '';
+                        if($('#price_var_'+i).val()){
+                            price = $('#price_var_'+i).val();
+                        }
+                        var stock = '';
+                        if($('#stock_var_'+i).val()){
+                            stock = $('#stock_var_'+i).val();
+                        }
+
+                        var visible = '';
+                        var hidden = '';
+                        if($('#visibility_var_'+i).val()){
+                            if($('#visibility_var_'+i).val() == 'Visible'){
+                                visible = 'selected';
+                            }else if($('#visibility_var_'+i).val() == 'Hidden'){
+                                hidden = 'selected';
+                            }
+                        }else{
+                            visible = 'selected';
+                        }
+
+                        html += '<br><h3 style="text-align: center">'+data_price[i].name+'</h3><hr style="border-top: 2px dashed black;"><br>';
+                        html += '<div class="row" style="margin-bottom: 1%">' +
+                            '<div class="col-md-2">Price</div>'+
+                            '<div class="col-md-4"><input type="text" class="form-control price" id="price_var_'+i+'" value="'+price+'" placeholder="Price"></div>'+
+                            '</div>';
+                        html += '<div class="row" style="margin-bottom: 1%">' +
+                            '<div class="col-md-2">Stock</div>'+
+                            '<div class="col-md-4"><input type="text" class="form-control onlynumber" value="'+stock+'" id="stock_var_'+i+'" placeholder="Stock"></div>'+
+                            '</div>';
+                        html += '<div class="row" style="margin-bottom: 1%">' +
+                            '<div class="col-md-2">Visibility</div>'+
+                            '<div class="col-md-4"><select class="form-control select2-multiple" id="visibility_var_'+i+'" data-placeholder="Select">' +
+                            '<option value="Visible" '+visible+'>Visible</option>'+
+                            '<option value="Hidden" '+hidden+'>Hidden</option>'+
+                            '</select>'+
+                            '</div>'+
+                            '</div>';
+                    }
+
+                    $('#modal_content_variant_price').empty();
+                    $('#modal_content_variant_price').append(html);
+                    $('#modalVariantPrice').modal('show');
+                }
+                else if(result.status == "fail"){
+                    $('#modal_content_variant_price').empty();
+                    swal("Error!", result.messages[0], "error")
+                }
+                else {
+                    $('#modal_content_variant_price').empty();
+                    swal("Error!", "Something went wrong. Failed to delete candidate.", "error")
+                }
+            }
+        });
+    }
+
+    function variantUpdatePrice(){
+        $('#data_variant_price').val('');
+        $('#variant_price').empty();
+
+        var html = '';
+        for (var i=0;i<array_variant_price.length;i++){
+            array_variant_price[i].price = $('#price_var_'+i).val();
+            array_variant_price[i].stock = $('#stock_var_'+i).val();
+            array_variant_price[i].visibility = $('#visibility_var_'+i).val();
+            html += '<br><h4 style="text-align: center">'+array_variant_price[i].name+'</h4><hr style="border-top: 2px dashed black;"><br>';
+            html += '<div class="row" style="margin-bottom: 1%">' +
+                '<div class="col-md-8">Price : '+$('#price_var_'+i).val()+'</div>'+
+                '</div>';
+            html += '<div class="row" style="margin-bottom: 1%">' +
+                '<div class="col-md-8">Stock : '+$('#stock_var_'+i).val()+'</div>'+
+                '</div>';
+            html += '<div class="row" style="margin-bottom: 1%">' +
+                '<div class="col-md-8">Visibility : '+$('#visibility_var_'+i).val()+'</div>'+
+                '</div>';
+            html += '<div class="row" style="margin-bottom: 1%">' +
+                '<div class="col-md-8"><a onclick="addWholesalerVariant('+i+')" class="btn btn-sm yellow" style="margin-bottom: 2%">Add Wholesale Price</a></div>'+
+                '</div>';
+            html += '<div class="row" style="margin-bottom: 1%">' +
+                '<div class="col-md-8" id="wholesaler_variant_'+i+'"></div>'+
+                '</div>';
+        }
+
+        $('#variant_price').append(html);
+        $('#data_variant_price').val(JSON.stringify( array_variant_price ) );
+        $('#modalVariantPrice').modal('hide');
+    }
+
+    var j_variant = 0;
+    function addWholesalerVariant(id){
+        var html = '<div class="row" id="wholesaler_'+id+'_'+j_variant+'" style="margin-bottom: 0.5%">' +
+            '<div class="col-md-4">Minimum<br><input type="text" class="form-control onlynumber" name="wholesaler_variant['+id+']['+j_variant+'][minimum]"></div>'+
+            '<div class="col-md-4">Price<br><input type="text" class="form-control onlynumber" name="wholesaler_variant['+id+']['+j_variant+'][unit_price]"></div>'+
+            '<div class="col-md-4"><br><a class="btn btn-danger" onclick="deleteWholesalerVariant('+id+','+j_variant+')"><i class="fa fa-trash"></i></a></div>'+
+            '</div>';
+
+        $('#wholesaler_variant_'+id).append(html);
+
+        $('.onlynumber').keypress(function (e) {
+            var regex = new RegExp("^[0-9]");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+            var check_browser = navigator.userAgent.search("Firefox");
+
+            if(check_browser == -1){
+                if (regex.test(str) || e.which == 8) {
+                    return true;
+                }
+            }else{
+                if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+                    return true;
+                }
+            }
+
+            e.preventDefault();
+            return false;
+        });
+        j_variant++;
+    }
+
+    function deleteWholesalerVariant(id, id_2){
+        $('#wholesaler_'+id+'_'+id_2).remove();
+    }
+
+    var j = 0;
+    function addWholesaler(){
+        var html = '<div class="row" id="wholesaler_'+j+'" style="margin-bottom: 0.5%">' +
+            '<div class="col-md-4">Minimum<br><input type="text" class="form-control onlynumber" name="wholesaler['+j+'][minimum]"></div>'+
+            '<div class="col-md-4">Price<br><input type="text" class="form-control onlynumber" name="wholesaler['+j+'][unit_price]"></div>'+
+            '<div class="col-md-4"><br><a class="btn btn-danger" onclick="deleteWholesaler('+j+')"><i class="fa fa-trash"></i></a></div>'+
+            '</div>';
+
+        $('#wholesaler').append(html);
+
+        $('.onlynumber').keypress(function (e) {
+            var regex = new RegExp("^[0-9]");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+
+            var check_browser = navigator.userAgent.search("Firefox");
+
+            if(check_browser == -1){
+                if (regex.test(str) || e.which == 8) {
+                    return true;
+                }
+            }else{
+                if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
+                    return true;
+                }
+            }
+
+            e.preventDefault();
+            return false;
+        });
+        j++;
+    }
+
+    function deleteWholesaler(id){
+        $('#wholesaler_'+id).remove();
+    }
+
     </script>
 
 @endsection
@@ -270,26 +470,64 @@
             <form class="form-horizontal" role="form" action="{{ url()->current() }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                                Outlet
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Pilih outlet" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-4">
+                            <select name="id_outlet" class="form-control select2-multiple" data-placeholder="Select Outlet" required>
+                                <option></option>
+                                @foreach($outlets as $suw)
+                                    <option value="{{ $suw['id_outlet'] }}">{{ $suw['outlet_code'] }} - {{ $suw['outlet_name'] }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">
+                            Main Image <span class="required" aria-required="true">* </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar Utama" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>
+                                <div>
+                                <span class="btn default btn-file">
+                                <span class="fileinput-new"> Select image </span>
+                                <span class="fileinput-exists"> Change </span>
+                                <input type="file" class="file" id="fieldphoto" accept="image/*" name="photo" required>
+                                </span>
+                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Category <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Pilih Kategori Produk" data-container="body"></i>
                         </label>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="input-icon right">
-                                <select id="multiple" class="form-control select2-multiple" name="id_product_category" data-placeholder="select category" required>
-                                <optgroup label="Category List">
-                                    <option value="0">Uncategorize</option>
+                                <select id="multiple" class="form-control select2-multiple" name="id_product_category" data-placeholder="Select category" required>
+                                    <option></option>
                                     @if (!empty($parent))
                                         @foreach($parent as $suw)
-                                            <option value="{{ $suw['id_product_category'] }}">{{ $suw['product_category_name'] }}</option>
-                                            @if (!empty($suw['child']))
-                                                @foreach ($suw['child'] as $child)
-                                                    <option value="{{ $child['id_product_category'] }}" data-ampas="{{ $child['product_category_name'] }}">&nbsp;&nbsp;&nbsp;{{ $child['product_category_name'] }}</option>
-                                                @endforeach
-                                            @endif
+                                            @foreach ($suw['children']??[] as $child)
+                                                <optgroup label="{{ $suw['product_category_name'] }} - {{ $child['product_category_name'] }}">
+                                                    @foreach ($child['children']??[] as $subChild)
+                                                        <option value="{{ $subChild['id_product_category'] }}">{{ $subChild['product_category_name'] }}</option>
+                                                    @endforeach
+                                                </optgroup>
+                                            @endforeach
                                         @endforeach
                                     @endif
-                                </optgroup>
-                            </select>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -297,29 +535,38 @@
                         <label class="col-md-3 control-label">Name <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Nama Produk" data-container="body"></i>
                         </label>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="input-icon right">
-                                <input type="text" placeholder="Product name" class="form-control" name="product_name" value="{{ old('product_name') }}" required>
+                                <input type="text" class="form-control" name="product_name" placeholder="Name" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Code
-                            <i class="fa fa-question-circle tooltips" data-original-title="Kode Produk Bersifat Unik" data-container="body"></i>
+                        <label class="col-md-3 control-label">Need Recipe
+                            <i class="fa fa-question-circle tooltips" data-original-title="Setting apakah produk memerlukan resep dari dokter" data-container="body"></i>
                         </label>
-                        <div class="col-md-8">
-                            <div class="input-icon right">
-                                <input type="text" class="form-control" name="product_code" value="{{ old('product_code') }}" placeholder="Product code">
+                        <div class="input-icon right">
+                            <div class="col-md-2">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" id="radio_recipe1" name="need_recipe_status" class="md-radiobtn req-type" value="1" required>
+                                        <label for="radio_recipe1">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> Need</label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Global Price <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Global Price Product" data-container="body"></i>
-                        </label>
-                        <div class="col-md-8">
-                            <div class="input-icon right">
-                                <input type="text" class="form-control price" name="product_global_price" value="{{old('product_global_price')}}" required>
+                            <div class="col-md-2">
+                                <div class="md-radio-inline">
+                                    <div class="md-radio">
+                                        <input type="radio" id="radio_recipe2" name="need_recipe_status" class="md-radiobtn req-type" value="0" required checked>
+                                        <label for="radio_recipe2">
+                                            <span></span>
+                                            <span class="check"></span>
+                                            <span class="box"></span> No Need </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -331,7 +578,7 @@
                             <div class="col-md-2">
                                 <div class="md-radio-inline">
                                     <div class="md-radio">
-                                        <input type="radio" id="radio1" name="product_visibility" class="md-radiobtn req-type" value="Visible" required>
+                                        <input type="radio" id="radio1" name="product_visibility" class="md-radiobtn req-type" value="Visible" required checked>
                                         <label for="radio1">
                                             <span></span>
                                             <span class="check"></span>
@@ -352,133 +599,160 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                            Brand
-                            <span class="required" aria-required="true"> * </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand untuk produk ini" data-container="body"></i>
+                        <label for="multiple" class="control-label col-md-3">Description
+                            <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-6">
+                            <div class="input-icon right">
+                                <textarea name="product_description" id="pro_text" class="form-control" style="height: 100px"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Weight <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Berat Produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control onlynumber" name="product_weight" placeholder="Weight" required>
+                                <span class="input-group-addon">
+										gram
+									</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Length <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Panjang Produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control onlynumber" name="product_length" placeholder="Length" required>
+                                <span class="input-group-addon">
+                                    cm
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Width <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Lebar Produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control onlynumber" name="product_width" placeholder="Width" required>
+                                <span class="input-group-addon">
+                                    cm
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Height <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Tinggi Produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control onlynumber" name="product_height" placeholder="Height" required>
+                                <span class="input-group-addon">
+                                    cm
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="stock">
+                        <label class="col-md-3 control-label">Stock <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Total jumlah produk" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                <input type="text" class="form-control onlynumber" name="stock" placeholder="Stock" required>
+                                <span class="input-group-addon">
+                                    qty
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Base Price <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Base Price Product, jika memiliki variant maka harga base price akan diambil dari harga terendah variant" data-container="body"></i>
+                        </label>
+                        <div class="col-md-4">
+                            <div class="input-icon right">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    Rp
+                                    </span>
+                                    <input type="text" id="base_price" class="form-control price" name="base_price" placeholder="Base Price" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="div_wholesaler">
+                        <label class="col-md-3 control-label">Wholesale Price
+                            <i class="fa fa-question-circle tooltips" data-original-title="Set harga grosir" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <a onclick="addWholesaler()" class="btn btn-sm yellow" style="margin-bottom: 2%">Add Wholesale Price</a>
+                            <div id="wholesaler">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="multiple" class="control-label col-md-3">Use Variant
+                            <i class="fa fa-question-circle tooltips" data-original-title="Status penggunaan variant" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="icheck-list" style="margin-top: 1.5%">
+                                <label><input type="checkbox" class="icheck" id="checkbox-variant" name="product_variant_status"> </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="variants" style="display: none">
+                        <div class="form-group">
+                            <label for="multiple" class="control-label col-md-3">Variant Color
                             </label>
-                        </div>
-                        <div class="col-md-8">
-                            <select class="select2 form-control" multiple="multiple" name="product_brands[]" required>
-                                <option value="*">All Brand</option>
-                                @foreach($brands as $brand)
-                                <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],old('product_brands',[]))) selected="selected" @endif>{{$brand['name_brand']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">
-                            Photo <span class="required" aria-required="true">* <br>(300*300) </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk" data-container="body"></i>
-                        </label>
-                        <div class="col-md-8">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                <img src="https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image" alt="">
-                                </div>
-                                <div class="fileinput-preview fileinput-exists thumbnail" id="imageproduct" style="max-width: 200px; max-height: 200px;"></div>
-                                <div>
-                                    <span class="btn default btn-file">
-                                    <span class="fileinput-new"> Select image </span>
-                                    <span class="fileinput-exists"> Change </span>
-                                    <input type="file" class="file" id="fieldphoto" accept="image/*" name="photo" required>
-                                    </span>
-
-                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                </div>
+                            <div class="col-md-8" id="variant_color" style="margin-top: 0.5%">
+                                <a data-toggle="modal" href="#modalVariantColor" class="btn btn-sm green" style="margin-bottom: 1%">Add <i class="fa fa-plus-circle"></i></a>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">
-                            Photo Detail<span class="required" aria-required="true">* <br>(720*360) </span>
-                            <i class="fa fa-question-circle tooltips" data-original-title="Gambar Produk Detail" data-container="body"></i>
-                        </label>
-                        <div class="col-md-8">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
-                                <img src="@if(isset($syu['product_photo_detail'])){{$syu['product_photo_detail']}}@endif" alt="">
-                                </div>
-                                <div class="fileinput-preview fileinput-exists thumbnail" id="imageproductDetail" style="max-width: 200px; max-height: 200px;"></div>
-                                <div>
-                                    <span class="btn default btn-file">
-                                    <span class="fileinput-new"> Select image </span>
-                                    <span class="fileinput-exists"> Change </span>
-                                    <input type="file" class="filePhotoDetail" id="fieldphotodetail" accept="image/*" name="product_photo_detail">
-                                    </span>
-
-                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-                                </div>
+                        <div class="form-group">
+                            <label for="multiple" class="control-label col-md-3">Variant Size
+                            </label>
+                            <div class="col-md-8" id="variant_size" style="margin-top: 0.5%">
+                                <a data-toggle="modal" href="#modalVariantSize" class="btn btn-sm green" style="margin-bottom: 1%">Add <i class="fa fa-plus-circle"></i></a>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label for="multiple" class="control-label col-md-3">Variant Price
+                            </label>
+                            <div class="col-md-8">
+                                <a onclick="showVariantPrice()" class="btn btn-sm green" style="margin-bottom: 2%">Update Price & Stock</a>
+                                <div id="variant_price">
+                                </div>
+                            </div>
+                            <input type="hidden" id="data_variant_price" name="variants">
+                        </div>
                     </div>
-
-                    <!--<div class="form-group">-->
-                    <!--    <label class="col-md-3 control-label">Video-->
-                    <!--        <br>-->
-                    <!--        <span class="required" aria-required="true"> (from youtube) </span> -->
-                    <!--        <i class="fa fa-question-circle tooltips" data-original-title="Video Tentang Produk" data-container="body"></i>-->
-                    <!--    </label>-->
-                    <!--    <div class="col-md-8">-->
-                    <!--        <div class="input-icon right">-->
-                    <!--            <input type="url" placeholder="Example: https://www.youtube.com/watch?v=u9_2wWSOQ" class="form-control" name="product_video" value="{{ old('product_video') }}">-->
-                    <!--        </div>-->
-                    <!--    </div>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                    <!--    <label class="col-md-3 control-label">Weight-->
-                    <!--        <br>-->
-                    <!--        <span class="required" aria-required="true"> (gram) </span> -->
-                    <!--        <i class="fa fa-question-circle tooltips" data-original-title="Berat Produk" data-container="body"></i>-->
-                    <!--    </label>-->
-                    <!--    <div class="col-md-8">-->
-                    <!--        <div class="input-icon right">-->
-                    <!--            <input type="number" placeholder="Product weight" class="form-control" name="product_weight" value="{{ old('product_weight') }}">-->
-                    <!--        </div>-->
-                    <!--    </div>-->
-                    <!--</div>-->
-
-                    <div class="form-group">
-                       <label for="multiple" class="control-label col-md-3">Description
-                           <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
-                       </label>
-                       <div class="col-md-8">
-                           <div class="input-icon right">
-                               <textarea name="product_description" id="text_pro" class="form-control">{{ old('product_description') }}</textarea>
-                           </div>
-                       </div>
-                    </div>
-
-                    <!--<div class="form-group">-->
-                    <!--    <label for="multiple" class="control-label col-md-3">Tag-->
-                    <!--        {{-- <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i> --}}-->
-                    <!--    </label>-->
-                    <!--    <div class="col-md-8">-->
-                    <!--        <select name="id_tag[]" class="bs-select form-control" id="select_tag" multiple data-live-search="true" title="Select Tag">-->
-                    <!--            <option id="option_new_tag" value="+" data-content="<span class='btn btn-info'><i class='fa fa-plus' style='color:#fff'></i> Add New Category</span>">-->
-                    <!--                New Tag-->
-                    <!--            </option>-->
-                    <!--            @if (!empty($tags))-->
-                    <!--                @foreach($tags as $tag)-->
-                    <!--                    <option value="{{ $tag['id_tag'] }}">{{ $tag['tag_name'] }}</option>-->
-                    <!--                @endforeach-->
-                    <!--            @endif-->
-                    <!--        </select>-->
-                    <!--    </div>-->
-                    <!--</div>-->
-
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-offset-3 col-md-8">
                             <button type="submit" class="btn blue">Submit</button>
-                            <!--<button type="submit" name="next" value="1" class="btn blue">Submit & Manage Photo</button>-->
                         </div>
                     </div>
                 </div>
@@ -486,40 +760,56 @@
         </div>
     </div>
 
-    <!--begin::Modal-->
-	<div class="modal fade" id="m_modal_5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-sm" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">
-						New Tag
-					</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">
-							&times;
-						</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="form-group">
-							<label for="recipient-name" class="form-control-label">
-								Tag Name:
-							</label>
-							<input type="text" class="form-control" id="tag_name">
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-secondary" data-dismiss="modal" id="close_modal">
-						Cancel
-					</button>
-					<button type="button" class="btn btn-primary" id="new_tag">
-						Save
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
-<!--end::Modal-->
+    <div class="modal fade" id="modalVariantColor" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Variant Color Name
+                        </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="variant_name_color" placeholder="Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <a class="btn green" onclick="addVariantColor()">Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalVariantSize" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Variant Size Name
+                        </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="variant_name_size" placeholder="Name">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <a class="btn green" onclick="addVariantSize()">Add</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalVariantPrice" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body" id="modal_content_variant_price">
+
+                </div>
+                <div class="modal-footer" style="text-align: center">
+                    <a class="btn green" onclick="variantUpdatePrice()">Update</a>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -21,6 +21,7 @@ class ProductController extends Controller
     function __construct() {
         date_default_timezone_set('Asia/Jakarta');
         $this->tag  = "Modules\Product\Http\Controllers\TagController";
+        $this->categories  = "Modules\Product\Http\Controllers\CategoryController";
     }
 
     // get category and position
@@ -497,33 +498,78 @@ class ProductController extends Controller
                 'submenu_active' => 'product-new',
             ];
 
-            $data['parent'] = $this->category();
-            $tags = MyHelper::get('product/tag/list');
-            $data['tags'] = parent::getData($tags);
-            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+            $getCategory = MyHelper::post('product/category/be/list',$request->all())['result']??[];
+
+            $data['parent'] = [];
+            if(!empty($getCategory)){
+                $data['parent'] = app($this->categories )->buildTree($getCategory);
+            }
+            $data['outlets'] = MyHelper::get('outlet/be/list')['result']??[];
+
             return view('product::product.create', $data);
         }
-        else {
-            if (isset($post['next'])) {
-                $next = 1;
-                unset($post['next']);
-            }
-
-            if (isset($post['id_product_category']) && $post['id_product_category'] == 0) {
-                unset($post['id_product_category']);
-            }
-
-            // print_r($post);exit;
-
+        else{
             if (isset($post['photo'])) {
-                $post['photo']      = MyHelper::encodeImage($post['photo']);
+                $post['image']      = MyHelper::encodeImage($post['photo']);
             }
 
-            if (isset($post['product_photo_detail'])) {
-                $post['product_photo_detail']      = MyHelper::encodeImage($post['product_photo_detail']);
+            if(!empty($post['product_variant_status'])){
+                if(!empty($post['variant_color'])){
+                    $arr[] = [
+                        "id_product_variant" => 0,
+                        "variant_name" =>  "Color",
+                        "variant_child" => []
+                    ];
+                }
+
+                if(!empty($post['variant_size'])){
+                    $arr[] = [
+                        "id_product_variant" => 0,
+                        "variant_name" =>  "Size",
+                        "variant_child" => []
+                    ];
+                }
+
+                foreach ($post['variant_color']??[] as $value){
+                    $arr[0]['variant_child'][] = [
+                        "id_product_variant" => 0,
+                        "variant_name" =>  $value
+                    ];
+                }
+
+                foreach ($post['variant_size']??[] as $value){
+                    $key = (isset($arr[1]) ? 1 : 0);
+                    $arr[$key]['variant_child'][] = [
+                        "id_product_variant" => 0,
+                        "variant_name" =>  $value
+                    ];
+                }
+
+                $variantPrice = (array)json_decode($post['variants']);
+                $resVariantPrice = [];
+                $allPrice = [];
+                foreach ($variantPrice as $key=>$val){
+                    $val = (array)$val;
+                    $allPrice[] = $val['price'];
+                    $val['wholesaler_price'] = $post['wholesaler_variant'][$key]??[];
+                    $resVariantPrice[] = $val;
+                }
+
+                $variants = [
+                    'variants' => $arr,
+                    'variants_price' => $resVariantPrice
+                ];
+
+                if(!empty($arr)){
+                    $post['variant_status'] = 1;
+                }
+
+                $post['variants'] = json_encode($variants);
+                $post['base_price'] = (count($allPrice ) > 0 ? min($allPrice) : 0);
             }
 
-            $save = MyHelper::post('product/create', $post);
+            $post['admin'] = 1;
+            $save = MyHelper::post('merchant/be/product/create', $post);
 
             if (isset($save['status']) && $save['status'] == 'success') {
                 if (isset($post['id_tag']))  {
@@ -733,216 +779,136 @@ class ProductController extends Controller
         ];
 
         $product = MyHelper::post('product/be/list', ['product_code' => $code, 'outlet_prices' => 1]);
-        // dd($product);
+
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
         }
         else {
             $e = ['e' => 'Data product not found.'];
-            return back()->witherrors($e);
+            return redirect('product')->witherrors($e);
         }
 
+        $detail = MyHelper::post('merchant/be/product/detail', ['id_merchant' => $data['product'][0]['id_merchant'], 'id_product' => $data['product'][0]['id_product']]);
+
+        if (isset($detail['status']) && $detail['status'] == "success") {
+            $data['detail'] = $detail['result'];
+        }
+        else {
+            $e = ['e' => 'Data product not found.'];
+            return redirect('product')->witherrors($e);
+        }
         $post = $request->except('_token');
 
-        if (empty($post) || (!isset($post['product_detail_visibility']) && !isset($post['product_price']) && isset($post['page']))) {
-            $data['parent'] = $this->category();
-            $tags = MyHelper::get('product/tag/list');
-            $data['tags'] = parent::getData($tags);
+        if (empty($post)) {
+            $getCategory = MyHelper::post('product/category/be/list',$request->all())['result']??[];
+
+            $data['parent'] = [];
+            if(!empty($getCategory)){
+                $data['parent'] = app($this->categories)->buildTree($getCategory);
+            }
             $data['page'] = $post['page']??1;
-            $dtDetail['id_product'] = $data['product'][0]['id_product'];
-            $dtDetail['page'] = 1;
-            $dtPrice['id_product'] = $data['product'][0]['id_product'];
-            $dtPrice['page'] = 1;
-
-            if(isset($post['type']) && $post['type'] == 'product_detail'){
-                $dtDetail['page'] = $post['page'];
-            }
-            if(isset($post['type']) && $post['type'] == 'product_special_price'){
-                $dtPrice['page'] = $post['page'];
-            }
-
-			$outlet = MyHelper::post('outlet/be/list/product-detail', $dtDetail);
-
-            if (isset($outlet['status']) && $outlet['status'] == "success") {
-                $data['outlet']          = $outlet['result']['data'];
-                $data['outletTotal']     = $outlet['result']['total'];
-                $data['outletPerPage']   = $outlet['result']['from'];
-                $data['outletUpTo']      = $outlet['result']['from'] + count($outlet['result']['data'])-1;
-                $data['outletPaginator'] = new LengthAwarePaginator($outlet['result']['data'], $outlet['result']['total'], $outlet['result']['per_page'], $outlet['result']['current_page'], ['path' => url()->current()]);
-            }else{
-                $data['outlet']          = [];
-                $data['outletTotal']     = 0;
-                $data['outletPerPage']   = 0;
-                $data['outletUpTo']      = 0;
-                $data['outletPaginator'] = false;
-            }
-
-            $outletsSpecialPrice = MyHelper::post('outlet/be/list/product-special-price', $dtPrice);
-            if (isset($outletsSpecialPrice['status']) && $outletsSpecialPrice['status'] == "success") {
-                $data['outletSpecialPrice']          = $outletsSpecialPrice['result']['data'];
-                $data['outletSpecialPriceTotal']     = $outletsSpecialPrice['result']['total'];
-                $data['outletSpecialPricePerPage']   = $outletsSpecialPrice['result']['from'];
-                $data['outletSpecialPriceUpTo']      = $outletsSpecialPrice['result']['from'] + count($outletsSpecialPrice['result']['data'])-1;
-                $data['outletSpecialPricePaginator'] = new LengthAwarePaginator($outletsSpecialPrice['result']['data'], $outletsSpecialPrice['result']['total'], $outletsSpecialPrice['result']['per_page'], $outletsSpecialPrice['result']['current_page'], ['path' => url()->current()]);
-            }else{
-                $data['outlet']          = [];
-                $data['outletTotal']     = 0;
-                $data['outletPerPage']   = 0;
-                $data['trxUpTo']      = 0;
-                $data['trxPaginator'] = false;
-            }
-
-            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-            $data['promo_categories'] = MyHelper::get('product/promo-category')['result']??[];
-            $data['product'][0]['product_promo_categories'] = array_column($data['product'][0]['product_promo_categories'],'id_product_promo_category');
-            $nextId = MyHelper::get('product/next/'.$data['product'][0]['id_product']);
-            if (isset($nextId['result']['product_code'])) {
-                $data['next_id'] = $nextId['result']['product_code'];
-            }
-            else {
-                $data['next_id'] = null;
-            }
-
-            $outletAll = MyHelper::post('outlet/be/list', ['admin' => 1, 'id_product' => $data['product'][0]['id_product']]);
             $data['outlet_all'] = [];
-            if (isset($outletAll['status']) && $outletAll['status'] == 'success') {
-                $data['outlet_all'] = $outletAll['result'];
-            }
 
-            $data['product_variant'] = MyHelper::get('product-variant')['result'] ?? [];
-            $data['product_variant_group'] = MyHelper::post('product-variant-group',  ['product_code' => $code])['result'] ?? [];
-            $data['count'] = count($data['product_variant_group']);
+            $variants = $data['detail']['variants']??[];
+
+            $searchKeyColor = array_search('Color', array_column($variants['variants']??[], 'variant_name'));
+            $searchKeySize = array_search('Size', array_column($variants['variants']??[], 'variant_name'));
+
+            $data['variant_color'] = $variants['variants'][$searchKeyColor]??[];
+            $data['variant_size'] = $variants['variants'][$searchKeySize]??[];
+            $data['array_color'] = $data['variant_color']['variant_child']??[];
+            $data['array_size'] = $data['variant_size']['variant_child']??[];
+            $data['variant_price'] = $variants['variants_price']??[];
             return view('product::product.detail', $data);
         }
         else {
-			// print_r($post);exit;
-
-			 /**
-             * update info
-             */
-            if (isset($post['id_product_category'])) {
-                // kalo 0 => uncategorize
-                if ($post['id_product_category'] == 0  || empty($post['id_product_category'])) {
-                    $post['id_product_category'] = null;
-                }
-
-                if (isset($post['photo'])) {
-                    $post['photo'] = MyHelper::encodeImage($post['photo']);
-                }
-
-                if (isset($post['product_photo_detail'])) {
-                    $post['product_photo_detail']      = MyHelper::encodeImage($post['product_photo_detail']);
-                }
-
-                // update data
-                $save = MyHelper::post('product/update', $post);
-
-                unset($post['photo']);
-
-                // update product tag
-                if (isset($save['status']) && $save['status'] == 'success') {
-                    // delete dulu
-                    $deleteRelation = app($this->tag)->deleteAllProductTag($post['id_product']);
-					// print_r($deleteRelation);exit;
-                    // baru simpan
-                    if (isset($post['id_tag']))  {
-                        $saveRelation = app($this->tag)->createProductTag($post['id_product'], $post['id_tag']);
-                    }
-                }
-
-                return parent::redirect($save, 'Product info has been updated.', 'product/detail/'.$post['product_code'].'#info');
+            if ($post['id_product_category'] == 0  || empty($post['id_product_category'])) {
+                $post['id_product_category'] = null;
             }
 
-            /**
-             * jika outlet setting
-             */
-			if (isset($post['product_detail_visibility'])) {
-				$save = MyHelper::post('product/detail/update', $post);
-				// print_r($save);exit;
-                return parent::redirect($save, 'Visibility setting has been updated.', 'product/detail/'.$code.'?page='.$post['page'].'&type='.$post['type'].'#outletsetting');
-			}
-
-            /**
-             * if price setting
-             */
-
-            if (isset($post['product_price'])) {
-                $save = MyHelper::post('product/detail/update/price', $post);
-                // print_r($save);exit;
-                return parent::redirect($save, 'Product price setting has been updated.', 'product/detail/'.$code.'?page='.$post['page'].'&type='.$post['type'].'#outletpricesetting');
-            }
-
-			/**
-             * jika diskon
-             */
-            if (isset($post['type_disc'])) {
-                unset($post['type_disc']);
-
-                $post = array_filter($post);
-
-                if (isset($post['discount_days'])) {
-                    $post['discount_days'] = implode(",", $post['discount_days']);
-                }
-
-                if (isset($post['discount_time_start'])) {
-                    $post['discount_time_start'] = date('H:i:s', strtotime($post['discount_time_start']));
-                }
-
-                if (isset($post['discount_time_end'])) {
-                    $post['discount_time_end'] = date('H:i:s', strtotime($post['discount_time_end']));
-                }
-
-                $save = MyHelper::post('product/discount/create', $post);
-                return parent::redirect($save, 'Product discount has been added.', 'product/detail/'.$code.'#discount');
-            }
-
-            /**
-             * jika foto
-             */
             if (isset($post['photo'])) {
                 $post['photo'] = MyHelper::encodeImage($post['photo']);
-                /**
-                 * save
-                 */
-                $save          = MyHelper::post('product/photo/create', $post);
-                return parent::redirect($save, 'Product photo has been added.', 'product/detail/'.$code.'#photo');
             }
 
-            /**
-             * jika ada id_product_photo => untuk sorting
-             */
-            if (isset($post['id_product_photo'])) {
-                for ($x= 0; $x < count($post['id_product_photo']); $x++) {
-                    $data = [
-                        'id_product_photo' => $post['id_product_photo'][$x],
-                        'product_photo_order' => $x+1,
-                    ];
+            $save = MyHelper::post('product/update', $post);
 
-                    /**
-                     * save product photo
-                     */
-                    $save = MyHelper::post('product/photo/update', $data);
-
-                    if (!isset($save['status']) || $save['status'] != "success") {
-                        return redirect('product/detail/'.$code.'#photo')->witherrors(['Something went wrong. Please try again.']);
-                    }
-                }
-
-                return redirect('product/detail/'.$code.'#photo')->with('success', ['Photo\'s order has been updated']);
-            }
-
+            return parent::redirect($save, 'Product info has been updated.', 'product/detail/'.$post['product_code'].'#info');
         }
     }
 
     public function productVarianGroup(Request $request, $product_code){
         $post = $request->all();
-        $post['product_code'] = $product_code;
-        $create_update = MyHelper::post('product-variant-group', $post);
+        if(!empty($post['variant_deletes'])){
+            $delete = MyHelper::post('product-variant/delete', ['ids' => $post['variant_deletes']]);
+            if(!isset($delete['status']) || (isset($delete['status']) && $delete['status'] == 'fail')){
+                return redirect('product/detail/'.$product_code.'#variant')->withErrors($create_update['messages'] ?? ['Failed delete variant']);
+            }
+        }
+
+        $variantStatus = 0;
+        if(!empty($post['product_variant_status'])){
+            $variantStatus = 1;
+        }
+
+        $update = MyHelper::post('product-variant/update/status', ['id_product' => $post['id_product'], 'status' => $variantStatus]);
+
+        if(!isset($update['status']) || (isset($update['status']) && $update['status'] == 'fail')){
+            return redirect('product/detail/'.$product_code.'#variant')->withErrors($create_update['messages'] ?? ['Failed update status use variant']);
+        }elseif($variantStatus == 0 && isset($update['status']) && $update['status'] == 'success'){
+            return redirect('product/detail/'.$product_code.'#variant')->with('success',['Update Variant Status Success']);
+        }
+
+        if(!empty($post['variant_color'])){
+            $arr[] = [
+                "id_product_variant" => $post['variant_color_id']??0,
+                "variant_name" =>  "Color",
+                "variant_child" => []
+            ];
+        }
+
+        if(!empty($post['variant_size'])){
+            $arr[] = [
+                "id_product_variant" => $post['variant_size_id']??0,
+                "variant_name" =>  "Size",
+                "variant_child" => []
+            ];
+        }
+
+        foreach ($post['variant_color']??[] as $value){
+            $arr[0]['variant_child'][] = [
+                "id_product_variant" => $value['id']??0,
+                "variant_name" =>  $value['name']??$value
+            ];
+        }
+
+        foreach ($post['variant_size']??[] as $value){
+            $key = (isset($arr[1]) ? 1 : 0);
+            $arr[$key]['variant_child'][] = [
+                "id_product_variant" => $value['id']??0,
+                "variant_name" =>  $value['name']??$value
+            ];
+        }
+
+        foreach ($post['variant_price'] as $key => $value){
+            $replace = str_replace('[', '', $value['data']);
+            $replace = str_replace(']', '', $replace);
+            $post['variant_price'][$key]['data'] = explode(',', $replace);
+        }
+
+        $data = [
+            'id_product' => $post['id_product'],
+            'id_merchant' => $post['id_merchant'],
+            'variants' => $arr??[],
+            'variants_price' => $post['variant_price'],
+            'admin' => 1
+        ];
+
+        $create_update = MyHelper::post('merchant/be/product/variant/update', $data);
 
         if(($create_update['status']??'')=='success'){
-            return redirect('product/detail/'.$product_code.'#variant-group')->with('success',['Update Product Variant Group Success']);
+            return redirect('product/detail/'.$product_code.'#variant')->with('success',['Update Product Variant Success']);
         }else{
-            return redirect('product/detail/'.$product_code.'#variant-group')->withErrors($create_update['messages'] ?? ['Something went wrong']);
+            return redirect('product/detail/'.$product_code.'#variant')->withErrors($create_update['messages'] ?? ['Something went wrong']);
         }
     }
 
@@ -1004,12 +970,7 @@ class ProductController extends Controller
         $post = $request->except('_token');
         $delete = MyHelper::post('product/delete', $post);
 
-        if (isset($delete['status']) && $delete['status'] == "success") {
-            return "success";
-        }
-        else {
-            return "fail";
-        }
+        return $delete;
     }
 
     public function price(Request $request, $key = null)
@@ -1540,5 +1501,44 @@ class ProductController extends Controller
                 return back()->witherrors($save['messages']??['Something went wrong']);
             }
         }
+    }
+
+    public function variantCombination(Request $request){
+        $post = $request->all();
+
+        if(!empty($post['array_color'])){
+            $arr[] = [
+                "id_product_variant" => $post['id_variant_color']??0,
+                "variant_name" =>  "Color",
+                "variant_child" => []
+            ];
+        }
+
+        if(!empty($post['array_size'])){
+            $arr[] = [
+                "id_product_variant" => $post['id_variant_size']??0,
+                "variant_name" =>  "Size",
+                "variant_child" => []
+            ];
+        }
+
+        foreach ($post['array_color']??[] as $value){
+            $arr[0]['variant_child'][] = [
+                "id_product_variant" => $value['id_product_variant']??0,
+                "variant_name" =>  $value['variant_name']??$value
+            ];
+        }
+
+        foreach ($post['array_size']??[] as $value){
+            $key = (isset($arr[1]) ? 1 : 0);
+            $arr[$key]['variant_child'][] = [
+                "id_product_variant" => $value['id_product_variant']??0,
+                "variant_name" =>  $value['variant_name']??$value
+            ];
+        }
+
+        $combination = MyHelper::post('merchant/be/product/variant/create-combination', $arr);
+
+        return $combination;
     }
 }
