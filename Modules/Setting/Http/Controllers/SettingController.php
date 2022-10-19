@@ -782,13 +782,28 @@ class SettingController extends Controller
             ];
         }
 
+        //product detail
+        $pp=['select' => ['id_product', 'product_name', 'product_code']];
+        $request = MyHelper::post('product/be/list', $pp);
+        $data['products'] = $request['result']??[];
+
+        //merchant detail
+        $mp=['select' => ['id_merchant', 'merchant_pic_name']];
+        $request = MyHelper::post('merchant/list-setting', $mp);
+        $data['merchants'] = $request['result']??[];
+
+        //doctor detail
+        $dcp=['select' => ['id_doctor', 'doctor_name']];
+        $request = MyHelper::post('doctor', $dcp);
+        $data['doctors'] = $request['result']??[];
+
         $data['default_home'] = parent::getData(MyHelper::get('setting/default_home'));
         $data['default_home_doctor'] = parent::getData(MyHelper::get('setting/default_home_doctor'));
         $data['app_logo'] = parent::getData(MyHelper::get('setting/app_logo'));
         $data['app_sidebar'] = parent::getData(MyHelper::get('setting/app_sidebar'));
         $data['app_navbar'] = parent::getData(MyHelper::get('setting/app_navbar'));
         $data['inbox_max_days'] = parent::getData(MyHelper::post('setting',['key'=>'inbox_max_days']))['value']??30;
-        //dd($data);
+        // dd($data);
 		return view('setting::home', $data);
 	}
 

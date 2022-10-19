@@ -1352,24 +1352,39 @@
 						<div class="col-md-5">
 							<select class="select2 form-control" name="click_to">
 								<option value="none">None</option>
-								<option value="news">News</option>
-								<option value="url">Link</option>
-								<option value="order">Order</option>
+								<option value="home">Home</option>
+								<option value="membership">Membership</option>
+								<option value="point_history">Point History</option>
+								<option value="store">Store</option>
+								<option value="consultation">Consultation</option>
+								<option value="elearning">E-learning</option>
+								<option value="product_recomendation_list">Product Recomendation List</option>
+								<option value="doctor_recomendation_list">Doctor Recomendation List</option>
 								<option value="deals_list">Deals List</option>
-								<option value="deals_detail">Deals Detail</option>
-								<option value="subscription_list">Subscription List</option>
-								<option value="subscription_detail">Subscription Detail</option>
-								<option value="my_voucher">My Voucher</option>
-								<option value="edit_profile">Edit Profile</option>
+								<option value="inbox">Inbox</option>
+								<option value="merchant_detail">Merchant Detail</option>
+								<option value="product_detail">Product Detail</option>
+								<option value="notification_notification">Notification</option>
+								<option value="notification_promo">Notification Promo</option>
+								<option value="history_order">History Order</option>
+								<option value="history_consultation">History Consultation</option>
+								<option value="doctor_detail">Doctor Detail</option>
+								<option value="wishlist">Wishlist</option>
+								<option value="privacy_policy">Privacy Policy</option>
+								<option value="faq">FAQ</option>
+								<option value="enquires">Enquires</option>
+								<option value="featured_promo">Featured Promo</option>
+								<option value="promo_detail">Promo Detail</option>
+								<option value="url">URL</option>
 							</select>
                         </div>
 					</div>
-					<div class="form-group clearfix" data-visible="news">
+					<div class="form-group clearfix" data-visible="elearning">
                         <label class="col-md-3 control-label">
-                            News
+							E-Learning
                         </label>
                         <div class="col-md-5">
-                        	<select class="form-control select2 click-to-news" name="id_reference" data-placeholder="Select News">
+                        	<select class="form-control select2 click-to-news" name="id_reference" data-placeholder="E-Learning">
                         		<option></option>
                                 @if (!empty($news))
                                     @foreach ($news as $item)
@@ -1387,12 +1402,12 @@
 							<input class="form-control" type="text" name="url" placeholder="https://www.google.com">
                         </div>
 					</div>
-					<div class="form-group clearfix" data-visible="deals_detail">
+					<div class="form-group clearfix" data-visible="promo_detail">
                         <label class="col-md-3 control-label">
-                            Deals
+                            Promo
                         </label>
                         <div class="col-md-5">
-                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Deals">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Promo">
                                 @if (!empty($deals))
                                     @foreach ($deals as $item)
                                     <option value="{{ $item['id_deals'] }}">{{ $item['deals_title'] }}</option>
@@ -1401,15 +1416,43 @@
                             </select>
                         </div>
 					</div>
-					<div class="form-group clearfix" data-visible="subscription_detail">
+					<div class="form-group clearfix" data-visible="product_detail">
                         <label class="col-md-3 control-label">
-                            Subscription
+                            Product Detail
                         </label>
                         <div class="col-md-5">
-                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Subscription">
-                                @if (!empty($news))
-                                    @foreach ($subscriptions as $item)
-                                    <option value="{{ $item['id_subscription'] }}">{{ $item['subscription_title'] }}</option>
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Product">
+                                @if (!empty($products))
+                                    @foreach ($products as $item)
+                                    <option value="{{ $item['id_product'] }}">{{ $item['product_code'] }} - {{ $item['product_name'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="merchant_detail">
+                        <label class="col-md-3 control-label">
+                            Merchant Detail
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Merchant">
+                                @if (!empty($merchants))
+                                    @foreach ($merchants as $item)
+                                    <option value="{{ $item['id_merchant'] }}">{{ $item['merchant_pic_name'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="doctor_detail">
+                        <label class="col-md-3 control-label">
+                            Doctor Detail
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Doctor">
+                                @if (!empty($doctors))
+                                    @foreach ($doctors as $item)
+                                    <option value="{{ $item['id_doctor'] }}">{{ $item['doctor_name'] }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -1523,24 +1566,39 @@
 						<div class="col-md-5">
 							<select class="select2 form-control" name="click_to" id="click-to-type">
 								<option value="none">None</option>
-								<option value="news">News</option>
-								<option value="url">Link</option>
-								<option value="order">Order</option>
+								<option value="home">Home</option>
+								<option value="membership">Membership</option>
+								<option value="point_history">Point History</option>
+								<option value="store">Store</option>
+								<option value="consultation">Consultation</option>
+								<option value="elearning">E-learning</option>
+								<option value="product_recomendation_list">Product Recomendation List</option>
+								<option value="doctor_recomendation_list">Doctor Recomendation List</option>
 								<option value="deals_list">Deals List</option>
-								<option value="deals_detail">Deals Detail</option>
-								<option value="subscription_list">Subscription List</option>
-								<option value="subscription_detail">Subscription Detail</option>
-								<option value="my_voucher">My Voucher</option>
-								<option value="edit_profile">Edit Profile</option>
+								<option value="inbox">Inbox</option>
+								<option value="merchant_detail">Merchant Detail</option>
+								<option value="product_detail">Product Detail</option>
+								<option value="notification_notification">Notification</option>
+								<option value="notification_promo">Notification Promo</option>
+								<option value="history_order">History Order</option>
+								<option value="history_consultation">History Consultation</option>
+								<option value="doctor_detail">Doctor Detail</option>
+								<option value="wishlist">Wishlist</option>
+								<option value="privacy_policy">Privacy Policy</option>
+								<option value="faq">FAQ</option>
+								<option value="enquires">Enquires</option>
+								<option value="featured_promo">Featured Promo</option>
+								<option value="promo_detail">Promo Detail</option>
+								<option value="url">URL</option>
 							</select>
                         </div>
 					</div>
-					<div class="form-group clearfix" data-visible="news">
+					<div class="form-group clearfix" data-visible="elearning">
                         <label class="col-md-3 control-label">
-                            News
+							E-Learning
                         </label>
                         <div class="col-md-5">
-                        	<select class="form-control select2 click-to-news" name="id_reference" data-placeholder="Select News">
+                        	<select class="form-control select2 click-to-news" name="id_reference" data-placeholder="E-Learning">
                         		<option></option>
                                 @if (!empty($news))
                                     @foreach ($news as $item)
@@ -1558,12 +1616,12 @@
 							<input class="form-control" type="text" name="url" placeholder="https://www.google.com">
                         </div>
 					</div>
-					<div class="form-group clearfix" data-visible="deals_detail">
+					<div class="form-group clearfix" data-visible="promo_detail">
                         <label class="col-md-3 control-label">
-                            Deals
+                            Promo
                         </label>
                         <div class="col-md-5">
-                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Deals">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Promo">
                                 @if (!empty($deals))
                                     @foreach ($deals as $item)
                                     <option value="{{ $item['id_deals'] }}">{{ $item['deals_title'] }}</option>
@@ -1572,15 +1630,43 @@
                             </select>
                         </div>
 					</div>
-					<div class="form-group clearfix" data-visible="subscription_detail">
+					<div class="form-group clearfix" data-visible="product_detail">
                         <label class="col-md-3 control-label">
-                            Subscription
+                            Product Detail
                         </label>
                         <div class="col-md-5">
-                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Subscription">
-                                @if (!empty($news))
-                                    @foreach ($subscriptions as $item)
-                                    <option value="{{ $item['id_subscription'] }}">{{ $item['subscription_title'] }}</option>
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Product">
+                                @if (!empty($products))
+                                    @foreach ($products as $item)
+                                    <option value="{{ $item['id_product'] }}">{{ $item['product_code'] }} - {{ $item['product_name'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="merchant_detail">
+                        <label class="col-md-3 control-label">
+                            Merchant Detail
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Merchant">
+                                @if (!empty($merchants))
+                                    @foreach ($merchants as $item)
+                                    <option value="{{ $item['id_merchant'] }}">{{ $item['merchant_pic_name'] }}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+					</div>
+					<div class="form-group clearfix" data-visible="doctor_detail">
+                        <label class="col-md-3 control-label">
+                            Doctor Detail
+                        </label>
+                        <div class="col-md-5">
+                        	<select class="form-control select2" name="id_reference" data-placeholder="Select Doctor">
+                                @if (!empty($doctors))
+                                    @foreach ($doctors as $item)
+                                    <option value="{{ $item['id_doctor'] }}">{{ $item['doctor_name'] }}</option>
                                     @endforeach
                                 @endif
                             </select>
