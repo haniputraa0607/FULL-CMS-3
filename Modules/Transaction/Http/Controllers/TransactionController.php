@@ -169,14 +169,14 @@ class TransactionController extends Controller
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'transaction-point-achievement';
                 $data['click_inbox'] = [
-                    ['value' => "Home",'title' => 'Home'],
-                    ['value' => "History Order",'title' => 'History Order'],
-                    ['value' => "Point History",'title' => 'Point History']
+                    ['value' => "home",'title' => 'Home'],
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "point_history",'title' => 'Point History']
                 ];
                 $data['click_notification'] = [
-                    ['value' => "Home",'title' => 'Home'],
-                    ['value' => "History Order",'title' => 'History Order'],
-                    ['value' => "Point History",'title' => 'Point History']
+                    ['value' => "home",'title' => 'Home'],
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "point_history",'title' => 'Point History']
                 ];
                 break;
                         
