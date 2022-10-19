@@ -163,6 +163,7 @@
         }else{
             $('#variants').hide();
             $('#data_variant_price').val('');
+            $('#variant_price').empty();
             $("input[name=base_price]").val(0);
             $("input[name=base_price]").prop('disabled', false);
             $('input[name=base_price]').prop('required',true);
@@ -364,8 +365,8 @@
     var j_variant = 0;
     function addWholesalerVariant(id){
         var html = '<div class="row" id="wholesaler_'+id+'_'+j_variant+'" style="margin-bottom: 0.5%">' +
-            '<div class="col-md-4">Minimum<br><input type="text" class="form-control onlynumber" name="wholesaler_variant['+id+']['+j_variant+'][minimum]"></div>'+
-            '<div class="col-md-4">Price<br><input type="text" class="form-control onlynumber" name="wholesaler_variant['+id+']['+j_variant+'][unit_price]"></div>'+
+            '<div class="col-md-4">Minimum<br><input type="text" class="form-control onlynumber" name="wholesaler_variant['+id+']['+j_variant+'][minimum]" required></div>'+
+            '<div class="col-md-4">Price<br><input type="text" class="form-control onlynumber" name="wholesaler_variant['+id+']['+j_variant+'][unit_price]" required></div>'+
             '<div class="col-md-4"><br><a class="btn btn-danger" onclick="deleteWholesalerVariant('+id+','+j_variant+')"><i class="fa fa-trash"></i></a></div>'+
             '</div>';
 

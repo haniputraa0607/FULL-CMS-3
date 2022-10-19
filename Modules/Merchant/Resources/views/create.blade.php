@@ -217,7 +217,7 @@
                             </label>
                         </div>
                         <div class="col-md-4">
-                            <select class="select2 form-control" name="id_brand">
+                            <select class="select2 form-control" name="id_brand" required>
                                 <option></option>
                                 @foreach($brands as $brand)
                                     <option value="{{$brand['id_brand']}}">{{$brand['name_brand']}}</option>
@@ -259,7 +259,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="merchant_email" placeholder="Outlet Email" required>
+                            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" name="merchant_email" placeholder="Outlet Email" required>
                         </div>
                     </div>
 
@@ -403,7 +403,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="merchant_pic_email" required placeholder="PIC Email">
+                            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" name="merchant_pic_email" required placeholder="PIC Email">
                         </div>
                     </div>
                     <div class="form-group">
