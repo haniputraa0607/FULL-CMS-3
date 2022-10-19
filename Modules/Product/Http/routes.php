@@ -19,6 +19,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product'
 	Route::post('import/save', ['middleware' => ['feature_control:56', 'config_control:10'], 'uses' => 'ProductController@importProductSave']);
 	Route::get('ajax', ['middleware' => 'feature_control:48', 'uses' => 'ProductController@listProductAjax']);
 	Route::get('ajax/simple', ['uses' => 'ProductController@listProductAjaxSimple']);
+    Route::post('variant-combination', ['uses' => 'ProductController@variantCombination']);
 	Route::any('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductController@create']);
 	Route::any('update', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@update']);
 	Route::post('update/allow_sync', ['middleware' => 'feature_control:51', 'uses' => 'ProductController@updateAllowSync']);
