@@ -169,14 +169,14 @@ class TransactionController extends Controller
                 $data['menu_active'] = 'transaction';
                 $data['submenu_active'] = 'transaction-point-achievement';
                 $data['click_inbox'] = [
-                    ['value' => "Home",'title' => 'Home'],
-                    ['value' => "History Transaction",'title' => 'History Transaction'],
-                    ['value' => "History Point",'title' => 'History Point']
+                    ['value' => "home",'title' => 'Home'],
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "point_history",'title' => 'Point History']
                 ];
                 $data['click_notification'] = [
-                    ['value' => "Home",'title' => 'Home'],
-                    ['value' => "History Transaction",'title' => 'History Transaction'],
-                    ['value' => "History Point",'title' => 'History Point']
+                    ['value' => "home",'title' => 'Home'],
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "point_history",'title' => 'Point History']
                 ];
                 break;
                         
@@ -281,12 +281,52 @@ class TransactionController extends Controller
                     ['value' => 'History Transaction','title' => 'History Transaction']
                 ];
                 break;
-            default:
+            case 'payment-success':
                 $data['click_inbox'] = [
-                    ['value' => "History Transaction",'title' => 'History Transaction']
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "history_order_detail",'title' => 'History Order Detail']
                 ];
                 $data['click_notification'] = [
-                    ['value' => 'History Transaction','title' => 'History Transaction']
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "history_order_detail",'title' => 'History Order Detail']
+                ];
+                break;
+            case 'transaction-accepted':
+                $data['click_inbox'] = [
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "history_order_detail",'title' => 'History Order Detail']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "history_order_detail",'title' => 'History Order Detail']
+                ];
+                break;
+            case 'transaction-reject':
+                $data['click_inbox'] = [
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "history_order_detail",'title' => 'History Order Detail']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "history_order",'title' => 'History Order'],
+                    ['value' => "history_order_detail",'title' => 'History Order Detail']
+                ];
+                break;
+            case 'merchant-transaction-new':
+                $data['click_inbox'] = [
+                    ['value' => "my_store",'title' => 'My Store'],
+                    ['value' => "store_transaction_new",'title' => 'Store Transaction New']
+                ];
+                $data['click_notification'] = [
+                    ['value' => "my_store",'title' => 'My Store'],
+                    ['value' => "store_transaction_new",'title' => 'Store Transaction New']
+                ];
+                break;
+            default:
+                $data['click_inbox'] = [
+                    ['value' => "history_order",'title' => 'History Order']
+                ];
+                $data['click_notification'] = [
+                    ['value' => 'history_order','title' => 'History Order']
                 ];
                 break;
         }
