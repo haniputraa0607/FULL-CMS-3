@@ -82,13 +82,14 @@
                 }
             });
         });
-
-        $(".file").change(function(e) {
+        
+        function checkImage(){
             var type      = $(this).data('jenis');
             var widthImg  = 0;
             var heightImg = 0;
             var _URL = window.URL || window.webkitURL;
             var image, file;
+            var this2 = this;
 
             if ((file = this.files[0])) {
                 image = new Image();
@@ -97,17 +98,17 @@
                     if (type == "landscape") {
                         if ($(".file").val().split('.').pop().toLowerCase() != 'png') {
                             toastr.warning("Please check type of your photo.");
-                            $("#removeLogo").trigger( "click" );
+                            $(this2).parent().parent().find('.removeLogo').trigger( "click" );
                         }
                         if (this.width != 1080 || this.height != 1920) {
                             toastr.warning("Please check dimension of your photo.");
-                            $("#removeLogo").trigger( "click" );
+                            $(this2).parent().parent().find('.removeLogo').trigger( "click" );
                         }
                     }
                 };
                 image.src = _URL.createObjectURL(file);
             }
-        });
+        };
     </script>
 @endsection
 
@@ -220,7 +221,7 @@
                         </label>
                         <div class="col-md-9">
                             <div class="col-md-12">
-                                <div class="mt-repeater" data-limit="8">
+                                <div class="mt-repeater" data-limit="8" id="parent-list">
                                     <div data-repeater-list="value_text" id="sortable">
                                         @if (isset($value_text) && $value_text != null)
                                         @foreach ($value_text as $item)
@@ -256,9 +257,9 @@
                                                                 <span class="btn default btn-file">
                                                                 <span class="fileinput-new"> Select image </span>
                                                                 <span class="fileinput-exists"> Change </span>
-                                                                <input type="text" accept="image/*" value="{{'value='.$item}}" class="file form-control demo featureImageForm" name="value_text" data-jenis="landscape">
+                                                                <input type="text" accept="image/*" value="{{'value='.$item}}" class="file form-control demo featureImageForm" name="value_text" data-jenis="landscape" onchange="checkImage.bind(this)()">
                                                                 </span>
-                                                                <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                <a href="javascript:;" class="btn red fileinput-exists removeLogo" data-dismiss="fileinput"> Remove </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -299,9 +300,9 @@
                                                                 <span class="btn default btn-file">
                                                                 <span class="fileinput-new"> Select image </span>
                                                                 <span class="fileinput-exists"> Change </span>
-                                                                <input type="file" accept="image/*" class="file form-control demo featureImageForm" name="value_text" data-jenis="landscape">
+                                                                <input type="file" accept="image/*" class="file form-control demo featureImageForm" name="value_text" data-jenis="landscape" onchange="checkImage.bind(this)()">
                                                                 </span>
-                                                                <a href="javascript:;" id="removeLogo" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                <a href="javascript:;" class="btn red fileinput-exists removeLogo" data-dismiss="fileinput"> Remove </a>
                                                             </div>
                                                         </div>
                                                     </div>
