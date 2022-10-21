@@ -815,8 +815,8 @@ class ProductController extends Controller
             $searchKeyColor = array_search('Color', array_column($variants['variants']??[], 'variant_name'));
             $searchKeySize = array_search('Size', array_column($variants['variants']??[], 'variant_name'));
 
-            $data['variant_color'] = $variants['variants'][$searchKeyColor]??[];
-            $data['variant_size'] = $variants['variants'][$searchKeySize]??[];
+            $data['variant_color'] = ($searchKeyColor !== false ? $variants['variants'][$searchKeyColor] : []);
+            $data['variant_size'] = ($searchKeySize !== false ? $variants['variants'][$searchKeySize] : []);
             $data['array_color'] = $data['variant_color']['variant_child']??[];
             $data['array_size'] = $data['variant_size']['variant_child']??[];
             $data['variant_price'] = $variants['variants_price']??[];
