@@ -203,6 +203,7 @@
 
         $('#variant_name_color').val('');
         $('#modalVariantColor').modal('hide');
+        showVariantPrice();
     }
 
     function deleteVariantColor(name){
@@ -215,6 +216,7 @@
             }
         }
         $('#variant_color_'+id).empty();
+        showVariantPrice();
     }
 
     function addVariantSize(){
@@ -241,11 +243,10 @@
 
         $('#variant_name_size').val('');
         $('#modalVariantSize').modal('hide');
+        showVariantPrice();
     }
 
     function deleteVariantSize(name){
-        $('#data_variant_price').val('');
-        $('#variant_price').empty();
         var id = name.replace(" ", "_");
         for (var i=0;i<array_size.length;i++){
             if(name.toLowerCase() == array_size[i].toLowerCase()){
@@ -253,12 +254,11 @@
             }
         }
         $('#variant_size_'+id).empty();
+        showVariantPrice();
     }
 
-    var array_variant_price = [];
     function showVariantPrice(){
-        array_variant_price = [];
-        $('#data_variant_price').val('');
+        $('#variant_price').empty();
         $.ajax({
             type : "POST",
             url : "{{ url('product/variant-combination') }}",
@@ -270,132 +270,97 @@
             success : function(result) {
                 if (result.status == "success") {
                     var data_price = result.result.variants_price;
-                    array_variant_price = data_price;
 
                     var html = '';
                     for (var i =0;i<data_price.length;i++){
-                        var price = '';
-                        if($('#price_var_'+i).val()){
-                            price = $('#price_var_'+i).val();
-                        }
-                        var stock = '';
-                        if($('#stock_var_'+i).val()){
-                            stock = $('#stock_var_'+i).val();
-                        }
-
                         var visible = '';
                         var hidden = '';
-                        if($('#visibility_var_'+i).val()){
-                            if($('#visibility_var_'+i).val() == 'Visible'){
-                                visible = 'selected';
-                            }else if($('#visibility_var_'+i).val() == 'Hidden'){
-                                hidden = 'selected';
-                            }
-                        }else{
+                        if(data_price[i].visibility == 1){
                             visible = 'selected';
+                            hidden = '';
+                        }else{
+                            visible = '';
+                            hidden = 'selected';
                         }
 
-                        html += '<br><h3 style="text-align: center">'+data_price[i].name+'</h3><hr style="border-top: 2px dashed black;"><br>';
-                        html += '<div class="row" style="margin-bottom: 1%">' +
-                            '<div class="col-md-2">Price</div>'+
-                            '<div class="col-md-4"><input type="text" class="form-control price" id="price_var_'+i+'" value="'+price+'" placeholder="Price"></div>'+
-                            '</div>';
-                        html += '<div class="row" style="margin-bottom: 1%">' +
-                            '<div class="col-md-2">Stock</div>'+
-                            '<div class="col-md-4"><input type="text" class="form-control onlynumber" value="'+stock+'" id="stock_var_'+i+'" placeholder="Stock"></div>'+
-                            '</div>';
-                        html += '<div class="row" style="margin-bottom: 1%">' +
-                            '<div class="col-md-2">Visibility</div>'+
-                            '<div class="col-md-4"><select class="form-control select2-multiple" id="visibility_var_'+i+'" data-placeholder="Select">' +
-                            '<option value="Visible" '+visible+'>Visible</option>'+
-                            '<option value="Hidden" '+hidden+'>Hidden</option>'+
-                            '</select>'+
-                            '</div>'+
-                            '</div>';
-                    }
+                        var wholesale = '';
+                        var data_whole = data_price[i].wholesaler_price;
+                        for (var j =0;j<data_whole.length;j++){
+                            wholesale +='<div class="row" style="margin-bottom: 2%" id="variant_wholesaler_'+i+'_'+j+'">';
+                            wholesale +='<div class="col-md-5">';
+                            wholesale +='<div class="input-group">';
+                            wholesale +='<span class="input-group-addon">';
+                            wholesale +='min';
+                            wholesale +='</span>';
+                            wholesale +='<input class="form-control price" required name="variant_price['+i+'][wholesaler_price]['+j+'][minimum]" value="'+data_whole[j].minimum+'">';
+                            wholesale +='</div>';
+                            wholesale +='</div>';
+                            wholesale +='<div class="col-md-5">';
+                            wholesale +='<div class="input-group">';
+                            wholesale +='<input class="form-control price" required name="variant_price['+i+'][wholesaler_price]['+j+'][unit_price]" value="'+data_whole[j].unit_price+'">';
+                            wholesale +='<span class="input-group-addon">';
+                            wholesale +='/pcs';
+                            wholesale +='</span>';
+                            wholesale +='</div>';
+                            wholesale +='</div>';
+                            wholesale +='<div class="col-md-2">';
+                            wholesale +='<a class="btn red" style="margin-bottom: 2%" onclick="deleteVariantWholesaler('+i+'_'+j+')"><i class="fa fa-trash"></i></a>';
+                            wholesale +='</div>';
+                            wholesale +='</div>';
+                        }
 
-                    $('#modal_content_variant_price').empty();
-                    $('#modal_content_variant_price').append(html);
-                    $('#modalVariantPrice').modal('show');
+                        html += '<hr style="border-top: 1px dashed black;">';
+                        html += '<div class="form-group">';
+                        html += '<label for="multiple" class="control-label col-md-3">Name';
+                        html += '</label>';
+                        html += '<div class="col-md-6">';
+                        html += '<input type="text" class="form-control" name="variant_price['+i+'][name]" value="'+data_price[i].name+'" readonly>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div class="form-group">';
+                        html += '<label for="multiple" class="control-label col-md-3">Price';
+                        html += '</label>';
+                        html += '<div class="col-md-6">';
+                        html += '<input type="text" class="form-control price" required name="variant_price['+i+'][price]" id="price_var_'+i+'" value="'+data_price[i].price+'" placeholder="Price">';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div class="form-group">';
+                        html += '<label for="multiple" class="control-label col-md-3">Stock';
+                        html += '</label>';
+                        html += '<div class="col-md-6">';
+                        html += '<input type="text" class="form-control onlynumber" required name="variant_price['+i+'][stock]" value="'+data_price[i].stock+'" id="stock_var_'+i+'" placeholder="Stock">';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<input type="hidden" name="variant_price['+i+'][data]" value="'+data_price[i].data+'">';
+                        html += '<div class="form-group">';
+                        html += '<label for="multiple" class="control-label col-md-3">Visibility';
+                        html += '</label>';
+                        html += '<div class="col-md-6">';
+                        html += '<select name="variant_price['+i+'][visibility]" class="form-control select2-multiple" id="visibility_var_'+i+'" data-placeholder="Select">';
+                        html += '<option value="Visible" '+visible+'>Visible</option>';
+                        html += '<option value="Hidden" '+hidden+'>Hidden</option>';
+                        html += '</select>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div class="form-group">';
+                        html += '<label for="multiple" class="control-label col-md-3">Wholesaler</label>';
+                        html += '<div class="col-md-8" id="div_variant_wholesaler_'+i+'">';
+                        html += '<a class="btn yellow btn-sm" style="margin-bottom: 2%" onclick="addVariantWholesaler(`'+i+'_'+data_whole.length+'`)">Add Wholesale Price</a>';
+                        html += wholesale;
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<input type="hidden" value="'+data_price[i].id_product_variant_group+'" name="variant_price['+i+'][id_product_variant_group]">';
+                    }
+                    $('#variant_price').append(html);
                 }
                 else if(result.status == "fail"){
-                    $('#modal_content_variant_price').empty();
                     swal("Error!", result.messages[0], "error")
                 }
                 else {
-                    $('#modal_content_variant_price').empty();
                     swal("Error!", "Something went wrong. Failed to delete candidate.", "error")
                 }
             }
         });
-    }
-
-    function variantUpdatePrice(){
-        $('#data_variant_price').val('');
-        $('#variant_price').empty();
-
-        var html = '';
-        for (var i=0;i<array_variant_price.length;i++){
-            array_variant_price[i].price = $('#price_var_'+i).val();
-            array_variant_price[i].stock = $('#stock_var_'+i).val();
-            array_variant_price[i].visibility = $('#visibility_var_'+i).val();
-            html += '<br><h4 style="text-align: center">'+array_variant_price[i].name+'</h4><hr style="border-top: 2px dashed black;"><br>';
-            html += '<div class="row" style="margin-bottom: 1%">' +
-                '<div class="col-md-8">Price : '+$('#price_var_'+i).val()+'</div>'+
-                '</div>';
-            html += '<div class="row" style="margin-bottom: 1%">' +
-                '<div class="col-md-8">Stock : '+$('#stock_var_'+i).val()+'</div>'+
-                '</div>';
-            html += '<div class="row" style="margin-bottom: 1%">' +
-                '<div class="col-md-8">Visibility : '+$('#visibility_var_'+i).val()+'</div>'+
-                '</div>';
-            html += '<div class="row" style="margin-bottom: 1%">' +
-                '<div class="col-md-8"><a onclick="addWholesalerVariant('+i+')" class="btn btn-sm yellow" style="margin-bottom: 2%">Add Wholesale Price</a></div>'+
-                '</div>';
-            html += '<div class="row" style="margin-bottom: 1%">' +
-                '<div class="col-md-8" id="wholesaler_variant_'+i+'"></div>'+
-                '</div>';
-        }
-
-        $('#variant_price').append(html);
-        $('#data_variant_price').val(JSON.stringify( array_variant_price ) );
-        $('#modalVariantPrice').modal('hide');
-    }
-
-    var j_variant = 0;
-    function addWholesalerVariant(id){
-        var html = '<div class="row" id="wholesaler_'+id+'_'+j_variant+'" style="margin-bottom: 0.5%">' +
-            '<div class="col-md-4">Minimum<br><input type="text" class="form-control onlynumber" name="wholesaler_variant['+id+']['+j_variant+'][minimum]" required></div>'+
-            '<div class="col-md-4">Price<br><input type="text" class="form-control onlynumber" name="wholesaler_variant['+id+']['+j_variant+'][unit_price]" required></div>'+
-            '<div class="col-md-4"><br><a class="btn btn-danger" onclick="deleteWholesalerVariant('+id+','+j_variant+')"><i class="fa fa-trash"></i></a></div>'+
-            '</div>';
-
-        $('#wholesaler_variant_'+id).append(html);
-
-        $('.onlynumber').keypress(function (e) {
-            var regex = new RegExp("^[0-9]");
-            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-
-            var check_browser = navigator.userAgent.search("Firefox");
-
-            if(check_browser == -1){
-                if (regex.test(str) || e.which == 8) {
-                    return true;
-                }
-            }else{
-                if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
-                    return true;
-                }
-            }
-
-            e.preventDefault();
-            return false;
-        });
-        j_variant++;
-    }
-
-    function deleteWholesalerVariant(id, id_2){
-        $('#wholesaler_'+id+'_'+id_2).remove();
     }
 
     var j = 0;
@@ -432,6 +397,74 @@
 
     function deleteWholesaler(id){
         $('#wholesaler_'+id).remove();
+    }
+
+    var variantWholesalerIndex = 0;
+    function addVariantWholesaler(id){
+        var split = id.split('_');
+        var index = split[1] + variantWholesalerIndex;
+        var html = '<div class="row" style="margin-bottom: 2%" id="variant_wholesaler_'+split[0]+'_'+index+'">';
+        html += '<div class="col-md-5">';
+        html += '<div class="input-group">';
+        html += '<span class="input-group-addon">min</span>';
+        html += '<input class="form-control price" required name="variant_price['+split[0]+'][wholesaler_price]['+index+'][minimum]">';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="col-md-5">';
+        html += '<div class="input-group">';
+        html += '<input class="form-control price" required name="variant_price['+split[0]+'][wholesaler_price]['+index+'][unit_price]">';
+        html += '<span class="input-group-addon">/pcs</span>';
+        html += '</div>';
+        html += '</div>';
+        html += '<div class="col-md-2">';
+        html += '<a class="btn red" onclick="deleteVariantWholesaler(\''+ split[0]+'_'+index + '\')"><i class="fa fa-trash"></i></a>';
+        html += '</div>';
+        html += '</div>';
+
+        $('#div_variant_wholesaler_'+split[0]).append(html);
+        variantWholesalerIndex++;
+
+        $('.price').each(function() {
+            var input = $(this).val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $(this).val( function() {
+                return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            });
+        });
+
+        $( ".price" ).on( "keyup", numberFormat);
+        function numberFormat(event){
+            var selection = window.getSelection().toString();
+            if ( selection !== '' ) {
+                return;
+            }
+
+            if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 ) {
+                return;
+            }
+            var $this = $( this );
+            var input = $this.val();
+            var input = input.replace(/[\D\s\._\-]+/g, "");
+            input = input ? parseInt( input, 10 ) : 0;
+
+            $this.val( function() {
+                return ( input === 0 ) ? "" : input.toLocaleString( "id" );
+            });
+        }
+
+        $( ".price" ).on( "blur", checkFormat);
+        function checkFormat(event){
+            var data = $( this ).val().replace(/[($)\s\._\-]+/g, '');
+            if(!$.isNumeric(data)){
+                $( this ).val("");
+            }
+        }
+    }
+
+    function deleteVariantWholesaler(id){
+        $('#variant_wholesaler_'+id).empty();
     }
 
     </script>
@@ -737,18 +770,9 @@
                                 <a data-toggle="modal" href="#modalVariantSize" class="btn btn-sm green" style="margin-bottom: 1%">Add <i class="fa fa-plus-circle"></i></a>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="multiple" class="control-label col-md-3">Variant Price
-                            </label>
-                            <div class="col-md-8">
-                                <a onclick="showVariantPrice()" class="btn btn-sm green" style="margin-bottom: 2%">Update Price & Stock</a>
-                                <div id="variant_price">
-                                </div>
-                            </div>
-                            <input type="hidden" id="data_variant_price" name="variants">
-                        </div>
                     </div>
+
+                    <div id="variant_price"></div>
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}
@@ -797,19 +821,6 @@
                 </div>
                 <div class="modal-footer" style="text-align: center">
                     <a class="btn green" onclick="addVariantSize()">Add</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalVariantPrice" tabindex="-1" role="basic" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body" id="modal_content_variant_price">
-
-                </div>
-                <div class="modal-footer" style="text-align: center">
-                    <a class="btn green" onclick="variantUpdatePrice()">Update</a>
                 </div>
             </div>
         </div>
