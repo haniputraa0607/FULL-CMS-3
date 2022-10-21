@@ -569,6 +569,7 @@ class ProductController extends Controller
             }
 
             $post['admin'] = 1;
+            $post['base_price'] = str_replace('.', '', $post['base_price']);
             $save = MyHelper::post('merchant/be/product/create', $post);
 
             if (isset($save['status']) && $save['status'] == 'success') {

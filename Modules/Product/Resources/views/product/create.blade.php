@@ -603,11 +603,12 @@
 
                     <div class="form-group">
                         <label for="multiple" class="control-label col-md-3">Description
+                            <span class="required" aria-required="true"> * </span>
                             <i class="fa fa-question-circle tooltips" data-original-title="Deskripsi Produk" data-container="body"></i>
                         </label>
                         <div class="col-md-6">
                             <div class="input-icon right">
-                                <textarea name="product_description" id="pro_text" class="form-control" style="height: 100px"></textarea>
+                                <textarea name="product_description" id="pro_text" class="form-control" style="height: 100px" required></textarea>
                             </div>
                         </div>
                     </div>
