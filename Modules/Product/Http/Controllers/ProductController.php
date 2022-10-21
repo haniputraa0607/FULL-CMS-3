@@ -545,13 +545,22 @@ class ProductController extends Controller
                     ];
                 }
 
-                $variantPrice = (array)json_decode($post['variants']);
+                $variantPrice = $post['variant_price'];
                 $resVariantPrice = [];
                 $allPrice = [];
-                foreach ($variantPrice as $key=>$val){
-                    $val = (array)$val;
+                foreach ($variantPrice as $val){
+                    $val['price'] = str_replace('.', '', $val['price']);
+
+                    $replaceDt = str_replace('[', '', $val['data']);
+                    $replaceDt = str_replace(']', '', $replaceDt);
+                    $val['data'] = explode(',', $replaceDt);
+
                     $allPrice[] = $val['price'];
-                    $val['wholesaler_price'] = $post['wholesaler_variant'][$key]??[];
+                    if(!empty($val['wholesaler_price'])){
+                        foreach ($val['wholesaler_price'] as $index=>$whole){
+                            $val['wholesaler_price'][$index]['unit_price'] = str_replace('.', '', $whole['unit_price']);
+                        }
+                    }
                     $resVariantPrice[] = $val;
                 }
 
@@ -572,18 +581,7 @@ class ProductController extends Controller
             $post['base_price'] = str_replace('.', '', $post['base_price']);
             $save = MyHelper::post('merchant/be/product/create', $post);
 
-            if (isset($save['status']) && $save['status'] == 'success') {
-                if (isset($post['id_tag']))  {
-                    $saveRelation = app($this->tag)->createProductTag($save['result']['id_product'], $post['id_tag']);
-                }
-            }
-
-            if (isset($next)) {
-                return parent::redirect($save, 'Product has been created.', 'product/detail/'.$post['product_code'].'#photo');
-            }
-            else {
-                return parent::redirect($save, 'Product has been created.');
-            }
+            return parent::redirect($save, 'Product has been created.');
         }
     }
 
@@ -815,8 +813,8 @@ class ProductController extends Controller
             $searchKeyColor = array_search('Color', array_column($variants['variants']??[], 'variant_name'));
             $searchKeySize = array_search('Size', array_column($variants['variants']??[], 'variant_name'));
 
-            $data['variant_color'] = $variants['variants'][$searchKeyColor]??[];
-            $data['variant_size'] = $variants['variants'][$searchKeySize]??[];
+            $data['variant_color'] = ($searchKeyColor !== false ? $variants['variants'][$searchKeyColor] : []);
+            $data['variant_size'] = ($searchKeySize !== false ? $variants['variants'][$searchKeySize] : []);
             $data['array_color'] = $data['variant_color']['variant_child']??[];
             $data['array_size'] = $data['variant_size']['variant_child']??[];
             $data['variant_price'] = $variants['variants_price']??[];
