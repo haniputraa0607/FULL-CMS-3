@@ -2721,9 +2721,40 @@ return [
 					'icon' => 'icon-question'
 				],
 				[
+					'label' => 'FAQ Doctor Apps',
+					'required_features' => [],
+					'type' => 'tree',
+					'children' => [
+						[
+							'label' => 'New FAQ',
+							'required_features' => [89],
+							'url' => 'setting/faq-doctor/create'
+						],
+						[
+							'label' => 'List FAQ',
+							'required_features' => [88],
+							'active' => '\View::shared("submenu_active") == "faq-list"',
+							'url' => 'setting/faq-doctor'
+						],
+						[
+							'label' => 'Sorting FAQ List',
+							'required_features' => [88],
+							'active' => '\View::shared("submenu_active") == "faq-sort"',
+							'url' => 'setting/faq-doctor/sort'
+						],
+					],
+					'icon' => 'icon-question'
+				],
+				[
 					'label' => 'Privacy Policy',
 					'required_features' => [350],
 					'url' => 'setting/privacypolicy',
+					'icon' => 'fa fa-lock'
+				],
+				[
+					'label' => 'Privacy Policy Doctor Apps',
+					'required_features' => [350],
+					'url' => 'setting/privacypolicydoctor',
 					'icon' => 'fa fa-lock'
 				],
 				[

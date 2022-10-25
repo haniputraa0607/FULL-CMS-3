@@ -176,6 +176,12 @@ class SettingController extends Controller
             $subTitle = 'Kebijakan Privasi';
             $label = 'Kebijakan Privasi';
             $span = '';
+        } elseif ($key == 'privacypolicydoctor') {
+            $sub = 'about-privacy-policy-doctor';
+            $active = 'privacy-policy-doctor';
+            $subTitle = 'Kebijakan Privasi Doctor Apps';
+            $label = 'Kebijakan Privasi Doctor Apps';
+            $span = '';
         }
 
         $data = [
@@ -460,6 +466,141 @@ class SettingController extends Controller
         $id = $exploded[0];
         $created_at = $exploded[1];
         $delete = MyHelper::post('setting/faq/delete', ['id_faq' => $id,'created_at',$created_at]);
+
+        return parent::redirect($delete, 'FAQ has been deleted.');
+    }
+
+    public function faqDoctorList() {
+        $data = [];
+        $data = [
+            'title'   => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-list'
+        ];
+
+        $faqList = MyHelper::get('setting/be/faq-doctor');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = array_map(function($var){
+                $var['id_faq_doctor'] = MyHelper::createSlug($var['id_faq_doctor'],$var['created_at']);
+                return $var;
+            },$faqList['result']);
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqDoctorList', $data)->withErrors($e);
+            }
+        }
+
+        return view('setting::faqDoctorList', $data);
+    }
+
+    public function faqDoctorCreate() {
+        $data = [];
+        $data = [
+            'title'   => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-new'
+        ];
+
+        return view('setting::faqDoctorCreate', $data);
+    }
+
+    public function faqDoctorStore(Request $request) {
+        $data = $request->except('_token');
+
+        $insert = MyHelper::post('setting/faq-doctor/create', $data);
+
+        return parent::redirect($insert, 'FAQ has been created.');
+    }
+
+    /*======== This function is used to display the FAQ list that will be sorted ========*/
+    public function faqDoctorSort() {
+        $data = [];
+        $data = [
+            'title'   => 'Sorting FAQ List',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-sort'
+        ];
+
+        $faqList = MyHelper::get('setting/be/faq-doctor');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = $faqList['result'];
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqDoctorList', $data)->withErrors($e);
+            }
+        }
+        return view('setting::faqDoctorSort', $data);
+    }
+
+    public function faqDoctorSortUpdate(Request $request) {
+        $post = $request->except('_token');
+        $status = 0;
+        $update = MyHelper::post('setting/faq-doctor/sort/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            $status = 1;
+        }
+
+        return response()->json(['status' => $status]);
+    }
+
+    public function faqDoctorEdit($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
+        $data = [];
+        $data = [
+            'title'   => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-list'
+        ];
+
+        $edit = MyHelper::post('setting/faq-doctor/edit', ['id_faq_doctor' => $id,'created_at'=>$created_at]);
+
+        if (isset($edit['status']) && $edit['status'] == 'success') {
+            $data['faq'] = $edit['result'];
+            if(isset($data['faq']['id_faq_doctor'])){
+                $data['faq']['id_faq_doctor'] = $slug;
+            }
+            return view('setting::faqDoctorEdit', $data);
+        }
+        else {
+            $e = ['e' => 'Something went wrong. Please try again.'];
+
+            return back()->witherrors($e);
+        }
+    }
+
+    public function faqDoctorUpdate(Request $request, $slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
+        $post =[
+            'id_faq_doctor'    => $id,
+            'question'  => $request['question'],
+            'answer'    => $request['answer'],
+            'created_at' => $created_at
+        ];
+
+        $update = MyHelper::post('setting/faq-doctor/update', $post);
+
+        return parent::redirect($update, 'FAQ has been updated.');
+    }
+
+    public function faqDoctorDelete($slug) {
+        $exploded = MyHelper::explodeSlug($slug);
+        $id = $exploded[0];
+        $created_at = $exploded[1];
+        $delete = MyHelper::post('setting/faq-doctor/delete', ['id_faq_doctor' => $id,'created_at',$created_at]);
 
         return parent::redirect($delete, 'FAQ has been deleted.');
     }
