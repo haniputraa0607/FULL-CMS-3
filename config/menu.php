@@ -2733,13 +2733,13 @@ return [
 						[
 							'label' => 'List FAQ',
 							'required_features' => [88],
-							'active' => '\View::shared("submenu_active") == "faq-list"',
+							'active' => '\View::shared("submenu_active") == "faq-doctor-list"',
 							'url' => 'setting/faq-doctor'
 						],
 						[
 							'label' => 'Sorting FAQ List',
 							'required_features' => [88],
-							'active' => '\View::shared("submenu_active") == "faq-sort"',
+							'active' => '\View::shared("submenu_active") == "faq-doctor-sort"',
 							'url' => 'setting/faq-doctor/sort'
 						],
 					],

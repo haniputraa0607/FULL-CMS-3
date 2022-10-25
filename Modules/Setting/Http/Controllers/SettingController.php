@@ -475,7 +475,7 @@ class SettingController extends Controller
         $data = [
             'title'   => 'Setting',
             'menu_active'    => 'faq',
-            'submenu_active' => 'faq-list'
+            'submenu_active' => 'faq-doctor-list'
         ];
 
         $faqList = MyHelper::get('setting/be/faq-doctor');
@@ -503,7 +503,7 @@ class SettingController extends Controller
         $data = [
             'title'   => 'Setting',
             'menu_active'    => 'faq',
-            'submenu_active' => 'faq-new'
+            'submenu_active' => 'faq-doctor-new'
         ];
 
         return view('setting::faqDoctorCreate', $data);
@@ -523,7 +523,7 @@ class SettingController extends Controller
         $data = [
             'title'   => 'Sorting FAQ List',
             'menu_active'    => 'faq',
-            'submenu_active' => 'faq-sort'
+            'submenu_active' => 'faq-doctor-sort'
         ];
 
         $faqList = MyHelper::get('setting/be/faq-doctor');
@@ -561,7 +561,7 @@ class SettingController extends Controller
         $data = [
             'title'   => 'Setting',
             'menu_active'    => 'faq',
-            'submenu_active' => 'faq-list'
+            'submenu_active' => 'faq-doctor-list'
         ];
 
         $edit = MyHelper::post('setting/faq-doctor/edit', ['id_faq_doctor' => $id,'created_at'=>$created_at]);
