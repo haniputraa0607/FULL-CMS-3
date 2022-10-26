@@ -178,9 +178,15 @@
                         let tooltipDetailTransaction = tooltipTemplate.replace('%tooltip_text%', 'Halaman detail transaksi');
                         let tooltipDetailRefund = tooltipTemplate.replace('%tooltip_text%', 'Detail dari hasil pengisian form confirm process');
 
+                        var url = '';
+                        if(row.transaction_type == 'Consultation'){
+                            url = `{{url('consultation/be')}}/${row.id_transaction}/detail`;
+                        }else{
+                            url = `{{url('transaction/detail')}}/${row.id_transaction}`;
+                        }
                         const buttons = [
                             `<button type="button" class="btn ${row.need_manual_void == 1 ? 'yellow confirm-btn' : 'green detail-btn'} btn-sm btn-outline" data-data='${JSON.stringify(row)}'>${row.need_manual_void == 1 ? 'Confirm Process' : 'Detail Refund'} ${row.need_manual_void == 1 ? tooltipConfirmProcess : tooltipDetailRefund}</button>`,
-                            `<a class="btn blue btn-sm btn-outline" href="{{url('transaction')}}/${row.transaction_from}/detail/${row.id_transaction}">Detail Transaction ${tooltipDetailTransaction}</a>`
+                            `<a class="btn blue btn-sm btn-outline" href="${url}">Detail Transaction ${tooltipDetailTransaction}</a>`
                         ];
 
                         if(row.need_manual_void == '1' && row.trasaction_payment_type.toLowerCase() == 'xendit' && ["OVO","DANA","LINKAJA","SHOPEEPAY","SAKUKU"].includes(row.transaction_payment_xendit.type.toUpperCase())){
