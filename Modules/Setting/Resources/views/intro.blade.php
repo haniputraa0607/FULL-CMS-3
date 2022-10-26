@@ -44,7 +44,7 @@
             $(".file").change(function(e) {
                 var type      = $(this).data('jenis');
                 var widthImg  = 1080;
-                var heightImg = 1920;
+                var heightImg = 1720;
 
                 var _URL = window.URL || window.webkitURL;
                 var image, file;
@@ -61,7 +61,7 @@
 
                             if (type == "square" || type == "icon") {
                                 $('#field_image_square').val("");
-                                $('#image_square').children('img').attr('src', 'https://www.placehold.it/1080x1920/EFEFEF/AAAAAA&amp;text=no+image');
+                                $('#image_square').children('img').attr('src', 'https://www.placehold.it/1080x1720/EFEFEF/AAAAAA&amp;text=no+image');
                             }
                         }
                     };
@@ -71,7 +71,7 @@
 
             $('.mt-repeater-add').on('click', function(event) {
                 if ($(this).parents(".mt-repeater").find("div[data-repeater-item]").length <= $(this).parents(".mt-repeater").attr("data-limit")) {
-                    $('.previewImage').last().attr('src', 'https://www.placehold.it/1080x1920/EFEFEF/AAAAAA&amp;text=no+image');
+                    $('.previewImage').last().attr('src', 'https://www.placehold.it/1080x1720/EFEFEF/AAAAAA&amp;text=no+image');
                     $('.btnImage').last().show();
                     $('.featureImageForm').last().prop('type', 'file');
                     $('.featureImageForm').last().val('');
@@ -100,7 +100,7 @@
                             toastr.warning("Please check type of your photo.");
                             $(this2).parent().parent().find('.removeLogo').trigger( "click" );
                         }
-                        if (this.width != 1080 || this.height != 1920) {
+                        if (this.width != 1080 || this.height != 1720) {
                             toastr.warning("Please check dimension of your photo.");
                             $(this2).parent().parent().find('.removeLogo').trigger( "click" );
                         }
@@ -243,7 +243,7 @@
                                                         Image Tutorial
                                                         <span class="required" aria-required="true"> * </span>
                                                         <br>
-                                                        <span class="required" aria-required="true"> (1080*1920) </span>
+                                                        <span class="required" aria-required="true"> (1080*1720) </span>
                                                         <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran portrait ditampilkan pada halaman awal aplikasi mobile" data-container="body"></i>
                                                         </label>
                                                     </div>
@@ -286,14 +286,14 @@
                                                         Image Tutorial
                                                         <span class="required" aria-required="true"> * </span>
                                                         <br>
-                                                        <span class="required" aria-required="true"> (1080*1920) </span>
+                                                        <span class="required" aria-required="true"> (1080*1720) </span>
                                                         <i class="fa fa-question-circle tooltips" data-original-title="Gambar dengan ukuran portrait ditampilkan pada halaman awal aplikasi mobile" data-container="body"></i>
                                                         </label>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="fileinput fileinput-new" data-provides="fileinput">
                                                             <div class="fileinput-new thumbnail" style="width: 150px; height: 17Z0px;">
-                                                                <img class='previewImage' src="https://www.placehold.it/1080x1920/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                                                <img class='previewImage' src="https://www.placehold.it/1080x1720/EFEFEF/AAAAAA&amp;text=no+image" alt="">
                                                             </div>
                                                             <div class="fileinput-preview fileinput-exists thumbnail" id="image_landscape" style="max-width: 17Z0px; max-height: 100px;"></div>
                                                             <div class='btnImage'>
