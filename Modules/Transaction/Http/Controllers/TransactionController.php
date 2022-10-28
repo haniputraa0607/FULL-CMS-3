@@ -90,11 +90,7 @@ class TransactionController extends Controller
 				];
 
         if($subject == 'transaction-success'){
-            $subject = 'payment-success';
-        }elseif($subject == 'order-accepted'){
-            $subject = 'transaction-accepted';
-        }elseif($subject == 'order-reject'){
-            $subject = 'transaction-reject';
+            $subject = 'transaction-completed';
         }
 
         switch ($subject) {
