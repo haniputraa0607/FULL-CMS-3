@@ -82,7 +82,7 @@ $configs     = session('configs');
         <div class="portlet-title tabbable-line">
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#service_fee" data-toggle="tab" > Service Fee </a>
+                    <a href="#service_fee" data-toggle="tab" > Service Tax & Fee </a>
                 </li>
                 <li>
                     <a href="#mdr_fee" data-toggle="tab"> MDR Fee</a>
@@ -98,6 +98,21 @@ $configs     = session('configs');
                     <form class="form-horizontal" action="{{url('transaction/setting/fee/service')}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-body">
+                            <div class="form-group">
+                                <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                        Tax Fee
+                                        <span class="required" aria-required="true"> * </span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Example format 1-100" data-container="body"></i>
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="number" maxlength="3" min="0" max="100" placeholder="Insert Tax" class="form-control" name="tax" value="{{$tax}}" required>
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="input-icon right">
                                     <label class="col-md-3 control-label">
