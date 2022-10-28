@@ -966,22 +966,10 @@ return [
                             ]
                         ],
                         [
-                            'label' => '[Response] Payment Success',
+                            'label' => '[Response] Payment Status',
                             'required_features' => [93],
-                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-transaction-success"',
-                            'url' => 'transaction/autoresponse/transaction-success'
-                        ],
-                        [
-                            'label' => '[Response] Transaction Accepted',
-                            'required_features' => [93],
-                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-order-accepted"',
-                            'url' => 'transaction/autoresponse/order-accepted'
-                        ],
-                        [
-                            'label' => '[Response] Transaction Reject',
-                            'required_features' => [93],
-                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-order-reject"',
-                            'url' => 'transaction/autoresponse/order-reject'
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-payment-status"',
+                            'url' => 'transaction/autoresponse/payment-status'
                         ],
                         [
                             'label' => '[Response] Merchant Transaction New',
@@ -990,8 +978,44 @@ return [
                             'url' => 'transaction/autoresponse/merchant-transaction-new'
                         ],
                         [
+                            'label' => '[Response] Transaction Accepted',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-transaction-accepted"',
+                            'url' => 'transaction/autoresponse/transaction-accepted'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Reject',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-transaction-reject"',
+                            'url' => 'transaction/autoresponse/transaction-reject'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Delivery Confirm',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-transaction-delivery-confirm"',
+                            'url' => 'transaction/autoresponse/transaction-delivery-confirm'
+                        ],
+                        [
+                            'label' => '[Response] Delivery Status Update',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "delivery-status-update"',
+                            'url' => 'transaction/autoresponse/delivery-status-update'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Delivery Received',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-transaction-delivery-received"',
+                            'url' => 'transaction/autoresponse/transaction-delivery-received'
+                        ],
+                        [
+                            'label' => '[Response] Transaction Completed',
+                            'required_features' => [93],
+                            'active' => '\View::shared("submenu_active") == "transaction-autoresponse-transaction-success"',
+                            'url' => 'transaction/autoresponse/transaction-success'
+                        ],
+                        [
                             'label' => '[Response] Transaction Point Achievement',
-                            'required_features' => [],
+                            'required_features' => [93],
                             'url' => 'transaction/autoresponse/transaction-point-achievement'
                         ]
                     ],
