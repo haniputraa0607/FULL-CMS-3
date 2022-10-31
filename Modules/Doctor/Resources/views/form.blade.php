@@ -535,11 +535,10 @@
 										<input type="password" name="pin" placeholder="Minimum 8 digits karakter (Leave empty to autogenerate)" minlength="8" class="form-control mask_number" autocomplete="new-password" required />
 									</div>
 								</div>
-								@endif
 								<div class="form-group">
 									<div class="input-icon right">
 										<label class="col-md-3 control-label">
-										Sent Password to Doctor?
+										Send Password to Doctor?
 										<span class="required" aria-required="true"> * </span>
 										<i class="fa fa-question-circle tooltips" data-original-title="Pilih apakah akan mengirimkan password ke user (Yes/No)" data-container="body"></i>
 										</label>
@@ -552,6 +551,7 @@
 										</select>
 									</div>
 								</div>
+								@endif
 								<div class="form-group">
 									<div class="input-icon right">
 										<label class="col-md-3 control-label">

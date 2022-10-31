@@ -479,6 +479,7 @@
 
 						<select class="form-control" name="membership_type" onChange="typeChange(this.value)">
 							<option value="value" @if(isset($value) && $value == 'value') selected @endif>By Total Transaction Value </option>
+							<option value="count"@if(isset($value) && $value == 'count') selected @endif>By Total Visit </option>
 							<option value="balance"@if(isset($value) && $value == 'balance') selected @endif>By {{env('POINT_NAME', 'Points')}} Received </option>
 						</select>
 					</div>
