@@ -722,7 +722,7 @@
 									<input type="hidden" name="is_active" value="0"/>
 									<label class="col-md-3 control-label"> Status Account <span class="text-danger">*</span></label>
 									<div class="col-md-3">
-										<input data-switch="true" type="checkbox" name="is_active" data-on-text="Active" data-off-text="Deactive" checked/>
+										<input data-switch="true" type="checkbox" name="is_active" data-on-text="Active" data-off-text="Deactive" {{isset($doctor) && $doctor['is_active'] ? 'checked' : ''}}/>
 									</div>
 								</div>
 								<div class="form-group">
