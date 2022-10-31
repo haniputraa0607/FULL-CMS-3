@@ -12,18 +12,51 @@ use Guzzle\Http\Message\Response;
 use Guzzle\Http\Exception\ServerErrorResponseException;
 
 use Illuminate\Support\Facades\URL;
+use Image;
+use File;
 
 class MyHelper
 {
 
-  public static function encodeImage($image){
+  public static function encodeImage($image, $ext = null){
 	$size   = $image->getSize();
     $encoded;
-    if( $size < 90000000 ) {
+
+    $convert = $size/1000;
+    if( $convert < 1000 ) {
       $encoded = base64_encode(fread(fopen($image, "r"), filesize($image)));
     }
     else {
-      return false;
+      $img = Image::make($image);
+      $imgwidth = $img->width();
+      $imgheight = $img->height();
+
+      $path = 'images/'.time().'.'.$ext;
+
+      if($imgwidth > $imgheight && $imgwidth > 1000){
+        $img->resize(1000, null, function ($constraint) {
+          $constraint->aspectRatio();
+          $constraint->upsize();
+        });
+      } elseif($imgheight > $imgwidth && $imgheight > 1000) {
+        $img->resize(null, 1000, function ($constraint) {
+          $constraint->aspectRatio();
+          $constraint->upsize();
+        });
+      } elseif ($imgheight == $imgwidth){
+        $img->resize(1000, 1000, function ($constraint) {
+          $constraint->aspectRatio();
+          $constraint->upsize();
+        });
+      }
+
+      $img->save($path);
+
+      $image = File::get(public_path($path));
+      $encoded = base64_encode($image);
+      if (file_exists($path)) {
+          unlink($path);
+      }
     }
 
     return $encoded;

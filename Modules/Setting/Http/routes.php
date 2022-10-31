@@ -13,7 +13,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('faq/update/{slug}', 'SettingController@faqUpdate');
     Route::any('faq/delete/{slug}', 'SettingController@faqDelete');
     Route::get('faq/sort', 'SettingController@faqSort');
-    Route::post('faq/sort/update', 'SettingController@faqDoctorSortUpdate');
+    Route::post('faq/sort/update', 'SettingController@faqSortUpdate');
     Route::get('faq-doctor', 'SettingController@faqDoctorList');
     Route::get('faq-doctor/create', 'SettingController@faqDoctorCreate');
     Route::post('faq-doctor/save', 'SettingController@faqDoctorStore');

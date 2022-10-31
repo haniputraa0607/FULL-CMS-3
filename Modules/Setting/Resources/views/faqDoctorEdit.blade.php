@@ -78,7 +78,7 @@
                                 <div class="col-md-offset-3 col-md-9">
                                     <button type="submit" class="btn green">
                                         <i class="fa fa-check"></i> Submit</button>
-                                    <button type="button" class="btn default">Cancel</button>
+                                    <a type="button" class="btn default" href="{{url('setting/faq-doctor')}}">Cancel</a>
                                 </div>
                             </div>
                         </div>
