@@ -40,8 +40,8 @@ $configs     		= session('configs');
 						$("#removeImage").trigger( "click" );
 					}
 
-					if (size > 10) {
-						toastr.warning("The maximum size is 10 KB");
+					if (size > 1000) {
+						toastr.warning("The maximum size is 1 MB");
 						$("#removeImage").trigger( "click" );
 					}
 				};
@@ -111,7 +111,7 @@ $configs     		= session('configs');
 						Image
 						<span class="required" aria-required="true"> * </span>
 						<i class="fa fa-question-circle tooltips" data-original-title="image to display in apps when maintenance mode active" data-container="body"></i>
-						<span class="required" aria-required="true"> (500*500) <br> PNG Only <br> max size 10 KB</span>
+						<span class="required" aria-required="true"> (500*500) <br> PNG Only <br> max size 1 MB</span>
 					</label>
 				</div>
 				<div class="col-md-9">

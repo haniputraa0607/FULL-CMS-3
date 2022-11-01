@@ -510,7 +510,7 @@ class ProductController extends Controller
         }
         else{
             if (isset($post['photo'])) {
-                $post['image']      = MyHelper::encodeImage($post['photo']);
+                $post['image']      = MyHelper::encodeImage($post['photo'],  $request->file('photo')->extension());
             }
 
             if(!empty($post['product_variant_status'])){
@@ -826,7 +826,7 @@ class ProductController extends Controller
             }
 
             if (isset($post['photo'])) {
-                $post['photo'] = MyHelper::encodeImage($post['photo']);
+                $post['photo'] = MyHelper::encodeImage($post['photo'], $request->file('photo')->extension());
             }
 
             $save = MyHelper::post('product/update', $post);
