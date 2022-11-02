@@ -283,9 +283,14 @@ class TransactionSettingController extends Controller
             return view('transaction::setting.all_fee', $data);
         }else{
             if($type == 'service'){
+                $service = $post['service']/100;
+                $service = ($service == 0 ? '0.0' : $service);
+                $tax = $post['tax']/100;
+                $tax = ($tax == 0 ? '0.0' : $tax);
+
                 $sendData = [
-                    'service' => ['value', ($post['service']/100)],
-                    'tax' => ['value', ($post['tax']/100)]
+                    'service' => ['value', $service],
+                    'tax' => ['value', $tax]
                 ];
                 $update = MyHelper::post('setting/update2', ['update' => $sendData]);
             }elseif ($type == 'mdr'){
