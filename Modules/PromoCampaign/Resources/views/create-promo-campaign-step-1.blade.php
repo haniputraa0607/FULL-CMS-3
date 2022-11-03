@@ -157,7 +157,7 @@
 		$('#singleCode, #totalCoupon').hide()
 		$('#multipleCode').hide()
 		$('#exampleCode').hide()
-		var maxChar = 15
+		var maxChar = 30
 		$('input[name=code_type]').change(function() {
 			code = $('input[name=code_type]:checked').val()
 			$('#exampleCode').replaceWith("<span id='exampleCode'></span>")
@@ -791,11 +791,11 @@
 						</div>
 						<div id="singleCode">
 							<div class="form-group">
-								<label class="control-label">Promo Code (Max 15 characters)</label>
+								<label class="control-label">Promo Code (Max 30 characters)</label>
 								<span class="required" aria-required="true"> * </span>
 								<i class="fa fa-question-circle tooltips" data-original-title="Kode promo yang dibuat" data-container="body"></i>
 								<div class="input-group col-md-12">
-									<input id="singlePromoCode" maxlength="15" type="text" class="form-control" name="promo_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Promo Code"  value="{{ old('promo_code')??$result['promo_campaign_promo_codes'][0]['promo_code']??null }}" autocomplete="off">
+									<input id="singlePromoCode" maxlength="30" type="text" class="form-control" name="promo_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Promo Code"  value="{{ old('promo_code')??$result['promo_campaign_promo_codes'][0]['promo_code']??null }}" autocomplete="off">
 									<p id="alertSinglePromoCode" style="display: none;" class="help-block">Kode sudah pernah dibuat!</p>
 								</div>
 							</div>
@@ -812,7 +812,7 @@
 							<div class="form-group" id="alertMultipleCode">
 								<label class="control-label">Prefix Code</label>
 								<span class="required" aria-required="true"> * </span>
-								<i class="fa fa-question-circle tooltips" data-original-title="Kode prefix untuk judul kode. Maksimal 9 karakter. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
+								<i class="fa fa-question-circle tooltips" data-original-title="Kode prefix untuk judul kode. Maksimal 9 karakter. Prefix Code + Digit Random tidak boleh lebih dari 30 karakter" data-container="body"></i>
 								<div class="input-group col-md-12">
 									<input id="multiplePrefixCode" maxlength="9" type="text" class="form-control" name="prefix_code" onkeyup="this.value=this.value.replace(/[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789]/g,'');" placeholder="Prefix Code" @if(isset($result['prefix_code']) && $result['prefix_code'] != "") value="{{$result['prefix_code']}}" @elseif(old('prefix_code') != "") value="{{old('prefix_code')}}" @endif autocomplete="off">
 									<p id="alertMultiplePromoCode" style="display: none;" class="help-block">Kode prefix sudah pernah dibuat, lebih disarankan untuk membuat kode baru!</p>
@@ -821,11 +821,11 @@
 							<div class="form-group" id="number_last_code">
 								<label class="control-label">Digit Random</label>
 								<span class="required" aria-required="true"> * </span>
-								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah digit yang digenerate secara otomatis untuk akhiran kode. Prefix Code + Digit Random tidak boleh lebih dari 15 karakter" data-container="body"></i>
+								<i class="fa fa-question-circle tooltips" data-original-title="Jumlah digit yang digenerate secara otomatis untuk akhiran kode. Prefix Code + Digit Random tidak boleh lebih dari 30 karakter" data-container="body"></i>
 								<div class="input-group col-md-12">
-									<input id="multipleNumberLastCode" type="number" class="form-control" name="number_last_code" placeholder="Total Digit Random Last Code" @if(isset($result['number_last_code']) && $result['number_last_code'] != "") value="{{$result['number_last_code']}}" @elseif(old('number_last_code') != "") value="{{old('number_last_code')}}" @endif autocomplete="off" min="6" max="15">
+									<input id="multipleNumberLastCode" type="number" class="form-control" name="number_last_code" placeholder="Total Digit Random Last Code" @if(isset($result['number_last_code']) && $result['number_last_code'] != "") value="{{$result['number_last_code']}}" @elseif(old('number_last_code') != "") value="{{old('number_last_code')}}" @endif autocomplete="off" min="6" max="30">
 								</div>
-								<span class="help-block" id="subscription-false"> Min : <span id="digit-random-min" class="font-weight-bold" style="padding-right: 12px">6</span> Max : <span id="digit-random-max" class="font-weight-bold">15</span></span>
+								<span class="help-block" id="subscription-false"> Min : <span id="digit-random-min" class="font-weight-bold" style="padding-right: 12px">6</span> Max : <span id="digit-random-max" class="font-weight-bold">30</span></span>
 							</div>
 							<div class="form-group">
 								<label class="control-label">Example Code 
