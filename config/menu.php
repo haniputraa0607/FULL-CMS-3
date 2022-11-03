@@ -278,10 +278,16 @@ return [
 							'url' => 'doctor/recommendation'
 						],
 						[
-                            'label' => '[Response] Pin Sent',
-                            'required_features' => [93],
-                            'active' => '\View::shared("submenu_active") == "doctor-autoresponse-pin-sent"',
-                            'url' => 'doctor/autoresponse/pin-sent'
+                            'label' => '[Response] Doctor Pin Forgot',
+                            'required_features' => [328],
+                            'active' => '\View::shared("submenu_active") == "doctor-autoresponse-doctor-pin-forgot"',
+                            'url' => 'doctor/autoresponse/doctor-pin-forgot'
+                        ],
+                        [
+                            'label' => '[Response] Doctor Pin Sent',
+                            'required_features' => [328],
+                            'active' => '\View::shared("submenu_active") == "doctor-autoresponse-doctor-pin-sent"',
+                            'url' => 'doctor/autoresponse/doctor-pin-sent'
                         ],
 					]
 				],
