@@ -2712,6 +2712,54 @@ return [
                         ]
                     ]
                 ],
+				[
+					'label' => 'Single Campaign',
+					'required_configs' => [50],
+					'type' => 'tree',
+					'children' => [
+						[
+							'label' => 'New Campaign',
+							'required_features' => [100],
+							'active' => '\View::shared("submenu_active") == "campaign-create"',
+							'url' => 'campaign/create'
+						],
+						[
+							'label' => 'Campaign List',
+							'required_features' => [98],
+							'active' => '\View::shared("submenu_active") == "campaign-list"',
+							'url' => 'campaign'
+						],
+						[
+							'label' => 'Email Outbox',
+							'required_features' => [104],
+							'required_configs' => [51],
+							'active' => '\View::shared("submenu_active") == "campaign-email-outbox"',
+							'url' => 'campaign/email/outbox'
+						],
+						[
+							'label' => 'SMS Outbox',
+							'required_features' => [106],
+							'required_configs' => [52],
+							'active' => '\View::shared("submenu_active") == "campaign-sms-outbox"',
+							'url' => 'campaign/sms/outbox'
+						],
+						[
+							'label' => 'Push Outbox',
+							'required_features' => [108],
+							'required_configs' => [53],
+							'active' => '\View::shared("submenu_active") == "campaign-push-outbox"',
+							'url' => 'campaign/push/outbox'
+						],
+						[
+							'label' => 'WhatsApp Outbox',
+							'required_features' => [108],
+							'required_configs' => [75],
+							'active' => '\View::shared("submenu_active") == "campaign-whatsapp-outbox"',
+							'url' => 'campaign/whatsapp/outbox'
+						],
+					],
+					'icon' => 'icon-speech'
+				],
                 [
                     'label' => 'Contact Us',
                     'required_features' => [83,84],
