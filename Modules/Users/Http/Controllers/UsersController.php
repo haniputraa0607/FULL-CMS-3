@@ -340,66 +340,6 @@ class UsersController extends Controller
             }
         }
 
-        if(!empty($post)){
-            if(isset($post['action']) && isset($post['users'])){
-                //Bulk action
-                $phone = [];
-                foreach($post['users'] as $key => $code){
-                    array_push($phone, $key);
-                }
-
-                if($post['action'] == 'delete'){
-                    $action = MyHelper::post('users/delete', ['phone' => $phone]);
-                    if($action['status'] == 'success'){
-                        unset($post['action']);
-                        return back()->withSuccess($action['result']);
-                    } else{
-                        return back()->withErrors($action['messages']);
-                    }
-                }
-
-                if($post['action'] == 'phone verified'){
-                    $action = MyHelper::post('users/phone/verified', ['phone' => $phone]);
-                    if($action['status'] == 'success'){
-                        unset($post['action']);
-                        return back()->withSuccess($action['result']);
-                    } else{
-                        return back()->withErrors($action['messages']);
-                    }
-                }
-
-                if($post['action'] == 'phone not verified'){
-                    $action = MyHelper::post('users/phone/unverified', ['phone' => $phone]);
-                    if($action['status'] == 'success'){
-                        unset($post['action']);
-                        return back()->withSuccess($action['result']);
-                    } else{
-                        return back()->withErrors($action['messages']);
-                    }
-                }
-
-                if($post['action'] == 'email verified'){
-                    $action = MyHelper::post('users/email/verified', ['phone' => $phone]);
-                    if($action['status'] == 'success'){
-                        unset($post['action']);
-                        return back()->withSuccess($action['result']);
-                    } else{
-                        return back()->withErrors($action['messages']);
-                    }
-                }
-
-                if($post['action'] == 'email not verified'){
-                    $action = MyHelper::post('users/email/unverified', ['phone' => $phone]);
-                    if($action['status'] == 'success'){
-                        unset($post['action']);
-                        return back()->withSuccess($action['result']);
-                    } else{
-                        return back()->withErrors($action['messages']);
-                    }
-                }
-            }
-        }
-
         $data = [ 'title'             => 'User',
             'menu_active'       => 'user',
             'submenu_active'    => 'user-list'
@@ -462,6 +402,68 @@ class UsersController extends Controller
         }
 
         return view('users::index', $data);
+    }
+
+    public function bulkAction(Request $request){
+        $post = $request->except('_token');
+
+        if(isset($post['action']) && isset($post['users_check'])){
+            //Bulk action
+            $post['users'] = json_decode($post['users_check']);
+            $phone = $post['users'];
+
+            if($post['action'] == 'delete'){
+                $action = MyHelper::post('users/delete', ['phone' => $phone]);
+                if($action['status'] == 'success'){
+                    unset($post['action']);
+                    return back()->withSuccess($action['result']);
+                } else{
+                    return back()->withErrors($action['messages']);
+                }
+            }
+
+            if($post['action'] == 'phone verified'){
+                $action = MyHelper::post('users/phone/verified', ['phone' => $phone]);
+                if($action['status'] == 'success'){
+                    unset($post['action']);
+                    return back()->withSuccess($action['result']);
+                } else{
+                    return back()->withErrors($action['messages']);
+                }
+            }
+
+            if($post['action'] == 'phone not verified'){
+                $action = MyHelper::post('users/phone/unverified', ['phone' => $phone]);
+                if($action['status'] == 'success'){
+                    unset($post['action']);
+                    return back()->withSuccess($action['result']);
+                } else{
+                    return back()->withErrors($action['messages']);
+                }
+            }
+
+            if($post['action'] == 'email verified'){
+                $action = MyHelper::post('users/email/verified', ['phone' => $phone]);
+                if($action['status'] == 'success'){
+                    unset($post['action']);
+                    return back()->withSuccess($action['result']);
+                } else{
+                    return back()->withErrors($action['messages']);
+                }
+            }
+
+            if($post['action'] == 'email not verified'){
+                $action = MyHelper::post('users/email/unverified', ['phone' => $phone]);
+                if($action['status'] == 'success'){
+                    unset($post['action']);
+                    return back()->withSuccess($action['result']);
+                } else{
+                    return back()->withErrors($action['messages']);
+                }
+            }
+        }else{
+            return back()->withErrors(['User can not be empty']);
+        }
     }
 	
 	public function searchReset()
