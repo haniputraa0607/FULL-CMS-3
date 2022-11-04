@@ -1020,8 +1020,8 @@
                         html += '</label>';
                         html += '<div class="col-md-6">';
                         html += '<select name="variant_price['+i+'][visibility]" class="form-control select2-multiple" id="visibility_var_'+i+'" data-placeholder="Select">';
-                        html += '<option value="Visible" '+visible+'>Visible</option>';
-                        html += '<option value="Hidden" '+hidden+'>Hidden</option>';
+                        html += '<option value="1" '+visible+'>Visible</option>';
+                        html += '<option value="0" '+hidden+'>Hidden</option>';
                         html += '</select>';
                         html += '</div>';
                         html += '</div>';
