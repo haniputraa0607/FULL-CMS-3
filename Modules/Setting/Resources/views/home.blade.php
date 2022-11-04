@@ -1359,9 +1359,7 @@
 								<option value="consultation">Consultation</option>
 								<option value="elearning">E-learning</option>
 								<option value="product_recomendation_list">Product Recomendation List</option>
-								<option value="doctor_recomendation_list">Doctor Recomendation List</option>
-								<option value="deals_list">Deals List</option>
-								<option value="inbox">Inbox</option>
+								<option value="home">Doctor Recomendation List</option>
 								<option value="merchant_detail">Merchant Detail</option>
 								<option value="product_detail">Product Detail</option>
 								<option value="notification_notification">Notification</option>
@@ -1373,7 +1371,8 @@
 								<option value="privacy_policy">Privacy Policy</option>
 								<option value="faq">FAQ</option>
 								<option value="enquires">Enquires</option>
-								<option value="featured_promo">Featured Promo</option>
+								<option value="featured_promo_home">Featured Promo Home</option>
+								<option value="featured_promo_merchant">Featured Promo Merchant</option>
 								<option value="promo_detail">Promo Detail</option>
 								<option value="url">URL</option>
 							</select>
@@ -1408,9 +1407,9 @@
                         </label>
                         <div class="col-md-5">
                         	<select class="form-control select2" name="id_reference" data-placeholder="Select Promo">
-                                @if (!empty($deals))
-                                    @foreach ($deals as $item)
-                                    <option value="{{ $item['id_deals'] }}">{{ $item['deals_title'] }}</option>
+                                @if (!empty($all_promo))
+                                    @foreach ($all_promo as $item)
+                                    <option value="{{ $item['id_promo_campaign'] }}">{{ $item['promo_title'] }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -1438,7 +1437,7 @@
                         	<select class="form-control select2" name="id_reference" data-placeholder="Select Merchant">
                                 @if (!empty($merchants))
                                     @foreach ($merchants as $item)
-                                    <option value="{{ $item['id_merchant'] }}">{{ $item['merchant_pic_name'] }}</option>
+										<option value="{{ $item['id_outlet'] }}">{{ $item['outlet_name'] }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -1573,9 +1572,7 @@
 								<option value="consultation">Consultation</option>
 								<option value="elearning">E-learning</option>
 								<option value="product_recomendation_list">Product Recomendation List</option>
-								<option value="doctor_recomendation_list">Doctor Recomendation List</option>
-								<option value="deals_list">Deals List</option>
-								<option value="inbox">Inbox</option>
+								<option value="home">Doctor Recomendation List</option>
 								<option value="merchant_detail">Merchant Detail</option>
 								<option value="product_detail">Product Detail</option>
 								<option value="notification_notification">Notification</option>
@@ -1587,7 +1584,8 @@
 								<option value="privacy_policy">Privacy Policy</option>
 								<option value="faq">FAQ</option>
 								<option value="enquires">Enquires</option>
-								<option value="featured_promo">Featured Promo</option>
+								<option value="featured_promo_home">Featured Promo Home</option>
+								<option value="featured_promo_merchant">Featured Promo Merchant</option>
 								<option value="promo_detail">Promo Detail</option>
 								<option value="url">URL</option>
 							</select>
@@ -1622,9 +1620,9 @@
                         </label>
                         <div class="col-md-5">
                         	<select class="form-control select2" name="id_reference" data-placeholder="Select Promo">
-                                @if (!empty($deals))
-                                    @foreach ($deals as $item)
-                                    <option value="{{ $item['id_deals'] }}">{{ $item['deals_title'] }}</option>
+                                @if (!empty($all_promo))
+                                    @foreach ($all_promo as $item)
+                                    <option value="{{ $item['id_promo_campaign'] }}">{{ $item['promo_title'] }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -1652,7 +1650,7 @@
                         	<select class="form-control select2" name="id_reference" data-placeholder="Select Merchant">
                                 @if (!empty($merchants))
                                     @foreach ($merchants as $item)
-                                    <option value="{{ $item['id_merchant'] }}">{{ $item['merchant_pic_name'] }}</option>
+                                    <option value="{{ $item['id_outlet'] }}">{{ $item['outlet_name'] }}</option>
                                     @endforeach
                                 @endif
                             </select>
