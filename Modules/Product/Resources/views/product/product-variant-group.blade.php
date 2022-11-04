@@ -77,8 +77,8 @@
                         </label>
                         <div class="col-md-6">
                             <select class="form-control select2-multiple" id="visibility_var_{{$key}}" name="variant_price[{{$key}}][visibility]" data-placeholder="Select">
-                                <option value="Visible" @if($val['visibility'] == 'Visible') selected @endif>Visible</option>
-                                <option value="Hidden" @if($val['visibility'] == 'Hidden') selected @endif>Hidden</option>
+                                <option value="1" @if($val['visibility'] == 'Visible') selected @endif>Visible</option>
+                                <option value="0" @if($val['visibility'] == 'Hidden') selected @endif>Hidden</option>
                             </select>
                         </div>
                     </div>

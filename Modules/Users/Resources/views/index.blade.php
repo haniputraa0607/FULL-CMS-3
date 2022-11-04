@@ -35,12 +35,18 @@ $configs     		= session('configs');
 		function centang(no){
 			alert(no);
 		}
+		var arr = [];
+
 		function checkUsers(){
 			var slides = document.getElementsByClassName("md-check");
 			for(var i = 0; i < slides.length; i++)
 			{
 				slides[i].checked = true;
+				var currentId = slides[i].id;
+				var phone = currentId.replace("check", "");
+				arr.push(phone);
 			}
+			$('[name="users_check"]').val( JSON.stringify( arr ) );
 		}
 
 		function uncheckUsers(){
@@ -49,6 +55,20 @@ $configs     		= session('configs');
 			{
 				slides[i].checked = false;
 			}
+			arr = [];
+			$('[name="users_check"]').val('');
+		}
+
+		function insertUsers(id){
+			if($('#check' + id).is(":checked")){
+				arr.push(id);
+			}else{
+				const index = arr.indexOf(id);
+				if (index > -1) {
+					arr.splice(index, 1);
+				}
+			}
+			$('[name="users_check"]').val( JSON.stringify( arr ) );
 		}
 	</script>
 @endsection
@@ -287,8 +307,6 @@ $configs     		= session('configs');
 							</tr>
 							</thead>
 							<tbody>
-							<form action="{{ url('user') }}" method="post">
-								{{ csrf_field() }}
 								@if(!empty($dataUser))
 									@foreach($dataUser as $no => $data)
 
@@ -302,7 +320,7 @@ $configs     		= session('configs');
 											<tr>
 												@endif
 												<td> {{($page-1) * $take + $no + 1}}
-													<label class="mt-checkbox"><input type="checkbox" value="1" name="users[{{$data['phone']}}]" id="check{{$data['phone']}}" class="md-check" /> <span></span></label>
+													<label class="mt-checkbox"><input type="checkbox" value="1" onclick="insertUsers(`{{$data['phone']}}`)" name="users[{{$data['phone']}}]" id="check{{$data['phone']}}" class="md-check" /> <span></span></label>
 												</td>
 												<td>
 													@if(MyHelper::hasAccess([2], $grantedFeature))
@@ -406,23 +424,23 @@ $configs     		= session('configs');
 						@endif
 					</div>
 				</div>
-				<div class="col-md-12" style="padding-left:0px;padding-right:0px;margin-top:20px">
-					<div class="col-md-5" style="padding-left:0px;padding-right:0px;">
-						<select name="action" class="form-control select2">
-							<option value="">Select...</option>
-							@if(MyHelper::hasAccess([5], $grantedFeature))
-								<option value="delete">Delete</option>
-							@endif
-							<option value="phone verified">Set Phone Verified</option>
-							<option value="phone not verified">Set Phone Not Verified</option>
-							<option value="email verified">Set Email Verified</option>
-							<option value="email not verified">Set Email Not Verified</option>
-						</select>
+				<form action="{{ url('user/action/bulk') }}" method="post">
+					{{ csrf_field() }}
+					<div class="col-md-12" style="padding-left:0px;padding-right:0px;margin-top:20px">
+						<div class="col-md-5" style="padding-left:0px;padding-right:0px;">
+							<select name="action" class="form-control select2" required>
+								<option value="">Select...</option>
+								<option value="phone verified">Set Phone Verified</option>
+								<option value="phone not verified">Set Phone Not Verified</option>
+								<option value="email verified">Set Email Verified</option>
+								<option value="email not verified">Set Email Not Verified</option>
+							</select>
+						</div>
+						<input type="hidden" name="users_check">
+						<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
+							<button type="submit" class="btn yellow" data-toggle="confirmation" data-placement="top">Apply Bulk Action</button>
+						</div>
 					</div>
-					<div class="col-md-3" style="padding-left:0px;padding-right:0px;">
-						<button type="submit" class="btn yellow" data-toggle="confirmation" data-placement="top">Apply Bulk Action</button>
-					</div>
-				</div>
 				</form>
 			</div>
 		</div>
