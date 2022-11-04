@@ -276,6 +276,10 @@
 
 	function addNewLevel(){
         setTimeout(function(){
+
+			$('.level_requiretment').removeAttr('readonly');
+			$('#level_requiretment_0').attr('readonly','readonly');
+
             $('.price').each(function() {
 				var input = $(this).val();
 				var input = input.replace(/[\D\s\._\-]+/g, "");
@@ -681,7 +685,9 @@
 												<span class="input-group-btn levelAchievement" @if($value != 'achievement') style="display:none;" @endif>
 													<button class="btn blue" type="button" >Total Achievement</button>
 												</span>
-												<input class="form-control price" type="text" name="min_value" @if($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @elseif($value == 'achievement') value="{{$membership['min_total_achievement']}}" @endif placeholder="Level Requirement">
+
+												<input class="form-control price level_requiretment" type="text" id="level_requiretment_{{$i}}" name="min_value" @if($i == 0) readonly @elseif($value == 'value') value="{{$membership['min_total_value']}}" @elseif($value == 'count') value="{{$membership['min_total_count']}}"  @elseif($value == 'balance') value="{{$membership['min_total_balance']}}" @elseif($value == 'achievement') value="{{$membership['min_total_achievement']}}" @endif placeholder="Level Requirement">
+
 												<span class="input-group-btn levelReqX" @if($value != 'count') style="display:none;" @endif>
 													<button class="btn yellow" type="button" >X trx</button>
 												</span>
