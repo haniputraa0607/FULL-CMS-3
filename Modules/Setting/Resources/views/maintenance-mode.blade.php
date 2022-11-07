@@ -36,7 +36,7 @@ $configs     		= session('configs');
 						$("#removeImage").trigger( "click" );
 					}
 					if (this.width > 500 ||  this.height > 500) {
-						toastr.warning("Please check dimension of your photo. The maximum height and width 100px.");
+						toastr.warning("Please check dimension of your photo. The maximum height and width 500px.");
 						$("#removeImage").trigger( "click" );
 					}
 
@@ -111,7 +111,7 @@ $configs     		= session('configs');
 						Image
 						<span class="required" aria-required="true"> * </span>
 						<i class="fa fa-question-circle tooltips" data-original-title="image to display in apps when maintenance mode active" data-container="body"></i>
-						<span class="required" aria-required="true"> (500*500) <br> PNG Only <br> max size 1 MB</span>
+						<span class="required" aria-required="true"> (500*500) <br> max size 1 MB</span>
 					</label>
 				</div>
 				<div class="col-md-9">
