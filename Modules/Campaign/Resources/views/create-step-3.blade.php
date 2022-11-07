@@ -1,3 +1,31 @@
+<?php
+$clickTo = [
+		"none" => "None",
+		"home" => "Home",
+		"membership" => "Membership",
+		"point_history" => "Point History",
+		"store" => "Store",
+		"consultation" => "Consultation",
+		"elearning" => "E-learning",
+		"product_recomendation_list" => "Product Recomendation List",
+		"home" => "Doctor Recomendation List",
+		"merchant_detail" => "Merchant Detail",
+		"product_detail" => "Product Detail",
+		"notification_notification" => "Notification",
+		"notification_promo" => "Notification Promo",
+		"history_order" => "History Order",
+		"history_consultation" => "History Consultation",
+		"doctor_detail" => "Doctor Detail",
+		"wishlist" => "Wishlist",
+		"privacy_policy" => "Privacy Policy",
+		"faq" => "FAQ",
+		"enquires" => "Enquires",
+		"featured_promo_home" => "Featured Promo Home",
+		"featured_promo_merchant" => "Featured Promo Merchant",
+		"promo_detail" => "Promo Detail",
+		"url" => "URL"
+];
+?>
 @extends('layouts.main-closed')
 
 @section('page-style')
@@ -525,10 +553,10 @@
 							<div class="form-group">
 								<label class="col-md-2 control-label">Click To</label>
 								<div class="col-md-10">
-									<input type="text" placeholder="Push Notification Click To" class="form-control" name="campaign_push_clickto" id="campaign_push_clickto" required @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] != "") value="{{$result['campaign_push_clickto']}}" @endif readonly>
+									<input type="text" placeholder="Push Notification Click To" class="form-control" name="campaign_push_clickto" id="campaign_push_clickto" required value="{{$clickTo[$result['campaign_push_clickto']]??$result['campaign_push_clickto']??''}}" readonly>
 								</div>
 							</div>
-							@if(isset($result['campaign_push_clickto']) && ($result['campaign_push_clickto'] == "Outlet" || $result['campaign_push_clickto'] == "Product" || $result['campaign_push_clickto'] == "Treatment"))
+							@if(isset($result['campaign_push_clickto']) && ($result['campaign_push_clickto'] == "product_detail" || $result['campaign_push_clickto'] == "promo_detail" || $result['campaign_push_clickto'] == "doctor_detail" || $result['campaign_push_clickto'] == "merchant_detail"))
 							<div class="form-group">
 								<label class="col-md-2 control-label">Reference</label>
 								<div class="col-md-10">
@@ -572,10 +600,10 @@
 							<div class="form-group">
 								<label class="col-md-2 control-label">Click To</label>
 								<div class="col-md-10">
-									<input type="text" placeholder="Inbox Click To" class="form-control" name="campaign_inbox_clickto" id="campaign_inbox_clickto" required @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] != "") value="{{$result['campaign_inbox_clickto']}}" @endif readonly>
+									<input type="text" placeholder="Inbox Click To" class="form-control" name="campaign_inbox_clickto" id="campaign_inbox_clickto" required value="{{$clickTo[$result['campaign_inbox_clickto']]??$result['campaign_inbox_clickto']??''}}"  readonly>
 								</div>
 							</div>
-							@if(isset($result['campaign_inbox_clickto']) && ($result['campaign_inbox_clickto'] == "Outlet" || $result['campaign_inbox_clickto'] == "Product"))
+							@if(isset($result['campaign_inbox_clickto']) && ($result['campaign_inbox_clickto'] == "product_detail" || $result['campaign_inbox_clickto'] == "promo_detail" || $result['campaign_inbox_clickto'] == "doctor_detail" || $result['campaign_inbox_clickto'] == "merchant_detail"))
 							<div class="form-group">
 								<label class="col-md-2 control-label">Reference</label>
 								<div class="col-md-10">

@@ -93,7 +93,8 @@
 
 	function fetchDetail(det, type, idref=null){
 		let token  = "{{ csrf_token() }}";
-		if(det == 'Product'){
+
+		if(det == 'product_detail'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('product/ajax') }}",
@@ -108,6 +109,32 @@
 							operator_value.options[operator_value.options.length] = new Option(result[x]['product_name'], result[x]['id_product'], false, true);
 						}else{
 							operator_value.options[operator_value.options.length] = new Option(result[x]['product_name'], result[x]['id_product']);
+						}
+					}
+				}
+			});
+			document.getElementById('link_'+type).style.display = 'none';
+			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+		}
+
+		else if(det == 'doctor_detail'){
+			$.ajax({
+				type : "POST",
+				url : "{{ url('campaign/click-action') }}",
+				data : {
+					"_token" : token,
+					"type" : 'doctor_detail'
+				},
+				success : function(result) {
+					document.getElementById('atd_'+type).style.display = 'block';
+					var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
+					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+					operator_value.options[operator_value.options.length] = new Option("", "");
+					for(x=0;x < result.length; x++){
+						if(idref == result[x]['id_doctor']){
+							operator_value.options[operator_value.options.length] = new Option(result[x]['doctor_name'], result[x]['id_doctor'], false, true);
+						}else{
+							operator_value.options[operator_value.options.length] = new Option(result[x]['doctor_name'], result[x]['id_doctor']);
 						}
 					}
 				}
@@ -139,7 +166,33 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
-		else if(det == 'News'){
+		else if(det == 'merchant_detail'){
+			$.ajax({
+				type : "POST",
+				url : "{{ url('campaign/click-action') }}",
+				data : {
+					"_token" : token,
+					"type" : 'merchant_detail'
+				},
+				success : function(result) {
+					document.getElementById('atd_'+type).style.display = 'block';
+					var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
+					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+					operator_value.options[operator_value.options.length] = new Option("", "");
+					for(x=0;x < result.length; x++){
+						if(idref == result[x]['id_outlet']){
+							operator_value.options[operator_value.options.length] = new Option(result[x]['outlet_name'], result[x]['id_outlet'], false, true);
+						}else{
+							operator_value.options[operator_value.options.length] = new Option(result[x]['outlet_name'], result[x]['id_outlet']);
+						}
+					}
+				}
+			});
+			document.getElementById('link_'+type).style.display = 'none';
+			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+		}
+
+		else if(det == 'elearning'){
 			$.ajax({
 				type : "GET",
 				url : "{{ url('news/ajax') }}",
@@ -208,6 +261,32 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
+		else if(det == 'promo_detail'){
+			$.ajax({
+				type : "POST",
+				url : "{{ url('campaign/click-action') }}",
+				data : {
+					"_token" : token,
+					"type" : 'promo_detail'
+				},
+				success : function(result) {
+					document.getElementById('atd_'+type).style.display = 'block';
+					var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
+					for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
+					operator_value.options[operator_value.options.length] = new Option("", "");
+					for(x=0;x < result.length; x++){
+						if(idref == result[x]['id_promo_campaign']){
+							operator_value.options[operator_value.options.length] = new Option(result[x]['promo_title'], result[x]['id_promo_campaign'], false, true);
+						}else{
+							operator_value.options[operator_value.options.length] = new Option(result[x]['promo_title'], result[x]['id_promo_campaign']);
+						}
+					}
+				}
+			});
+			document.getElementById('link_'+type).style.display = 'none';
+			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
+		}
+
 		else if(det == 'Complex'){
 			$.ajax({
 				type : "GET",
@@ -263,8 +342,7 @@
 			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
-		else if(det == 'Link'){
-			console.log(idref)
+		else if(det == 'url'){
 			document.getElementById('atd_'+type).style.display = 'none';
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
@@ -917,27 +995,30 @@
 								<label for="campaign_push_clickto" class="control-label col-md-2" style="padding-top:30px">Click Action</label>
 								<div class="col-md-10" style="padding-top:30px">
 									<select name="campaign_push_clickto" id="campaign_push_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'push')">
-										<option value="Home" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Home") selected @endif>Home</option>
-										<option value="Deals" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Deals") selected @endif>Deals</option>
-										<option value="Subscription" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Subscription") selected @endif>Subscription</option>
-										<option value="My Subscription" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "My Subscription") selected @endif>My Subscription</option>
-										<option value="Voucher" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Voucher") selected @endif>Voucher</option>
-										<option value="Order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Order") selected @endif>Order</option>
-										<option value="History Transaction" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Transaction") selected @endif>History Transaction</option>
-										<option value="History Point" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "History Point") selected @endif>History Point</option>
-										<option value="Profil" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Profil") selected @endif>Profile</option>
-										<option value="Membership" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Membership") selected @endif>Membership</option>
-										<option value="News" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "News") selected @endif>News</option>
-										<option value="Outlet" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Outlet") selected @endif>Outlet</option>
-										<option value="About" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "About") selected @endif>About</option>
-										<option value="FAQ" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "TOS") selected @endif>Term Of Services</option>
-										<option value="Contact Us" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Contact Us") selected @endif>Contact Us</option>
-										<option value="Link" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Link") selected @endif>Link</option>
-										<option value="Logout" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Logout") selected @endif>Logout</option>
-										@if(MyHelper::hasAccess([111], $configs))
-										<option value="Complex" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Complex") selected @endif>Complex</option>
-										@endif
+										<option value="none" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "none") selected @endif>None</option>
+										<option value="home" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "home") selected @endif>Home</option>
+										<option value="membership" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "membership") selected @endif>Membership</option>
+										<option value="point_history" @if(isset($result['campaign_push_clickto']) && $result['campaign_inbox_clickto'] == "point_history") selected @endif>Point History</option>
+										<option value="store" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "store") selected @endif>Store</option>
+										<option value="consultation" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "consultation") selected @endif>Consultation</option>
+										<option value="elearning" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "elearning") selected @endif>E-learning</option>
+										<option value="product_recomendation_list" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "No Action") selected @endif>Product Recomendation List</option>
+										<option value="home" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "product_recomendation_list") selected @endif>Doctor Recomendation List</option>
+										<option value="merchant_detail" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "merchant_detail") selected @endif>Merchant Detail</option>
+										<option value="product_detail" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "product_detail") selected @endif>Product Detail</option>
+										<option value="notification_notification" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "notification_notification") selected @endif>Notification</option>
+										<option value="notification_promo" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "notification_promo") selected @endif>Notification Promo</option>
+										<option value="history_order" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "history_order") selected @endif>History Order</option>
+										<option value="history_consultation" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "history_consultation") selected @endif>History Consultation</option>
+										<option value="doctor_detail" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "doctor_detail") selected @endif>Doctor Detail</option>
+										<option value="wishlist" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "wishlist") selected @endif>Wishlist</option>
+										<option value="privacy_policy" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "privacy_policy") selected @endif>Privacy Policy</option>
+										<option value="faq" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "faq") selected @endif>FAQ</option>
+										<option value="enquires" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "enquires") selected @endif>Enquires</option>
+										<option value="featured_promo_home" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "featured_promo_home") selected @endif>Featured Promo Home</option>
+										<option value="featured_promo_merchant" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "featured_promo_merchant") selected @endif>Featured Promo Merchant</option>
+										<option value="promo_detail" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "promo_detail") selected @endif>Promo Detail</option>
+										<option value="url" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "url") selected @endif>URL</option>
 									</select>
 								</div>
 							</div>
@@ -992,25 +1073,30 @@
 								<label for="campaign_inbox_clickto" class="control-label col-md-2">Click Action</label>
 								<div class="col-md-10">
 									<select name="campaign_inbox_clickto" id="campaign_inbox_clickto" class="form-control select2" onChange="fetchDetail(this.value, 'inbox')">
-										<option value="No Action" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "No Action") selected @endif>No Action</option>
-										<option value="Deals" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Deals") selected @endif>Deals</option>
-										<option value="Subscription" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "Subscription") selected @endif>Subscription</option>
-										<option value="My Subscription" @if(isset($result['campaign_push_clickto']) && $result['campaign_push_clickto'] == "My Subscription") selected @endif>My Subscription</option>
-										<option value="Voucher" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Voucher") selected @endif>Voucher</option>
-										<option value="Order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Order") selected @endif>Order</option>
-										<option value="History Transaction" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Transaction") selected @endif>History Transaction</option>
-										<option value="History Point" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "History Point") selected @endif>History Point</option>
-										<option value="Profil" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Profil") selected @endif>Profile</option>
-										<option value="Membership" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Membership") selected @endif>Membership</option>
-										<option value="News" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "News") selected @endif>News</option>
-										<option value="Outlet" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Outlet") selected @endif>Outlet</option>
-										<option value="About" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "About") selected @endif>About</option>
-										<option value="FAQ" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "FAQ") selected @endif>FAQ</option>
-										<option value="TOS" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "TOS") selected @endif>Term Of Services</option>
-										<option value="Contact Us" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Contact Us") selected @endif>Contact Us</option>
-										<option value="Link" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Link") selected @endif>Link</option>
-										<option value="Logout" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "Logout") selected @endif>Logout</option>
-
+										<option value="none" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "none") selected @endif>None</option>
+										<option value="home" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "home") selected @endif>Home</option>
+										<option value="membership" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "membership") selected @endif>Membership</option>
+										<option value="point_history" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "point_history") selected @endif>Point History</option>
+										<option value="store" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "store") selected @endif>Store</option>
+										<option value="consultation" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "consultation") selected @endif>Consultation</option>
+										<option value="elearning" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "elearning") selected @endif>E-learning</option>
+										<option value="product_recomendation_list" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "No Action") selected @endif>Product Recomendation List</option>
+										<option value="home" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "product_recomendation_list") selected @endif>Doctor Recomendation List</option>
+										<option value="merchant_detail" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "merchant_detail") selected @endif>Merchant Detail</option>
+										<option value="product_detail" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "product_detail") selected @endif>Product Detail</option>
+										<option value="notification_notification" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "notification_notification") selected @endif>Notification</option>
+										<option value="notification_promo" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "notification_promo") selected @endif>Notification Promo</option>
+										<option value="history_order" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "history_order") selected @endif>History Order</option>
+										<option value="history_consultation" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "history_consultation") selected @endif>History Consultation</option>
+										<option value="doctor_detail" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "doctor_detail") selected @endif>Doctor Detail</option>
+										<option value="wishlist" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "wishlist") selected @endif>Wishlist</option>
+										<option value="privacy_policy" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "privacy_policy") selected @endif>Privacy Policy</option>
+										<option value="faq" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "faq") selected @endif>FAQ</option>
+										<option value="enquires" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "enquires") selected @endif>Enquires</option>
+										<option value="featured_promo_home" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "featured_promo_home") selected @endif>Featured Promo Home</option>
+										<option value="featured_promo_merchant" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "featured_promo_merchant") selected @endif>Featured Promo Merchant</option>
+										<option value="promo_detail" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "promo_detail") selected @endif>Promo Detail</option>
+										<option value="url" @if(isset($result['campaign_inbox_clickto']) && $result['campaign_inbox_clickto'] == "url") selected @endif>URL</option>
 									</select>
 								</div>
 							</div>

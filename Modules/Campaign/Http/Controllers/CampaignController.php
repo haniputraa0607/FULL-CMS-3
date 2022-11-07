@@ -952,4 +952,21 @@ class CampaignController extends Controller
 
 		return view('campaign::push-outbox', $data);
     }
+
+    public function campaignClickActionData(Request $request){
+        $post = $request->except(['_token']);
+        $res = [];
+
+        if($post['type'] == 'promo_detail'){
+            $res = MyHelper::get('promo-campaign/active-campaign')['result'] ?? [];
+        }elseif($post['type'] == 'merchant_detail'){
+            $mp=['select' => ['id_merchant', 'merchant_pic_name']];
+            $res = MyHelper::post('merchant/list-setting', $mp)['result'] ?? [];
+        }elseif($post['type'] == 'doctor_detail'){
+            $dcp=['select' => ['id_doctor', 'doctor_name']];
+            $res = MyHelper::post('doctor', $dcp)['result'] ?? [];
+        }
+
+        return $res;
+    }
 }
