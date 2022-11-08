@@ -146,17 +146,6 @@
 						<th>Birthday</th>
 					</tr>
 				</thead>
-				<tfoot>
-					<tr>
-						<th>No</th>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Phone</th>
-						<th>Gender</th>
-						<th>City</th>
-						<th>Birthday</th>
-					</tr>
-				</tfoot>
 				<tbody>
 				</tbody>
 			</table>

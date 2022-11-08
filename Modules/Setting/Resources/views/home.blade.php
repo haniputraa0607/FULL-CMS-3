@@ -1359,7 +1359,7 @@
 								<option value="consultation">Consultation</option>
 								<option value="elearning">E-learning</option>
 								<option value="product_recomendation_list">Product Recomendation List</option>
-								<option value="home">Doctor Recomendation List</option>
+								<option value="doctor_recommendation_list">Doctor Recomendation List</option>
 								<option value="merchant_detail">Merchant Detail</option>
 								<option value="product_detail">Product Detail</option>
 								<option value="notification_notification">Notification</option>
@@ -1572,7 +1572,7 @@
 								<option value="consultation">Consultation</option>
 								<option value="elearning">E-learning</option>
 								<option value="product_recomendation_list">Product Recomendation List</option>
-								<option value="home">Doctor Recomendation List</option>
+								<option value="doctor_recommendation_list">Doctor Recomendation List</option>
 								<option value="merchant_detail">Merchant Detail</option>
 								<option value="product_detail">Product Detail</option>
 								<option value="notification_notification">Notification</option>

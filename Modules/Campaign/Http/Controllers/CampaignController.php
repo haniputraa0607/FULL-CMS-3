@@ -712,12 +712,13 @@ class CampaignController extends Controller
     		$post=['id_campaign' => $id_campaign_decrypt];
     	}
 		if($request->input('ajax')){
+            $post['page'] = $request->input('start')/$request->input('length')+1;
 			$action = MyHelper::post('campaign/recipient', $post);
 
 			$return=$post;
 			$i=($post['start']??0);
-			$return['recordsTotal']=$action['recordsTotal'];
-			$return['recordsFiltered']=$action['recordsFiltered'];
+			$return['recordsTotal']=(int)($action['result']['users']['per_page']??0);
+			$return['recordsFiltered']=$action['result']['users']['total']??0;
 			$return['data']=array_map(function($x) use (&$i){
 				$i++;
 				return [
@@ -729,7 +730,7 @@ class CampaignController extends Controller
 					$x['city_name'],
 					$x['birthday']
 				];
-			},$action['result']['users']??[]);
+			},$action['result']['users']['data']??[]);
 			$return['id_campaign'] = $id_campaign;
 			return $return;
 		}
@@ -951,5 +952,22 @@ class CampaignController extends Controller
 		$data['post'] = $post;
 
 		return view('campaign::push-outbox', $data);
+    }
+
+    public function campaignClickActionData(Request $request){
+        $post = $request->except(['_token']);
+        $res = [];
+
+        if($post['type'] == 'promo_detail'){
+            $res = MyHelper::get('promo-campaign/active-campaign')['result'] ?? [];
+        }elseif($post['type'] == 'merchant_detail'){
+            $mp=['select' => ['id_merchant', 'merchant_pic_name']];
+            $res = MyHelper::post('merchant/list-setting', $mp)['result'] ?? [];
+        }elseif($post['type'] == 'doctor_detail'){
+            $dcp=['select' => ['id_doctor', 'doctor_name']];
+            $res = MyHelper::post('doctor', $dcp)['result'] ?? [];
+        }
+
+        return $res;
     }
 }
