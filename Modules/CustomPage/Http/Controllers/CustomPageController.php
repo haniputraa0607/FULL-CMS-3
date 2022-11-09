@@ -151,8 +151,9 @@ class CustomPageController extends Controller
         if(isset($action['result']['id_custom_page'])){
         	$action['result']['id_custom_page'] = $id_custom_page;
         }
-        $action['result']['custom_page_button_form_text_button'] = json_decode($action['result']['custom_page_button_form_text'], true)['button'];
-        $action['result']['custom_page_button_form_text_value'] = json_decode($action['result']['custom_page_button_form_text'], true)['value'];
+
+        $action['result']['custom_page_button_form_text_button'] = json_decode($action['result']['custom_page_button_form_text']??'', true)['button']??'';
+        $action['result']['custom_page_button_form_text_value'] = json_decode($action['result']['custom_page_button_form_text']??'', true)['value']??'';
         
         $data['detail'] = $action['result'];
 
@@ -182,6 +183,8 @@ class CustomPageController extends Controller
 
         $action = MyHelper::post('custom-page/detail', ['id_custom_page' => $id_custom_page_decrypt]);
 
+        $action['result']['custom_page_button_form_text_button'] = json_decode($action['result']['custom_page_button_form_text']??'', true)['button']??'';
+        $action['result']['custom_page_button_form_text_value'] = json_decode($action['result']['custom_page_button_form_text']??'', true)['value']??'';
         $data['result'] = $action['result'];
 
         // get outlet
@@ -220,12 +223,20 @@ class CustomPageController extends Controller
             unset($post['customform']);
         } else {
             // set to null if form type didn't match
-            foreach ($post['customform'] as $key => $form) {
+            foreach ($post['customform']??[] as $key => $form) {
                 if (is_string($form['custom_page_image_header'])) {
                     $post['customform'][$key]['custom_page_image_header'] = $form['custom_page_image_header'];
                 } else {
                     $post['customform'][$key]['custom_page_image_header'] = MyHelper::encodeImage($form['custom_page_image_header']);
                 }
+            }
+        }
+
+        if (isset($post['custom_page_button_form'])) {
+            if (isset($post['custom_page_button_form_text_button'])) {
+                $post['custom_page_button_form_text'] = json_encode(['value' => $post['custom_page_button_form_text_value'], 'button' => $post['custom_page_button_form_text_button']]);
+            } else {
+                $post['custom_page_button_form_text'] = json_encode(['value' => $post['custom_page_button_form_text_value']]);
             }
         }
 
@@ -241,7 +252,7 @@ class CustomPageController extends Controller
         $action = MyHelper::post('custom-page/update', $post);
 
         if ($action['status'] == 'success') {
-            return redirect('custom-page/detail/' . $id_custom_page);
+            return redirect('custom-page/edit/' . $id_custom_page);
         } else {
             return back()->withErrors($action['messages']);
         }
