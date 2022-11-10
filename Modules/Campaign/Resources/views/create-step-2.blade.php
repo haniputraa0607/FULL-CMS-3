@@ -780,11 +780,9 @@
 							<i class="icon-settings font-blue "></i>
 							<span class="caption-subject bold uppercase">Recipient</span>
 						</div>
-						@if($result['campaign_generate_receipient']=='Now')
 						<div class="action-btn pull-right">
 							<a href="{{url('campaign/recipient/'.$result['id_campaign'])}}" target="_blank" class="btn yellow btn-sm btn-flat">See generated recipient</a>
 						</div>
-						@endif
 					</div>
 					<div class="portlet-body form">
 						@if($result['campaign_generate_receipient'] != "Now")
