@@ -78,10 +78,10 @@
 
 		var textvaluebaru = textvalue+" "+param;
 		$('#campaign_inbox_content').val(textvaluebaru);
-		$('#campaign_inbox_content').summernote('editor.saveRange');
-		$('#campaign_inbox_content').summernote('editor.restoreRange');
-		$('#campaign_inbox_content').summernote('editor.focus');
-		$('#campaign_inbox_content').summernote('editor.insertText', param);
+		// $('#campaign_inbox_content').summernote('editor.saveRange');
+		// $('#campaign_inbox_content').summernote('editor.restoreRange');
+		// $('#campaign_inbox_content').summernote('editor.focus');
+		// $('#campaign_inbox_content').summernote('editor.insertText', param);
     }
 
 	function addWhatsappContent(param, element){
@@ -114,7 +114,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'doctor_detail'){
@@ -140,7 +139,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Outlet' || det == 'Order'){
@@ -163,7 +161,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'merchant_detail'){
@@ -189,7 +186,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'elearning'){
@@ -212,7 +208,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Subscription'){
@@ -235,7 +230,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Deals'){
@@ -258,7 +252,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'promo_detail'){
@@ -284,7 +277,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Complex'){
@@ -307,7 +299,6 @@
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 		
 		else if(det == 'Home'){
@@ -315,7 +306,6 @@
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Inbox'){
@@ -323,7 +313,6 @@
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Voucher'){
@@ -331,7 +320,6 @@
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Contact Us'){
@@ -339,7 +327,6 @@
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'url'){
@@ -347,7 +334,6 @@
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'block';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Logout'){
@@ -355,7 +341,6 @@
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Content'){
@@ -363,7 +348,6 @@
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'block';
 		}
 
 		else {
@@ -371,7 +355,6 @@
 			var operator_value = document.getElementsByName('campaign_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 	}
 
@@ -1050,7 +1033,7 @@
 					</div>
 					<div class="portlet-body">
 						<div class="row">
-							<div class="form-group" style="margin-bottom:30px">
+							<div class="form-group">
 								<label class="col-md-2 control-label">Subject</label>
 								<div class="col-md-10">
 									<input type="text" placeholder="Inbox Subject" maxlength="125" class="form-control" name="campaign_inbox_subject" id="campaign_inbox_subject" required @if(isset($result['campaign_inbox_subject']) && $result['campaign_inbox_subject'] != "") value="{{$result['campaign_inbox_subject']}}" @endif>
@@ -1064,7 +1047,22 @@
 											</div>
 										@endforeach
 									</div>
+								</div>
+							</div>
+							<div class="form-group" id="div_inbox_content" style="margin-bottom:30px;">
+								<label for="multiple" class="control-label col-md-2" style="padding-top:30px;">Content</label>
+								<div class="col-md-10" style="padding-top:30px;">
+									<textarea name="campaign_inbox_content" id="campaign_inbox_content"  placeholder="Inbox Content" class="form-control">@if(isset($result['campaign_inbox_content']) && $result['campaign_inbox_content'] != ""){{$result['campaign_inbox_content']}}@endif</textarea>
+									You can use this variables to display user personalized information:
 									<br><br>
+									<div class="row">
+										@foreach($textreplaces as $key=>$row)
+											<div class="col-md-3" style="margin-bottom:5px;">
+												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addInboxContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+											</div>
+										@endforeach
+									</div>
+									<br>
 								</div>
 							</div>
 							<div class="form-group">
@@ -1109,21 +1107,6 @@
 								<label for="campaign_inbox_link" class="control-label col-md-2" style="padding-top:30px;">Link</label>
 								<div class="col-md-10" style="padding-top:30px;">
 									<input type="text" placeholder="https://" class="form-control" name="campaign_inbox_link" id="campaign_inbox_link" @if(isset($result['campaign_inbox_link'])) value="{{$result['campaign_inbox_link']}}" @endif>
-								</div>
-							</div>
-							<div class="form-group" id="div_inbox_content" style="margin-bottom:30px; display:none">
-								<label for="multiple" class="control-label col-md-2" style="padding-top:30px;">Content</label>
-								<div class="col-md-10" style="padding-top:30px;">
-									<textarea name="campaign_inbox_content" id="campaign_inbox_content" class="form-control summernote">@if(isset($result['campaign_inbox_content']) && $result['campaign_inbox_content'] != ""){{$result['campaign_inbox_content']}}@endif</textarea>
-									You can use this variables to display user personalized information:
-									<br><br>
-									<div class="row">
-										@foreach($textreplaces as $key=>$row)
-											<div class="col-md-3" style="margin-bottom:5px;">
-												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addInboxContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-											</div>
-										@endforeach
-									</div>
 								</div>
 							</div>
 						</div>

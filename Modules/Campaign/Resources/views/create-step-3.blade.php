@@ -596,6 +596,14 @@ $clickTo = [
 								</div>
 							</div>
 							<div class="form-group">
+								<label for="multiple" class="control-label col-md-2">Content</label>
+								<div class="col-md-10">
+									<div class="col-md-12" style="border: 1px solid #c2cad8;background-color: #eef1f5; opacity: 1; padding: 6px 12px;">
+										<?php echo $result['campaign_inbox_content']; ?>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-md-2 control-label">Click To</label>
 								<div class="col-md-10">
 									<input type="text" placeholder="Inbox Click To" class="form-control" name="campaign_inbox_clickto" id="campaign_inbox_clickto" required value="{{$clickTo[$result['campaign_inbox_clickto']]??$result['campaign_inbox_clickto']??''}}"  readonly>
@@ -606,16 +614,6 @@ $clickTo = [
 								<label class="col-md-2 control-label">Reference</label>
 								<div class="col-md-10">
 									<input type="text" placeholder="Push Notification Click To" class="form-control" name="campaign_inbox_name_reference" id="campaign_inbox_name_reference" required @if(isset($result['campaign_inbox_name_reference']) && $result['campaign_inbox_name_reference'] != "") value="{{$result['campaign_inbox_name_reference']}}" @endif readonly>
-								</div>
-							</div>
-							@endif
-							@if(isset($result['campaign_inbox_clickto']) && ($result['campaign_inbox_clickto'] == "Content"))
-							<div class="form-group">
-								<label for="multiple" class="control-label col-md-2">Content</label>
-								<div class="col-md-10">
-									<div class="col-md-12" style="border: 1px solid #c2cad8;background-color: #eef1f5; opacity: 1; padding: 6px 12px;">
-										<?php echo $result['campaign_inbox_content']; ?>
-									</div>
 								</div>
 							</div>
 							@endif
