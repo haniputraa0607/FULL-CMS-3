@@ -222,10 +222,10 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 
 		var textvaluebaru = textvalue+" "+param;
 		$('#autocrm_inbox_content').val(textvaluebaru);
-		$('#autocrm_inbox_content').summernote('editor.saveRange');
-		$('#autocrm_inbox_content').summernote('editor.restoreRange');
-		$('#autocrm_inbox_content').summernote('editor.focus');
-		$('#autocrm_inbox_content').summernote('editor.insertText', param);
+		// $('#autocrm_inbox_content').summernote('editor.saveRange');
+		// $('#autocrm_inbox_content').summernote('editor.restoreRange');
+		// $('#autocrm_inbox_content').summernote('editor.focus');
+		// $('#autocrm_inbox_content').summernote('editor.insertText', param);
     }
 
 	function addForwardSubject(param){
@@ -275,7 +275,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Outlet' || det == 'Order'){
@@ -298,7 +297,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'News'){
@@ -321,7 +319,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 				}
 			});
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Home'){
@@ -329,7 +326,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Inbox'){
@@ -337,7 +333,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Voucher'){
@@ -345,7 +340,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Contact Us' || det == 'Transaction'){
@@ -353,7 +347,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Link'){
@@ -361,7 +354,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'block';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 
 		else if(det == 'Content'){
@@ -369,7 +361,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'block';
 		}
 
 		else {
@@ -377,7 +368,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 			var operator_value = document.getElementsByName('autocrm_'+type+'_id_reference')[0];
 			for(i = operator_value.options.length - 1 ; i >= 0 ; i--) operator_value.remove(i);
 			document.getElementById('link_'+type).style.display = 'none';
-			if(type=="inbox") document.getElementById('div_inbox_content').style.display = 'none';
 		}
 	}
 
@@ -419,6 +409,7 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 			if(nilai=='1'){
 				document.getElementById('div_inbox_subject').style.display = 'block';
 				document.getElementById('div_inbox_clickto').style.display = 'block';
+				document.getElementById('div_inbox_content').style.display = 'block';
 			} else {
 				document.getElementById('div_inbox_subject').style.display = 'none';
 				document.getElementById('div_inbox_content').style.display = 'none';
@@ -952,6 +943,31 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 									<input type="hidden" id="id_autocrm_inbox" name="id_autocrm">
 								</div>
 							</div>
+							<div class="form-group" id="div_inbox_content" @if($data['autocrm_inbox_toogle'] == 0) style="display:none;" @endif>
+								<label for="multiple" class="control-label col-md-3">Content
+									<span class="required" aria-required="true"> * </span>
+									<i class="fa fa-question-circle tooltips" data-original-title="Konten inbox, tambahkan text replacer bila perlu" data-container="body"></i>
+								</label>
+								<div class="col-md-9">
+									<textarea name="autocrm_inbox_content" id="autocrm_inbox_content" class="form-control" placeholder="Inbox Content">@if(isset($data['autocrm_inbox_content']) && $data['autocrm_inbox_content'] != ""){{$data['autocrm_inbox_content']}}@endif</textarea>
+									You can use this variables to display user personalized information:
+									<br><br>
+									<div class="row">
+										@foreach($textreplaces as $key=>$row)
+											<div class="col-md-3" style="margin-bottom:5px;">
+												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addInboxContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
+											</div>
+										@endforeach
+										@if (isset($custom))
+											@foreach($custom as $key=>$row)
+												<div class="col-md-3" style="margin-bottom:5px;">
+													<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addInboxContent('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
+												</div>
+											@endforeach
+										@endif
+									</div>
+								</div>
+							</div>
 							<div class="form-group" id="div_inbox_clickto" @if($data['autocrm_inbox_toogle'] == 0) style="display:none;" @endif>
 								<label for="autocrm_inbox_clickto" class="control-label col-md-3">Click Action</label>
 								<div class="col-md-9">
@@ -973,28 +989,6 @@ $active_response = $active_response??['email', 'sms', 'push', 'inbox', 'whatsapp
 								<label for="autocrm_inbox_link" class="control-label col-md-3">Link</label>
 								<div class="col-md-9" >
 									<input type="text" placeholder="https://" class="form-control" name="autocrm_inbox_link" id="autocrm_inbox_link" @if(isset($data['autocrm_inbox_link'])) value="{{$data['autocrm_inbox_link']}}" @endif>
-								</div>
-							</div>
-							<div class="form-group" id="div_inbox_content" style="margin-bottom:30px; display:none">
-								<label for="multiple" class="control-label col-md-3">Content</label>
-								<div class="col-md-9">
-									<textarea name="autocrm_inbox_content" id="autocrm_inbox_content" class="form-control summernote">@if(isset($data['autocrm_inbox_content']) && $data['autocrm_inbox_content'] != ""){{$data['autocrm_inbox_content']}}@endif</textarea>
-									You can use this variables to display user personalized information:
-									<br><br>
-									<div class="row">
-										@foreach($textreplaces as $key=>$row)
-											<div class="col-md-3" style="margin-bottom:5px;">
-												<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $row['keyword'] }}' with user's {{ $row['reference'] }}" onClick="addInboxContent('{{ $row['keyword'] }}');">{{ str_replace('_',' ',$row['keyword']) }}</span>
-											</div>
-										@endforeach
-										@if (isset($custom))
-											@foreach($custom as $key=>$row)
-												<div class="col-md-3" style="margin-bottom:5px;">
-													<span class="btn dark btn-xs btn-block btn-outline var" data-toggle="tooltip" title="Text will be replace '{{ $custom[$key] }}'" onClick="addInboxContent('{{ $custom[$key] }}');">{{ str_replace('_',' ',$custom[$key]) }}</span>
-												</div>
-											@endforeach
-										@endif
-									</div>
 								</div>
 							</div>
 							<hr>
