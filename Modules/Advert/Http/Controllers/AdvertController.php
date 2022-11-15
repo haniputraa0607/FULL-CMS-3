@@ -5,7 +5,6 @@ namespace Modules\Advert\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 use Session;
 use Modules\Advert\Http\Requests\Create;
@@ -16,7 +15,8 @@ class AdvertController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    function index(Create $request, $key) {
+    public function index(Create $request, $key)
+    {
 
         if (in_array($key, Session::get('advert'))) {
             $post = $request->except('_token');
@@ -34,8 +34,7 @@ class AdvertController extends Controller
                 $data['advert'] = parent::getData(MyHelper::post('advert', ['page' => $type]));
                 $data['news'] = parent::getData(MyHelper::post('news/be/list', ['admin' => 1]));
                 return view('advert::index', $data);
-            }
-            else {
+            } else {
                 if (isset($post['rearange'])) {
                     return $this->rearange($post);
                 }
@@ -47,24 +46,24 @@ class AdvertController extends Controller
                 if (isset($post['img_bottom'])) {
                     $post['img_bottom'] = MyHelper::encodeImage($post['img_bottom']);
                 }
-                
+
                 if ($post['type'] == "text_top" || $post['type'] == "text_bottom") {
                     if (stristr($post['value'], "<p><br></p>") || empty($post['value'])) {
-                        return parent::redirect(MyHelper::post('advert/delete', $post), 'Data advert has been updated', url()->current().'#'.$post['current']);
+                        return parent::redirect(MyHelper::post('advert/delete', $post), 'Data advert has been updated', url()->current() . '#' . $post['current']);
                     }
                 }
-                
-                return parent::redirect(MyHelper::post('advert/create', $post), 'Data advert has been updated.', url()->current().'#'.$post['current']);
+
+                return parent::redirect(MyHelper::post('advert/create', $post), 'Data advert has been updated.', url()->current() . '#' . $post['current']);
             }
         }
 
         return redirect('home')->withErrors(['Advert is not available']);
-        
     }
 
     /* REARANGE PICTURE */
-    function rearange($post) {
-        for ($i=0; $i < count($post['id_advert']); $i++) { 
+    public function rearange($post)
+    {
+        for ($i = 0; $i < count($post['id_advert']); $i++) {
             $data = [
                 'id_advert' => $post['id_advert'][$i],
                 'order'     => $i + 1
@@ -77,11 +76,12 @@ class AdvertController extends Controller
             }
         }
 
-        return parent::redirect($update, 'Data advert has been updated.', url()->current().'#'.$post['current']);
+        return parent::redirect($update, 'Data advert has been updated.', url()->current() . '#' . $post['current']);
     }
 
     /* DEFINE TYPE */
-    function type() {
+    public function type()
+    {
         $currentUrl = url()->current();
         $arrUrl     = explode('/', $currentUrl);
         $url        = end($arrUrl);
@@ -91,17 +91,16 @@ class AdvertController extends Controller
     }
 
     /* DELETE ADVERT */
-    function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $post    = $request->except('_token');
 
         $advert = MyHelper::post('advert/delete', ['id_advert' => $post['id_advert']]);
 
         if (isset($advert['status']) && $advert['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
-
 }

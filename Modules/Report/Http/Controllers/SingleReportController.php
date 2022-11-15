@@ -5,14 +5,13 @@ namespace Modules\Report\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use App\Lib\MyHelper;
 
 class SingleReportController extends Controller
 {
     /**
      * Display a single report page
-     * 
+     *
      */
     public function index()
     {
@@ -26,34 +25,34 @@ class SingleReportController extends Controller
         // get report year
         $data['year_list'] = [date('Y')];
         $year_list = MyHelper::get('report/single/year-list');
-        if (isset($year_list['status']) && $year_list['status']=='success' ) {
+        if (isset($year_list['status']) && $year_list['status'] == 'success') {
             $data['year_list'] = $year_list['result'];
         }
         // get outlet list
         $data['outlets'] = [];
         $outlets = MyHelper::get('report/single/outlet-list');
-        if (isset($outlets['status']) && $outlets['status']=='success' ) {
+        if (isset($outlets['status']) && $outlets['status'] == 'success') {
             $data['outlets'] = $outlets['result'];
         }
         // get product list
         $data['products'] = [];
         $products = MyHelper::get('report/single/product-list');
-        if (isset($products['status']) && $products['status']=='success' ) {
+        if (isset($products['status']) && $products['status'] == 'success') {
             $data['products'] = $products['result'];
         }
         // get membership list
         $data['memberships'] = [];
         $memberships = MyHelper::get('report/single/membership-list');
-        if (isset($memberships['status']) && $memberships['status']=='success' ) {
+        if (isset($memberships['status']) && $memberships['status'] == 'success') {
             $data['memberships'] = $memberships['result'];
         }
         // get deals list
         $data['deals'] = [];
         $deals = MyHelper::get('report/single/deals-list');
-        if (isset($deals['status']) && $deals['status']=='success' ) {
+        if (isset($deals['status']) && $deals['status'] == 'success') {
             $data['deals'] = $deals['result'];
         }
-        
+
         $post = session('report_filter');
         if ($post == null) {
             // set default filter
@@ -63,7 +62,7 @@ class SingleReportController extends Controller
             $post['time_type_select'] = 'day';  // for select in view
             $post['time_type'] = 'day';  // for api
             $post['param1'] = $one_week_ago;
-            $post['param2'] = $today;        
+            $post['param2'] = $today;
 
             $post['param1_str'] = date('d/m/Y', strtotime($post['param1']));
             $post['param2_str'] = date('d/m/Y', strtotime($post['param2']));
@@ -92,7 +91,7 @@ class SingleReportController extends Controller
         // get report
         $data['report'] = [];
         $report = MyHelper::post('report/single', $post);
-        if (isset($report['status']) && $report['status']=='success' ) {
+        if (isset($report['status']) && $report['status'] == 'success') {
             $data['report'] = $report['result'];
         }
 
@@ -106,14 +105,13 @@ class SingleReportController extends Controller
         $post['time_type_select'] = $post['time_type'];
         if ($post['time_type'] == 'week') {
             $post['time_type'] = 'day';
-        }
-        else if ($post['time_type'] == 'quarter') {
+        } elseif ($post['time_type'] == 'quarter') {
             $post['time_type'] = 'month';
         }
-        
+
         switch ($post['time_type']) {
             case 'day':
-                if ($post['param1']=="" || $post['param2']=="") {
+                if ($post['param1'] == "" || $post['param2'] == "") {
                     $success = false;
                 } else {
                     // date format in datepicker
@@ -126,27 +124,29 @@ class SingleReportController extends Controller
                     $post['param1'] = date('Y-m-d', strtotime($post['param1']));
                     $post['param2'] = date('Y-m-d', strtotime($post['param2']));
 
-                    $date_range = date('d M Y', strtotime($post['param1'])) ." - ". date('d M Y', strtotime($post['param2']));
+                    $date_range = date(
+                        'd M Y',
+                        strtotime($post['param1'])
+                    ) . " - " . date('d M Y', strtotime($post['param2']));
                 }
                 break;
             case 'month':
-                if ($post['param1']=="" || $post['param2']=="" || $post['param3']=="") {
+                if ($post['param1'] == "" || $post['param2'] == "" || $post['param3'] == "") {
                     $success = false;
-                }
-                else{
+                } else {
                     $month_name_1 = date('F', mktime(0, 0, 0, $post['param1'], 10));
                     $month_name_2 = date('F', mktime(0, 0, 0, $post['param2'], 10));
-                    $date_range = $month_name_1 ." - ". $month_name_2 ." ". $post['param3'];
+                    $date_range = $month_name_1 . " - " . $month_name_2 . " " . $post['param3'];
                 }
                 break;
             case 'year':
-                if ($post['param1']=="" || $post['param2']=="") {
+                if ($post['param1'] == "" || $post['param2'] == "") {
                     $success = false;
                 } else {
-                    $date_range = $post['param1'] ." - ". $post['param2'];
+                    $date_range = $post['param1'] . " - " . $post['param2'];
                 }
                 break;
-            
+
             default:
                 $success = false;
                 break;
@@ -174,15 +174,14 @@ class SingleReportController extends Controller
                 "status" => "fail",
                 "messages" => ['Field is required']
             ];
-        }
-        else{
+        } else {
             $post = $check['post'];
             $date_range = $check['date_range'];
 
             // combine post with filter from session
             $report_filter = session('report_filter');
             $post = array_replace($report_filter, $post);
-            
+
             // store filter in session
             session(['report_filter' => $post]);
 
@@ -213,9 +212,8 @@ class SingleReportController extends Controller
             // date format in datepicker
             $result['filter'] = $post;
             $result['date_range'] = $date_range;
-            
+
             return $result;
         }
     }
-
 }

@@ -1,7 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'autocrm', 'namespace' => 'Modules\Autocrm\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'autocrm', 'namespace' => 'Modules\Autocrm\Http\Controllers'], function () {
     Route::get('/', ['middleware' => ['config_control:55', 'feature_control:119'], 'uses' => 'AutocrmController@list']);
     Route::any('create', ['middleware' => ['config_control:55', 'feature_control:121'], 'uses' => 'AutocrmController@create']);
     Route::any('cron/delete', ['middleware' => ['config_control:55', 'feature_control:113'], 'uses' => 'AutocrmController@deleteAutocrmCron']);
@@ -16,12 +15,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'autocrm'
     Route::get('{media}/turnon/{id}', 'AutocrmController@mediaOn');
 });
 
-Route::group(['middleware' => ['web','validate_session'], 'prefix' => 'about', 'namespace' => 'Modules\Autocrm\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web','validate_session'], 'prefix' => 'about', 'namespace' => 'Modules\Autocrm\Http\Controllers'], function () {
     Route::any('autoresponse/{subject}', 'AutocrmController@autoResponse');
 });
 
-Route::group(['middleware' => ['web', 'validate_session'],'namespace' => 'Modules\Autocrm\Http\Controllers'], function()
-{
-  Route::any('autoresponse/{type}/{subject}', 'AutocrmController@autoResponse');
+Route::group(['middleware' => ['web', 'validate_session'],'namespace' => 'Modules\Autocrm\Http\Controllers'], function () {
+    Route::any('autoresponse/{type}/{subject}', 'AutocrmController@autoResponse');
 });

@@ -5,18 +5,19 @@ namespace Modules\Report\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 use Session;
 
 class ReportDuaController extends Controller
 {
-    function __construct() {
+    public function __construct()
+    {
         date_default_timezone_set('Asia/Jakarta');
     }
 
     /* warna */
-    function color($key) {
+    public function color($key)
+    {
         $warna = [
             '#FF0F00',
             '#FF6600',
@@ -63,7 +64,8 @@ class ReportDuaController extends Controller
     }
 
     /* character */
-    function character($key) {
+    public function character($key)
+    {
         $chara = [
             "https://www.amcharts.com/lib/images/faces/A04.png",
             "https://www.amcharts.com/lib/images/faces/A01.png",
@@ -82,14 +84,14 @@ class ReportDuaController extends Controller
         return $chara[$key];
     }
 
-    public function reportProductAll(Request $request) {
+    public function reportProductAll(Request $request)
+    {
         $post = $request->except('_token');
-        
+
         if (empty($post)) {
             $post['date_start']   = date('Y-m-d', strtotime("-30 days"));
             $post['date_end']     = date('Y-m-d', strtotime("-1 days"));
-        }
-        else {
+        } else {
             $post['date_start']   = date('Y-m-d', strtotime($post['date_start']));
             $post['date_end']     = date('Y-m-d', strtotime($post['date_end']));
         }
@@ -116,7 +118,8 @@ class ReportDuaController extends Controller
     }
 
     /* GET DATA */
-    function getDataReportProduct($post) {
+    public function getDataReportProduct($post)
+    {
         $report = MyHelper::post('report/trx/product', $post);
 
         $dataRec     = [];
@@ -129,9 +132,9 @@ class ReportDuaController extends Controller
             $dataProduct = $report['result'];
 
             foreach ($report['result'] as $key => $value) {
-                $dataProduct[$key]['id_product'] = MyHelper::createSlug($report['result'][$key]['id_product'],'');
+                $dataProduct[$key]['id_product'] = MyHelper::createSlug($report['result'][$key]['id_product'], '');
                 $tempNominal = [
-                    'product' => $value['product_code'].'-'.$value['product_name'],
+                    'product' => $value['product_code'] . '-' . $value['product_name'],
                     'nominal' => $value['total_nominal'],
                     'color'   =>  $this->color($key)
                 ];
@@ -139,14 +142,14 @@ class ReportDuaController extends Controller
                 array_push($dataNominal, $tempNominal);
 
                 $tempQty = [
-                    'product' => $value['product_code'].'-'.$value['product_name'],
+                    'product' => $value['product_code'] . '-' . $value['product_name'],
                     'qty'     => $value['total_qty']
                 ];
 
                 array_push($dataQty, $tempQty);
 
                 $tempRec = [
-                    'product' => $value['product_code'].'-'.$value['product_name'],
+                    'product' => $value['product_code'] . '-' . $value['product_name'],
                     'rec'     => $value['total_rec']
                 ];
 
@@ -163,7 +166,8 @@ class ReportDuaController extends Controller
     }
 
     /* REPORT PRODUCT DETAIL */
-    function reportProductDetail($slug, $date_start, $date_end) {
+    public function reportProductDetail($slug, $date_start, $date_end)
+    {
         $exploded = MyHelper::explodeSlug($slug);
         $id = $exploded[0];
         $created_at = $exploded[1];
@@ -187,14 +191,15 @@ class ReportDuaController extends Controller
         }
 
         $data['date_start'] = $date_start;
-        $data['date_end']   = $date_end;        
+        $data['date_end']   = $date_end;
         $data['product']    = parent::getData(MyHelper::post('product/be/list', ['id_product' => $id]));
-        $data['product'][0]['category'] = $data['product'][0]['category'][0]??['product_category_name' => 'Uncategories'];
+        $data['product'][0]['category'] = $data['product'][0]['category'][0] ?? ['product_category_name' => 'Uncategories'];
 
         return view('report::report_product_detail', $data);
     }
 
-    function getDataReportProductDetail($post) {
+    public function getDataReportProductDetail($post)
+    {
         $report = MyHelper::post('report/trx/product/detail', $post);
 
         $dataRecQty  = [];
@@ -206,7 +211,7 @@ class ReportDuaController extends Controller
                     'date' => $value['trx_date'],
                     'qty'  => $value['total_qty'],
                     'rec'  => $value['total_rec']
-                ];  
+                ];
 
                 array_push($dataRecQty, $recQtyTemp);
 
@@ -228,14 +233,14 @@ class ReportDuaController extends Controller
     }
 
     /* REPORT OUTLET */
-    public function reportOutletAll(Request $request) {
+    public function reportOutletAll(Request $request)
+    {
         $post = $request->except('_token');
-        
+
         if (empty($post)) {
             $post['date_start']   = date('Y-m-d', strtotime("-30 days"));
             $post['date_end']     = date('Y-m-d', strtotime("-1 days"));
-        }
-        else {
+        } else {
             $post['date_start']   = date('Y-m-d', strtotime($post['date_start']));
             $post['date_end']     = date('Y-m-d', strtotime($post['date_end']));
         }
@@ -253,7 +258,7 @@ class ReportDuaController extends Controller
 
         // DATA
         $graph = $this->getDataReportOutlet($post);
-        
+
         foreach ($graph as $key => $value) {
             $data[$key] = $value;
         }
@@ -262,7 +267,8 @@ class ReportDuaController extends Controller
     }
 
     /* GET DATA REPORT OUTLET */
-    function getDataReportOutlet($post) {
+    public function getDataReportOutlet($post)
+    {
         $report = MyHelper::post('report/trx/outlet', $post);
 
         $dataCount     = [];
@@ -275,7 +281,7 @@ class ReportDuaController extends Controller
 
             foreach ($report['result']['count'] as $key => $value) {
                 $tempCount = [
-                    'outlet' => $value['outlet_code'].'-'.$value['outlet_name'],
+                    'outlet' => $value['outlet_code'] . '-' . $value['outlet_name'],
                     'count' => $value['total_count'],
                     'color'   =>  $this->color($key)
                 ];
@@ -284,9 +290,9 @@ class ReportDuaController extends Controller
             }
 
             foreach ($report['result']['value'] as $key => $value) {
-                $dataOutlet[$key]['id_outlet'] = MyHelper::createSlug($value['id_outlet'],'');
+                $dataOutlet[$key]['id_outlet'] = MyHelper::createSlug($value['id_outlet'], '');
                 $tempValue = [
-                    'outlet' => $value['outlet_code'].'-'.$value['outlet_name'],
+                    'outlet' => $value['outlet_code'] . '-' . $value['outlet_name'],
                     'value'     => $value['total_value'],
                     'color'   =>  $this->color($key)
                 ];
@@ -294,9 +300,9 @@ class ReportDuaController extends Controller
                 array_push($dataValue, $tempValue);
             }
 
-            usort($dataValue, function($a, $b) { 
-                return $a['value'] < $b['value']; 
-            }); 
+            usort($dataValue, function ($a, $b) {
+                return $a['value'] < $b['value'];
+            });
             $dataValue = array_slice($dataValue, 0, 10);
         }
 
@@ -308,21 +314,22 @@ class ReportDuaController extends Controller
     }
 
      /* REPORT OUTLET DETAIL */
-     function reportOutletDetail($slug, $date_start, $date_end) {
+    public function reportOutletDetail($slug, $date_start, $date_end)
+    {
         $exploded = MyHelper::explodeSlug($slug);
         $id = $exploded[0];
         $created_at = $exploded[1];
         $data = [
-            'title'          => 'Report',
-            'menu_active'    => 'report-outlet',
-            'sub_title'      => 'Outlet',
-            'submenu_active' => 'report-outlet'
+           'title'          => 'Report',
+           'menu_active'    => 'report-outlet',
+           'sub_title'      => 'Outlet',
+           'submenu_active' => 'report-outlet'
         ];
 
         $post = [
-            'id_outlet' => $id,
-            'date_start' => $date_start,
-            'date_end'   => $date_end
+           'id_outlet' => $id,
+           'date_start' => $date_start,
+           'date_end'   => $date_end
         ];
 
         $graph = $this->getDataReportOutletDetail($post);
@@ -332,13 +339,14 @@ class ReportDuaController extends Controller
         }
 
         $data['date_start'] = $date_start;
-        $data['date_end']   = $date_end;        
+        $data['date_end']   = $date_end;
         $data['outlet']    = parent::getData(MyHelper::post('outlet/be/list', ['id_outlet' => $id]));
 
         return view('report::report_outlet_detail', $data);
     }
 
-    function getDataReportOutletDetail($post) {
+    public function getDataReportOutletDetail($post)
+    {
         $report = MyHelper::post('report/trx/outlet/detail', $post);
 
         $dataOutlet  = [];
@@ -349,10 +357,9 @@ class ReportDuaController extends Controller
                     'date' => $value['trx_date'],
                     'count'  => $value['total_count'],
                     'value'  => $value['total_value']
-                ];  
+                ];
 
                 array_push($dataOutlet, $temp);
-
             }
         }
 
@@ -364,9 +371,10 @@ class ReportDuaController extends Controller
     }
 
     /* REPORT GLOBAL */
-    function reportGlobal(Request $request) {
+    public function reportGlobal(Request $request)
+    {
         $post = $request->except('_token');
-        
+
         $data = [
             'title'          => 'Report',
             'menu_active'    => 'report-global',
@@ -378,21 +386,19 @@ class ReportDuaController extends Controller
             $post['date_start']   = date('Y-m-d', strtotime("-30 days"));
             $post['date_end']     = date('Y-m-d', strtotime("-1 days"));
             $post['id_outlet']    = 0;
-        }
-        else {
+        } else {
             if (!isset($post['id_outlet']) || $post['id_outlet'] == 0) {
                 unset($post['id_outlet']);
                 $data['id_outlet'] = 0;
-            }
-            else {
+            } else {
                 $post['id_outlet']    = $post['id_outlet'];
             }
-            
+
             $post['date_start']   = date('Y-m-d', strtotime($post['date_start']));
             $post['date_end']     = date('Y-m-d', strtotime($post['date_end']));
         }
 
-        
+
 
         foreach ($post as $key => $value) {
             $data[$key] = $value;
@@ -432,7 +438,8 @@ class ReportDuaController extends Controller
         return view('report::report_global_new', $data);
     }
 
-    function globalTrx($post) {
+    public function globalTrx($post)
+    {
         $report = MyHelper::post('report/trx/transaction', $post);
 
         // print_r($report); exit();
@@ -450,15 +457,15 @@ class ReportDuaController extends Controller
                 $nominalTemp = [
                     'nominal' => $value['trx_grand'],
                     'date'    => $value['trx_date']
-                ];  
+                ];
 
                 array_push($nominal, $nominalTemp);
 
                 $totalNominal  = $totalNominal + $value['trx_grand'];
                 $totalCountTrx = $totalCountTrx + $value['trx_count'];
 
-                if($value['trx_date'] != $tempDate){
-                    $totalTrx = $totalTrx + 1; 
+                if ($value['trx_date'] != $tempDate) {
+                    $totalTrx = $totalTrx + 1;
                     $tempDate = $value['trx_date'];
                 }
             }
@@ -478,9 +485,10 @@ class ReportDuaController extends Controller
         ];
     }
 
-    function point($post) {
+    public function point($post)
+    {
         $report      = MyHelper::post('report/trx/transaction/point', $post);
-        
+
         $pointGiven  = 0;
         $pointRedeem = 0;
         $pointTotal       = 0;
@@ -498,7 +506,8 @@ class ReportDuaController extends Controller
         ];
     }
 
-    function customer($post) {
+    public function customer($post)
+    {
         $user     = [];
         $dataUser = [];
 
@@ -525,7 +534,8 @@ class ReportDuaController extends Controller
         ];
     }
 
-    function product($post) {
+    public function product($post)
+    {
         $product     = [];
         $dataProduct = [];
 
@@ -533,10 +543,9 @@ class ReportDuaController extends Controller
 
         if (isset($report['status']) && $report['status'] == "success") {
             foreach ($report['result'] as $key => $value) {
-
                 if ($key < 10) {
                     $tempNominal = [
-                        'product' => $value['product_code'].'-'.$value['product_name'],
+                        'product' => $value['product_code'] . '-' . $value['product_name'],
                         'qty'     => $value['total_qty'],
                         'color'   =>  $this->color($key)
                     ];
@@ -545,7 +554,7 @@ class ReportDuaController extends Controller
                 }
             }
 
-            usort($product, function($a, $b) {
+            usort($product, function ($a, $b) {
                 return $a['qty'] < $b['qty'];
             });
 

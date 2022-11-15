@@ -5,7 +5,6 @@ namespace Modules\Deals\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 
 class WebviewDealsController extends Controller
@@ -32,17 +31,17 @@ class WebviewDealsController extends Controller
                 'messages' => ['Deals is not found']
             ];
         }
-        
-        usort($data['deals'][0]['outlet_by_city'], function($a, $b) {
+
+        usort($data['deals'][0]['outlet_by_city'], function ($a, $b) {
             return $a['city_name'] <=> $b['city_name'];
         });
-        
+
         for ($i = 0; $i < count($data['deals'][0]['outlet_by_city']); $i++) {
-            usort($data['deals'][0]['outlet_by_city'][$i]['outlet'] ,function($a, $b) {
+            usort($data['deals'][0]['outlet_by_city'][$i]['outlet'], function ($a, $b) {
                 return $a['outlet_name'] <=> $b['outlet_name'];
             });
         }
-        
+
         return view('deals::deals.webview.deals_detail', $data);
     }
 

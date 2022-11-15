@@ -9,18 +9,18 @@ use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 use App\Lib\MyHelper;
 
-class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
+class ProductExport implements FromArray, WithTitle, ShouldAutoSize, WithEvents
 {
-	protected $data;
+    protected $data;
     protected $code_brand;
     protected $name_brand;
     protected $tab_title;
 
-    public function __construct(array $data,$brand=null,$tab_title = 'List Products')
+    public function __construct(array $data, $brand = null, $tab_title = 'List Products')
     {
         $this->data = $data;
-        $this->code_brand = $brand['code_brand']??'';
-        $this->name_brand = $brand['name_brand']??'';
+        $this->code_brand = $brand['code_brand'] ?? '';
+        $this->name_brand = $brand['name_brand'] ?? '';
         $this->tab_title = $tab_title;
     }
 
@@ -29,12 +29,12 @@ class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
     */
     public function array(): array
     {
-    	$array = [
+        $array = [
             ['Brand Code',$this->code_brand],
             ['Brand Name',$this->name_brand],
-            array_keys($this->data[0]??[])
+            array_keys($this->data[0] ?? [])
         ];
-        return array_merge($array,$this->data);
+        return array_merge($array, $this->data);
     }
     /**
      * @return string
@@ -50,7 +50,7 @@ class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function(AfterSheet $event) {
+            AfterSheet::class    => function (AfterSheet $event) {
                 $last = count($this->data);
                 $styleArray = [
                     'borders' => [
@@ -78,9 +78,9 @@ class ProductExport implements FromArray,WithTitle, ShouldAutoSize, WithEvents
                         ],
                     ],
                 ];
-                $x_coor = MyHelper::getNameFromNumber(count($this->data[0]??[]));
-                $event->sheet->getStyle('A3:'.$x_coor.($last+3))->applyFromArray($styleArray);
-                $headRange = 'A3:'.$x_coor.'3';
+                $x_coor = MyHelper::getNameFromNumber(count($this->data[0] ?? []));
+                $event->sheet->getStyle('A3:' . $x_coor . ($last + 3))->applyFromArray($styleArray);
+                $headRange = 'A3:' . $x_coor . '3';
                 $event->sheet->getStyle($headRange)->applyFromArray($styleHead);
             },
         ];

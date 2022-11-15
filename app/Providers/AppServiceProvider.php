@@ -16,19 +16,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(UrlGenerator $url)
     {
-        if(env('REDIRECT_HTTPS', 'false') == 'true') {
+        if (env('REDIRECT_HTTPS', 'false') == 'true') {
             $url->forceScheme('https');
         }
 
-        view()->composer('*', function ($view) 
-            {
+        view()->composer('*', function ($view) {
                 $view->with('configs', session('configs'));
                 $view->with('grantedFeature', session('granted_features'));
 
                 $badges = MyHelper::get('sidebar-badge?log_save=false')['result'] ?? [];
                 View::share('sidebar_badges', $badges);
                 View::share('total_inbox', 123);
-            });
+        });
     }
 
     /**
@@ -38,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('mailgun.client', function() {
+        $this->app->bind('mailgun.client', function () {
             return \Http\Adapter\Guzzle6\Client::createWithConfig([
                 // your Guzzle6 configuration
             ]);

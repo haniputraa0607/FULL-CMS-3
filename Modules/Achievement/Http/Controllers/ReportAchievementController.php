@@ -14,7 +14,8 @@ use Session;
 
 class ReportAchievementController extends Controller
 {
-    function reportAchievement(Request $request){
+    public function reportAchievement(Request $request)
+    {
         $post = $request->all();
         $data = [
             'title'          => 'Achievement',
@@ -23,14 +24,14 @@ class ReportAchievementController extends Controller
             'submenu_active' => 'achievement-report'
         ];
 
-        if(Session::has('filter-report-achievement') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-report-achievement') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-report-achievement');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-report-achievement');
         }
 
@@ -40,9 +41,9 @@ class ReportAchievementController extends Controller
             $data['data']          = $getData['result']['data'];
             $data['dataTotal']     = $getData['result']['total'];
             $data['dataPerPage']   = $getData['result']['from'];
-            $data['dataUpTo']      = $getData['result']['from'] + count($getData['result']['data'])-1;
+            $data['dataUpTo']      = $getData['result']['from'] + count($getData['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($getData['result']['data'], $getData['result']['total'], $getData['result']['per_page'], $getData['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -50,13 +51,14 @@ class ReportAchievementController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-report-achievement',$post);
+        if ($post) {
+            Session::put('filter-report-achievement', $post);
         }
         return view('achievement::report.achievement.achievement', $data);
     }
 
-    function reportDetailAchievement(Request $request, $id){
+    public function reportDetailAchievement(Request $request, $id)
+    {
         $post = $request->all();
         $data = [
             'title'          => 'Achievement',
@@ -66,7 +68,7 @@ class ReportAchievementController extends Controller
         ];
 
         $data['id_achievement_group'] = $id;
-        if(!empty($post)){
+        if (!empty($post)) {
             $post['id_achievement_group'] = $id;
             $getData = MyHelper::post('achievement/report/detail', $post);
 
@@ -80,30 +82,31 @@ class ReportAchievementController extends Controller
             }
 
             return response()->json($result);
-        }else{
+        } else {
             $data['data_achievement'] = [];
             $data['data_badge'] = [];
             return view('achievement::report.achievement.detail', $data);
         }
     }
 
-    function reportListUserAchievement(Request $request, $id){
+    public function reportListUserAchievement(Request $request, $id)
+    {
         $post = $request->all();
         $post['id_achievement_group'] = $id;
-        $draw =$post['draw'];
+        $draw = $post['draw'];
 
         $page = 1;
-        if(isset($post['start']) && isset($post['length'])){
-            $page = $post['start']/$post['length'] + 1;
+        if (isset($post['start']) && isset($post['length'])) {
+            $page = $post['start'] / $post['length'] + 1;
         }
-        $getDataListUser = MyHelper::post('achievement/report/list/user-achievement?page='.$page, $post);
+        $getDataListUser = MyHelper::post('achievement/report/list/user-achievement?page=' . $page, $post);
 
-        if(isset($getDataListUser['status']) && $getDataListUser['status'] == 'success'){
+        if (isset($getDataListUser['status']) && $getDataListUser['status'] == 'success') {
             $arr_result['draw'] = $draw;
             $arr_result['recordsTotal'] = $getDataListUser['result']['total'];
             $arr_result['recordsFiltered'] = $getDataListUser['result']['total'];
             $arr_result['data'] = $getDataListUser['result']['data'];
-        }else{
+        } else {
             $arr_result['draw'] = $draw;
             $arr_result['recordsTotal'] = 0;
             $arr_result['recordsFiltered'] = 0;
@@ -113,7 +116,8 @@ class ReportAchievementController extends Controller
         return response()->json($arr_result);
     }
 
-    function reportUser(Request $request){
+    public function reportUser(Request $request)
+    {
         $post = $request->all();
         $data = [
             'title'          => 'Achievement',
@@ -122,14 +126,14 @@ class ReportAchievementController extends Controller
             'submenu_active' => 'achievement-report-user'
         ];
 
-        if(Session::has('filter-report-achievement-user') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-report-achievement-user') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-report-achievement-user');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-report-achievement-user');
         }
 
@@ -139,9 +143,9 @@ class ReportAchievementController extends Controller
             $data['data']          = $getData['result']['data'];
             $data['dataTotal']     = $getData['result']['total'];
             $data['dataPerPage']   = $getData['result']['from'];
-            $data['dataUpTo']      = $getData['result']['from'] + count($getData['result']['data'])-1;
+            $data['dataUpTo']      = $getData['result']['from'] + count($getData['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($getData['result']['data'], $getData['result']['total'], $getData['result']['per_page'], $getData['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -149,13 +153,14 @@ class ReportAchievementController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-report-achievement-user',$post);
+        if ($post) {
+            Session::put('filter-report-achievement-user', $post);
         }
         return view('achievement::report.user.user', $data);
     }
 
-    function reportDetailUser(Request $request, $phone){
+    public function reportDetailUser(Request $request, $phone)
+    {
         $post = $request->all();
         $data = [
             'title'          => 'Achievement',
@@ -170,22 +175,21 @@ class ReportAchievementController extends Controller
         if (isset($getData['status']) && $getData['status'] == "success") {
             $data['user'] = $getData['result']['data_user'];
 
-            if(!empty($getData['result']['list_achievement'])){
+            if (!empty($getData['result']['list_achievement'])) {
                 $listachievement = $getData['result']['list_achievement'];
                 $data['data']          = $listachievement['data'];
                 $data['dataTotal']     = $listachievement['total'];
                 $data['dataPerPage']   = $listachievement['from'];
-                $data['dataUpTo']      = $listachievement['from'] + count($listachievement['data'])-1;
+                $data['dataUpTo']      = $listachievement['from'] + count($listachievement['data']) - 1;
                 $data['dataPaginator'] = new LengthAwarePaginator($listachievement['data'], $listachievement['total'], $listachievement['per_page'], $listachievement['current_page'], ['path' => url()->current()]);
-            }else{
+            } else {
                 $data['data']          = [];
                 $data['dataTotal']     = 0;
                 $data['dataPerPage']   = 0;
                 $data['dataUpTo']      = 0;
                 $data['dataPaginator'] = false;
             }
-
-        }else{
+        } else {
             $data['user'] = [];
             $data['data']          = [];
             $data['dataTotal']     = 0;
@@ -199,7 +203,8 @@ class ReportAchievementController extends Controller
         return view('achievement::report.user.detail', $data);
     }
 
-    function reportDetailBadgeUser(Request $request, $id_achievement_group,$phone){
+    public function reportDetailBadgeUser(Request $request, $id_achievement_group, $phone)
+    {
         $post = $request->all();
         $data = [
             'title'          => 'Achievement',
@@ -219,7 +224,8 @@ class ReportAchievementController extends Controller
         return view('achievement::report.user.detail_badge', $data);
     }
 
-    function reportMembership(Request $request){
+    public function reportMembership(Request $request)
+    {
         $post = $request->all();
         $data = [
             'title'          => 'Achievement',
@@ -228,14 +234,14 @@ class ReportAchievementController extends Controller
             'submenu_active' => 'achievement-report-user'
         ];
 
-        if(Session::has('filter-report-achievement-membership') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-report-achievement-membership') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-report-achievement-membership');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-report-achievement-membership');
         }
 
@@ -245,9 +251,9 @@ class ReportAchievementController extends Controller
             $data['data']          = $getData['result']['data'];
             $data['dataTotal']     = $getData['result']['total'];
             $data['dataPerPage']   = $getData['result']['from'];
-            $data['dataUpTo']      = $getData['result']['from'] + count($getData['result']['data'])-1;
+            $data['dataUpTo']      = $getData['result']['from'] + count($getData['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($getData['result']['data'], $getData['result']['total'], $getData['result']['per_page'], $getData['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -255,13 +261,14 @@ class ReportAchievementController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-report-achievement-membership',$post);
+        if ($post) {
+            Session::put('filter-report-achievement-membership', $post);
         }
         return view('achievement::report.membership.membership', $data);
     }
 
-    function reportDetailMembershipView(Request $request, $id){
+    public function reportDetailMembershipView(Request $request, $id)
+    {
         $data = [
             'title'          => 'Achievement',
             'sub_title'      => 'Report Detail Membeship Achievement',
@@ -273,7 +280,8 @@ class ReportAchievementController extends Controller
         return view('achievement::report.membership.detail', $data);
     }
 
-    function reportDetailMembership(Request $request, $id){
+    public function reportDetailMembership(Request $request, $id)
+    {
         $post = $request->all();
 
         $post['id_membership'] = $id;
@@ -281,23 +289,24 @@ class ReportAchievementController extends Controller
         return response()->json($getData);
     }
 
-    function reportListUserMembership(Request $request, $id){
+    public function reportListUserMembership(Request $request, $id)
+    {
         $post = $request->all();
         $post['id_membership'] = $id;
-        $draw =$post['draw'];
+        $draw = $post['draw'];
 
         $page = 1;
-        if(isset($post['start']) && isset($post['length'])){
-            $page = $post['start']/$post['length'] + 1;
+        if (isset($post['start']) && isset($post['length'])) {
+            $page = $post['start'] / $post['length'] + 1;
         }
-        $getDataListUser = MyHelper::post('achievement/report/membership/list-user?page='.$page, $post);
+        $getDataListUser = MyHelper::post('achievement/report/membership/list-user?page=' . $page, $post);
 
-        if(isset($getDataListUser['status']) && $getDataListUser['status'] == 'success'){
+        if (isset($getDataListUser['status']) && $getDataListUser['status'] == 'success') {
             $arr_result['draw'] = $draw;
             $arr_result['recordsTotal'] = $getDataListUser['result']['total'];
             $arr_result['recordsFiltered'] = $getDataListUser['result']['total'];
             $arr_result['data'] = $getDataListUser['result']['data'];
-        }else{
+        } else {
             $arr_result['draw'] = $draw;
             $arr_result['recordsTotal'] = 0;
             $arr_result['recordsFiltered'] = 0;

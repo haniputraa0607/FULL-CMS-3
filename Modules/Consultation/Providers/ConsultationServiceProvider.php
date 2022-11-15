@@ -46,10 +46,11 @@ class ConsultationServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('consultation.php'),
+            __DIR__ . '/../Config/config.php' => config_path('consultation.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'consultation'
+            __DIR__ . '/../Config/config.php',
+            'consultation'
         );
     }
 
@@ -62,11 +63,11 @@ class ConsultationServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/consultation');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/consultation';
@@ -85,7 +86,7 @@ class ConsultationServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'consultation');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'consultation');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'consultation');
         }
     }
 

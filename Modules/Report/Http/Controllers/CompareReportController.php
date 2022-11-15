@@ -5,7 +5,6 @@ namespace Modules\Report\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use App\Lib\MyHelper;
 
 class CompareReportController extends Controller
@@ -22,34 +21,34 @@ class CompareReportController extends Controller
         // get report year
         $data['year_list'] = [date('Y')];
         $year_list = MyHelper::get('report/single/year-list');
-        if (isset($year_list['status']) && $year_list['status']=='success' ) {
+        if (isset($year_list['status']) && $year_list['status'] == 'success') {
             $data['year_list'] = $year_list['result'];
         }
         // get outlet list
         $data['outlets'] = [];
         $outlets = MyHelper::get('report/single/outlet-list');
-        if (isset($outlets['status']) && $outlets['status']=='success' ) {
+        if (isset($outlets['status']) && $outlets['status'] == 'success') {
             $data['outlets'] = $outlets['result'];
         }
         // get product list
         $data['products'] = [];
         $products = MyHelper::get('report/single/product-list');
-        if (isset($products['status']) && $products['status']=='success' ) {
+        if (isset($products['status']) && $products['status'] == 'success') {
             $data['products'] = $products['result'];
         }
         // get membership list
         $data['memberships'] = [];
         $memberships = MyHelper::get('report/single/membership-list');
-        if (isset($memberships['status']) && $memberships['status']=='success' ) {
+        if (isset($memberships['status']) && $memberships['status'] == 'success') {
             $data['memberships'] = $memberships['result'];
         }
         // get deals list
         $data['deals'] = [];
         $deals = MyHelper::get('report/single/deals-list');
-        if (isset($deals['status']) && $deals['status']=='success' ) {
+        if (isset($deals['status']) && $deals['status'] == 'success') {
             $data['deals'] = $deals['result'];
         }
-        
+
         session(['compare_report_filter' => null]);
         $post = session('compare_report_filter');
         $post = null;
@@ -113,7 +112,7 @@ class CompareReportController extends Controller
         // get report
         $data['report'] = [];
         $report = MyHelper::post('report/compare', $post);
-        if (isset($report['status']) && $report['status']=='success' ) {
+        if (isset($report['status']) && $report['status'] == 'success') {
             $data['report'] = $report['result'];
         }
         // dd([$data['report']]);
@@ -128,15 +127,16 @@ class CompareReportController extends Controller
         $post['time_type_select'] = $post['time_type'];
         if ($post['time_type'] == 'week') {
             $post['time_type'] = 'day';
-        }
-        else if ($post['time_type'] == 'quarter') {
+        } elseif ($post['time_type'] == 'quarter') {
             $post['time_type'] = 'month';
         }
-        
+
         switch ($post['time_type']) {
             case 'day':
-                if ($post['param1']=="" || $post['param2']=="" ||
-                    $post['param3']=="" || $post['param4']=="") {
+                if (
+                    $post['param1'] == "" || $post['param2'] == "" ||
+                    $post['param3'] == "" || $post['param4'] == ""
+                ) {
                     $success = false;
                 } else {
                     // date format in datepicker
@@ -155,34 +155,44 @@ class CompareReportController extends Controller
                     $post['param3'] = date('Y-m-d', strtotime($post['param3']));
                     $post['param4'] = date('Y-m-d', strtotime($post['param4']));
 
-                    $date_range_1 = date('d M Y', strtotime($post['param1'])) ." - ". date('d M Y', strtotime($post['param2']));
-                    $date_range_2 = date('d M Y', strtotime($post['param3'])) ." - ". date('d M Y', strtotime($post['param4']));
+                    $date_range_1 = date(
+                        'd M Y',
+                        strtotime($post['param1'])
+                    ) . " - " . date('d M Y', strtotime($post['param2']));
+
+                    $date_range_2 = date(
+                        'd M Y',
+                        strtotime($post['param3'])
+                    ) . " - " . date('d M Y', strtotime($post['param4']));
                 }
                 break;
             case 'month':
-                if ($post['param1']=="" || $post['param2']=="" || $post['param3']=="" ||
-                    $post['param4']=="" || $post['param5']=="" || $post['param6']=="") {
+                if (
+                    $post['param1'] == "" || $post['param2'] == "" || $post['param3'] == "" ||
+                    $post['param4'] == "" || $post['param5'] == "" || $post['param6'] == ""
+                ) {
                     $success = false;
-                }
-                else{
+                } else {
                     $month_name_1 = date('F', mktime(0, 0, 0, $post['param1'], 10));
                     $month_name_2 = date('F', mktime(0, 0, 0, $post['param2'], 10));
                     $month_name_3 = date('F', mktime(0, 0, 0, $post['param4'], 10));
                     $month_name_4 = date('F', mktime(0, 0, 0, $post['param5'], 10));
-                    $date_range_1 = $month_name_1 ." - ". $month_name_2 ." ". $post['param3'];
-                    $date_range_2 = $month_name_3 ." - ". $month_name_4 ." ". $post['param6'];
+                    $date_range_1 = $month_name_1 . " - " . $month_name_2 . " " . $post['param3'];
+                    $date_range_2 = $month_name_3 . " - " . $month_name_4 . " " . $post['param6'];
                 }
                 break;
             case 'year':
-                if ($post['param1']=="" || $post['param2']=="" ||
-                    $post['param3']=="" || $post['param4']=="") {
+                if (
+                    $post['param1'] == "" || $post['param2'] == "" ||
+                    $post['param3'] == "" || $post['param4'] == ""
+                ) {
                     $success = false;
                 } else {
-                    $date_range_1 = $post['param1'] ." - ". $post['param2'];
-                    $date_range_2 = $post['param3'] ." - ". $post['param4'];
+                    $date_range_1 = $post['param1'] . " - " . $post['param2'];
+                    $date_range_2 = $post['param3'] . " - " . $post['param4'];
                 }
                 break;
-            
+
             default:
                 $success = false;
                 break;
@@ -211,8 +221,7 @@ class CompareReportController extends Controller
                 "status" => "fail",
                 "messages" => ['Field is required']
             ];
-        }
-        else{
+        } else {
             $post = $check['post'];
             $date_range_1 = $check['date_range_1'];
             $date_range_2 = $check['date_range_2'];
@@ -220,7 +229,7 @@ class CompareReportController extends Controller
             // combine post with filter from session
             $compare_report_filter = session('compare_report_filter');
             $post = array_replace($compare_report_filter, $post);
-            
+
             // store filter in session
             session(['compare_report_filter' => $post]);
 
@@ -249,9 +258,8 @@ class CompareReportController extends Controller
             $result['filter'] = $post;
             $result['date_range_1'] = $date_range_1;
             $result['date_range_2'] = $date_range_2;
-            
+
             return $result;
         }
     }
-
 }

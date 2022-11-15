@@ -59,9 +59,9 @@ class DoctorSpecialistCategoryController extends Controller
         $post = $request->all();
         $store = MyHelper::post('doctor/be/specialist-category/store', $post);
 
-        if(($store['status']??'')=='success'){
-            return redirect('doctor/specialist-category')->with('success',['Create Category Success']);
-        }else{
+        if (($store['status'] ?? '') == 'success') {
+            return redirect('doctor/specialist-category')->with('success', ['Create Category Success']);
+        } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
     }
@@ -90,7 +90,7 @@ class DoctorSpecialistCategoryController extends Controller
             'submenu_active' => 'doctor-specialist-category'
         ];
 
-        $category = MyHelper::get('doctor/be/specialist-category/'.$id);
+        $category = MyHelper::get('doctor/be/specialist-category/' . $id);
 
         if (isset($category['status']) && $category['status'] == "success") {
             $data['category'] = $category['result'];
@@ -112,9 +112,9 @@ class DoctorSpecialistCategoryController extends Controller
         $post = $post = $request->except('_method');
         $store = MyHelper::post('doctor/be/specialist-category/store', $post);
 
-        if(($store['status']??'')=='success'){
-            return redirect('doctor/specialist-category')->with('success',['Update Specialist Category Success']);
-        }else{
+        if (($store['status'] ?? '') == 'success') {
+            return redirect('doctor/specialist-category')->with('success', ['Update Specialist Category Success']);
+        } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
     }
@@ -127,9 +127,9 @@ class DoctorSpecialistCategoryController extends Controller
     public function destroy($id)
     {
         $result = MyHelper::post('doctor/be/specialist-category/delete', ['id_doctor_specialist_category' => $id]);
-        if(($result['status']??'')=='success'){
-            return redirect('doctor/specialist-category')->with('success',['Delete Service Success']);
-        }else{
+        if (($result['status'] ?? '') == 'success') {
+            return redirect('doctor/specialist-category')->with('success', ['Delete Service Success']);
+        } else {
             return back()->withInput()->withErrors($result['messages'] ?? ['Something went wrong']);
         }
     }

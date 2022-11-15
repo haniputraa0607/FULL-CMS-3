@@ -14,18 +14,18 @@ class ExcelImport implements ToCollection, WithHeadingRow
     public function collection(Collection $collection)
     {
         return $collection;
-        $column=array();
-        $newCollection=array();
-    	foreach ($collection[0] as $key => $value) {
-            if($key<1){
-                $column=$value;
-            }else{
-                $childColection=array();
+        $column = array();
+        $newCollection = array();
+        foreach ($collection[0] as $key => $value) {
+            if ($key < 1) {
+                $column = $value;
+            } else {
+                $childColection = array();
                 foreach ($column as $key2 => $val2) {
-                    $colval=$value[$key2];
-                    $childColection[$val2]=$colval??'';
+                    $colval = $value[$key2];
+                    $childColection[$val2] = $colval ?? '';
                 }
-                $newCollection[]=(Object) $childColection;
+                $newCollection[] = (object) $childColection;
             }
         }
         return $newCollection;

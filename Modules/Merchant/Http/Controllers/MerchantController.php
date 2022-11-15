@@ -11,7 +11,8 @@ use Session;
 
 class MerchantController extends Controller
 {
-    public function settingRegisterIntroduction(Request $request){
+    public function settingRegisterIntroduction(Request $request)
+    {
         $post = $request->all();
         if (empty($post)) {
             $data = [
@@ -22,24 +23,24 @@ class MerchantController extends Controller
                 'status'        => 'introduction'
             ];
 
-            $data['result'] = MyHelper::get('merchant/register/introduction/detail')['result']??[];
+            $data['result'] = MyHelper::get('merchant/register/introduction/detail')['result'] ?? [];
             return view('merchant::register_page', $data);
-
         } else {
-            if(!empty($post['image'])){
+            if (!empty($post['image'])) {
                 $post['image'] = MyHelper::encodeImage($post['image']);
             }
             $update = MyHelper::post('merchant/register/introduction/save', $post);
 
-            if (($update['status'] ?? false) == 'success'){
+            if (($update['status'] ?? false) == 'success') {
                 return back()->with('success', ['Register introduction setting has been updated']);
-            }else{
+            } else {
                 return back()->withErrors($update['messages'] ?? ['Update failed']);
             }
         }
     }
 
-    public function settingRegisterSuccess(Request $request){
+    public function settingRegisterSuccess(Request $request)
+    {
         $post = $request->all();
         if (empty($post)) {
             $data = [
@@ -50,24 +51,24 @@ class MerchantController extends Controller
                 'status'        => 'success'
             ];
 
-            $data['result'] = MyHelper::get('merchant/register/success/detail')['result']??[];
+            $data['result'] = MyHelper::get('merchant/register/success/detail')['result'] ?? [];
             return view('merchant::register_page', $data);
-
         } else {
-            if(!empty($post['image'])){
+            if (!empty($post['image'])) {
                 $post['image'] = MyHelper::encodeImage($post['image']);
             }
             $update = MyHelper::post('merchant/register/success/save', $post);
 
-            if (($update['status'] ?? false) == 'success'){
+            if (($update['status'] ?? false) == 'success') {
                 return back()->with('success', ['Register success setting has been updated']);
-            }else{
+            } else {
                 return back()->withErrors($update['messages'] ?? ['Update failed']);
             }
         }
     }
 
-    public function settingRegisterApproved(Request $request){
+    public function settingRegisterApproved(Request $request)
+    {
         $post = $request->all();
         if (empty($post)) {
             $data = [
@@ -78,24 +79,24 @@ class MerchantController extends Controller
                 'status'        => 'aproved'
             ];
 
-            $data['result'] = MyHelper::get('merchant/register/approved/detail')['result']??[];
+            $data['result'] = MyHelper::get('merchant/register/approved/detail')['result'] ?? [];
             return view('merchant::register_page', $data);
-
         } else {
-            if(!empty($post['image'])){
+            if (!empty($post['image'])) {
                 $post['image'] = MyHelper::encodeImage($post['image']);
             }
             $update = MyHelper::post('merchant/register/approved/save', $post);
 
-            if (($update['status'] ?? false) == 'success'){
+            if (($update['status'] ?? false) == 'success') {
                 return back()->with('success', ['Register approved setting has been updated']);
-            }else{
+            } else {
                 return back()->withErrors($update['messages'] ?? ['Update failed']);
             }
         }
     }
 
-    public function settingRegisterRejected(Request $request){
+    public function settingRegisterRejected(Request $request)
+    {
         $post = $request->all();
         if (empty($post)) {
             $data = [
@@ -106,24 +107,24 @@ class MerchantController extends Controller
                 'status'        => 'rejected'
             ];
 
-            $data['result'] = MyHelper::get('merchant/register/rejected/detail')['result']??[];
+            $data['result'] = MyHelper::get('merchant/register/rejected/detail')['result'] ?? [];
             return view('merchant::register_page', $data);
-
         } else {
-            if(!empty($post['image'])){
+            if (!empty($post['image'])) {
                 $post['image'] = MyHelper::encodeImage($post['image']);
             }
             $update = MyHelper::post('merchant/register/rejected/save', $post);
 
-            if (($update['status'] ?? false) == 'success'){
+            if (($update['status'] ?? false) == 'success') {
                 return back()->with('success', ['Register rejected setting has been updated']);
-            }else{
+            } else {
                 return back()->withErrors($update['messages'] ?? ['Update failed']);
             }
         }
     }
 
-    public function create(){
+    public function create()
+    {
         $data = [
             'title'          => 'Merchant',
             'sub_title'      => 'New Merchant',
@@ -131,23 +132,25 @@ class MerchantController extends Controller
             'submenu_active' => 'merchant-new'
         ];
 
-        $data['province'] = MyHelper::get('province/list')['result']??[];
-        $data['users'] = MyHelper::get('merchant/user/list-not-register')['result']??[];
-        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+        $data['province'] = MyHelper::get('province/list')['result'] ?? [];
+        $data['users'] = MyHelper::get('merchant/user/list-not-register')['result'] ?? [];
+        $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
         return view('merchant::create', $data);
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $post = $request->all();
         $create = MyHelper::post('merchant/store', $post);
         if (isset($create['status']) && $create['status'] == "success") {
             return redirect('merchant/candidate')->withSuccess(['Success save data']);
-        }else{
-            return redirect('merchant/create')->withErrors($create['messages']??['Failed save data']);
+        } else {
+            return redirect('merchant/create')->withErrors($create['messages'] ?? ['Failed save data']);
         }
     }
 
-    public function list(Request $request){
+    public function list(Request $request)
+    {
         $post = $request->all();
 
         $data = [
@@ -160,26 +163,26 @@ class MerchantController extends Controller
             'type' => ''
         ];
 
-        if(Session::has('filter-merchant') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-merchant') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-merchant');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-merchant');
         }
 
-        $getList = MyHelper::post('merchant/list',$post);
+        $getList = MyHelper::post('merchant/list', $post);
 
         if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $getList['result']['data'];
             $data['dataTotal']     = $getList['result']['total'];
             $data['dataPerPage']   = $getList['result']['from'];
-            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data'])-1;
+            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($getList['result']['data'], $getList['result']['total'], $getList['result']['per_page'], $getList['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -187,14 +190,15 @@ class MerchantController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-merchant',$post);
+        if ($post) {
+            Session::put('filter-merchant', $post);
         }
 
         return view('merchant::list', $data);
     }
 
-    public function detail($id){
+    public function detail($id)
+    {
         $data = [
             'title'          => 'Merchant',
             'sub_title'      => 'Merchant Detail',
@@ -202,36 +206,38 @@ class MerchantController extends Controller
             'submenu_active' => 'merchant-list'
         ];
 
-        $data['outlets'] = MyHelper::get('outlet/be/list/simple')['result']??[];
-        $data['provinces'] = MyHelper::get('province/list')['result']??[];
-        $data['cities'] = MyHelper::get('city/list')['result']??[];
-        $detail = MyHelper::post('merchant/detail',['id_merchant' => $id]);
+        $data['outlets'] = MyHelper::get('outlet/be/list/simple')['result'] ?? [];
+        $data['provinces'] = MyHelper::get('province/list')['result'] ?? [];
+        $data['cities'] = MyHelper::get('city/list')['result'] ?? [];
+        $detail = MyHelper::post('merchant/detail', ['id_merchant' => $id]);
 
         if (isset($detail['status']) && $detail['status'] == "success") {
             $data['detail'] = $detail['result'];
-            if(in_array($detail['result']['merchant_status'], ['Pending', 'Rejected'])){
+            if (in_array($detail['result']['merchant_status'], ['Pending', 'Rejected'])) {
                 $data['submenu_active'] = 'merchant-candidate';
             }
             return view('merchant::detail', $data);
-        }else{
-            return redirect('merchant/candidate')->withErrors($save['messages']??['Failed get data']);
+        } else {
+            return redirect('merchant/candidate')->withErrors($save['messages'] ?? ['Failed get data']);
         }
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $post = $request->except('_token');
         unset($post['action_type']);
         $post['id_merchant'] = $id;
-        $update = MyHelper::post('merchant/update',$post);
+        $update = MyHelper::post('merchant/update', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
-            return redirect('merchant/detail/'.$id)->withSuccess(['Success save data']);
-        }else{
-            return redirect('merchant/detail/'.$id)->withErrors($update['messages']??['Failed get data']);
+            return redirect('merchant/detail/' . $id)->withSuccess(['Success save data']);
+        } else {
+            return redirect('merchant/detail/' . $id)->withErrors($update['messages'] ?? ['Failed get data']);
         }
     }
 
-    public function candidate(Request $request){
+    public function candidate(Request $request)
+    {
         $post = $request->all();
 
         $data = [
@@ -244,26 +250,26 @@ class MerchantController extends Controller
             'type' => 'candidate'
         ];
 
-        if(Session::has('filter-merchant-candidate') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-merchant-candidate') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-merchant-candidate');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-merchant-candidate');
         }
 
-        $getList = MyHelper::post('merchant/candidate/list',$post);
+        $getList = MyHelper::post('merchant/candidate/list', $post);
 
         if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $getList['result']['data'];
             $data['dataTotal']     = $getList['result']['total'];
             $data['dataPerPage']   = $getList['result']['from'];
-            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data'])-1;
+            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($getList['result']['data'], $getList['result']['total'], $getList['result']['per_page'], $getList['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -271,35 +277,38 @@ class MerchantController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-merchant-candidate',$post);
+        if ($post) {
+            Session::put('filter-merchant-candidate', $post);
         }
 
         return view('merchant::candidate_list', $data);
     }
 
-    public function candidateUpdate(Request $request, $id){
+    public function candidateUpdate(Request $request, $id)
+    {
         $post = $request->all();
         $post['id_merchant'] = $id;
-        $detail = MyHelper::post('merchant/candidate/update',$post);
+        $detail = MyHelper::post('merchant/candidate/update', $post);
 
         if (isset($detail['status']) && $detail['status'] == "success") {
-            if($post['action_type'] == 'approve'){
-                return redirect('merchant/detail/'.$id)->withSuccess(['Success save data']);
-            }else{
-                return redirect('merchant/candidate/detail/'.$id)->withSuccess(['Success save data']);
+            if ($post['action_type'] == 'approve') {
+                return redirect('merchant/detail/' . $id)->withSuccess(['Success save data']);
+            } else {
+                return redirect('merchant/candidate/detail/' . $id)->withSuccess(['Success save data']);
             }
-        }else{
-            return redirect('merchant/candidate/detail/'.$id)->withErrors($detail['messages']??['Failed get data']);
+        } else {
+            return redirect('merchant/candidate/detail/' . $id)->withErrors($detail['messages'] ?? ['Failed get data']);
         }
     }
 
-    public function candidateDelete($id){
+    public function candidateDelete($id)
+    {
         $delete = MyHelper::post('merchant/delete', ['id_merchant' => $id]);
         return $delete;
     }
 
-    public function withdrawalList(Request  $request){
+    public function withdrawalList(Request $request)
+    {
         $post = $request->all();
 
         $data = [
@@ -312,26 +321,26 @@ class MerchantController extends Controller
             'type' => ''
         ];
 
-        if(Session::has('filter-merchant-withdrawal') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-merchant-withdrawal') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-merchant-withdrawal');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-merchant-withdrawal');
         }
 
-        $getList = MyHelper::post('merchant/withdrawal/list',$post);
+        $getList = MyHelper::post('merchant/withdrawal/list', $post);
 
         if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $getList['result']['data'];
             $data['dataTotal']     = $getList['result']['total'];
             $data['dataPerPage']   = $getList['result']['from'];
-            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data'])-1;
+            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($getList['result']['data'], $getList['result']['total'], $getList['result']['per_page'], $getList['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -339,21 +348,22 @@ class MerchantController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-merchant-withdrawal',$post);
+        if ($post) {
+            Session::put('filter-merchant-withdrawal', $post);
         }
 
         return view('merchant::withdrawal_list', $data);
     }
 
-    public function withdrawalCompleted(Request $request){
+    public function withdrawalCompleted(Request $request)
+    {
         $post = $request->all();
-        $update = MyHelper::post('merchant/withdrawal/completed',$post);
+        $update = MyHelper::post('merchant/withdrawal/completed', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
             return redirect('merchant/withdrawal')->withSuccess(['Success change status to completed']);
-        }else{
-            return redirect('merchant/withdrawal')->withErrors($update['messages']??['Failed change status']);
+        } else {
+            return redirect('merchant/withdrawal')->withErrors($update['messages'] ?? ['Failed change status']);
         }
     }
 }

@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
-
 use App\Lib\MyHelper;
 
 class DrugRecomendationExport implements FromArray, WithTitle, WithHeadings, ShouldAutoSize, WithEvents
@@ -16,7 +15,7 @@ class DrugRecomendationExport implements FromArray, WithTitle, WithHeadings, Sho
     protected $outlets;
     protected $title;
 
-    public function __construct(array $outlets,$title='')
+    public function __construct(array $outlets, $title = '')
     {
         $this->outlets = $outlets;
         $this->title = $title;
@@ -24,13 +23,13 @@ class DrugRecomendationExport implements FromArray, WithTitle, WithHeadings, Sho
 
     public function array(): array
     {
-    	return $this->outlets;
+        return $this->outlets;
     }
 
     public function headings(): array
     {
-        return array_keys($this->outlets[0]??[]);
-    	// return array_map(function($x){return ucwords(str_replace('_', ' ', $x));}, array_keys($this->outlets[0]??[]));
+        return array_keys($this->outlets[0] ?? []);
+        // return array_map(function($x){return ucwords(str_replace('_', ' ', $x));}, array_keys($this->outlets[0]??[]));
     }
 
     /**
@@ -47,7 +46,7 @@ class DrugRecomendationExport implements FromArray, WithTitle, WithHeadings, Sho
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function(AfterSheet $event) {
+            AfterSheet::class    => function (AfterSheet $event) {
                 $last = count($this->outlets['items']);
                 $lastOutlet = count($this->outlets['outlet']);
                 $styleArray = [
@@ -77,13 +76,13 @@ class DrugRecomendationExport implements FromArray, WithTitle, WithHeadings, Sho
                     ],
                 ];
                 //for outlet array
-                $x_coor = MyHelper::getNameFromNumber(count($this->outlets['outlet'][0]??[]));
-                $event->sheet->getStyle('A1:'.$x_coor.($lastOutlet-1))->applyFromArray($styleArray);
+                $x_coor = MyHelper::getNameFromNumber(count($this->outlets['outlet'][0] ?? []));
+                $event->sheet->getStyle('A1:' . $x_coor . ($lastOutlet - 1))->applyFromArray($styleArray);
 
                 //for recomendation array
-                $x_coor = MyHelper::getNameFromNumber(count($this->outlets['items'][0]??[]));
-                $event->sheet->getStyle('A6:'.$x_coor.($last+6))->applyFromArray($styleArray);
-                $headRange = 'A6:'.$x_coor.'6';
+                $x_coor = MyHelper::getNameFromNumber(count($this->outlets['items'][0] ?? []));
+                $event->sheet->getStyle('A6:' . $x_coor . ($last + 6))->applyFromArray($styleArray);
+                $headRange = 'A6:' . $x_coor . '6';
                 $event->sheet->getStyle($headRange)->applyFromArray($styleHead);
             },
         ];

@@ -1,8 +1,7 @@
 <?php
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
-{
-	Route::post('app_logo', 'SettingController@appLogoSave');
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
+    Route::post('app_logo', 'SettingController@appLogoSave');
     Route::post('app_sidebar', 'SettingController@appSidebarSave');
     Route::post('app_navbar', 'SettingController@appNavbarSave');
     Route::post('user_inbox', 'SettingController@userInboxSave');
@@ -24,20 +23,20 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('faq-doctor/sort/update', 'SettingController@faqDoctorSortUpdate');
     Route::post('update/{slug}', 'SettingController@settingUpdate');
 
-    
+
     Route::get('intro/{key}', 'TutorialController@introList');
     Route::post('intro/save', 'TutorialController@introStore');
 
     Route::any('whatsapp', ['middleware' => 'config_control:74,75', 'uses' => 'SettingController@whatsApp']);
-	
+
     /* complete profile */
     Route::any('complete-profile', ['middleware' => 'feature_control:148', 'uses' => 'SettingController@completeProfile']);
 
     /* confirmation messages */
-    Route::any('confirmation-messages','SettingController@confirmationMessages');
+    Route::any('confirmation-messages', 'SettingController@confirmationMessages');
 
     /* confirmation messages */
-    Route::any('otp-messages','SettingController@otpMessages');
+    Route::any('otp-messages', 'SettingController@otpMessages');
 
     /*Text menu*/
     Route::any('text_menu', 'SettingController@textMenu');
@@ -57,10 +56,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('outletapp/splash-screen', 'SettingController@splashScreenOutletApps');
 
     Route::any('home', 'SettingController@homeSetting');
-	Route::any('date', 'SettingController@dateSetting');
+    Route::any('date', 'SettingController@dateSetting');
     Route::get('{key}', 'SettingController@settingList');
-	
-	Route::any('background/create', ['middleware' => 'config_control:30,32', 'uses' => 'SettingController@createBackground']);
+
+    Route::any('background/create', ['middleware' => 'config_control:30,32', 'uses' => 'SettingController@createBackground']);
     Route::any('background/delete', ['middleware' => 'config_control:30,32', 'uses' => 'SettingController@deleteBackground']);
     Route::any('greeting/create', ['middleware' => 'config_control:30,31', 'uses' => 'SettingController@createGreeting']);
     Route::any('greeting/update/{slug}', ['middleware' => 'config_control:30,31', 'uses' => 'SettingController@updateGreetings']);
@@ -68,7 +67,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 
     Route::post('default_home', 'SettingController@defaultHomeSave');
     Route::post('default_home_doctor', 'SettingController@defaultDoctorHomeSave');
-    
+
     Route::any('home/user', 'SettingController@dashboardSetting');
     Route::post('dashboard/delete', 'SettingController@deleteDashboard');
     Route::post('dashboard/ajax', 'SettingController@updateDashboardAjax');
@@ -106,18 +105,15 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::post('consultation/{type}/update', 'SettingController@updateConsultationSetting');
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
     Route::any('setting_email', 'SettingController@settingEmail');
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'version', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'version', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
     Route::any('/', 'VersionController@index');
 });
 
-Route::group(['prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function()
-{
+Route::group(['prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
     Route::any('webview/{slug}', 'SettingController@aboutWebview');
     Route::any('faq/webview', 'SettingController@faqWebview');
 });

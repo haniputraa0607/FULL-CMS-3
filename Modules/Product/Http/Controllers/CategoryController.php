@@ -6,6 +6,7 @@ use App\Lib\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+
 use function GuzzleHttp\Promise\queue;
 
 class CategoryController extends Controller
@@ -23,17 +24,18 @@ class CategoryController extends Controller
             'submenu_active' => 'product-category-list'
         ];
 
-        $data['get_category'] = MyHelper::post('product/category/be/list',$request->all())['result']??[];
+        $data['get_category'] = MyHelper::post('product/category/be/list', $request->all())['result'] ?? [];
 
         $data['category'] = json_encode([]);
-        if(!empty($data['get_category'])){
+        if (!empty($data['get_category'])) {
             $data['category'] = json_encode($this->buildTree($data['get_category']));
         }
 
         return view('product::category.list', $data);
     }
 
-    function buildTree(array $elements, $parentId = 0) {
+    public function buildTree(array $elements, $parentId = 0)
+    {
         $branch = array();
 
         foreach ($elements as $element) {
@@ -57,13 +59,13 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $post = $request->all();
-        if(isset($post['data'][0]['product_category_image'])){
+        if (isset($post['data'][0]['product_category_image'])) {
             $post['data'][0]['product_category_image'] = MyHelper::encodeImage($post['data'][0]['product_category_image']);
         }
 
-        if(!empty($post['data']['child'])){
-            foreach ($post['data']['child'] as $key=>$child){
-                if(!empty($child['product_category_image'])){
+        if (!empty($post['data']['child'])) {
+            foreach ($post['data']['child'] as $key => $child) {
+                if (!empty($child['product_category_image'])) {
                     $post['data']['child'][$key]['product_category_image'] = MyHelper::encodeImage($child['product_category_image']);
                 }
             }
@@ -71,9 +73,9 @@ class CategoryController extends Controller
 
         $store = MyHelper::post('product/category/create', $post);
 
-        if(($store['status']??'')=='success'){
-            return redirect('product/category')->with('success',['Create Category Success']);
-        }else{
+        if (($store['status'] ?? '') == 'success') {
+            return redirect('product/category')->with('success', ['Create Category Success']);
+        } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
     }
@@ -97,7 +99,7 @@ class CategoryController extends Controller
 
         $data['all_parent'] = [];
         $data['category'] = [];
-        if(($get_data['status']??'')=='success'){
+        if (($get_data['status'] ?? '') == 'success') {
             $data['all_parent'] = $get_data['result']['all_parent'];
             $data['category'] = $get_data['result']['category'];
         }
@@ -115,13 +117,13 @@ class CategoryController extends Controller
     {
         $post = $request->all();
         $post['id_product_category'] = $id;
-        if(!empty($post['product_category_image'])){
+        if (!empty($post['product_category_image'])) {
             $post['product_category_image'] = MyHelper::encodeImage($post['product_category_image']);
         }
 
-        if(!empty($post['child'])){
-            foreach ($post['child'] as $key=>$child){
-                if(!empty($child['product_category_image'])){
+        if (!empty($post['child'])) {
+            foreach ($post['child'] as $key => $child) {
+                if (!empty($child['product_category_image'])) {
                     $post['child'][$key]['product_category_image'] = MyHelper::encodeImage($child['product_category_image']);
                 }
             }
@@ -129,9 +131,9 @@ class CategoryController extends Controller
 
         $update = MyHelper::post('product/category/update', $post);
 
-        if(($update['status']??'')=='success'){
-            return redirect('product/category/edit/'.$id)->with('success',['Updated Category Success']);
-        }else{
+        if (($update['status'] ?? '') == 'success') {
+            return redirect('product/category/edit/' . $id)->with('success', ['Updated Category Success']);
+        } else {
             return back()->withInput()->withErrors($update['messages'] ?? ['Something went wrong']);
         }
     }

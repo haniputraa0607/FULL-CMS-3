@@ -1,7 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', 'namespace' => 'Modules\News\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', 'namespace' => 'Modules\News\Http\Controllers'], function () {
     Route::get('/', ['middleware' => 'feature_control:19', 'uses' => 'NewsController@index']);
     Route::get('ajax', ['middleware' => 'feature_control:19', 'uses' => 'NewsController@indexAjax']);
     Route::any('create', ['middleware' => 'feature_control:21', 'uses' => 'NewsController@create']);
@@ -14,7 +13,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', '
     Route::post('featured', ['uses' => 'NewsController@featured']);
 
     //category
-    Route::group(['prefix'=>'category'],function(){
+    Route::group(['prefix' => 'category'], function () {
         Route::get('/', ['middleware' => 'feature_control:164', 'uses' => 'NewsCategoryController@index']);
         Route::get('create', ['middleware' => 'feature_control:165', 'uses' => 'NewsCategoryController@create']);
         Route::post('create', ['middleware' => 'feature_control:165', 'uses' => 'NewsCategoryController@store']);
@@ -29,8 +28,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', '
     Route::get('form-preview/{id_news}', 'NewsController@customFormPreview');
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', 'namespace' => 'Modules\Advert\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'news', 'namespace' => 'Modules\Advert\Http\Controllers'], function () {
     /* ADVERT */
     Route::any('advert', 'AdvertController@index');
 });

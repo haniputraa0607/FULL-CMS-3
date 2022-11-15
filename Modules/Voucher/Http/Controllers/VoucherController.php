@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 // use Illuminate\Routing\Controller;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 
 class VoucherController extends Controller
 {
-    public function voucherList() {
+    public function voucherList()
+    {
         $data = [
             'title'          => 'Voucher',
             'menu_active'    => 'voucher',
@@ -19,14 +19,15 @@ class VoucherController extends Controller
             'submenu_active' => 'voucher-list'
         ];
 
-        $data['list']    = parent::getData(MyHelper::get('voucher/list'));    
+        $data['list']    = parent::getData(MyHelper::get('voucher/list'));
 
         return view('voucher::index', $data);
     }
 
     /* DETAIL DAN UPDATE JADI SATU*/
-    public function update(Request $request, $id) {
-        
+    public function update(Request $request, $id)
+    {
+
         $post = $request->except('_token');
 
         if (empty($post)) {
@@ -53,25 +54,23 @@ class VoucherController extends Controller
 
                 if ($jumlah == $jumlahVocherOutlet) {
                     $data['all'] = 1;
-                }
-                else {
+                } else {
                     $data['all'] = 0;
                 }
 
                 return view('voucher::detail', $data);
-            }
-            else {
+            } else {
                 return back()->withErrors(['Data not found']);
             }
-        }
-        else {
+        } else {
             // kecuali id outlet
-            $outlet = $post['id_outlet']; print_r($outlet);
-            
+            $outlet = $post['id_outlet'];
+            print_r($outlet);
+
             $post = $request->except('_token', 'id_outlet', 'outlet');
             // filter
             $post = array_filter($post);
-            
+
             /* cek relasi */
             if ($post['related'] == "product") {
                 $post['id_treatment'] = null;
@@ -82,14 +81,13 @@ class VoucherController extends Controller
             }
 
             unset($post['related']);
-            
+
             // kalo pilih all
-            $all = array_search("all", $outlet); 
-            
+            $all = array_search("all", $outlet);
+
 
             // pengecekan yang sangat efak
             if (is_integer($all)) {
-
                 // panggil api, semua outlet
                 $outlet = array_filter(explode("|", $request->input('outlet')));
             }
@@ -113,23 +111,21 @@ class VoucherController extends Controller
 
                     if (isset($saveRelation['status']) && $saveRelation['status'] == "success") {
                         continue;
-                    }
-                    else {
+                    } else {
                         return redirect('voucher')->withErrors(['Voucher has been updated.', 'Outlet not saved.']);
                     }
-
                 }
 
                 return redirect('voucher')->withSuccess(['Voucher has been updated.']);
-            }
-            else {
-                return parent::redirect($save, 'Voucher has been updated', 'voucher');                
+            } else {
+                return parent::redirect($save, 'Voucher has been updated', 'voucher');
             }
         }
     }
 
     /* CREATE */
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         $post = $request->except('_token');
 
         if (empty($post)) {
@@ -145,11 +141,10 @@ class VoucherController extends Controller
             $data['outlet']    = parent::getData(MyHelper::get('outlet/be/list'));
 
             return view('voucher::create', $data);
-        }
-        else {
+        } else {
             // kecuali id outlet
             $outlet = $post['id_outlet'];
-            
+
             $post = $request->except('_token', 'id_outlet', 'outlet');
             // filter
             $post = array_filter($post);
@@ -164,14 +159,14 @@ class VoucherController extends Controller
             }
 
             unset($post['related']);
-            
+
             // kalo pilih all
-            $all = array_search("all", $outlet); 
+            $all = array_search("all", $outlet);
 
             // pengecekan yang sangat efak
             if (is_integer($all)) {
                 // panggil api, semua outlet
-                $outlet = array_filter(explode("|", $request->input('outlet')));         
+                $outlet = array_filter(explode("|", $request->input('outlet')));
             }
 
             /* save voucher duluk */
@@ -190,32 +185,28 @@ class VoucherController extends Controller
 
                     if (isset($saveRelation['status']) && $saveRelation['status'] == "success") {
                         continue;
-                    }
-                    else {
+                    } else {
                         return redirect('voucher')->withErrors(['Voucher has been created.', 'Outlet not saved.']);
                     }
-
                 }
 
                 return redirect('voucher')->withSuccess(['Voucher has been created.']);
+            } else {
+                return parent::redirect($save, 'Voucher has been created', 'voucher');
             }
-            else {
-                return parent::redirect($save, 'Voucher has been created', 'voucher');                
-            }
-        }   
+        }
     }
 
     /* DELETE */
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $post = $request->except('_token');
         $delete = MyHelper::post('voucher/delete', $post);
 
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
-        }   
+        }
     }
-
 }

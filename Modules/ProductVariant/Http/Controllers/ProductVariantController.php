@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Excel;
-
 use App\Imports\FirstSheetOnlyImport;
 
 class ProductVariantController extends Controller
@@ -26,10 +25,10 @@ class ProductVariantController extends Controller
             'submenu_active' => 'product-variant-list',
         ];
 
-        $data['get_variant'] = MyHelper::post('product-variant',$request->all())['result']??[];
+        $data['get_variant'] = MyHelper::post('product-variant', $request->all())['result'] ?? [];
 
         $data['variants'] = json_encode([]);
-        if(!empty($data['get_variant'])){
+        if (!empty($data['get_variant'])) {
             $data['variants'] = json_encode($this->buildTree($data['get_variant']));
         }
         return view('productvariant::index', $data);
@@ -45,26 +44,27 @@ class ProductVariantController extends Controller
             'submenu_active' => 'product-variant-position',
         ];
 
-        if(empty($post)){
-            $data['get_variant'] = MyHelper::post('product-variant',$request->all())['result']??[];
+        if (empty($post)) {
+            $data['get_variant'] = MyHelper::post('product-variant', $request->all())['result'] ?? [];
 
             $data['variants'] = json_encode([]);
-            if(!empty($data['get_variant'])){
+            if (!empty($data['get_variant'])) {
                 $data['variants'] = json_encode($this->buildTree($data['get_variant']));
             }
             return view('productvariant::position', $data);
-        }else{
+        } else {
             $update_potition = MyHelper::post('product-variant/position', $post);
 
-            if(($update_potition['status']??'')=='success'){
+            if (($update_potition['status'] ?? '') == 'success') {
                 return redirect('product-variant/position')->with('success', ['Update position success']);
-            }else{
+            } else {
                 return redirect('product-variant/position')->withErrors($update_potition['messages'] ?? ['Something went wrong']);
             }
         }
     }
 
-    function buildTree(array $elements, $parentId = 0) {
+    public function buildTree(array $elements, $parentId = 0)
+    {
         $branch = array();
 
         foreach ($elements as $element) {
@@ -105,9 +105,9 @@ class ProductVariantController extends Controller
         $post = $request->all();
         $store = MyHelper::post('product-variant/store', $post);
 
-        if(($store['status']??'')=='success'){
-            return redirect('product-variant')->with('success',['Create Variant Success']);
-        }else{
+        if (($store['status'] ?? '') == 'success') {
+            return redirect('product-variant')->with('success', ['Create Variant Success']);
+        } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
     }
@@ -141,7 +141,7 @@ class ProductVariantController extends Controller
 
         $data['all_parent'] = [];
         $data['product_variant'] = [];
-        if(($get_data['status']??'')=='success'){
+        if (($get_data['status'] ?? '') == 'success') {
             $data['all_parent'] = $get_data['result']['all_parent'];
             $data['product_variant'] = $get_data['result']['product_variant'];
         }
@@ -161,17 +161,17 @@ class ProductVariantController extends Controller
         $post['id_product_variant'] = $id;
 
 
-        if(isset($post['product_variant_visibility'])) {
+        if (isset($post['product_variant_visibility'])) {
             $post['product_variant_visibility'] = 'Visible';
-        }else{
+        } else {
             $post['product_variant_visibility'] = 'Hidden';
         }
 
         $update = MyHelper::post('product-variant/update', $post);
 
-        if(($update['status']??'')=='success'){
-            return redirect('product-variant/edit/'.$id)->with('success',['Updated Variant Success']);
-        }else{
+        if (($update['status'] ?? '') == 'success') {
+            return redirect('product-variant/edit/' . $id)->with('success', ['Updated Variant Success']);
+        } else {
             return back()->withInput()->withErrors($update['messages'] ?? ['Something went wrong']);
         }
     }
@@ -187,12 +187,13 @@ class ProductVariantController extends Controller
         return $result;
     }
 
-    public function export(Request $request) {
+    public function export(Request $request)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::post('product-variant', [])['result']??[];
+        $data = MyHelper::post('product-variant', [])['result'] ?? [];
         $tab_title = 'List Variant';
 
-        if(empty($data)){
+        if (empty($data)) {
             $datas['All Type'] = [
                 [
                     'product_variant_name' => 'Size',
@@ -203,23 +204,24 @@ class ProductVariantController extends Controller
                     'product_variant_child' => 'Hot,Ice'
                 ]
             ];
-        }else{
+        } else {
             $arr = [];
-            foreach ($data as $dt){
+            foreach ($data as $dt) {
                 $child = array_column($dt['product_variant_child'], 'product_variant_name');
-                if(!empty($dt['product_variant_child'])){
+                if (!empty($dt['product_variant_child'])) {
                     $arr[] = [
                         'product_variant_name' => $dt['product_variant_name'],
-                        'product_variant_child' => implode(",",$child)
+                        'product_variant_child' => implode(",", $child)
                     ];
                 }
             }
             $datas['All Type'] = $arr;
         }
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_variant.xlsx');
+        return Excel::download(new MultisheetExport($datas), date('YmdHi') . '_variant.xlsx');
     }
 
-    public function import(){
+    public function import()
+    {
         $data = [
             'title'          => 'Variant',
             'sub_title'      => 'Import Variant',
@@ -236,8 +238,8 @@ class ProductVariantController extends Controller
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
-            if(!empty($data)){
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(), $request->file('import_file'));
+            if (!empty($data)) {
                 $import = MyHelper::post('product-variant/import', ['data' => $data]);
             }
         }

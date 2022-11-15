@@ -5,16 +5,17 @@ namespace Modules\Plastic\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Excel;
-
 use App\Lib\MyHelper;
 
 class PlasticTypeController extends Controller
 {
-    function __construct() {
+    public function __construct()
+    {
         date_default_timezone_set('Asia/Jakarta');
     }
 
-    function index(){
+    public function index()
+    {
         $data = [
             'title'          => 'Plastic Type',
             'sub_title'      => 'New Plastic Type',
@@ -23,12 +24,13 @@ class PlasticTypeController extends Controller
             'child_active'   => 'plastic-type-list'
         ];
 
-        $data['data'] = MyHelper::get('plastic-type/list')['result']??[];
+        $data['data'] = MyHelper::get('plastic-type/list')['result'] ?? [];
 
-        return view('plastic::plastic_type.list',$data);
+        return view('plastic::plastic_type.list', $data);
     }
 
-    function create() {
+    public function create()
+    {
         $data = [
             'title'          => 'Plastic Type',
             'sub_title'      => 'New Plastic Type',
@@ -36,26 +38,28 @@ class PlasticTypeController extends Controller
             'submenu_active' => 'plastic-type',
             'child_active'   => 'plastic-type-new'
         ];
-        $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
-        return view('plastic::plastic_type.create',$data);
+        $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result'] ?? [];
+        return view('plastic::plastic_type.create', $data);
     }
 
-    function store(Request $request){
+    public function store(Request $request)
+    {
         $post = $request->except('_token');
 
         $store = MyHelper::post('plastic-type/store', $post);
 
-        if(isset($store['status']) && $store['status'] == 'success'){
+        if (isset($store['status']) && $store['status'] == 'success') {
             return redirect('plastic-type')->withSuccess(['Success create plastic type']);
-        }else{
-            return redirect('plastic-type/create')->withErrors($store['messages']??['Failed create plastic type'])->withInput();
+        } else {
+            return redirect('plastic-type/create')->withErrors($store['messages'] ?? ['Failed create plastic type'])->withInput();
         }
     }
 
-    function detail($id){
+    public function detail($id)
+    {
         $detail = MyHelper::post('plastic-type/detail', ['id_plastic_type' => $id]);
 
-        if(isset($detail['status']) && $detail['status'] == 'success'){
+        if (isset($detail['status']) && $detail['status'] == 'success') {
             $data = [
                 'title'          => 'Plastic Type',
                 'sub_title'      => 'Plastic Type Detail',
@@ -65,24 +69,24 @@ class PlasticTypeController extends Controller
             ];
 
             $data['detail'] = $detail['result'];
-            $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
+            $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result'] ?? [];
             return view('plastic::plastic_type.detail', $data);
-        }else{
-            return redirect('plastic-type')->withErrors($store['messages']??['Failed get detail plastic type']);
+        } else {
+            return redirect('plastic-type')->withErrors($store['messages'] ?? ['Failed get detail plastic type']);
         }
     }
 
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $post = $request->except('_token');
 
         $post['id_plastic_type'] = $id;
         $update = MyHelper::post('plastic-type/update', $post);
 
-        if(isset($update['status']) && $update['status'] == 'success'){
-            return redirect('plastic-type/detail/'.$id)->withSuccess(['Success update plastic type']);
-        }else{
-            return redirect('plastic-type/detail/'.$id)->withErrors($update['messages']??['Failed update plastic type']);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            return redirect('plastic-type/detail/' . $id)->withSuccess(['Success update plastic type']);
+        } else {
+            return redirect('plastic-type/detail/' . $id)->withErrors($update['messages'] ?? ['Failed update plastic type']);
         }
     }
 
@@ -93,10 +97,11 @@ class PlasticTypeController extends Controller
         return $delete;
     }
 
-    public function position(Request $request){
+    public function position(Request $request)
+    {
         $post = $request->except('_token');
 
-        if(empty($post)){
+        if (empty($post)) {
             $data = [
                 'title'          => 'Plastic Type',
                 'sub_title'      => 'Position Plastic Type',
@@ -104,15 +109,15 @@ class PlasticTypeController extends Controller
                 'submenu_active' => 'plastic-type',
                 'child_active' => 'plastic-type-position'
             ];
-            $data['data'] = MyHelper::get('plastic-type/list')['result']??[];
+            $data['data'] = MyHelper::get('plastic-type/list')['result'] ?? [];
             return view('plastic::plastic_type.position', $data);
-        }else{
+        } else {
             $update = MyHelper::post('plastic-type/position', $post);
 
-            if(isset($update['status']) && $update['status'] == 'success'){
+            if (isset($update['status']) && $update['status'] == 'success') {
                 return redirect('plastic-type/position')->withSuccess(['Success update position plastic type']);
-            }else{
-                return redirect('plastic-type/position')->withErrors($update['messages']??['Failed update position plastic type']);
+            } else {
+                return redirect('plastic-type/position')->withErrors($update['messages'] ?? ['Failed update position plastic type']);
             }
         }
     }

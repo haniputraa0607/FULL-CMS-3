@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant'], function(){
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant'], function () {
     Route::get('setting/register-introduction', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterIntroduction']);
     Route::post('setting/register-introduction', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterIntroduction']);
     Route::get('setting/register-success', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterSuccess']);
@@ -37,4 +37,3 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant
     Route::post('withdrawal', 'MerchantController@withdrawalList');
     Route::post('withdrawal/completed', 'MerchantController@withdrawalCompleted');
 });
-

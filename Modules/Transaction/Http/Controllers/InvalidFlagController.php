@@ -5,16 +5,15 @@ namespace Modules\Transaction\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Pagination\LengthAwarePaginator;
-
 use App\Lib\MyHelper;
 use Modules\Reward\Http\Controllers\RewardController;
 use Session;
 
 class InvalidFlagController extends Controller
 {
-    public function markAsPendingInvalid(Request $request){
+    public function markAsPendingInvalid(Request $request)
+    {
         $post = $request->except('_token');
 
         $data = [
@@ -24,9 +23,9 @@ class InvalidFlagController extends Controller
             'submenu_active' => 'mark-as-pending-invalid'
         ];
 
-        if(Session::has('filter-mark-as-pending-invalid') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-mark-as-pending-invalid') && !empty($post) && !isset($post['filter'])) {
             $post = Session::get('filter-mark-as-pending-invalid');
-        }else{
+        } else {
             Session::forget('filter-mark-as-pending-invalid');
         }
 
@@ -37,9 +36,9 @@ class InvalidFlagController extends Controller
             $data['data']          = $list['result']['data'];
             $data['dataTotal']     = $list['result']['total'];
             $data['dataPerPage']   = $list['result']['from'];
-            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
-        }else {
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -47,14 +46,15 @@ class InvalidFlagController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-mark-as-pending-invalid',$post);
+        if ($post) {
+            Session::put('filter-mark-as-pending-invalid', $post);
         }
 
         return view('transaction::flag_invalid.mark_as_pending_invalid', $data);
     }
 
-    public function markAsInvalid(Request $request){
+    public function markAsInvalid(Request $request)
+    {
         $post = $request->except('_token');
 
         $data = [
@@ -64,9 +64,9 @@ class InvalidFlagController extends Controller
             'submenu_active' => 'mark-as-invalid'
         ];
 
-        if(Session::has('filter-mark-as-invalid') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-mark-as-invalid') && !empty($post) && !isset($post['filter'])) {
             $post = Session::get('filter-mark-as-invalid');
-        }else{
+        } else {
             Session::forget('filter-mark-as-invalid');
         }
 
@@ -78,9 +78,9 @@ class InvalidFlagController extends Controller
             $data['data']          = $list['result']['data'];
             $data['dataTotal']     = $list['result']['total'];
             $data['dataPerPage']   = $list['result']['from'];
-            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
-        }else {
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -88,52 +88,56 @@ class InvalidFlagController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-mark-as-invalid',$post);
+        if ($post) {
+            Session::put('filter-mark-as-invalid', $post);
         }
 
         return view('transaction::flag_invalid.mark_as_invalid', $data);
     }
 
-    public function markAsPendingInvalidAdd(Request $request){
+    public function markAsPendingInvalidAdd(Request $request)
+    {
         $post = $request->except('_token');
         $add = MyHelper::post('transaction/invalid-flag/mark-as-pending-invalid/add', $post);
 
         if (isset($add['status']) && $add['status'] == 'success') {
-            return redirect('transaction/invalid-flag/detail/'.$post['id_transaction'].'?from=invalid')->withSuccess(['Success Update Data']);
-        }else{
+            return redirect('transaction/invalid-flag/detail/' . $post['id_transaction'] . '?from=invalid')->withSuccess(['Success Update Data']);
+        } else {
             return back()->withErrors($add['messages']);
         }
     }
 
-    public function markAsInvalidAdd(Request $request){
+    public function markAsInvalidAdd(Request $request)
+    {
         $post = $request->except('_token');
 
-        if(isset($post['image'])){
+        if (isset($post['image'])) {
             $post['image'] = MyHelper::encodeImage($post['image']);
         }
 
         $add = MyHelper::post('transaction/invalid-flag/mark-as-invalid/add', $post);
 
         if (isset($add['status']) && $add['status'] == 'success') {
-            return redirect('transaction/invalid-flag/detail/'.$post['id_transaction'].'?from=valid')->withSuccess(['Success Update Data']);
-        }else{
+            return redirect('transaction/invalid-flag/detail/' . $post['id_transaction'] . '?from=valid')->withSuccess(['Success Update Data']);
+        } else {
             return back()->withErrors($add['messages']);
         }
     }
 
-    public function markAsValidUpdate(Request $request){
+    public function markAsValidUpdate(Request $request)
+    {
         $post = $request->except('_token');
         $update = MyHelper::post('transaction/invalid-flag/mark-as-valid/update', $post);
 
         if (isset($update['status']) && $update['status'] == 'success') {
-            return redirect('transaction/invalid-flag/detail/'.$post['id_transaction'].'?from=invalid')->withSuccess(['Success Update Data']);
-        }else{
+            return redirect('transaction/invalid-flag/detail/' . $post['id_transaction'] . '?from=invalid')->withSuccess(['Success Update Data']);
+        } else {
             return back()->withErrors($update['messages']);
         }
     }
 
-    public function markAsValid(Request $request){
+    public function markAsValid(Request $request)
+    {
         $post = $request->except('_token');
 
         $data = [
@@ -143,9 +147,9 @@ class InvalidFlagController extends Controller
             'submenu_active' => 'mark-as-valid'
         ];
 
-        if(Session::has('filter-mark-as-valid') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-mark-as-valid') && !empty($post) && !isset($post['filter'])) {
             $post = Session::get('filter-mark-as-valid');
-        }else{
+        } else {
             Session::forget('filter-mark-as-valid');
         }
 
@@ -155,9 +159,9 @@ class InvalidFlagController extends Controller
             $data['data']          = $list['result']['data'];
             $data['dataTotal']     = $list['result']['total'];
             $data['dataPerPage']   = $list['result']['from'];
-            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
-        }else {
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -165,14 +169,15 @@ class InvalidFlagController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-mark-as-valid',$post);
+        if ($post) {
+            Session::put('filter-mark-as-valid', $post);
         }
 
         return view('transaction::flag_invalid.mark_as_valid', $data);
     }
 
-    public function detailTrx(Request $request, $id){
+    public function detailTrx(Request $request, $id)
+    {
         $post = $request->except('_token');
         $data = [
             'title'          => 'Invalid Flag',
@@ -195,15 +200,15 @@ class InvalidFlagController extends Controller
             return view('error', ['msg' => 'Something went wrong, try again']);
         }
 
-        if($post['from'] == 'valid'){
+        if ($post['from'] == 'valid') {
             $data['menu_active'] = 'mark-as-valid';
             $data['submenu_active'] = 'mark-as-valid';
             $data['sub_title'] = 'Mark as Valid';
-        }elseif($post['from'] == 'invalid'){
+        } elseif ($post['from'] == 'invalid') {
             $data['menu_active'] = 'mark-as-invalid';
             $data['submenu_active'] = 'mark-as-invalid';
             $data['sub_title'] = 'Mark as Invalid';
-        }elseif($post['from'] == 'pendinginvalid'){
+        } elseif ($post['from'] == 'pendinginvalid') {
             $data['menu_active'] = 'mark-as-pending-invalid';
             $data['submenu_active'] = 'mark-as-pending-invalid';
             $data['sub_title'] = 'Mark as Pending Invalid';
@@ -213,7 +218,7 @@ class InvalidFlagController extends Controller
         $data['id_transaction'] = $id;
 
         $data['logs'] = [];
-        $detailLog = MyHelper::post('transaction/log-invalid-flag/detail',['id_transaction' => $id]);
+        $detailLog = MyHelper::post('transaction/log-invalid-flag/detail', ['id_transaction' => $id]);
 
         if (isset($detailLog['status']) && $detailLog['status'] == 'success') {
             $data['logs'] = $detailLog['result'];
@@ -221,7 +226,8 @@ class InvalidFlagController extends Controller
         return view('transaction::transactionDetail3', $data);
     }
 
-    public function listLogInvalidFlag(Request $request){
+    public function listLogInvalidFlag(Request $request)
+    {
         $post = $request->except('_token');
         $data = [
             'title'          => 'Transaction',
@@ -230,14 +236,14 @@ class InvalidFlagController extends Controller
             'submenu_active' => 'log-invalid-flag'
         ];
 
-        if(Session::has('filter-list-flag-invalid') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-list-flag-invalid') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-list-flag-invalid');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-list-flag-invalid');
         }
 
@@ -247,9 +253,9 @@ class InvalidFlagController extends Controller
             $data['data']          = $list['result']['data'];
             $data['dataTotal']     = $list['result']['total'];
             $data['dataPerPage']   = $list['result']['from'];
-            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['dataUpTo']      = $list['result']['from'] + count($list['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
-        }else {
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -257,16 +263,17 @@ class InvalidFlagController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-list-flag-invalid',$post);
+        if ($post) {
+            Session::put('filter-list-flag-invalid', $post);
         }
 
         return view('transaction::flag_invalid.list', $data);
     }
 
-    public function detailLogInvalidFlag(Request $request){
+    public function detailLogInvalidFlag(Request $request)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::post('transaction/log-invalid-flag/detail',$post);
+        $data = MyHelper::post('transaction/log-invalid-flag/detail', $post);
 
         return $data;
     }

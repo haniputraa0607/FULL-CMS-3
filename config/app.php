@@ -44,9 +44,9 @@ return [
     ? in_array($_SERVER['REMOTE_ADDR'], explode(',', env('DEV_IP', '127.0.0.1')))
     : true : false,
     'debug_blacklist' => [
-    	'_COOKIE' => array_keys($_COOKIE),
-    	'_SERVER' => array_keys($_SERVER),
-    	'_ENV' => array_keys($_ENV), 
+        '_COOKIE' => array_keys($_COOKIE),
+        '_SERVER' => array_keys($_SERVER),
+        '_ENV' => array_keys($_ENV),
     ],
 
     /*
@@ -184,7 +184,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-		Intervention\Image\ImageServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         TimeHunter\LaravelGoogleReCaptchaV3\Providers\GoogleReCaptchaV3ServiceProvider::class,
         //Vinelab\Cdn\CdnServiceProvider::class,
@@ -240,7 +240,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        'GoogleReCaptchaV3'=> TimeHunter\LaravelGoogleReCaptchaV3\Facades\GoogleReCaptchaV3::class,
+        'GoogleReCaptchaV3' => TimeHunter\LaravelGoogleReCaptchaV3\Facades\GoogleReCaptchaV3::class,
         'Mailgun' => Bogardo\Mailgun\Facades\Mailgun::class,
         'Location' => Stevebauman\Location\LocationServiceProvider::class,
         'MyHelper' => App\Lib\MyHelper::class,

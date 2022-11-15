@@ -21,12 +21,12 @@ class ManualRefundController extends Controller
             'filter_date_today' => true,
         ];
 
-        if(session('filter_failed_void')){
-            $extra=session('filter_failed_void');
-            $data['rule']=array_map('array_values', $extra['rule']);
-            $data['operator']=$extra['operator'];
-        } else{
-            $extra=[
+        if (session('filter_failed_void')) {
+            $extra = session('filter_failed_void');
+            $data['rule'] = array_map('array_values', $extra['rule']);
+            $data['operator'] = $extra['operator'];
+        } else {
+            $extra = [
                 'rule' => [
                     '9998' => [
                         'subject' => 'transaction_date',
@@ -43,18 +43,18 @@ class ManualRefundController extends Controller
                 ],
                 'operator' => ''
             ];
-            $data['rule']=array_map('array_values', $extra['rule']);
-            $data['operator']=$extra['operator'];
-            $data['hide_record_total']=1;
+            $data['rule'] = array_map('array_values', $extra['rule']);
+            $data['operator'] = $extra['operator'];
+            $data['hide_record_total'] = 1;
         }
 
         if ($request->wantsJson()) {
             $data = MyHelper::post('transaction/failed-void-payment', $extra + $request->all());
             return $data['result'];
         }
-        
+
         $dateRange = [];
-        foreach ($data['rule']??[] as $rule) {
+        foreach ($data['rule'] ?? [] as $rule) {
             if ($rule[0] == 'transaction_date') {
                 if ($rule[1] == '<=') {
                     $dateRange[0] = $rule[2];
@@ -68,8 +68,8 @@ class ManualRefundController extends Controller
             $data['is_today'] = true;
         }
 
-        $data['outlets'] = array_map(function($item) {
-            return [$item['id_outlet'], $item['outlet_code'].' - '.$item['outlet_name']];
+        $data['outlets'] = array_map(function ($item) {
+            return [$item['id_outlet'], $item['outlet_code'] . ' - ' . $item['outlet_name']];
         }, MyHelper::get('outlet/be/list')['result'] ?? []);
         return view('transaction::transaction.manual_void', $data);
     }
@@ -82,7 +82,7 @@ class ManualRefundController extends Controller
     {
         $post = $request->all();
 
-        if(($post['rule']??false) && !isset($post['draw'])){
+        if (($post['rule'] ?? false) && !isset($post['draw'])) {
             if (($post['filter_type'] ?? false) == 'today') {
                 $post['rule'][9998] = [
                     'subject' => 'transaction_date',
@@ -97,12 +97,12 @@ class ManualRefundController extends Controller
                     'hide' => '1',
                 ];
             }
-            session(['filter_failed_void'=>$post]);
+            session(['filter_failed_void' => $post]);
             return back();
         }
 
-        if($post['clear']??false){
-            session(['filter_failed_void'=>null]);
+        if ($post['clear'] ?? false) {
+            session(['filter_failed_void' => null]);
             return back();
         }
 
@@ -113,7 +113,7 @@ class ManualRefundController extends Controller
     {
         $post = $request->except('_token');
         $post['refund_date'] = date('Y-m-d H:i:s', strtotime($post['date_refund']));
-        $post['images'] = array_map(function($item) {
+        $post['images'] = array_map(function ($item) {
             return MyHelper::encodeImage($item);
         }, $post['images'] ?? []);
         $response = MyHelper::post('transaction/failed-void-payment/confirm', $post);

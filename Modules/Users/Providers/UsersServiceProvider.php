@@ -46,10 +46,11 @@ class UsersServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('users.php'),
+            __DIR__ . '/../Config/config.php' => config_path('users.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'users'
+            __DIR__ . '/../Config/config.php',
+            'users'
         );
     }
 
@@ -62,11 +63,11 @@ class UsersServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/users');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/users';
@@ -85,7 +86,7 @@ class UsersServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'users');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'users');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'users');
         }
     }
 

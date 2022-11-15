@@ -5,7 +5,6 @@ namespace Modules\Transaction\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use App\Lib\MyHelper;
 
 class TransactionSettingController extends Controller
@@ -15,7 +14,7 @@ class TransactionSettingController extends Controller
         $data = [
             'title'          => 'Setting',
             'menu_active'    => 'order',
-            'sub_title'      => 'Global '.env('POINT_NAME', 'Points'),
+            'sub_title'      => 'Global ' . env('POINT_NAME', 'Points'),
             'submenu_active' => 'transaction-setting'
         ];
 
@@ -26,7 +25,7 @@ class TransactionSettingController extends Controller
 
             return view('transaction::setting.cashback_list', $data);
         } elseif (isset($lists['status']) && $lists['status'] == 'fail') {
-            if(isset($lists['messages'][0]) && $lists['messages'][0] == 'empty'){
+            if (isset($lists['messages'][0]) && $lists['messages'][0] == 'empty') {
                 return view('transaction::setting.cashback_list', $data);
             }
             return view('transaction::setting.cashback_list', $data)->withErrors($lists['messages']);
@@ -59,15 +58,15 @@ class TransactionSettingController extends Controller
         ];
 
         $data['status'] = [
-            'refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value']??0,
-            'refund_ipay88' => MyHelper::post('setting', ['key' => 'refund_ipay88'])['result']['value']??0,
-            'refund_shopeepay' => MyHelper::post('setting', ['key' => 'refund_shopeepay'])['result']['value']??0,
-            'refund_xendit' => MyHelper::post('setting', ['key' => 'refund_xendit'])['result']['value']??0,
-            'refund_failed_process_balance' => MyHelper::post('setting', ['key' => 'refund_failed_process_balance'])['result']['value']??0,
+            'refund_midtrans' => MyHelper::post('setting', ['key' => 'refund_midtrans'])['result']['value'] ?? 0,
+            'refund_ipay88' => MyHelper::post('setting', ['key' => 'refund_ipay88'])['result']['value'] ?? 0,
+            'refund_shopeepay' => MyHelper::post('setting', ['key' => 'refund_shopeepay'])['result']['value'] ?? 0,
+            'refund_xendit' => MyHelper::post('setting', ['key' => 'refund_xendit'])['result']['value'] ?? 0,
+            'refund_failed_process_balance' => MyHelper::post('setting', ['key' => 'refund_failed_process_balance'])['result']['value'] ?? 0,
         ];
 
-        $get = MyHelper::post('autocrm/list',['autocrm_title'=>'Payment Void Failed']);
-        if(isset($get['status']) && $get['status'] == 'success'){
+        $get = MyHelper::post('autocrm/list', ['autocrm_title' => 'Payment Void Failed']);
+        if (isset($get['status']) && $get['status'] == 'success') {
             $data['result'] = $get['result'];
 
             $data['textreplaces'] = [];
@@ -77,7 +76,7 @@ class TransactionSettingController extends Controller
                 $custom = explode(';', $get['result']['custom_text_replace']);
             }
             $data['custom'] = $custom;
-        }else{
+        } else {
             $data['result'] = [];
         }
 
@@ -87,11 +86,11 @@ class TransactionSettingController extends Controller
     public function updateRefundRejectOrder(Request $request)
     {
         $sendData = [
-            'refund_midtrans' => ['value', $request->refund_midtrans?1:0],
-            'refund_ipay88' => ['value', $request->refund_ipay88?1:0],
-            'refund_shopeepay' => ['value', $request->refund_shopeepay?1:0],
-            'refund_xendit' => ['value', $request->refund_xendit?1:0],
-            'refund_failed_process_balance' => ['value', $request->refund_failed_process_balance?1:0]
+            'refund_midtrans' => ['value', $request->refund_midtrans ? 1 : 0],
+            'refund_ipay88' => ['value', $request->refund_ipay88 ? 1 : 0],
+            'refund_shopeepay' => ['value', $request->refund_shopeepay ? 1 : 0],
+            'refund_xendit' => ['value', $request->refund_xendit ? 1 : 0],
+            'refund_failed_process_balance' => ['value', $request->refund_failed_process_balance ? 1 : 0]
         ];
         $data = MyHelper::post('setting/update2', ['update' => $sendData]);
 
@@ -102,12 +101,12 @@ class TransactionSettingController extends Controller
             'autocrm_forward_email_subject' => $request->autocrm_forward_email_subject,
             'autocrm_forward_email_content' => $request->autocrm_forward_email_content,
         ];
-        
+
         $query = MyHelper::post('autocrm/update', $updateAutocrm);
 
-        if (($data['status']??false) == 'success') {
+        if (($data['status'] ?? false) == 'success') {
             return back()->withSuccess(['Success update']);
-        } else{
+        } else {
             return back()->withErrors(['Update failed']);
         }
     }
@@ -122,10 +121,10 @@ class TransactionSettingController extends Controller
             'child_active' => 'forward-wehelpyou'
         ];
 
-        $data['wehelpyou_limit_balance'] = MyHelper::post('setting', ['key' => 'wehelpyou_limit_balance'])['result']['value']??0;
+        $data['wehelpyou_limit_balance'] = MyHelper::post('setting', ['key' => 'wehelpyou_limit_balance'])['result']['value'] ?? 0;
 
-        $get = MyHelper::post('autocrm/list',['autocrm_title'=>'WeHelpYou Low Balance']);
-        if(isset($get['status']) && $get['status'] == 'success'){
+        $get = MyHelper::post('autocrm/list', ['autocrm_title' => 'WeHelpYou Low Balance']);
+        if (isset($get['status']) && $get['status'] == 'success') {
             $data['result'] = $get['result'];
 
             $data['textreplaces'] = [];
@@ -135,7 +134,7 @@ class TransactionSettingController extends Controller
                 $custom = explode(';', $get['result']['custom_text_replace']);
             }
             $data['custom'] = $custom;
-        }else{
+        } else {
             $data['result'] = [];
         }
 
@@ -156,12 +155,12 @@ class TransactionSettingController extends Controller
             'autocrm_forward_email_subject' => $request->autocrm_forward_email_subject,
             'autocrm_forward_email_content' => $request->autocrm_forward_email_content,
         ];
-        
+
         $query = MyHelper::post('autocrm/update', $updateAutocrm);
 
-        if (($data['status']??false) == 'success') {
+        if (($data['status'] ?? false) == 'success') {
             return back()->withSuccess(['Success update']);
-        } else{
+        } else {
             return back()->withErrors(['Update failed']);
         }
     }
@@ -175,7 +174,7 @@ class TransactionSettingController extends Controller
             'submenu_active' => 'auto-reject-time'
         ];
 
-        $data['auto_reject_time'] = MyHelper::post('setting', ['key' => 'auto_reject_time'])['result']['value']??15;
+        $data['auto_reject_time'] = MyHelper::post('setting', ['key' => 'auto_reject_time'])['result']['value'] ?? 15;
 
         return view('transaction::setting.auto_reject', $data);
     }
@@ -183,12 +182,12 @@ class TransactionSettingController extends Controller
     public function updateAutoReject(Request $request)
     {
         $sendData = [
-            'auto_reject_time' => ['value', $request->auto_reject_time?:15]
+            'auto_reject_time' => ['value', $request->auto_reject_time ?: 15]
         ];
         $data = MyHelper::post('setting/update2', ['update' => $sendData]);
-        if (($data['status']??false) == 'success') {
+        if (($data['status'] ?? false) == 'success') {
             return back()->withSuccess(['Success update']);
-        } else{
+        } else {
             return back()->withErrors(['Update failed']);
         }
     }
@@ -203,7 +202,7 @@ class TransactionSettingController extends Controller
         ];
 
         $data['status'] = [
-            'cashback_include_bundling' => MyHelper::post('setting', ['key' => 'cashback_include_bundling'])['result']['value']??0,
+            'cashback_include_bundling' => MyHelper::post('setting', ['key' => 'cashback_include_bundling'])['result']['value'] ?? 0,
         ];
 
         return view('transaction::setting.cashback_calculation', $data);
@@ -212,57 +211,56 @@ class TransactionSettingController extends Controller
     public function cashbackCalculationUpdate(Request $request)
     {
         $sendData = [
-            'cashback_include_bundling' => ['value', $request->cashback_include_bundling?:0]
+            'cashback_include_bundling' => ['value', $request->cashback_include_bundling ?: 0]
         ];
         $data = MyHelper::post('setting/update2', ['update' => $sendData]);
-        if (($data['status']??false) == 'success') {
+        if (($data['status'] ?? false) == 'success') {
             return back()->withSuccess(['Success update']);
-        } else{
+        } else {
             return back()->withErrors(['Update failed']);
         }
     }
 
     public function updateTransactionMessages(Request $request)
     {
-    	if (empty($request->all())) {
-    		$data = [
-    			'title'          => 'Order',
-    			'menu_active'    => 'order',
-    			'sub_title'      => 'Transaction Messages',
-    			'submenu_active' => 'transaction-messages'
-    		];
+        if (empty($request->all())) {
+            $data = [
+                'title'          => 'Order',
+                'menu_active'    => 'order',
+                'sub_title'      => 'Transaction Messages',
+                'submenu_active' => 'transaction-messages'
+            ];
 
             $data['messages'] = [
                 'cashback_earned_text' => [
-                	'label' => 'Cashback Earned',
-                	'tooltip' => 'Teks yang akan tampil pada halaman checkout saat customer mendapatkan point cashback',
-                	'value' => MyHelper::post('setting',['key'=>'cashback_earned_text'])['result']['value'] ?? 'Point yang akan didapatkan',
-                	'text_replaces' => []
+                    'label' => 'Cashback Earned',
+                    'tooltip' => 'Teks yang akan tampil pada halaman checkout saat customer mendapatkan point cashback',
+                    'value' => MyHelper::post('setting', ['key' => 'cashback_earned_text'])['result']['value'] ?? 'Point yang akan didapatkan',
+                    'text_replaces' => []
                 ]
             ];
 
             return view('transaction::setting.transaction_messages', $data);
-
-    	} else {
-
+        } else {
             $update = MyHelper::post('setting/update2', [
-            	'update' => [
+                'update' => [
                     'cashback_earned_text' => ['value', $request->cashback_earned_text]
                 ]
             ]);
 
-            if (($update['status'] ?? false) == 'success'){
+            if (($update['status'] ?? false) == 'success') {
                 return back()->with('success', ['Transaction messages has been updated']);
-            }else{
+            } else {
                 return back()->withErrors($update['messages'] ?? ['Update failed']);
             }
-    	}
+        }
     }
 
-    public function settingAllFee(Request $request, $type = null){
+    public function settingAllFee(Request $request, $type = null)
+    {
         $post = $request->all();
 
-        if(empty($post)){
+        if (empty($post)) {
             $data = [
                 'title'          => 'Order',
                 'menu_active'    => 'order',
@@ -270,22 +268,22 @@ class TransactionSettingController extends Controller
                 'submenu_active' => 'setting-fee'
             ];
 
-            $data['service'] = MyHelper::post('setting', ['key' => 'service'])['result']['value']??0;
+            $data['service'] = MyHelper::post('setting', ['key' => 'service'])['result']['value'] ?? 0;
             $data['service'] = $data['service'] * 100;
-            $data['tax'] = MyHelper::post('setting', ['key' => 'tax'])['result']['value']??0;
+            $data['tax'] = MyHelper::post('setting', ['key' => 'tax'])['result']['value'] ?? 0;
             $data['tax'] = $data['tax'] * 100;
-            $data['mdr_charged'] = MyHelper::post('setting', ['key' => 'mdr_charged'])['result']['value']??'';
-            $mdrFormula = MyHelper::post('setting', ['key' => 'mdr_formula'])['result']['value_text']??'';
+            $data['mdr_charged'] = MyHelper::post('setting', ['key' => 'mdr_charged'])['result']['value'] ?? '';
+            $mdrFormula = MyHelper::post('setting', ['key' => 'mdr_formula'])['result']['value_text'] ?? '';
             $data['mdr_formula'] = (array)json_decode($mdrFormula);
-            $data['withdrawal_fee_global'] = MyHelper::post('setting', ['key' => 'withdrawal_fee_global'])['result']['value']??0;
-            $data['banks'] = MyHelper::post('disburse/bank',$post)['result']??[];
+            $data['withdrawal_fee_global'] = MyHelper::post('setting', ['key' => 'withdrawal_fee_global'])['result']['value'] ?? 0;
+            $data['banks'] = MyHelper::post('disburse/bank', $post)['result'] ?? [];
 
             return view('transaction::setting.all_fee', $data);
-        }else{
-            if($type == 'service'){
-                $service = $post['service']/100;
+        } else {
+            if ($type == 'service') {
+                $service = $post['service'] / 100;
                 $service = ($service == 0 ? '0.0' : $service);
-                $tax = $post['tax']/100;
+                $tax = $post['tax'] / 100;
                 $tax = ($tax == 0 ? '0.0' : $tax);
 
                 $sendData = [
@@ -293,15 +291,15 @@ class TransactionSettingController extends Controller
                     'tax' => ['value', $tax]
                 ];
                 $update = MyHelper::post('setting/update2', ['update' => $sendData]);
-            }elseif ($type == 'mdr'){
+            } elseif ($type == 'mdr') {
                 $update = MyHelper::post('transaction/setting/mdr', $post);
-            }elseif ($type == 'withdrawal'){
+            } elseif ($type == 'withdrawal') {
                 $update = MyHelper::post('transaction/setting/withdrawal', $post);
             }
 
-            if (($update['status']??false) == 'success') {
-                return redirect('transaction/setting/all-fee#'.$type.'_fee')->withSuccess(['Success update']);
-            } else{
+            if (($update['status'] ?? false) == 'success') {
+                return redirect('transaction/setting/all-fee#' . $type . '_fee')->withSuccess(['Success update']);
+            } else {
                 return back()->withErrors(['Update failed']);
             }
         }

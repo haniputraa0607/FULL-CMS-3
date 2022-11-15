@@ -1,7 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function () {
     Route::get('/setting/cashback', 'TransactionSettingController@list');
     Route::post('/setting/cashback/update', 'TransactionSettingController@update');
     Route::get('/setting/cashback-calculation', 'TransactionSettingController@cashbackCalculation');
@@ -37,27 +36,25 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::post('/setting/package-detail-delivery', 'TransactionController@packageDetailDelivery');
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function () {
     Route::get('/setting/rule', 'TransactionController@ruleTransaction');
     Route::post('/setting/rule/update', 'TransactionController@ruleTransactionUpdate');
     Route::get('/internalcourier', 'TransactionController@internalCourier');
-    
+
     Route::post('/manual-payment-save', ['middleware' => 'config_control:17', 'uses' => 'TransactionController@manualPaymentSave']);
     Route::post('/manual-payment-update/{id}', ['middleware' => 'config_control:17', 'uses' => 'TransactionController@manualPaymentUpdate']);
 
     Route::get('/point', 'TransactionController@pointUser');
     Route::get('/balance', 'TransactionController@balanceUser');
-	Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:93', 'uses' =>'TransactionController@autoResponse']);
-    Route::group(['prefix' => 'manualpayment', 'middleware' => 'config_control:17'], function()
-    {
-		Route::any('/banks', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@banksList']);
-		Route::any('/banks/create', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@banksCreate']);
-		Route::get('/banks/delete/{id}', ['middleware' => 'feature_control:68', 'uses' => 'TransactionController@banksDelete']);
+    Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:93', 'uses' => 'TransactionController@autoResponse']);
+    Route::group(['prefix' => 'manualpayment', 'middleware' => 'config_control:17'], function () {
+        Route::any('/banks', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@banksList']);
+        Route::any('/banks/create', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@banksCreate']);
+        Route::get('/banks/delete/{id}', ['middleware' => 'feature_control:68', 'uses' => 'TransactionController@banksDelete']);
         Route::any('/banks/method/create', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@bankMethodsCreate']);
         Route::any('/banks/method', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@banksMethodList']);
-		Route::get('/banks/method/delete/{id}', ['middleware' => 'feature_control:68', 'uses' => 'TransactionController@bankMethodsDelete']);
-		
+        Route::get('/banks/method/delete/{id}', ['middleware' => 'feature_control:68', 'uses' => 'TransactionController@bankMethodsDelete']);
+
         Route::get('/', ['middleware' => 'feature_control:64', 'uses' => 'TransactionController@manualPaymentList']);
         Route::any('/list/{type?}', 'TransactionController@manualPaymentUnpay');
         Route::any('/reset/{type?}', 'TransactionController@manualPaymentUnpay');
@@ -68,7 +65,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
         Route::get('/getData/{slug}', 'TransactionController@manualPaymentGetData');
         Route::post('/method/save', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@manualPaymentMethod']);
         Route::post('/method/delete', ['middleware' => 'feature_control:67', 'uses' => 'TransactionController@manualPaymentMethodDelete']);
-        
+
         Route::any('/confirm/{id}', ['middleware' => 'feature_control:65', 'uses' => 'TransactionController@manualPaymentConfirm']);
     });
 
@@ -76,11 +73,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
 
     Route::get('/admin/{receipt}/{phone}', 'TransactionController@adminOutlet');
     Route::get('/admin/{type}/{status}/{receipt}/{id}', 'TransactionController@adminOutletConfirm');
-
 });
 
-Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
-{
+Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function () {
     Route::any('/web/view/detail', 'WebviewController@detail');
     Route::any('/web/view/detail/check', 'WebviewController@check');
     Route::any('/web/view/detail/point', 'WebviewController@detailPoint');
@@ -89,18 +84,17 @@ Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Htt
     Route::any('/web/view/outletapp', 'WebviewController@receiptOutletapp');
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function () {
     Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
     Route::post('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);
 
-    Route::group(['prefix' => 'log-invalid-flag'], function(){
+    Route::group(['prefix' => 'log-invalid-flag'], function () {
         Route::any('list', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@listLogInvalidFlag']);
         Route::any('detail', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@detailLogInvalidFlag']);
     });
 
-    Route::group(['prefix' => 'invalid-flag'], function(){
+    Route::group(['prefix' => 'invalid-flag'], function () {
         Route::any('detail/{id_transaction}', ['uses' => 'InvalidFlagController@detailTrx']);
         Route::any('mark-as-valid', ['middleware' => 'feature_control:275', 'uses' => 'InvalidFlagController@markAsValid']);
         Route::post('mark-as-invalid/add', ['uses' => 'InvalidFlagController@markAsInvalidAdd']);
@@ -129,8 +123,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::any('send-report-outlet', [ 'uses' => 'TransactionController@sendReportToOutlet']);
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'response-with-code', 'namespace' => 'Modules\Transaction\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'response-with-code', 'namespace' => 'Modules\Transaction\Http\Controllers'], function () {
     Route::any('/', [ 'middleware' => 'feature_control:306,308,309', 'uses' => 'AutoresponseCodeController@list']);
     Route::get('create', [ 'middleware' => 'feature_control:307', 'uses' => 'AutoresponseCodeController@create']);
     Route::post('store', [ 'middleware' => 'feature_control:307', 'uses' => 'AutoresponseCodeController@store']);
@@ -140,4 +133,3 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'response
     Route::post('delete/autoresponse-code', [ 'middleware' => 'feature_control:309', 'uses' => 'AutoresponseCodeController@deleteAutoresponsecode']);
     Route::get('export-example', [ 'uses' => 'AutoresponseCodeController@exportExample']);
 });
-

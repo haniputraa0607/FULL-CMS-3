@@ -37,5 +37,4 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'achievem
     Route::any('report/membership/detail-view/{id}', 'ReportAchievementController@reportDetailMembershipView');
     Route::any('report/membership/detail/{id}', 'ReportAchievementController@reportDetailMembership');
     Route::any('report/membership/list-user/{id}', 'ReportAchievementController@reportListUserMembership');
-
 });
