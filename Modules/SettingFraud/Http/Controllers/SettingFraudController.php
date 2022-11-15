@@ -7,25 +7,25 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Session;
-
 use App\Lib\MyHelper;
 use Excel;
 
 class SettingFraudController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $post = $request->except('_token');
 
         //update data
-        if($post){
-            if(isset($post['files'])){
+        if ($post) {
+            if (isset($post['files'])) {
                 unset($post['files']);
             }
             $save = MyHelper::post('setting-fraud/update', $post);
 
             if (isset($save['status']) && $save['status'] == "success") {
-                return redirect('setting-fraud-detection#'.$post['type'])->withSuccess(['Setting fraud detection has been updated.']);
-            }else {
+                return redirect('setting-fraud-detection#' . $post['type'])->withSuccess(['Setting fraud detection has been updated.']);
+            } else {
                 if (isset($save['errors'])) {
                     return back()->withErrors($save['errors'])->withInput();
                 }
@@ -47,28 +47,28 @@ class SettingFraudController extends Controller
 
         $getSetting = MyHelper::post('setting-fraud', []);
 
-        if(isset($getSetting['status']) && $getSetting['status'] == 'success'){
+        if (isset($getSetting['status']) && $getSetting['status'] == 'success') {
             $data['result'] = $getSetting['result'];
-        }else{
+        } else {
             $data['result'] = null;
         }
 
         $config = MyHelper::get('setting-fraud/config');
-        if(isset($config['status']) && $config['status'] == 'success'){
+        if (isset($config['status']) && $config['status'] == 'success') {
             $data['config'] = $config['result']['is_active'];
-        }else{
+        } else {
             $data['config'] = null;
         }
 
         $getApiKey = MyHelper::get('setting/whatsapp');
-        if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+        if (isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']) {
             $data['api_key_whatsapp'] = $getApiKey['result']['value'];
-        }else{
+        } else {
             $data['api_key_whatsapp'] = null;
         }
 
         $textReplace = MyHelper::get('autocrm/textreplace');
-        if(isset($textReplace['status']) && $textReplace['status'] == 'success'){
+        if (isset($textReplace['status']) && $textReplace['status'] == 'success') {
             $data['textreplaces'] = $textReplace['result'];
         }
 
@@ -149,19 +149,21 @@ class SettingFraudController extends Controller
         return view('settingfraud::index', $data);
     }
 
-    public function updateStatus(Request $request){
+    public function updateStatus(Request $request)
+    {
         $post = $request->except('_token');
         $update = MyHelper::post('setting-fraud/update/status', $post);
         if (isset($update['status']) && $update['status'] == "success") {
             return ['status' => 'success'];
-        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+        } elseif (isset($update['status']) && $update['status'] == 'fail') {
             return ['status' => 'fail', 'messages' => $update['messages']];
         } else {
             return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update fraud status'];
         }
     }
 
-    public function list(){
+    public function list()
+    {
         $data = [ 'title'             => 'Setting Fraud Detection List',
             'menu_active'       => 'fraud-detection',
             'submenu_active'    => 'campaign-list'
@@ -171,8 +173,7 @@ class SettingFraudController extends Controller
 
         if (isset($action['status']) && $action['status'] == "success") {
             $data['list'] = $action['result'];
-        }
-        else {
+        } else {
             $data['list'] = [];
         }
 
@@ -184,14 +185,14 @@ class SettingFraudController extends Controller
         $post = $request->except('_token');
 
         //update data
-        if($post){
-            if(isset($post['files'])){
+        if ($post) {
+            if (isset($post['files'])) {
                 unset($post['files']);
             }
             $save = MyHelper::post('setting-fraud/update', $post);
             if (isset($save['status']) && $save['status'] == "success") {
-                return redirect('setting-fraud-detection/detail/'.$id)->withSuccess(['Setting fraud detection has been updated.']);
-            }else {
+                return redirect('setting-fraud-detection/detail/' . $id)->withSuccess(['Setting fraud detection has been updated.']);
+            } else {
                 if (isset($save['errors'])) {
                     return back()->withErrors($save['errors'])->withInput();
                 }
@@ -213,21 +214,21 @@ class SettingFraudController extends Controller
 
         $getSetting = MyHelper::post('setting-fraud', ['id_fraud_setting' => $id]);
 
-        if(isset($getSetting['status']) && $getSetting['status'] == 'success'){
+        if (isset($getSetting['status']) && $getSetting['status'] == 'success') {
             $data['result'] = $getSetting['result'];
-        }else{
+        } else {
             $data['result'] = null;
         }
 
         $getApiKey = MyHelper::get('setting/whatsapp');
-        if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
+        if (isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']) {
             $data['api_key_whatsapp'] = $getApiKey['result']['value'];
-        }else{
+        } else {
             $data['api_key_whatsapp'] = null;
         }
 
         $test = MyHelper::get('autocrm/textreplace');
-        if($test['status'] == 'success'){
+        if ($test['status'] == 'success') {
             $data['textreplaces'] = $test['result'];
         }
 
@@ -260,16 +261,17 @@ class SettingFraudController extends Controller
     }
 
     //======================== Start Fraud list Report ========================//
-    function fraudReportDevice(Request $request){
+    public function fraudReportDevice(Request $request)
+    {
         $post = $request->except('_token');
         $exportStatus = 0;
-        if(isset($post['export-excel'])){
+        if (isset($post['export-excel'])) {
             $exportStatus = 1;
         }
 
-        if(Session::has('filter-fraud-log-device') && !isset($post['filter'])){
+        if (Session::has('filter-fraud-log-device') && !isset($post['filter'])) {
             $post = Session::get('filter-fraud-log-device');
-        }else{
+        } else {
             Session::forget('filter-fraud-log-device');
         }
         $type_view = 'device';
@@ -285,12 +287,12 @@ class SettingFraudController extends Controller
         $url = 'fraud/list/log/device';
         $list = MyHelper::post($url, $post);
 
-        if(isset($list['status']) && $list['status'] == 'success'){
+        if (isset($list['status']) && $list['status'] == 'success') {
             //process export
-            if($exportStatus == 1){
+            if ($exportStatus == 1) {
                 $arr['All Type'] = [];
-                foreach ($list['result'] as $value){
-                    foreach ($value['users_fraud'] as $dtUser){
+                foreach ($list['result'] as $value) {
+                    foreach ($value['users_fraud'] as $dtUser) {
                         $dt = [
                             'Nama customer' => $dtUser['name'],
                             'No HP' => $dtUser['phone'],
@@ -307,40 +309,41 @@ class SettingFraudController extends Controller
                 }
 
                 $data = new MultisheetExport($arr);
-                return Excel::download($data,'Fraud_device_'.date('Ymdhis').'.xls');
+                return Excel::download($data, 'Fraud_device_' . date('Ymdhis') . '.xls');
             }
             $data['result'] = $list['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
         $data['type'] = 'device';
         $data['conditions'] = [];
 
-        if($post){
-            if(isset($post['conditions'])){
+        if ($post) {
+            if (isset($post['conditions'])) {
                 $data['conditions'] = $post['conditions'];
             }
 
-            if(isset($post['date_start']) && isset($post['date_end'])){
+            if (isset($post['date_start']) && isset($post['date_end'])) {
                 $data['date_start'] = $post['date_start'];
                 $data['date_end'] = $post['date_end'];
-                Session::put('filter-fraud-log-device',$data);
+                Session::put('filter-fraud-log-device', $data);
             }
         }
 
         return view('settingfraud::report.report_fraud_device', $data);
     }
 
-    function fraudReportTrxPoint(Request $request){
+    public function fraudReportTrxPoint(Request $request)
+    {
         $post = $request->except('_token');
         $exportStatus = 0;
-        if(isset($post['export-excel'])){
+        if (isset($post['export-excel'])) {
             $exportStatus = 1;
         }
 
-        if(Session::has('filter-fraud-log-trx-point') && !isset($post['filter'])){
+        if (Session::has('filter-fraud-log-trx-point') && !isset($post['filter'])) {
             $post = Session::get('filter-fraud-log-trx-point');
-        }else{
+        } else {
             Session::forget('filter-fraud-log-trx-point');
         }
         $type_view = 'transaction_point';
@@ -351,17 +354,21 @@ class SettingFraudController extends Controller
             'submenu_active' => 'report-fraud-transaction-point',
         ];
         $getOutlet = MyHelper::get('outlet/be/list');
-        if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
+        if ($getOutlet['status'] == 'success') {
+            $data['outlets'] = $getOutlet['result'];
+        } else {
+            $data['outlets'] = [];
+        }
 
         $post['export'] = $exportStatus;
         $url = 'fraud/list/log/transaction-point';
         $list = MyHelper::post($url, $post);
 
-        if(isset($list['status']) && $list['status'] == 'success'){
+        if (isset($list['status']) && $list['status'] == 'success') {
             //process export
-            if($exportStatus == 1){
+            if ($exportStatus == 1) {
                 $arr['All Type'] = [];
-                foreach ($list['result'] as $value){
+                foreach ($list['result'] as $value) {
                     $dt = [
                         'Nama customer' => $value['name'],
                         'No HP' => $value['phone'],
@@ -375,40 +382,41 @@ class SettingFraudController extends Controller
                 }
 
                 $data = new MultisheetExport($arr);
-                return Excel::download($data,'Fraud_transaction_point_'.date('Ymdhis').'.xls');
+                return Excel::download($data, 'Fraud_transaction_point_' . date('Ymdhis') . '.xls');
             }
             $data['result'] = $list['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
         $data['type'] = 'transaction-point';
         $data['conditions'] = [];
 
-        if($post){
-            if(isset($post['conditions'])){
+        if ($post) {
+            if (isset($post['conditions'])) {
                 $data['conditions'] = $post['conditions'];
             }
 
-            if(isset($post['date_start']) && isset($post['date_end'])){
+            if (isset($post['date_start']) && isset($post['date_end'])) {
                 $data['date_start'] = $post['date_start'];
                 $data['date_end'] = $post['date_end'];
-                Session::put('filter-fraud-log-trx-point',$data);
+                Session::put('filter-fraud-log-trx-point', $data);
             }
         }
         return view('settingfraud::report.report_fraud_transaction_point', $data);
     }
 
-    function fraudReportTrx(Request $request, $type){
+    public function fraudReportTrx(Request $request, $type)
+    {
         $post = $request->except('_token');
         $exportStatus = 0;
-        if(isset($post['export-excel'])){
+        if (isset($post['export-excel'])) {
             $exportStatus = 1;
         }
 
-        if($type == 'transaction-day'){
-            if(Session::has('filter-fraud-log-trx-day') && !isset($post['filter'])){
+        if ($type == 'transaction-day') {
+            if (Session::has('filter-fraud-log-trx-day') && !isset($post['filter'])) {
                 $post = Session::get('filter-fraud-log-trx-day');
-            }else{
+            } else {
                 Session::forget('filter-fraud-log-trx-day');
             }
 
@@ -419,10 +427,10 @@ class SettingFraudController extends Controller
                 'menu_active'    => 'fraud-detection',
                 'submenu_active' => 'report-fraud-transaction-day',
             ];
-        }elseif($type == 'transaction-week'){
-            if(Session::has('filter-fraud-log-trx-week') && !isset($post['filter'])){
+        } elseif ($type == 'transaction-week') {
+            if (Session::has('filter-fraud-log-trx-week') && !isset($post['filter'])) {
                 $post = Session::get('filter-fraud-log-trx-week');
-            }else{
+            } else {
                 Session::forget('filter-fraud-log-trx-week');
             }
             $type_view = 'transaction_week';
@@ -432,10 +440,10 @@ class SettingFraudController extends Controller
                 'menu_active'    => 'fraud-detection',
                 'submenu_active' => 'report-fraud-transaction-week',
             ];
-        }elseif($type == 'transaction-between'){
-            if(Session::has('filter-fraud-log-trx-between') && !isset($post['filter'])){
+        } elseif ($type == 'transaction-between') {
+            if (Session::has('filter-fraud-log-trx-between') && !isset($post['filter'])) {
                 $post = Session::get('filter-fraud-log-trx-between');
-            }else{
+            } else {
                 Session::forget('filter-fraud-log-trx-between');
             }
             $type_view = 'transaction_between';
@@ -448,15 +456,19 @@ class SettingFraudController extends Controller
         }
 
         $getOutlet = MyHelper::get('outlet/be/list');
-        if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
+        if ($getOutlet['status'] == 'success') {
+            $data['outlets'] = $getOutlet['result'];
+        } else {
+            $data['outlets'] = [];
+        }
 
         $post['export'] = $exportStatus;
-        $url = 'fraud/list/log/'.$type;
+        $url = 'fraud/list/log/' . $type;
         $list = MyHelper::post($url, $post);
 
-        if(isset($list['status']) && $list['status'] == 'success'){
+        if (isset($list['status']) && $list['status'] == 'success') {
             //process export
-            if($exportStatus == 1){
+            if ($exportStatus == 1) {
                 $arr['All Type'] = [];
                 foreach ($list['result'] as $value) {
                     $dt = [
@@ -474,46 +486,47 @@ class SettingFraudController extends Controller
                 }
 
                 $data = new MultisheetExport($arr);
-                return Excel::download($data,'Fraud_'.$type.'_'.date('Ymdhis').'.xls');
+                return Excel::download($data, 'Fraud_' . $type . '_' . date('Ymdhis') . '.xls');
             }
             $data['result'] = $list['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
         $data['type'] = $type;
         $data['conditions'] = [];
 
-        if($post){
-            if(isset($post['conditions'])){
+        if ($post) {
+            if (isset($post['conditions'])) {
                 $data['conditions'] = $post['conditions'];
             }
 
-            if(isset($post['date_start']) && isset($post['date_end'])){
+            if (isset($post['date_start']) && isset($post['date_end'])) {
                 $data['date_start'] = $post['date_start'];
                 $data['date_end'] = $post['date_end'];
-                if($type == 'transaction-day'){
-                    Session::put('filter-fraud-log-trx-day',$data);
-                }elseif($type == 'transaction-week'){
-                    Session::put('filter-fraud-log-trx-week',$data);
-                }elseif($type == 'transaction-between'){
-                    Session::put('filter-fraud-log-trx-between',$data);
+                if ($type == 'transaction-day') {
+                    Session::put('filter-fraud-log-trx-day', $data);
+                } elseif ($type == 'transaction-week') {
+                    Session::put('filter-fraud-log-trx-week', $data);
+                } elseif ($type == 'transaction-between') {
+                    Session::put('filter-fraud-log-trx-between', $data);
                 }
             }
         }
 
-        return view('settingfraud::report.report_fraud_'.$type_view, $data);
+        return view('settingfraud::report.report_fraud_' . $type_view, $data);
     }
 
-    function fraudReportReferral(Request $request){
+    public function fraudReportReferral(Request $request)
+    {
         $post = $request->except('_token');
         $exportStatus = 0;
-        if(isset($post['export-excel'])){
+        if (isset($post['export-excel'])) {
             $exportStatus = 1;
         }
 
-        if(Session::has('filter-fraud-log-referral') && !isset($post['filter'])){
+        if (Session::has('filter-fraud-log-referral') && !isset($post['filter'])) {
             $post = Session::get('filter-fraud-log-referral');
-        }else{
+        } else {
             Session::forget('filter-fraud-log-referral');
         }
         $type_view = 'transaction_point';
@@ -524,17 +537,21 @@ class SettingFraudController extends Controller
             'submenu_active' => 'report-fraud-referral',
         ];
         $getOutlet = MyHelper::get('outlet/be/list');
-        if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
+        if ($getOutlet['status'] == 'success') {
+            $data['outlets'] = $getOutlet['result'];
+        } else {
+            $data['outlets'] = [];
+        }
 
         $post['export'] = $exportStatus;
         $url = 'fraud/list/log/referral';
         $list = MyHelper::post($url, $post);
 
-        if(isset($list['status']) && $list['status'] == 'success'){
+        if (isset($list['status']) && $list['status'] == 'success') {
             //process export
-            if($exportStatus == 1){
+            if ($exportStatus == 1) {
                 $arr['All Type'] = [];
-                foreach ($list['result'] as $value){
+                foreach ($list['result'] as $value) {
                     $dt = [
                         'Nama customer' => $value['name'],
                         'No HP' => $value['phone'],
@@ -549,39 +566,40 @@ class SettingFraudController extends Controller
                 }
 
                 $data = new MultisheetExport($arr);
-                return Excel::download($data,'Fraud_referral_user_'.date('Ymdhis').'.xls');
+                return Excel::download($data, 'Fraud_referral_user_' . date('Ymdhis') . '.xls');
             }
             $data['result'] = $list['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
         $data['type'] = 'referral-user';
         $data['conditions'] = [];
 
-        if($post){
-            if(isset($post['conditions'])){
+        if ($post) {
+            if (isset($post['conditions'])) {
                 $data['conditions'] = $post['conditions'];
             }
 
-            if(isset($post['date_start']) && isset($post['date_end'])){
+            if (isset($post['date_start']) && isset($post['date_end'])) {
                 $data['date_start'] = $post['date_start'];
                 $data['date_end'] = $post['date_end'];
-                Session::put('filter-fraud-log-referral-user',$data);
+                Session::put('filter-fraud-log-referral-user', $data);
             }
         }
         return view('settingfraud::report.report_fraud_referral', $data);
     }
 
-    function fraudReportReferralUser(Request $request){
+    public function fraudReportReferralUser(Request $request)
+    {
         $post = $request->except('_token');
         $exportStatus = 0;
-        if(isset($post['export-excel'])){
+        if (isset($post['export-excel'])) {
             $exportStatus = 1;
         }
 
-        if(Session::has('filter-fraud-log-referral-user') && !isset($post['filter'])){
+        if (Session::has('filter-fraud-log-referral-user') && !isset($post['filter'])) {
             $post = Session::get('filter-fraud-log-referral-user');
-        }else{
+        } else {
             Session::forget('filter-fraud-log-referral-user');
         }
         $type_view = 'transaction_point';
@@ -592,17 +610,21 @@ class SettingFraudController extends Controller
             'submenu_active' => 'report-fraud-referral-user',
         ];
         $getOutlet = MyHelper::get('outlet/be/list');
-        if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
+        if ($getOutlet['status'] == 'success') {
+            $data['outlets'] = $getOutlet['result'];
+        } else {
+            $data['outlets'] = [];
+        }
 
         $post['export'] = $exportStatus;
         $url = 'fraud/list/log/referral-user';
         $list = MyHelper::post($url, $post);
 
-        if(isset($list['status']) && $list['status'] == 'success'){
+        if (isset($list['status']) && $list['status'] == 'success') {
             //process export
-            if($exportStatus == 1){
+            if ($exportStatus == 1) {
                 $arr['All Type'] = [];
-                foreach ($list['result'] as $value){
+                foreach ($list['result'] as $value) {
                     $dt = [
                         'Nama customer' => $value['name'],
                         'No HP' => $value['phone'],
@@ -617,39 +639,40 @@ class SettingFraudController extends Controller
                 }
 
                 $data = new MultisheetExport($arr);
-                return Excel::download($data,'Fraud_referral_user_'.date('Ymdhis').'.xls');
+                return Excel::download($data, 'Fraud_referral_user_' . date('Ymdhis') . '.xls');
             }
             $data['result'] = $list['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
         $data['type'] = 'referral-user';
         $data['conditions'] = [];
 
-        if($post){
-            if(isset($post['conditions'])){
+        if ($post) {
+            if (isset($post['conditions'])) {
                 $data['conditions'] = $post['conditions'];
             }
 
-            if(isset($post['date_start']) && isset($post['date_end'])){
+            if (isset($post['date_start']) && isset($post['date_end'])) {
                 $data['date_start'] = $post['date_start'];
                 $data['date_end'] = $post['date_end'];
-                Session::put('filter-fraud-log-referral-user',$data);
+                Session::put('filter-fraud-log-referral-user', $data);
             }
         }
         return view('settingfraud::report.report_fraud_referral_user', $data);
     }
 
-    function fraudReportPromoCode(Request $request){
+    public function fraudReportPromoCode(Request $request)
+    {
         $post = $request->except('_token');
         $exportStatus = 0;
-        if(isset($post['export-excel'])){
+        if (isset($post['export-excel'])) {
             $exportStatus = 1;
         }
 
-        if(Session::has('filter-fraud-log-promo-code') && !isset($post['filter'])){
+        if (Session::has('filter-fraud-log-promo-code') && !isset($post['filter'])) {
             $post = Session::get('filter-fraud-log-promo-code');
-        }else{
+        } else {
             Session::forget('filter-fraud-log-promo-code');
         }
 
@@ -660,17 +683,21 @@ class SettingFraudController extends Controller
             'submenu_active' => 'report-fraud-promo-code',
         ];
         $getOutlet = MyHelper::get('outlet/be/list');
-        if($getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result']; else $data['outlets'] = [];
+        if ($getOutlet['status'] == 'success') {
+            $data['outlets'] = $getOutlet['result'];
+        } else {
+            $data['outlets'] = [];
+        }
 
         $post['export'] = $exportStatus;
         $url = 'fraud/list/log/promo-code';
         $list = MyHelper::post($url, $post);
 
-        if(isset($list['status']) && $list['status'] == 'success'){
+        if (isset($list['status']) && $list['status'] == 'success') {
             //process export
-            if($exportStatus == 1){
+            if ($exportStatus == 1) {
                 $arr['All Type'] = [];
-                foreach ($list['result'] as $value){
+                foreach ($list['result'] as $value) {
                     $dt = [
                         'Nama customer' => $value['name'],
                         'No HP' => $value['phone'],
@@ -682,31 +709,32 @@ class SettingFraudController extends Controller
                 }
 
                 $data = new MultisheetExport($arr);
-                return Excel::download($data,'Fraud_promo_code_'.date('Ymdhis').'.xls');
+                return Excel::download($data, 'Fraud_promo_code_' . date('Ymdhis') . '.xls');
             }
             $data['result'] = $list['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
         $data['type'] = 'promo-code';
         $data['conditions'] = [];
 
-        if($post){
-            if(isset($post['conditions'])){
+        if ($post) {
+            if (isset($post['conditions'])) {
                 $data['conditions'] = $post['conditions'];
             }
 
-            if(isset($post['date_start']) && isset($post['date_end'])){
+            if (isset($post['date_start']) && isset($post['date_end'])) {
                 $data['date_start'] = $post['date_start'];
                 $data['date_end'] = $post['date_end'];
-                Session::put('filter-fraud-log-promo-code',$data);
+                Session::put('filter-fraud-log-promo-code', $data);
             }
         }
         return view('settingfraud::report.report_fraud_promo_code', $data);
     }
     //======================== End Fraud list Report ========================//
 
-    public function fraudReportDeviceDetail(Request $request, $device_id){
+    public function fraudReportDeviceDetail(Request $request, $device_id)
+    {
         $data = [
             'title'          => 'Report',
             'sub_title'      => 'Detail',
@@ -716,12 +744,12 @@ class SettingFraudController extends Controller
         ];
 
         $detail = MyHelper::post('fraud/detail/log/device', ['device_id' => $device_id]);
-        if(isset($detail['status']) && $detail['status'] == 'success'){
+        if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['result'] = [
                 'detail_user' => $detail['result']['detail_user'],
                 'detail_fraud' => $detail['result']['detail_fraud']
             ];
-        }else{
+        } else {
             $data['result'] = [
                 'detail_user' => [],
                 'detail_fraud' => []
@@ -731,7 +759,8 @@ class SettingFraudController extends Controller
         return view('settingfraud::report.report_fraud_device_detail', $data);
     }
 
-    public function fraudReportTransactionDayDetail(Request $request, $id){
+    public function fraudReportTransactionDayDetail(Request $request, $id)
+    {
         $data = [
             'title'          => 'Report',
             'sub_title'      => 'Detail',
@@ -740,16 +769,17 @@ class SettingFraudController extends Controller
         ];
 
         $detail = MyHelper::post('fraud/detail/log/transaction-day', ['id_fraud_detection_log_transaction_day' => $id]);
-        if(isset($detail['status']) && $detail['status'] == 'success'){
+        if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['result'] = $detail['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
         $data['id_fraud_log'] = $id;
         return view('settingfraud::report.report_fraud_transaction_day_detail', $data);
     }
 
-    public function fraudReportTransactionWeekDetail(Request $request, $id){
+    public function fraudReportTransactionWeekDetail(Request $request, $id)
+    {
         $data = [
             'title'          => 'Report',
             'sub_title'      => 'Detail',
@@ -759,16 +789,17 @@ class SettingFraudController extends Controller
 
         $detail = MyHelper::post('fraud/detail/log/transaction-week', ['id_fraud_detection_log_transaction_week' => $id]);
 
-        if(isset($detail['status']) && $detail['status'] == 'success'){
+        if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['result'] = $detail['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
         $data['id_fraud_log'] = $id;
         return view('settingfraud::report.report_fraud_transaction_week_detail', $data);
     }
 
-    public function fraudReportTransactionBetweenDetail(Request $request, $id_user, $date){
+    public function fraudReportTransactionBetweenDetail(Request $request, $id_user, $date)
+    {
 
         $data = [
             'title'          => 'Report',
@@ -779,16 +810,17 @@ class SettingFraudController extends Controller
 
         $detail = MyHelper::post('fraud/detail/log/transaction-between', ['id_user' => $id_user, 'date_fraud' => $date]);
 
-        if(isset($detail['status']) && $detail['status'] == 'success'){
+        if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['result'] = $detail['result'];
-        }else{
+        } else {
             $data['result'] = [];
         }
 
         return view('settingfraud::report.report_fraud_transaction_between_detail', $data);
     }
 
-    public function fraudReportPromoCodeDetail(Request $request, $id){
+    public function fraudReportPromoCodeDetail(Request $request, $id)
+    {
         $data = [
             'title'          => 'Report',
             'sub_title'      => 'Detail',
@@ -797,12 +829,12 @@ class SettingFraudController extends Controller
         ];
 
         $detail = MyHelper::post('fraud/detail/log/promo-code', ['id_fraud_detection_log_check_promo_code' => $id]);
-        if(isset($detail['status']) && $detail['status'] == 'success'){
+        if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['result'] = [
                 'list_promo_code' => $detail['result']['list_promo_code'],
                 'detail_fraud' => $detail['result']['detail_fraud']
             ];
-        }else{
+        } else {
             $data['result'] = [
                 'list_promo_code' => [],
                 'detail_fraud' => []
@@ -812,51 +844,53 @@ class SettingFraudController extends Controller
         return view('settingfraud::report.report_fraud_promo_code_detail', $data);
     }
 
-    public function updateSuspend(Request $request, $type, $phone){
+    public function updateSuspend(Request $request, $type, $phone)
+    {
         $post = $request->except('_token');
         $post['phone'] = $phone;
         $update = MyHelper::post('users/update/suspend', $post);
 
-        if($type == 'device'){
+        if ($type == 'device') {
             $device_id = $post['device_id'];
-            $url = 'fraud-detection/report/detail/device/'.$device_id;
-        }elseif($type == 'transaction-day'){
+            $url = 'fraud-detection/report/detail/device/' . $device_id;
+        } elseif ($type == 'transaction-day') {
             $id = $post['id_fraud_log'];
-            $url = 'fraud-detection/report/detail/transaction-day/'.$id;
-        }elseif($type == 'transaction-week'){
+            $url = 'fraud-detection/report/detail/transaction-day/' . $id;
+        } elseif ($type == 'transaction-week') {
             $id = $post['id_fraud_log'];
-            $url = 'fraud-detection/report/detail/transaction-week/'.$id;
-        }elseif($type == 'suspend-user'){
+            $url = 'fraud-detection/report/detail/transaction-week/' . $id;
+        } elseif ($type == 'suspend-user') {
             $url = 'fraud-detection/suspend-user/1';
         }
 
-        if(isset($update['status']) && isset($update['status']) == 'success'){
+        if (isset($update['status']) && isset($update['status']) == 'success') {
             return redirect($url)->withSuccess(['Success Update Suspend Status']);
-        }else{
+        } else {
             return redirect($url)->withErrors(['Failed Update Suspend Status']);
         }
-
     }
 
-    public function updateStatusLog(Request $request, $type){
+    public function updateStatusLog(Request $request, $type)
+    {
         $post = $request->except('_token');
         $post['type'] = $type;
         $update = MyHelper::post('fraud/detail/log/update', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
             return ['status' => 'success', 'messages' => 'Success update status'];
-        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+        } elseif (isset($update['status']) && $update['status'] == 'fail') {
             return ['status' => 'fail', 'messages' => 'Failed update status'];
         } else {
             return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update status'];
         }
     }
 
-    public function logFraudUser(Request $request){
+    public function logFraudUser(Request $request)
+    {
         $post = $request->except('_token');
-        if(Session::has('filter-user-fraud') && !isset($post['filter'])){
+        if (Session::has('filter-user-fraud') && !isset($post['filter'])) {
             $post = Session::get('filter-user-fraud');
-        }else{
+        } else {
             Session::forget('filter-user-fraud');
         }
         $take = 20;
@@ -869,15 +903,15 @@ class SettingFraudController extends Controller
         ];
 
         $post['skip'] = 0;
-        if(isset($post['page'])){
+        if (isset($post['page'])) {
             $page = $post['page'];
             $post['take'] = $take;
-            if($post['page'] > 1 ){
+            if ($post['page'] > 1) {
                 $post['skip'] = $post['page'] + $take;
             }
 
             $data['page'] = $page;
-        }else{
+        } else {
             $post['page'] = 1;
             $post['take'] = $take;
 
@@ -888,14 +922,14 @@ class SettingFraudController extends Controller
         $data['type'] = 'suspend';
         $data['outlets'] = [];
 
-        if(isset($post['conditions'])){
+        if (isset($post['conditions'])) {
             $data['conditions'] = $post['conditions'];
         }
 
-        if(isset($post['date_start']) && isset($post['date_end'])){
+        if (isset($post['date_start']) && isset($post['date_end'])) {
             $data['date_start'] = $post['date_start'];
             $data['date_end'] = $post['date_end'];
-            Session::put('filter-user-fraud',$data);
+            Session::put('filter-user-fraud', $data);
         }
 
         $getUser = MyHelper::post('fraud/list/user', $post);
@@ -904,15 +938,15 @@ class SettingFraudController extends Controller
         if (isset($getUser['status']) && $getUser['status'] == 'success') {
             $data['content'] = $getUser['result'];
             $data['total'] = $getUser['total'];
-        }
-        else {
+        } else {
             $data['content'] = null;
             $data['total'] = null;
         }
         return view('settingfraud::suspend-user', $data);
     }
 
-    public function detailLogFraudUser(Request $request, $phone){
+    public function detailLogFraudUser(Request $request, $phone)
+    {
         $data = [
             'title'          => 'Log Fraud',
             'sub_title'      => 'Log Fraud',
@@ -923,8 +957,7 @@ class SettingFraudController extends Controller
 
         if (isset($list['status']) && $list['status'] == 'success') {
             $data['result'] = $list['result'];
-        }
-        else {
+        } else {
             $data['result'] = [];
         }
 
@@ -937,13 +970,14 @@ class SettingFraudController extends Controller
         return back();
     }
 
-    public function updateStatusDeviceLogin(Request $request){
+    public function updateStatusDeviceLogin(Request $request)
+    {
         $post = $request->except('_token');
         $update = MyHelper::post('fraud/device-login/update-status', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
             return ['status' => 'success', 'messages' => 'Success update status'];
-        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+        } elseif (isset($update['status']) && $update['status'] == 'fail') {
             return ['status' => 'fail', 'messages' => 'Failed update status'];
         } else {
             return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update status'];

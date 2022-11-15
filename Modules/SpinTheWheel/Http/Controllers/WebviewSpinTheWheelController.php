@@ -5,11 +5,10 @@ namespace Modules\SpinTheWheel\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use App\Lib\MyHelper;
 
 class WebviewSpinTheWheelController extends Controller
-{   
+{
     // get spin prize temp and spin items
     public function index(Request $request)
     {
@@ -45,13 +44,13 @@ class WebviewSpinTheWheelController extends Controller
             $data['spin_count'] = count($spin_items['result']['spin_items']);
             $data['spin_point'] = $spin_items['result']['spin_point'];
             $data['spin_prize'] = $spin_items['result']['spin_prize'];
-            
+
             // set data for spin (number segment)
             $spin_array = [];
 
             foreach ($spin_items_temp as $key => $item) {
                 array_push($spin_array, $item['id_deals']);
-                
+
                 if ($key > 5) {
                     $key = ($key % 5);
                 }
@@ -69,8 +68,7 @@ class WebviewSpinTheWheelController extends Controller
             $data['spin_items_id']    = json_encode($spin_array);
             $data['spin_items']       = json_encode($segments);
             $data['spin_item_titles'] = json_encode($segment_titles);
-        }
-        elseif (isset($spin_items['messages'])) {
+        } elseif (isset($spin_items['messages'])) {
             $data['errors'] = $spin_items['messages'];
         }
 
@@ -86,12 +84,11 @@ class WebviewSpinTheWheelController extends Controller
         }
 
         $result = MyHelper::getWithBearer('spinthewheel/spin', $bearer);
-        
+
         if (isset($result['status']) && $result['status'] == "success") {
             return $result;
         }
 
         return "";
     }
-
 }

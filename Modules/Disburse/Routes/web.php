@@ -14,21 +14,27 @@ Route::get('/disburse', function () {
     return redirect('disburse/login');
 });
 
-Route::get('disburse/logout', function(){
+Route::get('disburse/logout', function () {
     $a = session('success')['s'];
     session()->flush();
-    if($a) session(['success' => ['s' => $a]]);
+    if ($a) {
+        session(['success' => ['s' => $a]]);
+    }
     return redirect('disburse/login');
 });
 
-Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
-    Route::get('login', function(){
-        if(!session()->has('username-franchise')) return view('disburse::login'); else return redirect('disburse/home');
+Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function () {
+    Route::get('login', function () {
+        if (!session()->has('username-franchise')) {
+            return view('disburse::login');
+        } else {
+            return redirect('disburse/home');
+        }
     });
 
     Route::post('login', 'DisburseController@loginUserFranchise');
 
-    Route::group(['middleware' => 'validate_session_disburse'], function(){
+    Route::group(['middleware' => 'validate_session_disburse'], function () {
         Route::any('user-franchise/dashboard', 'DisburseController@dashboard');
         Route::post('user-franchise/getOutlets', 'DisburseController@getOutlets');
         Route::post('user-franchise/getUserFranchise', 'DisburseController@userFranchise');
@@ -43,7 +49,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('user-franchise/reset-password', 'DisburseController@resetPassword');
     });
 
-    Route::group(['middleware' => 'validate_session'], function(){
+    Route::group(['middleware' => 'validate_session'], function () {
         Route::any('dashboard', 'DisburseController@dashboard');
         Route::post('getOutlets', 'DisburseController@getOutlets');
         Route::post('getUserFranchise', 'DisburseController@userFranchise');
@@ -79,7 +85,7 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
         Route::any('detail-trx/{id}', 'DisburseController@detailDisburseTrx');
         Route::any('update-status/{id}', 'DisburseController@updateStatusDisburse');
 
-        Route::group(['prefix' => 'rule-promo-payment-gateway'], function() {
+        Route::group(['prefix' => 'rule-promo-payment-gateway'], function () {
             Route::any('/', 'RulePromoPaymentGatewayController@index');
             Route::get('create', 'RulePromoPaymentGatewayController@create');
             Route::post('store', 'RulePromoPaymentGatewayController@store');
@@ -97,7 +103,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'disburse'], function() {
             Route::get('validation/report/download/{id}', 'RulePromoPaymentGatewayController@downloadFile');
 
             Route::any('list-trx', 'RulePromoPaymentGatewayController@promoPaymentGatewayListTransaction');
-
         });
     });
 });

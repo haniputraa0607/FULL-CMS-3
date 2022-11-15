@@ -9,12 +9,11 @@ use Maatwebsite\Excel\Imports\HeadingRowFormatter;
 
 class BrandOutletImport implements WithMultipleSheets
 {
-   
     public function sheets(): array
     {
         HeadingRowFormatter::default('none');
         return [
-            0=>new ExcelImport()
+            0 => new ExcelImport()
         ];
     }
 }

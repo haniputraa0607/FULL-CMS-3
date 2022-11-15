@@ -1,14 +1,12 @@
 <?php
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting-fraud-detection', 'namespace' => 'Modules\SettingFraud\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting-fraud-detection', 'namespace' => 'Modules\SettingFraud\Http\Controllers'], function () {
     Route::any('/', 'SettingFraudController@index');
     Route::any('detail/{id}', 'SettingFraudController@detail');
     Route::post('update/status', 'SettingFraudController@updateStatus');
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'fraud-detection', 'namespace' => 'Modules\SettingFraud\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'fraud-detection', 'namespace' => 'Modules\SettingFraud\Http\Controllers'], function () {
     Route::any('filter/reset/{session}', 'SettingFraudController@searchReset');
     /*== Report ==*/
     Route::post('update/status', 'SettingFraudController@updateStatus');

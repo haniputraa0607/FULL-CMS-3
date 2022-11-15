@@ -1,7 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'spinthewheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'spinthewheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function () {
     Route::get('/list', ['middleware' => 'feature_control:130', 'uses' => 'SpinTheWheelController@list']);
     Route::any('/create', ['middleware' => 'feature_control:131', 'uses' => 'SpinTheWheelController@create']);
     Route::get('/edit/{slug}', ['middleware' => 'feature_control:132', 'uses' => 'SpinTheWheelController@edit']);
@@ -11,10 +10,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'spinthew
 });
 
 /* Webview */
-Route::group(['middleware' => 'web', 'prefix' => 'webview/spin-the-wheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function()
-{
+Route::group(['middleware' => 'web', 'prefix' => 'webview/spin-the-wheel', 'namespace' => 'Modules\SpinTheWheel\Http\Controllers'], function () {
     Route::get('/', 'WebviewSpinTheWheelController@index');
     // ajax for claim spin prize
     Route::get('/spin', 'WebviewSpinTheWheelController@spin');
-
 });

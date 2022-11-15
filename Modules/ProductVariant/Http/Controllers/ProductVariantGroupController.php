@@ -18,7 +18,8 @@ use Session;
 
 class ProductVariantGroupController extends Controller
 {
-    public function listProductVariant(Request $request){
+    public function listProductVariant(Request $request)
+    {
         $post = $request->all();
         $data = [
             'title'          => 'Product Variant (SKU)',
@@ -27,23 +28,23 @@ class ProductVariantGroupController extends Controller
             'submenu_active' => 'product-variant-group-remove'
         ];
 
-        if(Session::has('filter-product-variant-group') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-product-variant-group') && !empty($post) && !isset($post['filter'])) {
             $post = Session::get('filter-product-variant-group');
-        }else{
+        } else {
             Session::forget('filter-product-variant-group');
         }
 
         if ($request->wantsJson()) {
             $draw = $request->draw;
 
-            $list = MyHelper::post('product-variant-group/list-group',$post);
+            $list = MyHelper::post('product-variant-group/list-group', $post);
 
-            if(isset($list['status']) && $list['status'] == 'success'){
+            if (isset($list['status']) && $list['status'] == 'success') {
                 $arr_result['draw'] = $draw;
                 $arr_result['recordsTotal'] = $list['result']['total'];
                 $arr_result['recordsFiltered'] = $list['result']['total'];
                 $arr_result['data'] = $list['result']['data'];
-            }else{
+            } else {
                 $arr_result['draw'] = $draw;
                 $arr_result['recordsTotal'] = 0;
                 $arr_result['recordsFiltered'] = 0;
@@ -52,29 +53,31 @@ class ProductVariantGroupController extends Controller
             return response()->json($arr_result);
         }
 
-        if($post){
-            Session::put('filter-product-variant-group',$post);
+        if ($post) {
+            Session::put('filter-product-variant-group', $post);
         }
 
-        $data['conditions'] = $post['conditions']??[];
+        $data['conditions'] = $post['conditions'] ?? [];
         return view('productvariant::group.product_variant_list', $data);
     }
 
-    public function removeProductVariant(Request $request){
+    public function removeProductVariant(Request $request)
+    {
         $post = $request->all();
-        if(Session::has('filter-product-variant-group')){
-            $post['conditions'] = Session::get('filter-product-variant-group')['conditions']??[];
+        if (Session::has('filter-product-variant-group')) {
+            $post['conditions'] = Session::get('filter-product-variant-group')['conditions'] ?? [];
         }
-        $remove = MyHelper::post('product-variant-group/remove',$post);
+        $remove = MyHelper::post('product-variant-group/remove', $post);
 
-        if(isset($remove['fail']) && !empty($remove['fail'])){
+        if (isset($remove['fail']) && !empty($remove['fail'])) {
             return redirect('product-variant-group/list-group')->withErrors($remove['messages'] ?? ['Something went wrong']);
-        }else{
-            return redirect('product-variant-group/list-group')->with('success',['Success remove product variant']);
+        } else {
+            return redirect('product-variant-group/list-group')->with('success', ['Success remove product variant']);
         }
     }
 
-    public function listProduct(Request $request){
+    public function listProduct(Request $request)
+    {
         $post = $request->except('_token');
         $data = [
             'title'          => 'Product Variant (SKU)',
@@ -86,14 +89,14 @@ class ProductVariantGroupController extends Controller
         if ($request->wantsJson()) {
             $draw = $request->draw;
 
-            $list = MyHelper::post('product-variant-group/list',$request->all());
+            $list = MyHelper::post('product-variant-group/list', $request->all());
 
-            if(isset($list['status']) && $list['status'] == 'success'){
+            if (isset($list['status']) && $list['status'] == 'success') {
                 $arr_result['draw'] = $draw;
                 $arr_result['recordsTotal'] = $list['result']['total'];
                 $arr_result['recordsFiltered'] = $list['result']['total'];
                 $arr_result['data'] = $list['result']['data'];
-            }else{
+            } else {
                 $arr_result['draw'] = $draw;
                 $arr_result['recordsTotal'] = 0;
                 $arr_result['recordsFiltered'] = 0;
@@ -106,7 +109,8 @@ class ProductVariantGroupController extends Controller
         return view('productvariant::group.product_list', $data);
     }
 
-    public function editProductVariant(Request $request, $product_code){
+    public function editProductVariant(Request $request, $product_code)
+    {
         $post = $request->except('_token');
         $data = [
             'title'          => 'Product Variant (SKU)',
@@ -115,22 +119,22 @@ class ProductVariantGroupController extends Controller
             'submenu_active' => 'product-variant-group-list'
         ];
 
-        if(empty($post)){
+        if (empty($post)) {
             $data['products'] = MyHelper::post('product/be/list', ['product_code' => $product_code, 'outlet_prices' => 1])['result'] ?? [];
             $data['product_variant'] = MyHelper::get('product-variant')['result'] ?? [];
-            $data['product_variant_group'] = MyHelper::post('product-variant-group',  ['product_code' => $product_code])['result'] ?? [];
+            $data['product_variant_group'] = MyHelper::post('product-variant-group', ['product_code' => $product_code])['result'] ?? [];
             $data['count'] = count($data['product_variant_group']);
             $data['product_code'] = $product_code;
             return view('productvariant::group.product_detail', $data);
-        }else{
+        } else {
             $post = $request->all();
             $post['product_code'] = $product_code;
             $create_update = MyHelper::post('product-variant-group', $post);
 
-            if(($create_update['status']??'')=='success'){
-                return redirect('product-variant-group/edit/'.$product_code)->with('success',['Update Product Variant Group Success']);
-            }else{
-                return redirect('product-variant-group/edit/'.$product_code)->withErrors($create_update['messages'] ?? ['Something went wrong']);
+            if (($create_update['status'] ?? '') == 'success') {
+                return redirect('product-variant-group/edit/' . $product_code)->with('success', ['Update Product Variant Group Success']);
+            } else {
+                return redirect('product-variant-group/edit/' . $product_code)->withErrors($create_update['messages'] ?? ['Something went wrong']);
             }
         }
     }
@@ -140,7 +144,7 @@ class ProductVariantGroupController extends Controller
         $result = MyHelper::post('product-variant-group/product-delete', ['product_code' => $product_code]);
 
         if (isset($result['status']) && $result['status'] == 'success') {
-            return redirect('product-variant-group/list')->with('success',['Delete All Product Variant Group Success']);
+            return redirect('product-variant-group/list')->with('success', ['Delete All Product Variant Group Success']);
         }
         return redirect('product-variant-group/list')->withErrors($result['messages'] ?? ['Something went wrong']);
     }
@@ -184,9 +188,9 @@ class ProductVariantGroupController extends Controller
             $data['productVariant']  = $get['result']['data'];
             $data['productVariantTotal']     = $get['result']['total'];
             $data['productVariantPerPage']   = $get['result']['from'];
-            $data['productVariantUpTo']      = $get['result']['from'] + count($get['result']['data'])-1;
+            $data['productVariantUpTo']      = $get['result']['from'] + count($get['result']['data']) - 1;
             $data['productVariantPaginator'] = new LengthAwarePaginator($get['result']['data'], $get['result']['total'], $get['result']['per_page'], $get['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['productVariant']  = [];
             $data['productVariantTotal']     = 0;
             $data['productVariantPerPage']   = 0;
@@ -262,9 +266,9 @@ class ProductVariantGroupController extends Controller
             $data['productVariant']  = $get['result']['data'];
             $data['productVariantTotal']     = $get['result']['total'];
             $data['productVariantPerPage']   = $get['result']['from'];
-            $data['productVariantUpTo']      = $get['result']['from'] + count($get['result']['data'])-1;
+            $data['productVariantUpTo']      = $get['result']['from'] + count($get['result']['data']) - 1;
             $data['productVariantPaginator'] = new LengthAwarePaginator($get['result']['data'], $get['result']['total'], $get['result']['per_page'], $get['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['productVariant']  = [];
             $data['productVariantTotal']     = 0;
             $data['productVariantPerPage']   = 0;
@@ -296,12 +300,13 @@ class ProductVariantGroupController extends Controller
         }
     }
 
-    public function export(Request $request) {
+    public function export(Request $request)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::post('product-variant-group/export', $post)['result']??[];
+        $data = MyHelper::post('product-variant-group/export', $post)['result'] ?? [];
         $tab_title = 'List Product Variant';
 
-        if(empty($data)){
+        if (empty($data)) {
             $datas['brand'] = [
                 'name_brand' => '',
                 'code_brand' => ''
@@ -322,15 +327,16 @@ class ProductVariantGroupController extends Controller
                     'Type' => ''
                 ]
             ];
-        }else{
+        } else {
             $datas = $data;
         }
 
         $tab_title = 'List Products';
-        return Excel::download(new ProductExport($datas['products'],$datas['brand'],$tab_title),date('YmdHi').'_product variant_'.$datas['brand']['name_brand'].'.xlsx');
+        return Excel::download(new ProductExport($datas['products'], $datas['brand'], $tab_title), date('YmdHi') . '_product variant_' . $datas['brand']['name_brand'] . '.xlsx');
     }
 
-    public function import(Request $request){
+    public function import(Request $request)
+    {
         $data = [
             'title'          => 'Product Variant (SKU)',
             'sub_title'      => 'Import Product Variant',
@@ -338,7 +344,7 @@ class ProductVariantGroupController extends Controller
             'submenu_active' => 'product-variant-group-import-global'
         ];
 
-        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+        $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
         return view('productvariant::group.import', $data);
     }
 
@@ -348,41 +354,42 @@ class ProductVariantGroupController extends Controller
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $excel = \Excel::toCollection(new ProductImport(),$request->file('import_file'));
+            $excel = \Excel::toCollection(new ProductImport(), $request->file('import_file'));
             $data = [];
             $head = [];
-            foreach ($excel[0]??[] as $key => $value) {
+            foreach ($excel[0] ?? [] as $key => $value) {
                 $value = json_decode($value);
-                if($key == 2){
+                if ($key == 2) {
                     $head = $value;
-                }elseif($key > 2){
+                } elseif ($key > 2) {
                     $data[] = array_combine($head, $value);
                 }
             }
 
-            if(!empty($data)){
+            if (!empty($data)) {
                 $import = MyHelper::post('product-variant-group/import', ['data' => $data]);
                 return $import;
-            }else{
+            } else {
                 return [
-                    'status'=>'fail',
-                    'messages'=>['File empty']
+                    'status' => 'fail',
+                    'messages' => ['File empty']
                 ];
             }
-        }else{
+        } else {
             return [
-                'status'=>'fail',
-                'messages'=>['File empty']
+                'status' => 'fail',
+                'messages' => ['File empty']
             ];
         }
     }
 
-    public function exportPrice(Request $request){
+    public function exportPrice(Request $request)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::post('product-variant-group/export-price', $post)['result']??[];
+        $data = MyHelper::post('product-variant-group/export-price', $post)['result'] ?? [];
         $tab_title = 'List Product Variant Price';
 
-        if(empty($data)){
+        if (empty($data)) {
             $datas['brand'] = [
                 'name_brand' => '',
                 'code_brand' => ''
@@ -395,7 +402,7 @@ class ProductVariantGroupController extends Controller
                     'product_variant' => 'Hot,S',
                     'global_price' => 10000,
                     'price_PP001' => 15000,
-                    'price_PP002' =>13500
+                    'price_PP002' => 13500
                 ],
                 [
                     'product' => 'P2 - Kopi',
@@ -404,7 +411,7 @@ class ProductVariantGroupController extends Controller
                     'product_variant' => 'Hot,L',
                     'global_price' => 15000,
                     'price_PP001' => 20000,
-                    'price_PP002' =>23000
+                    'price_PP002' => 23000
                 ],
                 [
                     'product' => 'P3 - Es Milo',
@@ -413,25 +420,26 @@ class ProductVariantGroupController extends Controller
                     'product_variant' => 'Ice, S',
                     'global_price' => 15000,
                     'price_PP001' => 20000,
-                    'price_PP002' =>23000
+                    'price_PP002' => 23000
                 ]
             ];
-        }else{
+        } else {
             $datas = $data;
         }
 
         $tab_title = 'List Product Variant';
-        return Excel::download(new ProductVariantPriceArrayExport($datas['products_variant'], $datas['brand'], $tab_title),date('YmdHi').'_product variant price_'.$datas['brand']['name_brand'].'.xlsx');
+        return Excel::download(new ProductVariantPriceArrayExport($datas['products_variant'], $datas['brand'], $tab_title), date('YmdHi') . '_product variant price_' . $datas['brand']['name_brand'] . '.xlsx');
     }
 
-    public function importPrice(Request $request){
+    public function importPrice(Request $request)
+    {
         $data = [
             'title'          => 'Product Variant (SKU)',
             'sub_title'      => 'Import Product Variant Price',
             'menu_active'    => 'product-variant',
             'submenu_active' => 'product-variant-group-import-price'
         ];
-        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+        $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
         return view('productvariant::group.import_price', $data);
     }
 
@@ -441,45 +449,46 @@ class ProductVariantGroupController extends Controller
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $excel = \Excel::toCollection(new ProductImport(),$request->file('import_file'));
+            $excel = \Excel::toCollection(new ProductImport(), $request->file('import_file'));
             $data = [];
             $head = [];
-            foreach ($excel[0]??[] as $key => $value) {
+            foreach ($excel[0] ?? [] as $key => $value) {
                 $value = json_decode($value);
-                if($key == 2){
+                if ($key == 2) {
                     $head = $value;
-                }elseif($key > 2){
+                } elseif ($key > 2) {
                     $data[] = array_combine($head, $value);
                 }
             }
 
-            if(!empty($data)){
+            if (!empty($data)) {
                 $import = MyHelper::post('product-variant-group/import-price', ['data' => $data]);
                 return $import;
-            }else{
+            } else {
                 return [
-                    'status'=>'fail',
-                    'messages'=>['File empty']
+                    'status' => 'fail',
+                    'messages' => ['File empty']
                 ];
             }
-        }else{
+        } else {
             return [
-                'status'=>'fail',
-                'messages'=>['File empty']
+                'status' => 'fail',
+                'messages' => ['File empty']
             ];
         }
     }
 
-    public function productVariantGroupList(Request $request){
+    public function productVariantGroupList(Request $request)
+    {
         $post = $request->except('_token');
-        $get = MyHelper::post('product-variant-group',$post);
+        $get = MyHelper::post('product-variant-group', $post);
         return '';
     }
 
     public function ajaxProductvariantGroup($idProduct)
     {
-        $productVariant=MyHelper::get('product-variant-group/ajax/'.$idProduct.'?log_save=0');
-        if(isset($productVariant['result'])){
+        $productVariant = MyHelper::get('product-variant-group/ajax/' . $idProduct . '?log_save=0');
+        if (isset($productVariant['result'])) {
             return $productVariant['result'];
         }
         return [];

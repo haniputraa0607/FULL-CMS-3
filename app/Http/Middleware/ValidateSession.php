@@ -15,14 +15,15 @@ class ValidateSession
      */
     public function handle($request, Closure $next)
     {
-        if(session()->has('phone')){
-            if(!strpos(url()->current(),'user/detail') && !strpos(url()->current(),'user/ajax') && !strpos(url()->current(),'user/log')){
+        if (session()->has('phone')) {
+            if (!strpos(url()->current(), 'user/detail') && !strpos(url()->current(), 'user/ajax') && !strpos(url()->current(), 'user/log')) {
                 session(['secure' => false]);
-            }elseif(session('secure') && session('secure_last_activity') >= (time() - 900)){
+            } elseif (session('secure') && session('secure_last_activity') >= (time() - 900)) {
                 session(['secure_last_activity' => time()]);
             }
             return $next($request);
+        } else {
+            return redirect('login')->withErrors(['e' => 'Please login.']);
         }
-        else{ return redirect('login')->withErrors(['e' => 'Please login.']);}
     }
 }

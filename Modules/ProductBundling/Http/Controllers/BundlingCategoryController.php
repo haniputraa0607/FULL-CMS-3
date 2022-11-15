@@ -13,7 +13,8 @@ use Session;
 class BundlingCategoryController extends Controller
 {
     //Product Bundling Category
-    public function indexBundlingCategory(){
+    public function indexBundlingCategory()
+    {
         $data = [
             'title'          => 'Product Bundling',
             'sub_title'      => 'Product Bundling Category',
@@ -25,7 +26,7 @@ class BundlingCategoryController extends Controller
 
         if (isset($bundling['status']) && $bundling['status'] == "success") {
             $data['data']          = $bundling['result'];
-        }else{
+        } else {
             $data['data']          = [];
         }
 
@@ -41,7 +42,7 @@ class BundlingCategoryController extends Controller
             'submenu_active' => 'product-bundling-category-new',
         ];
 
-        $data['bundling_category_parent'] = MyHelper::post('product-bundling-category/list', ['id_parent_category' => 0])['result']??[];
+        $data['bundling_category_parent'] = MyHelper::post('product-bundling-category/list', ['id_parent_category' => 0])['result'] ?? [];
         return view('productbundling::category.create', $data);
     }
 
@@ -50,14 +51,15 @@ class BundlingCategoryController extends Controller
         $post = $request->except('_token');
         $store = MyHelper::post('product-bundling-category/store', $post);
 
-        if(isset($store['status']) && $store['status'] == 'success'){
+        if (isset($store['status']) && $store['status'] == 'success') {
             return redirect('product-bundling/category')->withSuccess(['Success create bundling category']);
-        }else{
-            return redirect('product-bundling/category/create')->withErrors($store['messages']??['Failed create bundling category'])->withInput();
+        } else {
+            return redirect('product-bundling/category/create')->withErrors($store['messages'] ?? ['Failed create bundling category'])->withInput();
         }
     }
 
-    public function updateBundlingCategory(Request $request, $id){
+    public function updateBundlingCategory(Request $request, $id)
+    {
         $post = $request->except('_token');
         $data = [
             'title'          => 'Product Bundling',
@@ -68,41 +70,41 @@ class BundlingCategoryController extends Controller
 
         if (empty($post)) {
             $detail = MyHelper::post('product-bundling-category/list', ['id_bundling_category' => $id]);
-            if(isset($detail['status']) && $detail['status'] == 'success'){
-                $data['parent'] = MyHelper::post('product-bundling-category/list', ['id_parent_category' => 0])['result']??[];
+            if (isset($detail['status']) && $detail['status'] == 'success') {
+                $data['parent'] = MyHelper::post('product-bundling-category/list', ['id_parent_category' => 0])['result'] ?? [];
                 $data['category'] = $detail['result'];
                 return view('productbundling::category.update', $data);
-            }else{
-                return redirect('product-bundling/category')->withErrors($store['messages']??['Failed get detail bundling category'])->withInput();
+            } else {
+                return redirect('product-bundling/category')->withErrors($store['messages'] ?? ['Failed get detail bundling category'])->withInput();
             }
-        }
-        else {
+        } else {
             if (isset($post['id_parent_category']) && $post['id_parent_category'] == 0) {
                 $post['id_parent_category'] = null;
             }
 
             $save = MyHelper::post('product-bundling-category/update', $post);
-            if(isset($save['status']) && $save['status'] == 'success'){
-                return redirect('product-bundling/category/edit/'.$id)->withSuccess(['Success create bundling category']);
-            }else{
-                return redirect('product-bundling/category/edit/'.$id)->withErrors($store['messages']??['Failed create bundling category'])->withInput();
+            if (isset($save['status']) && $save['status'] == 'success') {
+                return redirect('product-bundling/category/edit/' . $id)->withSuccess(['Success create bundling category']);
+            } else {
+                return redirect('product-bundling/category/edit/' . $id)->withErrors($store['messages'] ?? ['Failed create bundling category'])->withInput();
             }
         }
     }
 
-    function deleteBundlingCategory(Request $request) {
+    public function deleteBundlingCategory(Request $request)
+    {
         $post = $request->except('_token');
 
         $delete = MyHelper::post('product-bundling-category/delete', $post);
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
 
-    function positionCategoryAssign(Request $request){
+    public function positionCategoryAssign(Request $request)
+    {
         $post = $request->except('_token');
         if (!isset($post['category_ids'])) {
             return [

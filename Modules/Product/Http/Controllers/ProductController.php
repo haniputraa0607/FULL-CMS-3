@@ -5,12 +5,10 @@ namespace Modules\Product\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Lib\MyHelper;
 use Excel;
 use Session;
-
 use App\Exports\ProductExport;
 use App\Exports\MultisheetExport;
 use App\Imports\ProductImport;
@@ -18,14 +16,16 @@ use App\Imports\FirstSheetOnlyImport;
 
 class ProductController extends Controller
 {
-    function __construct() {
+    public function __construct()
+    {
         date_default_timezone_set('Asia/Jakarta');
         $this->tag  = "Modules\Product\Http\Controllers\TagController";
         $this->categories  = "Modules\Product\Http\Controllers\CategoryController";
     }
 
     // get category and position
-    public function positionAssign(Request $request) {
+    public function positionAssign(Request $request)
+    {
         $data = [
             'title'          => 'Manage Product Position',
             'sub_title'      => 'Assign Products Position',
@@ -37,8 +37,7 @@ class ProductController extends Controller
 
         if (isset($catParent['status']) && $catParent['status'] == "success") {
             $data['category'] = $catParent['result'];
-        }
-        else {
+        } else {
             $data['category'] = [];
         }
 
@@ -46,8 +45,7 @@ class ProductController extends Controller
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
-        }
-        else {
+        } else {
             $data['product'] = [];
         }
         // dd($data);
@@ -70,35 +68,35 @@ class ProductController extends Controller
         return $result;
     }
 
-    public function categoryAssign(Request $request) {
-		$post = $request->except('_token');
+    public function categoryAssign(Request $request)
+    {
+        $post = $request->except('_token');
 
-		$data = [
+        $data = [
             'title'          => 'Manage Product Category',
             'sub_title'      => 'Assign Products to Categories',
             'menu_active'    => 'product',
             'submenu_active' => 'product-category',
         ];
 
-		if (!empty($post)) {
-			$update = MyHelper::post('product/category/assign', $post);
+        if (!empty($post)) {
+            $update = MyHelper::post('product/category/assign', $post);
 
-			if (isset($update['status']) && $update['status'] == 'success') {
-				// print_r($update);exit;
-				return parent::redirect($update, 'Product categories has been updated.', 'product/category/assign');
-			} elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
-				return back()->withErrors($update['messages']);
-			} else {
-				return back()->witherrors(['Update Failed']);
-			}
-		}
+            if (isset($update['status']) && $update['status'] == 'success') {
+                // print_r($update);exit;
+                return parent::redirect($update, 'Product categories has been updated.', 'product/category/assign');
+            } elseif (isset($outlet['status']) && $outlet['status'] == 'fail') {
+                return back()->withErrors($update['messages']);
+            } else {
+                return back()->witherrors(['Update Failed']);
+            }
+        }
 
-		$catParent = MyHelper::get('product/category/be/list');
+        $catParent = MyHelper::get('product/category/be/list');
 
         if (isset($catParent['status']) && $catParent['status'] == "success") {
             $data['category'] = $catParent['result'];
-        }
-		else {
+        } else {
             $data['category'] = [];
         }
 
@@ -106,16 +104,15 @@ class ProductController extends Controller
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
-        }
-        else {
+        } else {
             $data['product'] = [];
         }
 
         return view('product::product.product-category', $data);
+    }
 
-	}
-
-    public function importProduct($type) {
+    public function importProduct($type)
+    {
         $data = [
             'title'          => 'Product',
             'sub_title'      => 'Import Product',
@@ -127,41 +124,41 @@ class ProductController extends Controller
             case 'global':
                 $data['sub_title'] = 'Import Product Global';
                 $data['submenu_active'] = 'product-import-global';
-                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
                 break;
 
             case 'detail':
                 $data['sub_title'] = 'Import Detail Product';
                 $data['submenu_active'] = 'product-import-detail';
-                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
-                if(!$products){
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result'] ?? [];
+                if (!$products) {
                     return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
                 }
-                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
                 break;
 
             case 'price':
                 $data['sub_title'] = 'Import Product Price';
                 $data['submenu_active'] = 'product-import-price';
-                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result']??[];
-                if(!$products){
+                $products = MyHelper::post('product/be/list', ['admin_list' => 1])['result'] ?? [];
+                if (!$products) {
                     return redirect('product/import/global')->withErrors(['Product list empty','Upload global list product first']);
                 }
-                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
                 break;
 
             case 'modifier-price':
                 $data['sub_title'] = 'Import Topping Price';
                 $data['menu_active'] = 'product-modifier';
                 $data['submenu_active'] = 'product-modifier-import-price';
-                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
                 break;
 
             case 'modifier':
                 $data['sub_title'] = 'Import Topping';
                 $data['menu_active'] = 'product-modifier';
                 $data['submenu_active'] = 'product-modifier-import-global';
-                $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+                $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
                 break;
 
             default:
@@ -174,17 +171,18 @@ class ProductController extends Controller
     /**
      * Export product
      */
-    public function export(Request $request,$type) {
+    public function export(Request $request, $type)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::post('product/export',['type'=>$type]+$post)['result']??[];
-        if(!$data){
+        $data = MyHelper::post('product/export', ['type' => $type] + $post)['result'] ?? [];
+        if (!$data) {
             return back()->withErrors(['Something went wrong']);
         }
         $tab_title = 'List Products';
         switch ($type) {
             case 'global':
                 $tab_title = 'List Products';
-                if(!$data['products']){
+                if (!$data['products']) {
                     $data['products'] = [
                         [
                             'product_code' => '001',
@@ -207,7 +205,7 @@ class ProductController extends Controller
 
             case 'detail':
                 $tab_title = 'Product Detail';
-                if(!$data['products']){
+                if (!$data['products']) {
                     $data['products'] = [
                         [
                             'product_category_name' => 'Snacks',
@@ -239,7 +237,7 @@ class ProductController extends Controller
 
             case 'price':
                 $tab_title = 'Product Price';
-                if(!$data['products']){
+                if (!$data['products']) {
                     $data['products'] = [
                         [
                             'product_code' => '001',
@@ -247,7 +245,7 @@ class ProductController extends Controller
                             'product_description' => 'Example product 1',
                             'global_price' => 10000,
                             'price_PP001' => 15000,
-                            'price_BL012' =>13500
+                            'price_BL012' => 13500
                         ],
                         [
                             'product_code' => '002',
@@ -255,7 +253,7 @@ class ProductController extends Controller
                             'product_description' => 'Example product 2',
                             'global_price' => 20000,
                             'price_PP001' => 30000,
-                            'price_BL012' =>25000
+                            'price_BL012' => 25000
                         ],
                         [
                             'product_code' => '003',
@@ -263,7 +261,7 @@ class ProductController extends Controller
                             'product_description' => 'Example product 3',
                             'global_price' => 12000,
                             'price_PP001' => 18000,
-                            'price_BL012' =>15000
+                            'price_BL012' => 15000
                         ],
                     ];
                 }
@@ -271,7 +269,7 @@ class ProductController extends Controller
 
             case 'modifier-price':
                 $tab_title = 'Topping Price';
-                if(!$data['products']){
+                if (!$data['products']) {
                     $data['products'] = [
                         [
                             'type' => 'type1',
@@ -279,7 +277,7 @@ class ProductController extends Controller
                             'name' => 'Example Modifier 1',
                             'global_price' => 1000,
                             'price_PP001' => 1500,
-                            'price_BL012' =>1350
+                            'price_BL012' => 1350
                         ],
                         [
                             'type' => 'type1',
@@ -287,7 +285,7 @@ class ProductController extends Controller
                             'name' => 'Example Modifier 2',
                             'global_price' => 1400,
                             'price_PP001' => 1500,
-                            'price_BL012' =>1600
+                            'price_BL012' => 1600
                         ],
                         [
                             'type' => 'type2',
@@ -295,7 +293,7 @@ class ProductController extends Controller
                             'name' => 'Example Modifier 3',
                             'global_price' => 1200,
                             'price_PP001' => 1500,
-                            'price_BL012' =>1500
+                            'price_BL012' => 1500
                         ],
                     ];
                 }
@@ -304,7 +302,7 @@ class ProductController extends Controller
 
             case 'modifier':
                 $tab_title = 'Topping';
-                if(!$data['products']){
+                if (!$data['products']) {
                     $data['products'] = [
                         [
                             'type' => 'type1',
@@ -330,30 +328,31 @@ class ProductController extends Controller
                 # code...
                 break;
         }
-        return Excel::download(new ProductExport($data['products'],$data['brand'],$tab_title),date('YmdHi').'_'.$type.'_'.$data['brand']['name_brand'].'.xlsx');
+        return Excel::download(new ProductExport($data['products'], $data['brand'], $tab_title), date('YmdHi') . '_' . $type . '_' . $data['brand']['name_brand'] . '.xlsx');
     }
 
     /**
      * Import product
      */
-    public function import(Request $request,$type) {
+    public function import(Request $request, $type)
+    {
         $post = $request->except('_token');
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $excel = \Excel::toArray(new ProductImport(),$request->file('import_file'))[0]??[];
+            $excel = \Excel::toArray(new ProductImport(), $request->file('import_file'))[0] ?? [];
             $data = [];
             $head = [];
             foreach ($excel as $key => $value) {
-                if($key === 0 ){
+                if ($key === 0) {
                     $data['code_brand'] = $value[1];
-                }elseif($key == 2){
+                } elseif ($key == 2) {
                     $head = $value;
-                }elseif($key !== 1){
+                } elseif ($key !== 1) {
                     $data['products'][] = array_combine($head, $value);
                 }
             }
-            if(!empty($data)){
+            if (!empty($data)) {
                 $code_brand = '';
                 $import = MyHelper::post('product/import', [
                     'id_brand' => $post['id_brand'],
@@ -361,23 +360,24 @@ class ProductController extends Controller
                     'data' => $data
                 ]);
                 return $import;
-            }else{
+            } else {
                 return [
-                    'status'=>'fail',
-                    'messages'=>['File empty']
+                    'status' => 'fail',
+                    'messages' => ['File empty']
                 ];
             }
         }
 
         return [
-            'status'=>'fail',
-            'messages'=>['Something went wrong']
+            'status' => 'fail',
+            'messages' => ['Something went wrong']
         ];
     }
 
-    public function example(Request $request) {
+    public function example(Request $request)
+    {
         $post = $request->except('_token');
-        $listProduct = MyHelper::get('product/export',['type'=>$type]+$post);
+        $listProduct = MyHelper::get('product/export', ['type' => $type] + $post);
         $listOutlet = MyHelper::post('outlet/be/list', ['admin' => 1, 'type' => 'export']);
         $dataPrice = [];
 
@@ -414,7 +414,6 @@ class ProductController extends Controller
 
             $dataProduct = json_decode(json_encode($listProduct['result'], JSON_NUMERIC_CHECK), true);
         } else {
-
             $dataProduct[] = [
                 'product_code'        => null,
                 'product_name'        => null,
@@ -425,13 +424,13 @@ class ProductController extends Controller
             ];
 
             $dataProduct = json_decode(json_encode($dataProduct, JSON_NUMERIC_CHECK), true);
-            return Excel::download(new ArrayExport($dataProduct),'product');
+            return Excel::download(new ArrayExport($dataProduct), 'product');
         }
-        $excelData=[];
+        $excelData = [];
         // $excelData['Product']=$dataProduct;
-        $excelData['Product']=array_map(function($x){
+        $excelData['Product'] = array_map(function ($x) {
             // $x['category']=$x['category']['product_category_name'];
-            $x['category']=$x['category']['id_product_category'];
+            $x['category'] = $x['category']['id_product_category'];
             // $x['product_purchase_limitations']=$x['product_purchase_limitations']['product_purchase_limitation'];
             unset($x['product_purchase_limitations']);
             return $x;
@@ -448,11 +447,11 @@ class ProductController extends Controller
 
                 array_push($dataPrice, $data);
             }
-            $outlet_name = substr($value['outlet_name'],0,31);
-            $excelData[$outlet_name]=$dataPrice;
+            $outlet_name = substr($value['outlet_name'], 0, 31);
+            $excelData[$outlet_name] = $dataPrice;
             $dataPrice = [];
         }
-        return Excel::download(new MultisheetExport($excelData),'products.xlsx');
+        return Excel::download(new MultisheetExport($excelData), 'products.xlsx');
     }
 
     public function importProductSave(Request $request)
@@ -461,8 +460,8 @@ class ProductController extends Controller
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
-            if(!empty($data)){
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(), $request->file('import_file'));
+            if (!empty($data)) {
                 $import = MyHelper::post('product/import', ['data' => $data]);
             }
         }
@@ -473,7 +472,8 @@ class ProductController extends Controller
     /**
      * get category
      */
-    function category() {
+    public function category()
+    {
         $data = [];
 
         $catParent = MyHelper::get('product/category/be/list');
@@ -487,7 +487,8 @@ class ProductController extends Controller
     /**
      * create product
      */
-    function create(Request $request) {
+    public function create(Request $request)
+    {
         $post = $request->except('_token');
 
         if (empty($post)) {
@@ -498,23 +499,22 @@ class ProductController extends Controller
                 'submenu_active' => 'product-new',
             ];
 
-            $getCategory = MyHelper::post('product/category/be/list',$request->all())['result']??[];
+            $getCategory = MyHelper::post('product/category/be/list', $request->all())['result'] ?? [];
 
             $data['parent'] = [];
-            if(!empty($getCategory)){
-                $data['parent'] = app($this->categories )->buildTree($getCategory);
+            if (!empty($getCategory)) {
+                $data['parent'] = app($this->categories)->buildTree($getCategory);
             }
-            $data['outlets'] = MyHelper::get('outlet/be/list')['result']??[];
+            $data['outlets'] = MyHelper::get('outlet/be/list')['result'] ?? [];
 
             return view('product::product.create', $data);
-        }
-        else{
+        } else {
             if (isset($post['photo'])) {
-                $post['image']      = MyHelper::encodeImage($post['photo'],  $request->file('photo')->extension());
+                $post['image']      = MyHelper::encodeImage($post['photo'], $request->file('photo')->extension());
             }
 
-            if(!empty($post['product_variant_status'])){
-                if(!empty($post['variant_color'])){
+            if (!empty($post['product_variant_status'])) {
+                if (!empty($post['variant_color'])) {
                     $arr[] = [
                         "id_product_variant" => 0,
                         "variant_name" =>  "Color",
@@ -522,7 +522,7 @@ class ProductController extends Controller
                     ];
                 }
 
-                if(!empty($post['variant_size'])){
+                if (!empty($post['variant_size'])) {
                     $arr[] = [
                         "id_product_variant" => 0,
                         "variant_name" =>  "Size",
@@ -530,14 +530,14 @@ class ProductController extends Controller
                     ];
                 }
 
-                foreach ($post['variant_color']??[] as $value){
+                foreach ($post['variant_color'] ?? [] as $value) {
                     $arr[0]['variant_child'][] = [
                         "id_product_variant" => 0,
                         "variant_name" =>  $value
                     ];
                 }
 
-                foreach ($post['variant_size']??[] as $value){
+                foreach ($post['variant_size'] ?? [] as $value) {
                     $key = (isset($arr[1]) ? 1 : 0);
                     $arr[$key]['variant_child'][] = [
                         "id_product_variant" => 0,
@@ -548,7 +548,7 @@ class ProductController extends Controller
                 $variantPrice = $post['variant_price'];
                 $resVariantPrice = [];
                 $allPrice = [];
-                foreach ($variantPrice as $val){
+                foreach ($variantPrice as $val) {
                     $val['price'] = str_replace('.', '', $val['price']);
 
                     $replaceDt = str_replace('[', '', $val['data']);
@@ -556,8 +556,8 @@ class ProductController extends Controller
                     $val['data'] = explode(',', $replaceDt);
 
                     $allPrice[] = $val['price'];
-                    if(!empty($val['wholesaler_price'])){
-                        foreach ($val['wholesaler_price'] as $index=>$whole){
+                    if (!empty($val['wholesaler_price'])) {
+                        foreach ($val['wholesaler_price'] as $index => $whole) {
                             $val['wholesaler_price'][$index]['unit_price'] = str_replace('.', '', $whole['unit_price']);
                         }
                     }
@@ -569,12 +569,12 @@ class ProductController extends Controller
                     'variants_price' => $resVariantPrice
                 ];
 
-                if(!empty($arr)){
+                if (!empty($arr)) {
                     $post['variant_status'] = 1;
                 }
 
                 $post['variants'] = json_encode($variants);
-                $post['base_price'] = (count($allPrice ) > 0 ? min($allPrice) : 0);
+                $post['base_price'] = (count($allPrice) > 0 ? min($allPrice) : 0);
             }
 
             $post['admin'] = 1;
@@ -588,7 +588,8 @@ class ProductController extends Controller
     /**
      * list
      */
-    function listProduct(Request $request) {
+    public function listProduct(Request $request)
+    {
         $post = $request->all();
         $data = [
             'title'          => 'Product',
@@ -597,14 +598,14 @@ class ProductController extends Controller
             'submenu_active' => 'product-list'
         ];
 
-        if(Session::has('filter-products') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-products') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-products');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-products');
         }
 
@@ -616,9 +617,9 @@ class ProductController extends Controller
             $data['data']          = $getList['result']['data'];
             $data['dataTotal']     = $getList['result']['total'];
             $data['dataPerPage']   = $getList['result']['from'];
-            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data'])-1;
+            $data['dataUpTo']      = $getList['result']['from'] + count($getList['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($getList['result']['data'], $getList['result']['total'], $getList['result']['per_page'], $getList['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -626,15 +627,15 @@ class ProductController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-products',$post);
+        if ($post) {
+            Session::put('filter-products', $post);
         }
 
-        $data['outlets'] = MyHelper::get('outlet/be/list')['result']??[];
+        $data['outlets'] = MyHelper::get('outlet/be/list')['result'] ?? [];
         $categories = $this->category();
         $resCat = [];
-        foreach ($categories as $category){
-            if(!empty($category['id_parent_category']) && empty($category['category_child'])){
+        foreach ($categories as $category) {
+            if (!empty($category['id_parent_category']) && empty($category['category_child'])) {
                 $resCat[] = $category;
             }
         }
@@ -643,10 +644,11 @@ class ProductController extends Controller
         return view('product::product.list', $data);
     }
 
-    function addImage(Request $request) {
+    public function addImage(Request $request)
+    {
         $post = $request->except('_token');
         if (!empty($post)) {
-            $name = explode('.',$request->file('file')->getClientOriginalName())[0];
+            $name = explode('.', $request->file('file')->getClientOriginalName())[0];
             $post = MyHelper::encodeImage($request->file('file'));
             $save = MyHelper::post('product/photo/createAjax', ['name' => $name, 'photo' => $post]);
             return $save;
@@ -662,17 +664,17 @@ class ProductController extends Controller
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
-        }
-        else {
+        } else {
             $data['product'] = [];
         }
         return view('product::product.image', $data);
     }
 
-    function addImageDetail(Request $request) {
+    public function addImageDetail(Request $request)
+    {
         $post = $request->except('_token');
         if (!empty($post)) {
-            $name = explode('.',$request->file('file')->getClientOriginalName())[0];
+            $name = explode('.', $request->file('file')->getClientOriginalName())[0];
             $post = MyHelper::encodeImage($request->file('file'));
             $save = MyHelper::post('product/photo/createAjax', ['name' => $name, 'photo' => $post, 'detail' => 1]);
             return $save;
@@ -688,17 +690,17 @@ class ProductController extends Controller
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
-        }
-        else {
+        } else {
             $data['product'] = [];
         }
         return view('product::product.image_detail', $data);
     }
 
-    function listImage(Request $request) {
+    public function listImage(Request $request)
+    {
         $post = $request->except('_token');
         if (!empty($post)) {
-            $name = explode('.',$request->file('file')->getClientOriginalName())[0];
+            $name = explode('.', $request->file('file')->getClientOriginalName())[0];
             $post = MyHelper::encodeImage($request->file('file'));
             $save = MyHelper::post('product/photo/createAjax', ['name' => $name, 'photo' => $post]);
             return $save;
@@ -714,14 +716,14 @@ class ProductController extends Controller
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
-        }
-        else {
+        } else {
             $data['product'] = [];
         }
         return view('product::product.image', $data);
     }
 
-    function overrideImage(Request $request) {
+    public function overrideImage(Request $request)
+    {
         $post = $request->except('_token');
 
         if (isset($post['state'])) {
@@ -742,34 +744,35 @@ class ProductController extends Controller
         return $setting;
     }
 
-	function listProductAjax(Request $request) {
+    public function listProductAjax(Request $request)
+    {
         $product = MyHelper::get('product/be/list?log_save=0');
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data = $product['result'];
-        }
-        else {
+        } else {
             $data = [];
         }
-		return response()->json($data);
+        return response()->json($data);
     }
-    
-	function listProductAjaxSimple(Request $request) {
+
+    public function listProductAjaxSimple(Request $request)
+    {
         $product = MyHelper::get('product/list/ajax?log_save=0');
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data = $product['result'];
-        }
-        else {
+        } else {
             $data = [];
         }
-		return response()->json($data);
+        return response()->json($data);
     }
 
     /**
      * detail
      */
-    function detail(Request $request, $code) {
+    public function detail(Request $request, $code)
+    {
         $data = [
             'title'          => 'Product',
             'sub_title'      => 'Product Detail',
@@ -781,8 +784,7 @@ class ProductController extends Controller
 
         if (isset($product['status']) && $product['status'] == "success") {
             $data['product'] = $product['result'];
-        }
-        else {
+        } else {
             $e = ['e' => 'Data product not found.'];
             return redirect('product')->witherrors($e);
         }
@@ -791,36 +793,34 @@ class ProductController extends Controller
 
         if (isset($detail['status']) && $detail['status'] == "success") {
             $data['detail'] = $detail['result'];
-        }
-        else {
+        } else {
             $e = ['e' => 'Data product not found.'];
             return redirect('product')->witherrors($e);
         }
         $post = $request->except('_token');
 
         if (empty($post)) {
-            $getCategory = MyHelper::post('product/category/be/list',$request->all())['result']??[];
+            $getCategory = MyHelper::post('product/category/be/list', $request->all())['result'] ?? [];
 
             $data['parent'] = [];
-            if(!empty($getCategory)){
+            if (!empty($getCategory)) {
                 $data['parent'] = app($this->categories)->buildTree($getCategory);
             }
-            $data['page'] = $post['page']??1;
+            $data['page'] = $post['page'] ?? 1;
             $data['outlet_all'] = [];
 
-            $variants = $data['detail']['variants']??[];
+            $variants = $data['detail']['variants'] ?? [];
 
-            $searchKeyColor = array_search('Color', array_column($variants['variants']??[], 'variant_name'));
-            $searchKeySize = array_search('Size', array_column($variants['variants']??[], 'variant_name'));
+            $searchKeyColor = array_search('Color', array_column($variants['variants'] ?? [], 'variant_name'));
+            $searchKeySize = array_search('Size', array_column($variants['variants'] ?? [], 'variant_name'));
 
             $data['variant_color'] = ($searchKeyColor !== false ? $variants['variants'][$searchKeyColor] : []);
             $data['variant_size'] = ($searchKeySize !== false ? $variants['variants'][$searchKeySize] : []);
-            $data['array_color'] = $data['variant_color']['variant_child']??[];
-            $data['array_size'] = $data['variant_size']['variant_child']??[];
-            $data['variant_price'] = $variants['variants_price']??[];
+            $data['array_color'] = $data['variant_color']['variant_child'] ?? [];
+            $data['array_size'] = $data['variant_size']['variant_child'] ?? [];
+            $data['variant_price'] = $variants['variants_price'] ?? [];
             return view('product::product.detail', $data);
-        }
-        else {
+        } else {
             if ($post['id_product_category'] == 0  || empty($post['id_product_category'])) {
                 $post['id_product_category'] = null;
             }
@@ -831,64 +831,65 @@ class ProductController extends Controller
 
             $save = MyHelper::post('product/update', $post);
 
-            return parent::redirect($save, 'Product info has been updated.', 'product/detail/'.$post['product_code'].'#info');
+            return parent::redirect($save, 'Product info has been updated.', 'product/detail/' . $post['product_code'] . '#info');
         }
     }
 
-    public function productVarianGroup(Request $request, $product_code){
+    public function productVarianGroup(Request $request, $product_code)
+    {
         $post = $request->all();
-        if(!empty($post['variant_deletes'])){
+        if (!empty($post['variant_deletes'])) {
             $delete = MyHelper::post('product-variant/delete', ['ids' => $post['variant_deletes']]);
-            if(!isset($delete['status']) || (isset($delete['status']) && $delete['status'] == 'fail')){
-                return redirect('product/detail/'.$product_code.'#variant')->withErrors($create_update['messages'] ?? ['Failed delete variant']);
+            if (!isset($delete['status']) || (isset($delete['status']) && $delete['status'] == 'fail')) {
+                return redirect('product/detail/' . $product_code . '#variant')->withErrors($create_update['messages'] ?? ['Failed delete variant']);
             }
         }
 
         $variantStatus = 0;
-        if(!empty($post['product_variant_status'])){
+        if (!empty($post['product_variant_status'])) {
             $variantStatus = 1;
         }
 
         $update = MyHelper::post('product-variant/update/status', ['id_product' => $post['id_product'], 'status' => $variantStatus]);
 
-        if(!isset($update['status']) || (isset($update['status']) && $update['status'] == 'fail')){
-            return redirect('product/detail/'.$product_code.'#variant')->withErrors($create_update['messages'] ?? ['Failed update status use variant']);
-        }elseif($variantStatus == 0 && isset($update['status']) && $update['status'] == 'success'){
-            return redirect('product/detail/'.$product_code.'#variant')->with('success',['Update Variant Status Success']);
+        if (!isset($update['status']) || (isset($update['status']) && $update['status'] == 'fail')) {
+            return redirect('product/detail/' . $product_code . '#variant')->withErrors($create_update['messages'] ?? ['Failed update status use variant']);
+        } elseif ($variantStatus == 0 && isset($update['status']) && $update['status'] == 'success') {
+            return redirect('product/detail/' . $product_code . '#variant')->with('success', ['Update Variant Status Success']);
         }
 
-        if(!empty($post['variant_color'])){
+        if (!empty($post['variant_color'])) {
             $arr[] = [
-                "id_product_variant" => $post['variant_color_id']??0,
+                "id_product_variant" => $post['variant_color_id'] ?? 0,
                 "variant_name" =>  "Color",
                 "variant_child" => []
             ];
         }
 
-        if(!empty($post['variant_size'])){
+        if (!empty($post['variant_size'])) {
             $arr[] = [
-                "id_product_variant" => $post['variant_size_id']??0,
+                "id_product_variant" => $post['variant_size_id'] ?? 0,
                 "variant_name" =>  "Size",
                 "variant_child" => []
             ];
         }
 
-        foreach ($post['variant_color']??[] as $value){
+        foreach ($post['variant_color'] ?? [] as $value) {
             $arr[0]['variant_child'][] = [
-                "id_product_variant" => $value['id']??0,
-                "variant_name" =>  $value['name']??$value
+                "id_product_variant" => $value['id'] ?? 0,
+                "variant_name" =>  $value['name'] ?? $value
             ];
         }
 
-        foreach ($post['variant_size']??[] as $value){
+        foreach ($post['variant_size'] ?? [] as $value) {
             $key = (isset($arr[1]) ? 1 : 0);
             $arr[$key]['variant_child'][] = [
-                "id_product_variant" => $value['id']??0,
-                "variant_name" =>  $value['name']??$value
+                "id_product_variant" => $value['id'] ?? 0,
+                "variant_name" =>  $value['name'] ?? $value
             ];
         }
 
-        foreach ($post['variant_price'] as $key => $value){
+        foreach ($post['variant_price'] as $key => $value) {
             $replace = str_replace('[', '', $value['data']);
             $replace = str_replace(']', '', $replace);
             $post['variant_price'][$key]['data'] = explode(',', $replace);
@@ -897,21 +898,22 @@ class ProductController extends Controller
         $data = [
             'id_product' => $post['id_product'],
             'id_merchant' => $post['id_merchant'],
-            'variants' => $arr??[],
+            'variants' => $arr ?? [],
             'variants_price' => $post['variant_price'],
             'admin' => 1
         ];
 
         $create_update = MyHelper::post('merchant/be/product/variant/update', $data);
 
-        if(($create_update['status']??'')=='success'){
-            return redirect('product/detail/'.$product_code.'#variant')->with('success',['Update Product Variant Success']);
-        }else{
-            return redirect('product/detail/'.$product_code.'#variant')->withErrors($create_update['messages'] ?? ['Something went wrong']);
+        if (($create_update['status'] ?? '') == 'success') {
+            return redirect('product/detail/' . $product_code . '#variant')->with('success', ['Update Product Variant Success']);
+        } else {
+            return redirect('product/detail/' . $product_code . '#variant')->withErrors($create_update['messages'] ?? ['Something went wrong']);
         }
     }
 
-    public function deleteProductVarianGroup(Request $request){
+    public function deleteProductVarianGroup(Request $request)
+    {
         $post = $request->all();
         $delete = MyHelper::post('product-variant-group/delete', $post);
         return $delete;
@@ -919,15 +921,15 @@ class ProductController extends Controller
     /**
      * delete photo
      */
-    function deletePhoto(Request $request) {
+    public function deletePhoto(Request $request)
+    {
         $post   = $request->all();
 
         $delete = MyHelper::post('product/photo/delete', ['id_product_photo' => $post['id_product_photo']]);
 
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
@@ -935,14 +937,14 @@ class ProductController extends Controller
     /**
      * delete discount
      */
-    function deleteDiscount(Request $request) {
+    public function deleteDiscount(Request $request)
+    {
         $post   = $request->all();
         $delete = MyHelper::post('product/discount/delete', ['id_product_discount' => $post['id_product_discount']]);
 
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
@@ -950,14 +952,14 @@ class ProductController extends Controller
     /**
      * update
      */
-    function update(Request $request) {
+    public function update(Request $request)
+    {
         $post = $request->except('_token');
         $save = MyHelper::post('product/update', $post);
 
         if (isset($save['status']) && $save['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
@@ -965,7 +967,8 @@ class ProductController extends Controller
     /**
      * delete product
      */
-    function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $post = $request->except('_token');
         $delete = MyHelper::post('product/delete', $post);
 
@@ -984,13 +987,13 @@ class ProductController extends Controller
         ];
 
         $post = $request->except('_token');
-        if(isset($post['clear'])){
+        if (isset($post['clear'])) {
             session::forget('product_price_filter');
-        	unset($post['page']);
+            unset($post['page']);
         }
 
         if ((isset($post['rule']) || isset($post['operator']) )) {
-        	unset($post['page']);
+            unset($post['page']);
             session(['product_price_filter' => $post]);
             $data['rule']     = array_map('array_values', $post['rule']);
             $data['operator'] = $post['operator'];
@@ -1000,13 +1003,13 @@ class ProductController extends Controller
             $data['operator'] = $filter['operator'];
         }
 
-        if(isset($post['page'])){
+        if (isset($post['page'])) {
             $page = $post['page'];
             unset($post['page']);
         }
 
         if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
-            if(isset($post['sameall']) && !empty($post['sameall'])){
+            if (isset($post['sameall']) && !empty($post['sameall'])) {
                 $dataToUpdate = [
                     'product_price'         => $post['price'][0],
                     'id_outlet'             => $post['id_outlet'],
@@ -1014,11 +1017,11 @@ class ProductController extends Controller
                 $updatePrice = MyHelper::post('product/prices/all-product', $dataToUpdate);
 
                 if (isset($updatePrice['status']) && $updatePrice['status'] == 'success') {
-                    return redirect('product/price/'.$key)->withSuccess(['Success update price']);
+                    return redirect('product/price/' . $key)->withSuccess(['Success update price']);
                 } else {
                     return back()->witherrors([$updatePrice['messages']]);
                 }
-            }else{
+            } else {
                 return $this->priceProcess($post);
             }
         }
@@ -1026,22 +1029,22 @@ class ProductController extends Controller
         $outlets = MyHelper::post('outlet/be/list', ['filter' => 'different_price'])['result'] ?? [];
         if (!$outlets) {
             $data['outlets'] = [];
-        }else{
+        } else {
             $data['outlets'] = $outlets;
         }
 
         $data['pagination'] = true;
         $data['orderBy'] = 'product_name';
 
-        if(!isset($data['product_name']) && Session::get('search_product_name')){
+        if (!isset($data['product_name']) && Session::get('search_product_name')) {
             $data['product_name'] = Session::get('search_product_name');
         }
 
         $data['update_price'] = 1;
         $data['admin_list'] = 1;
-        if(isset($page)){
-            $product = MyHelper::post('product/be/list?page='.$page, $data);
-        }else{
+        if (isset($page)) {
+            $product = MyHelper::post('product/be/list?page=' . $page, $data);
+        } else {
             $product = MyHelper::post('product/be/list', $data);
         }
         if (isset($product['status']) && $product['status'] == 'success') {
@@ -1057,14 +1060,14 @@ class ProductController extends Controller
         if (!is_null($key)) {
             $data['key'] = $key;
         } else {
-            $data['key'] = $data['outlets'][0]['id_outlet']??'';
+            $data['key'] = $data['outlets'][0]['id_outlet'] ?? '';
         }
 
         return view('product::product.price', $data);
     }
 
     /* PROSES HARGA */
-    function priceProcess($post)
+    public function priceProcess($post)
     {
         $price = array_filter($post['price']);
         if (!empty($price)) {
@@ -1096,17 +1099,17 @@ class ProductController extends Controller
         ];
 
         $post = $request->except('_token');
-        if(isset($post['clear'])){
+        if (isset($post['clear'])) {
             session::forget('product_detail_filter');
         }
 
-        if(isset($post['page'])){
+        if (isset($post['page'])) {
             $page = $post['page'];
             unset($post['page']);
         }
 
         if ($post && (!isset($post['rule']) || !isset($post['operator'])) && !isset($post['clear'])) {
-            if(isset($post['sameall']) && !empty($post['sameall'])){
+            if (isset($post['sameall']) && !empty($post['sameall'])) {
                 $dataToUpdate = [
                     'product_visibility'    => $post['visible'][0],
                     'product_stock_status'  => $post['product_stock_status'][0],
@@ -1115,11 +1118,11 @@ class ProductController extends Controller
                 $updatePrice = MyHelper::post('product/outlet-detail/all-product', $dataToUpdate);
 
                 if (isset($updatePrice['status']) && $updatePrice['status'] == 'success') {
-                    return redirect('product/outlet-detail/'.$key)->withSuccess(['Success update price']);
+                    return redirect('product/outlet-detail/' . $key)->withSuccess(['Success update price']);
                 } else {
                     return back()->witherrors([$updatePrice['messages']]);
                 }
-            }else{
+            } else {
                 return $this->productOutletProcess($post);
             }
         }
@@ -1142,16 +1145,16 @@ class ProductController extends Controller
             $data['rule']     = array_map('array_values', $filter['rule']);
             $data['operator'] = $filter['operator'];
         } else {
-            if((isset($post['rule']) || isset($post['operator']) )){
+            if ((isset($post['rule']) || isset($post['operator']) )) {
                 session(['product_detail_filter' => $post]);
                 $data['rule']     = array_map('array_values', $post['rule']);
                 $data['operator'] = $post['operator'];
             }
         }
 
-        if(isset($page)){
-            $product = MyHelper::post('product/be/list?page='.$page, $data);
-        }else{
+        if (isset($page)) {
+            $product = MyHelper::post('product/be/list?page=' . $page, $data);
+        } else {
             $product = MyHelper::post('product/be/list', $data);
         }
         if (isset($product['status']) && $product['status'] == 'success') {
@@ -1174,7 +1177,7 @@ class ProductController extends Controller
     }
 
 
-    function productOutletProcess($post)
+    public function productOutletProcess($post)
     {
         if (!empty($post['visible'])) {
             foreach ($post['visible'] as $key => $value) {
@@ -1201,7 +1204,7 @@ class ProductController extends Controller
 
         if (isset($update['status']) && $update['status'] == "success") {
             return ['status' => 'success'];
-        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+        } elseif (isset($update['status']) && $update['status'] == 'fail') {
             return ['status' => 'fail', 'messages' => $update['messages']];
         } else {
             return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update product allow sync'];
@@ -1215,7 +1218,7 @@ class ProductController extends Controller
 
         if (isset($update['status']) && $update['status'] == "success") {
             return ['status' => 'success'];
-        }elseif (isset($update['status']) && $update['status'] == 'fail') {
+        } elseif (isset($update['status']) && $update['status'] == 'fail') {
             return ['status' => 'fail', 'messages' => $update['messages']];
         } else {
             return ['status' => 'fail', 'messages' => 'Something went wrong. Failed update product visibility'];
@@ -1225,53 +1228,55 @@ class ProductController extends Controller
     public function visibility(Request $request, $key = null)
     {
         $visibility = strpos(url()->current(), 'visible');
-        if($visibility <= 0){
+        if ($visibility <= 0) {
             $visibility = 'Hidden';
-        }else{
+        } else {
             $visibility = 'Visible';
         }
         $data = [
             'title'          => 'Product',
-            'sub_title'      => $visibility.' Product List',
+            'sub_title'      => $visibility . ' Product List',
             'menu_active'    => 'product',
-            'submenu_active' => 'product-list-'.lcfirst($visibility),
+            'submenu_active' => 'product-list-' . lcfirst($visibility),
             'visibility'     => $visibility
         ];
 
         $post = $request->except('_token');
 
-        if($key == null && empty($post)){
+        if ($key == null && empty($post)) {
             Session::forget('idVisibility');
             Session::forget('idVisibility_allOutlet');
             Session::forget('idVisibility_allProduct');
         }
 
-        if(isset($post['page'])){
+        if (isset($post['page'])) {
             $page = $post['page'];
             unset($post['page']);
-        }else{
+        } else {
             $page = null;
         }
 
         // Proses update visibility
         if ($post) {
             $ses = Session::get('idVisibility');
-            if($ses){
-                if(!$page) $page = 1;
+            if ($ses) {
+                if (!$page) {
+                    $page = 1;
+                }
                 foreach ($ses as $key => $value1) {
                     foreach ($value1 as $i => $value2) {
-                       foreach ($value2 as $j => $value) {
-                            if($key == (int)$post['key'] && $i == (int)$page){
-                            }else{
+                        foreach ($value2 as $j => $value) {
+                            if ($key == (int)$post['key'] && $i == (int)$page) {
+                            } else {
                                 $post['id_visibility'][] = $value;
-                           }
-                       }
+                            }
+                        }
                     }
                 }
             };
-            if($visibility == 'Hidden'){
+            if ($visibility == 'Hidden') {
                 $post['visibility'] = 'Visible';
-            }else{
+            } else {
                 $post['visibility'] = 'Hidden';
             }
             $save = MyHelper::post('product/update/visibility', $post);
@@ -1279,19 +1284,18 @@ class ProductController extends Controller
             Session::forget('idVisibility_allOutlet');
             Session::forget('idVisibility_allProduct');
             if (isset($save['status']) && $save['status'] == "success") {
-                return parent::redirect($save, 'Product visibility has been updated.', 'product/'.strtolower($visibility).'/'.$post['key']);
-            }else {
-                   if (isset($save['errors'])) {
-                       return back()->withErrors($save['errors'])->withInput();
-                   }
+                return parent::redirect($save, 'Product visibility has been updated.', 'product/' . strtolower($visibility) . '/' . $post['key']);
+            } else {
+                if (isset($save['errors'])) {
+                    return back()->withErrors($save['errors'])->withInput();
+                }
 
-                   if (isset($save['status']) && $save['status'] == "fail") {
-                       return back()->withErrors($save['messages'])->withInput();
-                   }
+                if (isset($save['status']) && $save['status'] == "fail") {
+                    return back()->withErrors($save['messages'])->withInput();
+                }
 
                    return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
-
         }
 
         $outlet = MyHelper::get('outlet/be/list');
@@ -1309,33 +1313,34 @@ class ProductController extends Controller
             $data['key'] = $data['outlet'][0]['id_outlet'];
         }
 
-        if($page){
-            $product = MyHelper::post('product/be/list?page='.$page, ['visibility' => $visibility, 'id_outlet' => $data['key'], 'pagination' => true]);
+        if ($page) {
+            $product = MyHelper::post('product/be/list?page=' . $page, ['visibility' => $visibility, 'id_outlet' => $data['key'], 'pagination' => true]);
             $data['page'] = $page;
-        }else{
+        } else {
             $product = MyHelper::post('product/be/list', ['visibility' => $visibility, 'id_outlet' => $data['key'], 'pagination' => true]);
             $data['page'] = 1;
         }
         // dd($product);
-        if(Session::get('idVisibility')){
+        if (Session::get('idVisibility')) {
             $ses = Session::get('idVisibility');
-            if(isset($ses[$data['key']]) && isset($ses[$data['key']][$data['page']])){
+            if (isset($ses[$data['key']]) && isset($ses[$data['key']][$data['page']])) {
                 $data['id_visibility'] = $ses[$data['key']][$data['page']];
-            }else{
+            } else {
                 $data['id_visibility'] = [];
             }
-        }else{
+        } else {
             $data['id_visibility'] = [];
         }
 
-        if(!empty(Session::get('idVisibility_allOutlet'))){
+        if (!empty(Session::get('idVisibility_allOutlet'))) {
             $data['allOutlet'] = Session::get('idVisibility_allOutlet');
         }
 
-        if(!empty(Session::get('idVisibility_allProduct'))){
+        if (!empty(Session::get('idVisibility_allProduct'))) {
             $ses = Session::get('idVisibility_allProduct');
-            if(isset($ses[$data['key']]))
-            $data['allProduct'] = $ses[$data['key']];
+            if (isset($ses[$data['key']])) {
+                $data['allProduct'] = $ses[$data['key']];
+            }
         }
 
         if (isset($product['status']) && $product['status'] == 'success') {
@@ -1358,9 +1363,9 @@ class ProductController extends Controller
         $ses_allProduct = Session::get('idVisibility_allProduct');
         $countProduct = 0;
 
-        if($post['checked'] == "true"){
+        if ($post['checked'] == "true") {
             // select all product in all outlet
-            if(isset($post['allOutlet'])){
+            if (isset($post['allOutlet'])) {
                 Session::put('idVisibility_allOutlet', true);
                 $outlet = MyHelper::get('outlet/be/list');
                 if (isset($outlet['status']) && $outlet['status'] == 'success') {
@@ -1372,8 +1377,8 @@ class ProductController extends Controller
                             $i = 1;
                             $idVisibility[$dataOutlet['id_outlet']][$page] = [];
                             foreach ($product['result'] as $key => $value) {
-                                $idVisibility[$dataOutlet['id_outlet']][$page][] = $value['id_product'].'/'.$dataOutlet['id_outlet'];
-                                if($i % 10 == 0){
+                                $idVisibility[$dataOutlet['id_outlet']][$page][] = $value['id_product'] . '/' . $dataOutlet['id_outlet'];
+                                if ($i % 10 == 0) {
                                     $page++;
                                 }
                                 $i++;
@@ -1382,48 +1387,47 @@ class ProductController extends Controller
                         }
                     }
                 }
-            }
-            // select all product in 1 outlet
-            else if(isset($post['allProduct'])){
+            } elseif (isset($post['allProduct'])) {
+                // select all product in 1 outlet
                 $ses_allProduct[$post['key']] = true;
-                Session::put('idVisibility_allProduct',$ses_allProduct);
+                Session::put('idVisibility_allProduct', $ses_allProduct);
                 $product = MyHelper::post('product/be/list', ['visibility' => $post['visibility'], 'id_outlet' => $post['key']]);
                 if (isset($product['status']) && $product['status'] == 'success') {
                     $page = 1;
                     $i = 1;
                     $idVisibility[$post['key']][$page] = [];
                     foreach ($product['result'] as $key => $value) {
-                        $idVisibility[$post['key']][$page][] = $value['id_product'].'/'.$post['key'];
-                        if($i % 10 == 0){
+                        $idVisibility[$post['key']][$page][] = $value['id_product'] . '/' . $post['key'];
+                        if ($i % 10 == 0) {
                             $page++;
                         }
                         $i++;
                         $countProduct++;
                     }
                 }
-            }else{
-                $idVisibility[$post['key']][$post['page']] = explode(',',$post['id_visibility']);
+            } else {
+                $idVisibility[$post['key']][$post['page']] = explode(',', $post['id_visibility']);
             }
-        }
-        // for uncheck
-        else{
-            if(isset($post['allOutlet'])){
+        } else {
+            // for uncheck
+            if (isset($post['allOutlet'])) {
                 $idVisibility = null;
                 Session::forget('idVisibility');
                 Session::forget('idVisibility_allOutlet');
                 Session::forget('idVisibility_allProduct');
-            } else if(isset($post['allProduct'])){
+            } elseif (isset($post['allProduct'])) {
                 unset($idVisibility[$post['key']]);
                 unset($ses_allProduct[$post['key']]);
                 Session::forget('idVisibility_allOutlet');
             }
         }
-        Session::put('idVisibility_allProduct',$ses_allProduct);
+        Session::put('idVisibility_allProduct', $ses_allProduct);
         Session::put('idVisibility', $idVisibility);
         return Session::get('idVisibility');
     }
 
-    public function photoDefault(Request $request) {
+    public function photoDefault(Request $request)
+    {
         $post = $request->except('_token');
 
         if (empty($post)) {
@@ -1434,15 +1438,15 @@ class ProductController extends Controller
                 'submenu_active' => 'product-photo-default',
             ];
 
-            $data['photo'] = env('STORAGE_URL_API').'img/product/item/default.png?';
-            $data['photo_detail'] = env('STORAGE_URL_API').'img/product/item/detail/default.png?';
+            $data['photo'] = env('STORAGE_URL_API') . 'img/product/item/default.png?';
+            $data['photo_detail'] = env('STORAGE_URL_API') . 'img/product/item/detail/default.png?';
 
             return view('product::product.photo-default', $data);
-        }else{
-            if(isset($post['photo'])){
+        } else {
+            if (isset($post['photo'])) {
                 $post['photo'] = MyHelper::encodeImage($post['photo']);
             }
-            if(isset($post['photo_detail'])){
+            if (isset($post['photo_detail'])) {
                 $post['photo_detail'] = MyHelper::encodeImage($post['photo_detail']);
             }
             $default = MyHelper::post('product/photo/default', $post);
@@ -1456,31 +1460,32 @@ class ProductController extends Controller
         }
     }
 
-    public function updateVisibilityProduct(Request $request){
+    public function updateVisibilityProduct(Request $request)
+    {
         $post = $request->except('_token');
         $post['id_visibility'] = explode(',', $post['id_visibility']);
         $save = MyHelper::post('product/update/visibility', $post);
         if (isset($save['status']) && $save['status'] == "success") {
             $data = ['status' => 'success'];
-        }
-        else {
+        } else {
             $data = ['status' => 'fail'];
-            if(isset($save['messages'])){
+            if (isset($save['messages'])) {
                 $data['messages'] = $save['messages'];
             }
         }
-		return response()->json($data);
+        return response()->json($data);
     }
 
     public function ajaxProductBrand(Request $request)
     {
-    	$post=$request->except('_token');
-        $product=MyHelper::post('product/ajax-product-brand', $post);
+        $post = $request->except('_token');
+        $product = MyHelper::post('product/ajax-product-brand', $post);
         return $product;
     }
 
-    public function productRecommendation(Request $request){
-        $post=$request->except('_token');
+    public function productRecommendation(Request $request)
+    {
+        $post = $request->except('_token');
 
         $data = [
             'title'          => 'Product',
@@ -1489,50 +1494,51 @@ class ProductController extends Controller
             'submenu_active' => 'product-recommendation',
         ];
 
-        if(empty($post)){
-            $data['products'] = MyHelper::post('product/be/list', ['admin_list' => 1, 'check_status' => 1])['result']??[];
+        if (empty($post)) {
+            $data['products'] = MyHelper::post('product/be/list', ['admin_list' => 1, 'check_status' => 1])['result'] ?? [];
             return view('product::product.product_recommendation', $data);
-        }else{
+        } else {
             $save = MyHelper::post('product/recommendation/save', $post);
             if (isset($save['status']) && $save['status'] == 'success') {
                 return parent::redirect($save, 'Product recommendation success save.', 'product/recommendation');
             } else {
-                return back()->witherrors($save['messages']??['Something went wrong']);
+                return back()->witherrors($save['messages'] ?? ['Something went wrong']);
             }
         }
     }
 
-    public function variantCombination(Request $request){
+    public function variantCombination(Request $request)
+    {
         $post = $request->all();
 
-        if(!empty($post['array_color'])){
+        if (!empty($post['array_color'])) {
             $arr[] = [
-                "id_product_variant" => $post['id_variant_color']??0,
+                "id_product_variant" => $post['id_variant_color'] ?? 0,
                 "variant_name" =>  "Color",
                 "variant_child" => []
             ];
         }
 
-        if(!empty($post['array_size'])){
+        if (!empty($post['array_size'])) {
             $arr[] = [
-                "id_product_variant" => $post['id_variant_size']??0,
+                "id_product_variant" => $post['id_variant_size'] ?? 0,
                 "variant_name" =>  "Size",
                 "variant_child" => []
             ];
         }
 
-        foreach ($post['array_color']??[] as $value){
+        foreach ($post['array_color'] ?? [] as $value) {
             $arr[0]['variant_child'][] = [
-                "id_product_variant" => $value['id_product_variant']??0,
-                "variant_name" =>  $value['variant_name']??$value
+                "id_product_variant" => $value['id_product_variant'] ?? 0,
+                "variant_name" =>  $value['variant_name'] ?? $value
             ];
         }
 
-        foreach ($post['array_size']??[] as $value){
+        foreach ($post['array_size'] ?? [] as $value) {
             $key = (isset($arr[1]) ? 1 : 0);
             $arr[$key]['variant_child'][] = [
-                "id_product_variant" => $value['id_product_variant']??0,
-                "variant_name" =>  $value['variant_name']??$value
+                "id_product_variant" => $value['id_product_variant'] ?? 0,
+                "variant_name" =>  $value['variant_name'] ?? $value
             ];
         }
 

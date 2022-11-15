@@ -11,8 +11,8 @@
 |
 */
 
-Route::prefix('product-variant')->group(function() {
-    Route::group(['middleware' => 'validate_session'], function(){
+Route::prefix('product-variant')->group(function () {
+    Route::group(['middleware' => 'validate_session'], function () {
         Route::get('/', ['middleware' => 'feature_control:278', 'uses' => 'ProductVariantController@index']);
         Route::get('position', ['middleware' => 'feature_control:278', 'uses' => 'ProductVariantController@position']);
         Route::post('position', ['middleware' => 'feature_control:281', 'uses' => 'ProductVariantController@position']);
@@ -27,8 +27,8 @@ Route::prefix('product-variant')->group(function() {
     });
 });
 
-Route::prefix('product-variant-group')->group(function() {
-    Route::group(['middleware' => 'validate_session'], function(){
+Route::prefix('product-variant-group')->group(function () {
+    Route::group(['middleware' => 'validate_session'], function () {
         Route::any('list', ['uses' => 'ProductVariantGroupController@listProduct']);
         Route::any('ajax/{idProduct}', ['uses' => 'ProductVariantGroupController@ajaxProductvariantGroup']);
         Route::any('edit/{product_code}', ['uses' => 'ProductVariantGroupController@editProductVariant']);

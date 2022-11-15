@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 // use Illuminate\Routing\Controller;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 
 class NewsController extends Controller
@@ -25,30 +24,30 @@ class NewsController extends Controller
         ];
 
         // get outlet
-        $data['news']    = parent::getData(MyHelper::post('news/be/list', ['admin'=> 1]));
+        $data['news']    = parent::getData(MyHelper::post('news/be/list', ['admin' => 1]));
         if (!empty($data['news'])) {
-        	foreach ($data['news'] as $key => $value) {
-        		$data['news'][$key]['id_news'] = MyHelper::createSlug($value['id_news'], $value['created_at']);
-        	}
+            foreach ($data['news'] as $key => $value) {
+                $data['news'][$key]['id_news'] = MyHelper::createSlug($value['id_news'], $value['created_at']);
+            }
         }
 
         return view('news::index', $data);
     }
-	
-	public function indexAjax()
+
+    public function indexAjax()
     {
-		$news = MyHelper::post('news/be/list?log_save=0', ['admin'=> 1]);
-		if (isset($news['status']) && $news['status'] == "success") {
+        $news = MyHelper::post('news/be/list?log_save=0', ['admin' => 1]);
+        if (isset($news['status']) && $news['status'] == "success") {
             $data = $news['result'];
-        }
-        else {
+        } else {
             $data = [];
         }
-		return response()->json($data);
+        return response()->json($data);
     }
 
     /* CREATE */
-    public function create(Request $request) {
+    public function create(Request $request)
+    {
         $post = $request->except('_token');
 
         if (empty($post)) {
@@ -64,16 +63,15 @@ class NewsController extends Controller
             $data['categories']    = parent::getData(MyHelper::post('news/be/category', ['admin' => '1']));
             // get product
             $data['product']   = parent::getData(MyHelper::get('product/be/list'));
-            
+
             return view('news::create', $data);
-        }
-        else {
+        } else {
             $news = $request->except('_token', 'id_outlet', 'id_product');
             $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%', $news['news_content_long']);
 
             if (isset($news['news_content_long'])) {
                 // remove tag <font>
-                $news['news_content_long'] =preg_replace("/<\\/?font(.|\\s)*?>/",'',$news['news_content_long']);
+                $news['news_content_long'] = preg_replace("/<\\/?font(.|\\s)*?>/", '', $news['news_content_long']);
             }
 
             // slug news otomatis
@@ -91,20 +89,19 @@ class NewsController extends Controller
                 unset($news['news_event_time_end']);
             }
 
-            // set tanggal 
+            // set tanggal
             if (isset($news['news_post_date'])) {
-                $news['news_post_date'] = date('Y-m-d', strtotime($news['news_post_date']))." ".date('H:i:s', strtotime($news['news_post_time']));
+                $news['news_post_date'] = date('Y-m-d', strtotime($news['news_post_date'])) . " " . date('H:i:s', strtotime($news['news_post_time']));
             }
-            
+
             $news['news_publish_date'] = date('Y-m-d 00:00:00', strtotime($news['news_publish_date']));
 
             if ($news['publish_type'] == "always") {
                 $news['news_expired_date'] = null;
-            }
-            else {
+            } else {
                 $news['news_expired_date'] = date('Y-m-d 23:59:59', strtotime($news['news_expired_date']));
             }
-            
+
             if (isset($news['news_event_date_start'])) {
                 $news['news_event_date_start'] = date('Y-m-d', strtotime($news['news_event_date_start']));
             }
@@ -123,73 +120,69 @@ class NewsController extends Controller
             }
 
             // remove custom form index if the checkbox is not checked
-            if ( !isset($news['custom_form_checkbox']) ) {
+            if (!isset($news['custom_form_checkbox'])) {
                 unset($news['customform']);
                 $news['news_button_form_expired'] = null;
-            }
-            else {
+            } else {
                 // set to null if form type didn't match
                 foreach ($news['customform'] as $key => $form) {
                     // autofill
-                    if ( !($form['form_input_types'] == "Short Text" || $form['form_input_types'] == "Long Text" || $form['form_input_types'] == "Date") ) {
+                    if (!($form['form_input_types'] == "Short Text" || $form['form_input_types'] == "Long Text" || $form['form_input_types'] == "Date")) {
                         $news['customform'][$key]['form_input_autofill'] = null;
                     }
                     // option
-                    if ( !($form['form_input_types'] == "Radio Button Choice" || $form['form_input_types'] == "Multiple Choice" || $form['form_input_types'] == "Dropdown Choice") ) {
+                    if (!($form['form_input_types'] == "Radio Button Choice" || $form['form_input_types'] == "Multiple Choice" || $form['form_input_types'] == "Dropdown Choice")) {
                         $news['customform'][$key]['form_input_options'] = null;
                     }
                     // is_unique
                     if (isset($form['is_unique'])) {    // if checked
                         $news['customform'][$key]['is_unique'] = $form['is_unique'][0];
-                    }
-                    else{   // if unchecked
+                    } else {   // if unchecked
                         $news['customform'][$key]['is_unique'] = 0;
                     }
                     // if checked but hidden (input type not match)
-                    if ( !($form['form_input_types'] == "Short Text" || $form['form_input_types'] == "Long Text" || $form['form_input_types'] == "Number Input") ) {
+                    if (!($form['form_input_types'] == "Short Text" || $form['form_input_types'] == "Long Text" || $form['form_input_types'] == "Number Input")) {
                         $news['customform'][$key]['is_unique'] = 0;
                     }
 
                     if (isset($form['is_required'])) {
                         $news['customform'][$key]['is_required'] = $form['is_required'][0];
-                    }
-                    else{
+                    } else {
                         $news['customform'][$key]['is_required'] = 0;
                     }
                 }
 
                 $news['news_button_form_expired'] = date('Y-m-d 00:00:00', strtotime($news['news_button_form_expired']));
             }
-            
+
             // set image
-            if(isset($news['news_image_luar'])){
+            if (isset($news['news_image_luar'])) {
                 $news['news_image_luar']   = MyHelper::encodeImage($news['news_image_luar']);
             }
 
-            if(isset($news['news_image_dalam'])){
+            if (isset($news['news_image_dalam'])) {
                 $news['news_image_dalam']   = MyHelper::encodeImage($news['news_image_dalam']);
             }
 
-            if(isset($post['news_outlet_text'])){
+            if (isset($post['news_outlet_text'])) {
                 $news['news_outlet_text'] = $post['news_outlet_text'];
                 $news['id_outlet'] = $post['id_outlet'];
             }
 
-            if(isset($post['news_product_text'])){
+            if (isset($post['news_product_text'])) {
                 $news['news_product_text'] = $post['news_product_text'];
                 $news['id_product'] = $post['id_product'];
             }
 
-            if(!isset($post['news_by'])){
+            if (!isset($post['news_by'])) {
                 $news['news_by'] = " ";
             }
 
             $save = MyHelper::post('news/create', $news);
 
             if (isset($save['status']) && $save['status'] == "success") {
-
                 // simpan relasi outlet
-                if (isset($post['id_outlet']))  {
+                if (isset($post['id_outlet'])) {
                     $saveRelation = $this->saveRelation('outlet', $save['result']['id_news'], $post['id_outlet']);
                 }
 
@@ -200,8 +193,7 @@ class NewsController extends Controller
 
                 // jika nggak ada
                 return redirect('news')->withSuccess(['News has been created.']);
-            }
-            else {
+            } else {
                 if (isset($save['errors'])) {
                     return back()->withErrors($save['errors'])->withInput();
                 }
@@ -209,14 +201,15 @@ class NewsController extends Controller
                 if (isset($save['status']) && $save['status'] == "fail") {
                     return back()->withErrors($save['messages'])->withInput();
                 }
-                
+
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
         }
     }
 
     /* SAVE RELATION */
-    function saveRelation($type, $id_news, $post=[]) {     
+    public function saveRelation($type, $id_news, $post = [])
+    {
         if (!empty($post)) {
             switch ($type) {
                 case 'outlet':
@@ -241,7 +234,7 @@ class NewsController extends Controller
                         $save = MyHelper::post('news/create/relation', $data);
                     }
                     break;
-                
+
                 default:
                     return true;
                     break;
@@ -252,9 +245,10 @@ class NewsController extends Controller
     }
 
     /* DETAIL */
-    function detail(Request $request, $id_news) {
+    public function detail(Request $request, $id_news)
+    {
         $post = $request->except('_token');
-        $id_news_decrypt = MyHelper::explodeSlug($id_news)[0]??'';
+        $id_news_decrypt = MyHelper::explodeSlug($id_news)[0] ?? '';
 
         if (empty($post)) {
             $data = [
@@ -264,33 +258,31 @@ class NewsController extends Controller
                     'submenu_active' => 'news-list',
             ];
 
-            $news    = parent::getData(MyHelper::post('news/be/list', ['id_news' => $id_news_decrypt,'admin'=>1]));
-			
+            $news    = parent::getData(MyHelper::post('news/be/list', ['id_news' => $id_news_decrypt,'admin' => 1]));
+
             if (empty($news)) {
                 return back()->withErrors(['Data news not found.']);
-            }
-            else {
+            } else {
                 $data['news'] = $news;
                 $data['categories']    = parent::getData(MyHelper::post('news/be/category', ['admin' => '1']));
             }
 
-            if(!empty($news[0]['news_type']) &&  $news[0]['news_type'] == 'video'){
+            if (!empty($news[0]['news_type']) &&  $news[0]['news_type'] == 'video') {
                 $data['news'][0]['news_video'] = null;
-                $data['news'][0]['link_video'] = $news[0]['news_video']??null;
-            }else{
+                $data['news'][0]['link_video'] = $news[0]['news_video'] ?? null;
+            } else {
                 $data['news'][0]['link_video'] = null;
             }
 
             // get outlet
             $data['outlet']    = parent::getData(MyHelper::get('outlet/be/list'));
-            
+
             // get product
             $data['product']   = parent::getData(MyHelper::get('product/be/list'));
-            
+
             // print_r($data); exit();
             return view('news::update', $data);
-        }
-        else {
+        } else {
             // filter data news
             $news = $request->except('_token', 'id_outlet', 'id_product');
             $news = $this->setInputForUpdate($news, $post);
@@ -305,9 +297,9 @@ class NewsController extends Controller
             }
 
             if (isset($news['news_content_long'])) {
-                $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%' ,$news['news_content_long']);
+                $news['news_content_long'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%', $news['news_content_long']);
                 // remove tag <font>
-                $news['news_content_long'] =preg_replace("/<\\/?font(.|\\s)*?>/",'',$news['news_content_long']);
+                $news['news_content_long'] = preg_replace("/<\\/?font(.|\\s)*?>/", '', $news['news_content_long']);
             }
 
             if (!isset($news['toggle_location'])) {
@@ -320,23 +312,22 @@ class NewsController extends Controller
                 unset($news['news_event_time_end']);
             }
 
-            if(!isset($post['news_by'])){
+            if (!isset($post['news_by'])) {
                 $news['news_by'] = " ";
             }
-            
+
             // update data master news
-			// print_r($news);exit;
+            // print_r($news);exit;
             $update = MyHelper::post('news/update', $news);
 
             if (isset($update['status']) && $update['status'] == "success") {
                 // simpan relasi outlet
-                if (isset($post['id_outlet']))  {
+                if (isset($post['id_outlet'])) {
                     // delete duluk
                     $deleteRelation = $this->deleteRelation('outlet', $news['id_news']);
                     // save kemudian
                     $saveRelation = $this->saveRelation('outlet', $news['id_news'], $post['id_outlet']);
-                }
-                else {
+                } else {
                     $deleteRelation = $this->deleteRelation('outlet', $news['id_news']);
                 }
 
@@ -346,15 +337,13 @@ class NewsController extends Controller
                     $deleteRelation = $this->deleteRelation('product', $news['id_news']);
                     // save kemudian
                     $saveRelation = $this->saveRelation('product', $news['id_news'], $post['id_product']);
-                }
-                else {
+                } else {
                     $deleteRelation = $this->deleteRelation('product', $news['id_news']);
                 }
 
                 // jika nggak ada
                 return back()->withSuccess(['News has been updated.']);
-            }
-            else {
+            } else {
                 if (isset($update['errors'])) {
                     return back()->withErrors($update['errors'])->withInput();
                 }
@@ -362,32 +351,32 @@ class NewsController extends Controller
                 if (isset($update['status']) && $update['status'] == "fail") {
                     return back()->withErrors($update['messages'])->withInput();
                 }
-                
+
                 return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
             }
         }
     }
 
     /* FILTER */
-    function setInputForUpdate($news, $post) {
+    public function setInputForUpdate($news, $post)
+    {
         // set slug
         $news['news_slug']         = str_slug($news['news_title'], '_');
-        // set tanggal 
+        // set tanggal
         $news['news_publish_date'] = date('Y-m-d 00:00:00', strtotime($news['news_publish_date']));
 
         $news = array_filter($news);
 
         if ($news['publish_type'] == "always") {
             $news['news_expired_date'] = null;
-        }
-        else {
+        } else {
             $news['news_expired_date'] = date('Y-m-d 23:59:59', strtotime($news['news_expired_date']));
         }
-        
+
         if (empty($news['news_post_date'])) {
             $news['news_post_date'] = null;
-        }else{
-            $news['news_post_date'] = date('Y-m-d', strtotime($news['news_post_date']))." ".date('H:i:s', strtotime($news['news_post_time']));
+        } else {
+            $news['news_post_date'] = date('Y-m-d', strtotime($news['news_post_date'])) . " " . date('H:i:s', strtotime($news['news_post_time']));
         }
 
         if (empty($post['news_video_text'])) {
@@ -405,15 +394,14 @@ class NewsController extends Controller
         if (empty($post['news_product_text'])) {
             $news['news_product_text'] = null;
         }
-		
-		if (empty($post['news_button_form_text'])) {
+
+        if (empty($post['news_button_form_text'])) {
             $news['news_button_form_text'] = null;
         }
-		
-		if (empty($post['news_button_form_expired'])) {
+
+        if (empty($post['news_button_form_expired'])) {
             $news['news_button_form_expired'] = null;
-        }
-        else {
+        } else {
             $news['news_button_form_expired'] = date('Y-m-d', strtotime($news['news_button_form_expired']));
         }
 
@@ -440,75 +428,71 @@ class NewsController extends Controller
 
         if (empty($post['news_event_time_end'])) {
             $news['news_event_time_end'] = null;
-        }
-        else {
+        } else {
             $news['news_event_time_end'] = date('H:i:s', strtotime($news['news_event_time_end']));
         }
 
         if (empty($post['news_event_time_start'])) {
             $news['news_event_time_start'] = null;
-        }
-        else {
+        } else {
             $news['news_event_time_start'] = date('H:i:s', strtotime($news['news_event_time_start']));
         }
 
         if (empty($post['news_event_date_start'])) {
             $news['news_event_date_start'] = null;
-        }else{
+        } else {
             $news['news_event_date_start'] = date('Y-m-d', strtotime($news['news_event_date_start']));
         }
 
         if (empty($post['news_event_date_end'])) {
             $news['news_event_date_end'] = null;
-        }else{
+        } else {
             $news['news_event_date_end'] = date('Y-m-d', strtotime($news['news_event_date_end']));
         }
 
         // remove custom form index if the checkbox is not checked
-        if ( !isset($news['custom_form_checkbox']) ) {
+        if (!isset($news['custom_form_checkbox'])) {
             unset($news['customform']);
             $news['news_button_form_expired'] = null;
-        }
-        else {
+        } else {
             // reorder array index
             $news['customform'] = array_values($news['customform']);
             // set to null if form type didn't match
             foreach ($news['customform'] as $key => $form) {
                 // autofill
-                if ( !($form['form_input_types'] == "Short Text" || $form['form_input_types'] == "Long Text" || $form['form_input_types'] == "Date") ) {
+                if (!($form['form_input_types'] == "Short Text" || $form['form_input_types'] == "Long Text" || $form['form_input_types'] == "Date")) {
                     $news['customform'][$key]['form_input_autofill'] = null;
                 }
                 // option
-                if ( !($form['form_input_types'] == "Radio Button Choice" || $form['form_input_types'] == "Multiple Choice" || $form['form_input_types'] == "Dropdown Choice") ) {
+                if (!($form['form_input_types'] == "Radio Button Choice" || $form['form_input_types'] == "Multiple Choice" || $form['form_input_types'] == "Dropdown Choice")) {
                     $news['customform'][$key]['form_input_options'] = null;
                 }
                 // is_unique
                 if (isset($form['is_unique'])) {    // if checked
                     $news['customform'][$key]['is_unique'] = $form['is_unique'][0];
-                }
-                else{   // if unchecked
+                } else {   // if unchecked
                     $news['customform'][$key]['is_unique'] = 0;
                 }
                 // if checked but hidden (input type not match)
-                if ( !($form['form_input_types'] == "Short Text" || $form['form_input_types'] == "Long Text" || $form['form_input_types'] == "Number Input") ) {
+                if (!($form['form_input_types'] == "Short Text" || $form['form_input_types'] == "Long Text" || $form['form_input_types'] == "Number Input")) {
                     $news['customform'][$key]['is_unique'] = 0;
                 }
 
                 if (isset($form['is_required'])) {
                     $news['customform'][$key]['is_required'] = $form['is_required'][0];
-                }
-                else{
+                } else {
                     $news['customform'][$key]['is_required'] = 0;
                 }
             }
             $news['news_button_form_expired'] = date('Y-m-d 00:00:00', strtotime($news['news_button_form_expired']));
         }
-		
+
         return $news;
     }
 
     /* DELETE RELATION */
-    function deleteRelation($type, $id_news) {
+    public function deleteRelation($type, $id_news)
+    {
         $data = [
             'type'    => $type,
             'id_news' => $id_news
@@ -520,15 +504,15 @@ class NewsController extends Controller
     }
 
     /* DELETE NEWS */
-    function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $post   = $request->all();
-		$post['id_news'] = MyHelper::explodeSlug($post['id_news'])[0]??'';
+        $post['id_news'] = MyHelper::explodeSlug($post['id_news'])[0] ?? '';
         $delete = MyHelper::post('news/delete', ['id_news' => $post['id_news']]);
-        
+
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
@@ -536,14 +520,13 @@ class NewsController extends Controller
     // preview news custom form from admin
     public function customFormPreview($id_news)
     {
-    	$id_news_decrypt = MyHelper::explodeSlug($id_news)[0]??'';
+        $id_news_decrypt = MyHelper::explodeSlug($id_news)[0] ?? '';
 
         $news = parent::getData(MyHelper::post('news/get', ['id_news' => $id_news_decrypt]));
 
         if (empty($news)) {
             return back()->withErrors(['Data news not found.']);
-        }
-        else {
+        } else {
             $data['form_action'] = "";
             $data['id_user'] = "";
             $data['user'] = [];
@@ -564,14 +547,13 @@ class NewsController extends Controller
             'news_form_data' => [],
         ];
 
-        $id_decrypt = MyHelper::explodeSlug($id)[0]??'';
+        $id_decrypt = MyHelper::explodeSlug($id)[0] ?? '';
 
         $result = parent::getData(MyHelper::post('news/form-data', ['id_news' => $id_decrypt]));
 
         if (empty($result)) {
             return back()->withErrors(['Form data news not found.']);
-        }
-        else {
+        } else {
             $data['news_form_structures'] = $result['news_form_structures'];
             $data['news_form_data'] = $result['news_form_data'];
         }
@@ -579,7 +561,8 @@ class NewsController extends Controller
         return view('news::form_data', $data);
     }
 
-    public function positionAssign() {
+    public function positionAssign()
+    {
         $data = [
             'title'          => 'Manage News',
             'sub_title'      => 'Assign News',
@@ -590,8 +573,7 @@ class NewsController extends Controller
         $catParent = MyHelper::post('news/be/category', ['admin' => '1']);
         if (isset($catParent['status']) && $catParent['status'] == "success") {
             $data['category'] = $catParent['result'];
-        }
-        else {
+        } else {
             $data['category'] = [];
         }
 
@@ -599,8 +581,7 @@ class NewsController extends Controller
 
         if (isset($news['status']) && $news['status'] == "success") {
             $data['news'] = $news['result'];
-        }
-        else {
+        } else {
             $data['news'] = [];
         }
 
@@ -621,10 +602,11 @@ class NewsController extends Controller
         return $result;
     }
 
-    public function featured(Request $request){
+    public function featured(Request $request)
+    {
         $post = $request->except('_token');
 
-        if(empty($post)){
+        if (empty($post)) {
             $data = [
                 'title'          => 'News',
                 'sub_title'      => 'News Featured',
@@ -632,19 +614,19 @@ class NewsController extends Controller
                 'submenu_active' => 'news-featured',
             ];
 
-            $get = MyHelper::get('news/featured')['result']??[];
+            $get = MyHelper::get('news/featured')['result'] ?? [];
 
-            $data['video'] = $get['video']??[];
-            $data['article'] = $get['article']??[];
-            $data['online_class'] = $get['online_class']??[];
+            $data['video'] = $get['video'] ?? [];
+            $data['article'] = $get['article'] ?? [];
+            $data['online_class'] = $get['online_class'] ?? [];
 
             return view('news::featured', $data);
-        }else{
+        } else {
             $store = MyHelper::post('news/featured', $post);
 
-            if(($store['status']??'')=='success'){
-                return redirect('news/featured')->with('success',['Save Featured Success']);
-            }else{
+            if (($store['status'] ?? '') == 'success') {
+                return redirect('news/featured')->with('success', ['Save Featured Success']);
+            } else {
                 return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
             }
         }

@@ -5,12 +5,11 @@ namespace Modules\Setting\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use App\Lib\MyHelper;
 
 class VersionController extends Controller
 {
-    function index(Request $request)
+    public function index(Request $request)
     {
         $post = $request->except('_token');
         $data = [

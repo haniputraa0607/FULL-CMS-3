@@ -24,11 +24,10 @@ class PaymentMethodController extends Controller
 
         // outlet
         $payment_method = MyHelper::get('payment-method');
-        
+
         if (isset($payment_method['status']) && $payment_method['status'] == "success") {
             $data['payment_method'] = $payment_method['result'];
-        }
-        else {
+        } else {
             $data['payment_method'] = [];
         }
 
@@ -53,8 +52,7 @@ class PaymentMethodController extends Controller
 
         if (isset($payment_method_category['status']) && $payment_method_category['status'] == "success") {
             $data['payment_method_category'] = $payment_method_category['result'];
-        }
-        else {
+        } else {
             $data['payment_method_category'] = [];
         }
 
@@ -70,11 +68,11 @@ class PaymentMethodController extends Controller
     {
         $post = $request->except('_token');
         $create = MyHelper::post('payment-method/store', $post);
-  
-        if($create['status'] == 'success'){
-            return redirect('payment-method')->with('success',['Create payment method success']);
-        }else{
-            return back()->withInput()->withErrors($create['messages']??['Create payment method fail']);
+
+        if ($create['status'] == 'success') {
+            return redirect('payment-method')->with('success', ['Create payment method success']);
+        } else {
+            return back()->withInput()->withErrors($create['messages'] ?? ['Create payment method fail']);
         }
     }
 
@@ -95,16 +93,14 @@ class PaymentMethodController extends Controller
         $payment_method_category = MyHelper::get('payment-method-category');
         if (isset($payment_method_category['status']) && $payment_method_category['status'] == "success") {
             $data['payment_method_category'] = $payment_method_category['result'];
-        }
-        else {
+        } else {
             $data['payment_method_category'] = [];
         }
 
-        $edit = MyHelper::get('payment-method/edit/'.$id);
+        $edit = MyHelper::get('payment-method/edit/' . $id);
         if (isset($edit['status']) && $edit['status'] == "success") {
             $data['payment_method'] = $edit['result'];
-        }
-        else {
+        } else {
             $data['payment_method'] = [];
         }
         //dd($data);exit;
@@ -121,12 +117,12 @@ class PaymentMethodController extends Controller
     {
         $post = $request->except('_token');
         // dd($post);exit;
-        $update = MyHelper::post('payment-method/update/'.$id, $post);
+        $update = MyHelper::post('payment-method/update/' . $id, $post);
         //dd($update);exit;
-        if($update['status'] == 'success'){
-            return redirect('payment-method')->with('success',['Update payment method success']);
-        }else{
-            return back()->withInput()->withErrors($create['messages']??['Update payment method fail']);
+        if ($update['status'] == 'success') {
+            return redirect('payment-method')->with('success', ['Update payment method success']);
+        } else {
+            return back()->withInput()->withErrors($create['messages'] ?? ['Update payment method fail']);
         }
     }
 
@@ -137,19 +133,20 @@ class PaymentMethodController extends Controller
      */
     public function destroy($id)
     {
-        $delete = MyHelper::get('payment-method/delete/'.$id);
-        
-        if($delete['status'] == 'success'){
-            return redirect('payment-method')->with('success',['Delete payment method success']);
-        }else{
-            return back()->withInput()->withErrors($create['messages']??['Delete payment method fail']);
+        $delete = MyHelper::get('payment-method/delete/' . $id);
+
+        if ($delete['status'] == 'success') {
+            return redirect('payment-method')->with('success', ['Delete payment method success']);
+        } else {
+            return back()->withInput()->withErrors($create['messages'] ?? ['Delete payment method fail']);
         }
     }
 
-    public function differentPaymentMethod($id){
-        $payment_method  = MyHelper::get('payment-method/item/'.$id);
+    public function differentPaymentMethod($id)
+    {
+        $payment_method  = MyHelper::get('payment-method/item/' . $id);
 
-        if(isset($payment_method['status']) && $payment_method['status'] == 'success'){
+        if (isset($payment_method['status']) && $payment_method['status'] == 'success') {
             $data = [
                 'title'          => 'Payment Method',
                 'sub_title'      => 'Detail Payment Method',
@@ -157,21 +154,23 @@ class PaymentMethodController extends Controller
                 'submenu_active' => 'payment-method-list',
                 'payment_method' => $payment_method['result']
             ];
-            return view('paymentmethod::detail',$data);
+            return view('paymentmethod::detail', $data);
         }
 
-        return back()-withInput()->withErrors($create['messages']??['Payment Method not found']);
+        return back() - withInput()->withErrors($create['messages'] ?? ['Payment Method not found']);
     }
 
-    public function getDifferentPaymentMethod(Request $request, $id){
+    public function getDifferentPaymentMethod(Request $request, $id)
+    {
         $filter['keyword'] = $request->post('keyword');
-        $data = MyHelper::post('payment-method/outlet/different-payment-method/list/'.$id,$filter);
+        $data = MyHelper::post('payment-method/outlet/different-payment-method/list/' . $id, $filter);
         return $data;
     }
 
-    public function updateDifferentPaymentMethod(Request $request){
+    public function updateDifferentPaymentMethod(Request $request)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::post('payment-method/outlet/different-payment-method/update',$post);
+        $data = MyHelper::post('payment-method/outlet/different-payment-method/update', $post);
         return $data;
     }
 }

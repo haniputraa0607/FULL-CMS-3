@@ -59,9 +59,9 @@ class DoctorClinicController extends Controller
         $post = $request->all();
         $store = MyHelper::post('doctor/clinic/store', $post);
 
-        if(($store['status']??'')=='success'){
-            return redirect('doctor/clinic')->with('success',['Create Clinic Success']);
-        }else{
+        if (($store['status'] ?? '') == 'success') {
+            return redirect('doctor/clinic')->with('success', ['Create Clinic Success']);
+        } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
     }
@@ -90,7 +90,7 @@ class DoctorClinicController extends Controller
             'submenu_active' => 'doctor-clinic'
         ];
 
-        $clinic = MyHelper::get('doctor/clinic/'.$id);
+        $clinic = MyHelper::get('doctor/clinic/' . $id);
 
         if (isset($clinic['status']) && $clinic['status'] == "success") {
             $data['clinic'] = $clinic['result'];
@@ -112,9 +112,9 @@ class DoctorClinicController extends Controller
         $post = $post = $request->except('_method');
         $store = MyHelper::post('doctor/clinic/store', $post);
 
-        if(($store['status']??'')=='success'){
-            return redirect('doctor/clinic')->with('success',['Update Clinic Success']);
-        }else{
+        if (($store['status'] ?? '') == 'success') {
+            return redirect('doctor/clinic')->with('success', ['Update Clinic Success']);
+        } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
     }
@@ -127,9 +127,9 @@ class DoctorClinicController extends Controller
     public function destroy($id)
     {
         $result = MyHelper::post('doctor/clinic/delete', ['id_doctor_clinic' => $id]);
-        if(($result['status']??'')=='success'){
-            return redirect('doctor/clinic')->with('success',['Delete Clinic Success']);
-        }else{
+        if (($result['status'] ?? '') == 'success') {
+            return redirect('doctor/clinic')->with('success', ['Delete Clinic Success']);
+        } else {
             return back()->withInput()->withErrors($result['messages'] ?? ['Something went wrong']);
         }
     }

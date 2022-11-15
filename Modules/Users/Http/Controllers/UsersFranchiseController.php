@@ -33,47 +33,47 @@ class UsersFranchiseController extends Controller
         $order = 'created_at';
         $orderType = 'desc';
         $sorting = 0;
-        if(isset($post['sorting'])){
+        if (isset($post['sorting'])) {
             $sorting = 1;
             $order = $post['order'];
             $orderType = $post['order_type'];
         }
 
-        if(isset($post['reset']) && $post['reset'] == 1){
+        if (isset($post['reset']) && $post['reset'] == 1) {
             Session::forget('filter-list-user-franchise');
             $post['filter_type'] = 'today';
-        }elseif(Session::has('filter-list-user-franchise') && !empty($post) && !isset($post['filter'])){
+        } elseif (Session::has('filter-list-user-franchise') && !empty($post) && !isset($post['filter'])) {
             $pageSession = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $pageSession = $post['page'];
             }
             $post = Session::get('filter-list-user-franchise');
             $post['page'] = $pageSession;
-            if($sorting == 0 && !empty($post['order'])){
+            if ($sorting == 0 && !empty($post['order'])) {
                 $order = $post['order'];
                 $orderType = $post['order_type'];
             }
         }
         $page = '?page=1';
-        if(isset($post['page'])){
-            $page = '?page='.$post['page'];
+        if (isset($post['page'])) {
+            $page = '?page=' . $post['page'];
         }
 
-        $data['outlets'] = MyHelper::get('franchise/outlets')['result']??[];
+        $data['outlets'] = MyHelper::get('franchise/outlets')['result'] ?? [];
         $data['order'] = $order;
         $data['order_type'] = $orderType;
         $post['order'] = $order;
         $post['order_type'] = $orderType;
 
-        $list = MyHelper::post('franchise/user'.$page, $post);
+        $list = MyHelper::post('franchise/user' . $page, $post);
 
-        if(($list['status']??'')=='success'){
+        if (($list['status'] ?? '') == 'success') {
             $data['data']          = $list['result']['data'];
             $data['data_total']     = $list['result']['total'];
             $data['data_per_page']   = $list['result']['from'];
-            $data['data_up_to']      = $list['result']['from'] + count($list['result']['data'])-1;
+            $data['data_up_to']      = $list['result']['from'] + count($list['result']['data']) - 1;
             $data['data_paginator'] = new LengthAwarePaginator($list['result']['data'], $list['result']['total'], $list['result']['per_page'], $list['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['data_total']     = 0;
             $data['data_per_page']   = 0;
@@ -81,8 +81,8 @@ class UsersFranchiseController extends Controller
             $data['data_paginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-list-user-franchise',$post);
+        if ($post) {
+            Session::put('filter-list-user-franchise', $post);
         }
 
         return view('users::user_franchise.list', $data);
@@ -101,7 +101,7 @@ class UsersFranchiseController extends Controller
             'menu_active'    => 'user-franchise',
             'submenu_active' => 'user-franchise-new',
         ];
-        $data['outlets'] = MyHelper::get('franchise/outlets')['result']??[];
+        $data['outlets'] = MyHelper::get('franchise/outlets')['result'] ?? [];
         return view('users::user_franchise.create', $data);
     }
 
@@ -139,12 +139,12 @@ class UsersFranchiseController extends Controller
         ];
         $result = MyHelper::post('franchise/user/detail', ['id_user_franchise' => $user_id]);
 
-        if(isset($result['status']) && $result['status'] == 'success'){
+        if (isset($result['status']) && $result['status'] == 'success') {
             $data['result'] = $result['result'];
-            $data['outlets'] = MyHelper::get('franchise/outlets')['result']??[];
+            $data['outlets'] = MyHelper::get('franchise/outlets')['result'] ?? [];
 
             return view('users::user_franchise.detail', $data);
-        }else{
+        } else {
             return redirect('user/user-franchise')->withErrors($result['messages'] ?? ['Failed get detail user mitra']);
         }
     }
@@ -162,10 +162,10 @@ class UsersFranchiseController extends Controller
         $post['id_user_franchise'] = $user_id;
 
         $result = MyHelper::post('franchise/user/update', $post);
-        if(isset($result['status']) && $result['status'] == 'success'){
-            return redirect('user/user-franchise/detail/'.$user_id)->withSuccess(['Success update user mitra']);
-        }else{
-            return redirect('user/user-franchise/detail/'.$user_id)->withErrors($result['messages'] ?? ['Failed update detail user mitra']);
+        if (isset($result['status']) && $result['status'] == 'success') {
+            return redirect('user/user-franchise/detail/' . $user_id)->withSuccess(['Success update user mitra']);
+        } else {
+            return redirect('user/user-franchise/detail/' . $user_id)->withErrors($result['messages'] ?? ['Failed update detail user mitra']);
         }
     }
 
@@ -181,36 +181,38 @@ class UsersFranchiseController extends Controller
         return $result;
     }
 
-    public function autoresponseUser(Request $request, $key){
+    public function autoresponseUser(Request $request, $key)
+    {
         $post = $request->except('_token');
 
-        if(empty($post)){
-            if($key == 'reset-pin-user'){
+        if (empty($post)) {
+            if ($key == 'reset-pin-user') {
                 $title = 'Reset Pin User Mitra';
-            }else{
+            } else {
                 $title = 'New User Mitra';
             }
 
-            $data['page_title'] = '[Response] '.$title;
-            $data['data'] = \MyHelper::apiPost('franchise/user/autoresponse', ['title' => $title])['result']??[];
-            if(empty($data['data'])){
+            $data['page_title'] = '[Response] ' . $title;
+            $data['data'] = \MyHelper::apiPost('franchise/user/autoresponse', ['title' => $title])['result'] ?? [];
+            if (empty($data['data'])) {
                 return redirect('user')->withErrors(['Failed get data']);
             }
             $data['key'] = $key;
             return view('user::autoresponse', $data);
-        }else{
+        } else {
             unset($post['files']);
             $query = \MyHelper::apiPost('franchise/user/autoresponse/new-user/update', $post);
 
-            if(isset($query['status']) && $query['status'] == 'success'){
-                return redirect('user/autoresponse/'.$key)->withSuccess(['Response updated']);
-            }else{
-                return redirect('user/autoresponse/'.$key)->withErrors(['Failed update response']);
+            if (isset($query['status']) && $query['status'] == 'success') {
+                return redirect('user/autoresponse/' . $key)->withSuccess(['Response updated']);
+            } else {
+                return redirect('user/autoresponse/' . $key)->withErrors(['Failed update response']);
             }
         }
     }
 
-    public function import(){
+    public function import()
+    {
         $data = [
             'title'          => 'User Mitra',
             'sub_title'      => 'Import User Mitra',
@@ -220,11 +222,12 @@ class UsersFranchiseController extends Controller
         return view('users::user_franchise.import_user_franchise', $data);
     }
 
-    public function export(Request $request){
+    public function export(Request $request)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::post('franchise/user', ['export' => 1])['result']??[];
+        $data = MyHelper::post('franchise/user', ['export' => 1])['result'] ?? [];
 
-        if(empty($data)){
+        if (empty($data)) {
             $datas['All Type'] = [
                 [
                     'username' => 'U01',
@@ -241,20 +244,21 @@ class UsersFranchiseController extends Controller
                     'status' => 'Inactive'
                 ]
             ];
-        }else{
+        } else {
             $datas['All Type'] = $data;
         }
 
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_user mitra.xlsx');
+        return Excel::download(new MultisheetExport($datas), date('YmdHi') . '_user mitra.xlsx');
     }
 
-    public function importSave(Request $request){
+    public function importSave(Request $request)
+    {
         $post = $request->except('_token');
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
-            if(!empty($data)){
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(), $request->file('import_file'));
+            if (!empty($data)) {
                 $import = MyHelper::post('franchise/user/import', ['data' => $data]);
             }
         }

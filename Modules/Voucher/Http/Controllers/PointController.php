@@ -6,19 +6,19 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 // use Illuminate\Routing\Controller;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
-
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class PointController extends Controller
 {
-    function __construct() {
+    public function __construct()
+    {
         date_default_timezone_set('Asia/Jakarta');
     }
 
     /* POINT */
-    function point(Request $request) {
+    public function point(Request $request)
+    {
         $post = $request->except('_token');
 
         if (empty($post)) {
@@ -38,8 +38,7 @@ class PointController extends Controller
             $data['phone_number'] = "";
 
             return view('voucher::point', $data);
-        }
-        else {
+        } else {
             $data = [
                 'title'          => 'Voucher',
                 'menu_active'    => 'voucher',
@@ -58,8 +57,7 @@ class PointController extends Controller
                 $data['date_start']   = session('date_start');
                 $data['date_end']     = session('date_end');
                 $data['phone_number'] = session('phone_number');
-            }
-            else {
+            } else {
                 session(['date_start'   => $post['date_start'] ]);
                 session(['date_end'     => $post['date_end'] ]);
                 session(['phone_number' => $post['phone_number'] ]);
@@ -83,7 +81,8 @@ class PointController extends Controller
         }
     }
 
-    function filterInputan($dataApi) {
+    public function filterInputan($dataApi)
+    {
         $dataApi = array_filter($dataApi);
         if (isset($dataApi['phone_number'])) {
             $dataApi['phone'] = $dataApi['phone_number'];
@@ -94,7 +93,8 @@ class PointController extends Controller
     }
 
     /* DATA POINT VALUE */
-    function getPointValue($dataApi) {
+    public function getPointValue($dataApi)
+    {
         $voucher      = 0;
         $pointVoucher = 0;
         $trx          = 0;
@@ -116,7 +116,7 @@ class PointController extends Controller
             '#CD0D74'
         ];
 
-        // POINT 
+        // POINT
         $point = parent::getData(MyHelper::post('point/list', $dataApi));
 
         if (!empty($point)) {
@@ -131,16 +131,16 @@ class PointController extends Controller
                     $pointTrx = $pointTrx + $suw['point'];
                 }
             }
-        }   
+        }
 
         // data point
         $dataPointValue = [
-            [   
+            [
                 'type'  => 'Voucher',
                 'point' => $pointVoucher,
                 'color' => $warna[0]
             ],
-            [   
+            [
                 'type'  => 'Transaction',
                 'point' => $pointTrx,
                 'color' => $warna[2]
@@ -149,11 +149,11 @@ class PointController extends Controller
 
         // data satuan
         $dataPoint = [
-            [   
+            [
                 'type'  => 'Voucher',
                 'point' => $voucher
             ],
-            [   
+            [
                 'type'  => 'Transaction',
                 'point' => $trx
             ],
@@ -170,19 +170,21 @@ class PointController extends Controller
     }
 
     /* GET USER WITH POINT*/
-    function getUserPoint($dataApi) {
+    public function getUserPoint($dataApi)
+    {
         $dataApi['admin'] = 1;
         $user = parent::getData(MyHelper::post('point/user/list', $dataApi));
 
         if (!empty($user)) {
-            $user['paginator'] = new LengthAwarePaginator($user['data'], $user['total']-1, $user['per_page'], $user['current_page'], ['path' => url()->current()]);
+            $user['paginator'] = new LengthAwarePaginator($user['data'], $user['total'] - 1, $user['per_page'], $user['current_page'], ['path' => url()->current()]);
         }
 
         return $user;
     }
 
     /* GET INFO POINT USER */
-    function pointDetail(Request $request, $phone) {
+    public function pointDetail(Request $request, $phone)
+    {
         $data = [
             'title'          => 'Voucher',
             'menu_active'    => 'voucher',
@@ -194,8 +196,7 @@ class PointController extends Controller
 
         if (empty($data['user'])) {
             return back()->withErrors(['Data not found.']);
-        }
-        else {
+        } else {
             return view('voucher::point_user', $data);
         }
     }

@@ -46,10 +46,11 @@ class VoucherServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            __DIR__.'/../Config/config.php' => config_path('voucher.php'),
+            __DIR__ . '/../Config/config.php' => config_path('voucher.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            __DIR__.'/../Config/config.php', 'voucher'
+            __DIR__ . '/../Config/config.php',
+            'voucher'
         );
     }
 
@@ -62,11 +63,11 @@ class VoucherServiceProvider extends ServiceProvider
     {
         $viewPath = resource_path('views/modules/voucher');
 
-        $sourcePath = __DIR__.'/../Resources/views';
+        $sourcePath = __DIR__ . '/../Resources/views';
 
         $this->publishes([
             $sourcePath => $viewPath
-        ],'views');
+        ], 'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
             return $path . '/modules/voucher';
@@ -85,7 +86,7 @@ class VoucherServiceProvider extends ServiceProvider
         if (is_dir($langPath)) {
             $this->loadTranslationsFrom($langPath, 'voucher');
         } else {
-            $this->loadTranslationsFrom(__DIR__ .'/../Resources/lang', 'voucher');
+            $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'voucher');
         }
     }
 

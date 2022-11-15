@@ -36,29 +36,30 @@ class ModifierController extends Controller
         }
         $data['start'] = ($page - 1) * 10;
         $types         = MyHelper::get('product/modifier/type')['result'] ?? [];
-        $data['types'] = array_map(function ($q) {return [$q, $q];}, $types);
+        $data['types'] = array_map(function ($q) {
+            return [$q, $q];
+        }, $types);
         $data['modifiers'] = MyHelper::post('product/modifier?page=' . $page, $post)['result'] ?? [];
-        
+
         $data['products'] = array_map(function ($q) {
-        	return [$q['id_product'], $q['product_code'].'-'.$q['product_name']];
+            return [$q['id_product'], $q['product_code'] . '-' . $q['product_name']];
         }, MyHelper::get('product/be/list')['result'] ?? []);
 
         $data['categories'] = array_map(function ($q) {
-        	return [$q['id_product_category'], $q['product_category_name']];
+            return [$q['id_product_category'], $q['product_category_name']];
         }, MyHelper::get('product/category/be/list')['result'] ?? []);
 
         $data['brands'] = array_map(function ($q) {
-        	return [$q['id_brand'], $q['name_brand']];
+            return [$q['id_brand'], $q['name_brand']];
         }, MyHelper::get('brand')['result'] ?? []);
 
-		if (!empty($data['modifiers']['data'])) {
+        if (!empty($data['modifiers']['data'])) {
             $data['mod']          = $data['modifiers']['data'];
             $data['modTotal']     = $data['modifiers']['total'];
             $data['modPerPage']   = $data['modifiers']['from'];
-            $data['modUpTo']      = $data['modifiers']['from'] + count($data['modifiers']['data'])-1;
+            $data['modUpTo']      = $data['modifiers']['from'] + count($data['modifiers']['data']) - 1;
             $data['modPaginator'] = new LengthAwarePaginator($data['modifiers']['data'], $data['modifiers']['total'], $data['modifiers']['per_page'], $data['modifiers']['current_page'], ['path' => url()->current()]);
-        }
-        else {
+        } else {
             $data['mod']          = [];
             $data['modTotal']     = 0;
             $data['modPerPage']   = 0;
@@ -123,12 +124,12 @@ class ModifierController extends Controller
             session(['product_modifier_filter' => null]);
             return redirect('product/modifier');
         }
-        if(isset($post['type_dropdown'])){
+        if (isset($post['type_dropdown'])) {
             $post['type'] = $post['type_dropdown'];
             if ($post['type'] == '0') {
                 $post['type'] = $post['type_textbox'];
             }
-        }else{
+        } else {
             $post['type'] = "Topping";
         }
 
@@ -204,9 +205,9 @@ class ModifierController extends Controller
             $result        = MyHelper::post('product/modifier/update', $post);
             return $result;
         }
-        if(isset($post['type_dropdown'])){
+        if (isset($post['type_dropdown'])) {
             $post['type'] = $post['type_dropdown'];
-        }else{
+        } else {
             $post['type'] = "Topping";
         }
         $post['id_product_modifier'] = $id;
@@ -270,7 +271,9 @@ class ModifierController extends Controller
         $data['outlets']   = $outlets;
         $post['id_outlet'] = $id_outlet;
         $types             = MyHelper::get('product/modifier/type')['result'] ?? [];
-        $data['types']     = array_map(function ($q) {return [$q, $q];}, $types);
+        $data['types']     = array_map(function ($q) {
+            return [$q, $q];
+        }, $types);
         $data['modifiers'] = MyHelper::post('product/modifier/list-price?page=' . $page, $post)['result'] ?? [];
         $data['total']     = $data['modifiers']['total'];
         $data['paginator'] = new LengthAwarePaginator($data['modifiers']['data'], $data['modifiers']['total'], $data['modifiers']['per_page'], $data['modifiers']['current_page'], ['path' => url()->current()]);
@@ -343,7 +346,9 @@ class ModifierController extends Controller
         $data['outlets']   = $outlets;
         $post['id_outlet'] = $id_outlet;
         $types             = MyHelper::get('product/modifier/type')['result'] ?? [];
-        $data['types']     = array_map(function ($q) {return [$q, $q];}, $types);
+        $data['types']     = array_map(function ($q) {
+            return [$q, $q];
+        }, $types);
         $data['modifiers'] = MyHelper::post('product/modifier/list-detail?page=' . $page, $post)['result'] ?? [];
         $data['total']     = $data['modifiers']['total'];
         $data['paginator'] = new LengthAwarePaginator($data['modifiers']['data'], $data['modifiers']['total'], $data['modifiers']['per_page'], $data['modifiers']['current_page'], ['path' => url()->current()]);
@@ -378,7 +383,8 @@ class ModifierController extends Controller
         }
     }
 
-    public function position(){
+    public function position()
+    {
         $data = [
             'title'          => 'Topping',
             'sub_title'      => 'Topping Manage Position',
@@ -388,15 +394,16 @@ class ModifierController extends Controller
 
         $get = MyHelper::post('product/modifier', ['order_position' => 1]);
 
-        if(isset($get['status']) && $get['status'] == 'success'){
+        if (isset($get['status']) && $get['status'] == 'success') {
             $data['list'] = $get['result'];
             return view('product::modifier.position', $data);
-        }else{
+        } else {
             return redirect('product/modifier')->withErrors(['Fail get list position']);
         }
     }
 
-    public function positionAssign(Request $request){
+    public function positionAssign(Request $request)
+    {
         $post = $request->except('_token');
         if (!isset($post['modifier_ids'])) {
             return [
@@ -419,7 +426,7 @@ class ModifierController extends Controller
         ];
         $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
         $data['modifiers'] = MyHelper::get('product/modifier/inventory-brand')['result'] ?? [];
-        $data['modifiers'] = array_map(function($modifier) {
+        $data['modifiers'] = array_map(function ($modifier) {
             $modifier['inventory_brand'] = array_column($modifier['inventory_brand'], 'id_brand');
             return $modifier;
         }, $data['modifiers']);

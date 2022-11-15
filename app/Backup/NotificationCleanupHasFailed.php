@@ -7,7 +7,6 @@ use Mailgun;
 
 class NotificationCleanupHasFailed extends Notifiable
 {
-
     public function send()
     {
         $setting = [
@@ -19,14 +18,14 @@ class NotificationCleanupHasFailed extends Notifiable
             'email_logo_position' => 'center'
         ];
         $data = array(
-            'html_message' => "Hello Team, <br> Date : ".date('l').",".date('d')." ".date('F')." ".date('Y')." <br> A failure occurred in cleanup process, please check this process.",
+            'html_message' => "Hello Team, <br> Date : " . date('l') . "," . date('d') . " " . date('F') . " " . date('Y') . " <br> A failure occurred in cleanup process, please check this process.",
             'setting' => $setting
         );
-        $mailMessage = Mailgun::send('emails.test', $data, function ($message) use ($setting){
+        $mailMessage = Mailgun::send('emails.test', $data, function ($message) use ($setting) {
             $message->subject('Clean up File BE');
-            if(!empty($setting['email_from']) && !empty($setting['email_sender'])){
+            if (!empty($setting['email_from']) && !empty($setting['email_sender'])) {
                 $message->from($setting['email_from'], $setting['email_sender']);
-            }else if(!empty($setting['email_from'])){
+            } elseif (!empty($setting['email_from'])) {
                 $message->from($setting['email_from']);
             }
             $message->to(env('BACKUP_MAIL_TO'));

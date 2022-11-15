@@ -26,14 +26,14 @@ class ProductBundlingController extends Controller
             'submenu_active' => 'product-bundling-list',
         ];
 
-        if(Session::has('filter-list-bundling') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-list-bundling') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-list-bundling');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-list-bundling');
         }
 
@@ -43,9 +43,9 @@ class ProductBundlingController extends Controller
             $data['data']          = $bundling['result']['data'];
             $data['dataTotal']     = $bundling['result']['total'];
             $data['dataPerPage']   = $bundling['result']['from'];
-            $data['dataUpTo']      = $bundling['result']['from'] + count($bundling['result']['data'])-1;
+            $data['dataUpTo']      = $bundling['result']['from'] + count($bundling['result']['data']) - 1;
             $data['dataPaginator'] = new LengthAwarePaginator($bundling['result']['data'], $bundling['result']['total'], $bundling['result']['per_page'], $bundling['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['data']          = [];
             $data['dataTotal']     = 0;
             $data['dataPerPage']   = 0;
@@ -53,10 +53,10 @@ class ProductBundlingController extends Controller
             $data['dataPaginator'] = false;
         }
 
-        $data['order_field'] = $post['order_field']??'id_bundling';
-        $data['order_method'] = $post['order_method']??'asc';
-        if($post){
-            Session::put('filter-list-bundling',$post);
+        $data['order_field'] = $post['order_field'] ?? 'id_bundling';
+        $data['order_method'] = $post['order_method'] ?? 'asc';
+        if ($post) {
+            Session::put('filter-list-bundling', $post);
         }
 
         return view('productbundling::index', $data);
@@ -71,9 +71,9 @@ class ProductBundlingController extends Controller
             'submenu_active' => 'product-bundling-new',
         ];
 
-        $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
-        $data['category'] = MyHelper::get('product-bundling-category/list')['result']??[];
-        $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
+        $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result'] ?? [];
+        $data['category'] = MyHelper::get('product-bundling-category/list')['result'] ?? [];
+        $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
         return view('productbundling::create', $data);
     }
 
@@ -94,10 +94,10 @@ class ProductBundlingController extends Controller
         }
 
         $store = MyHelper::post('product-bundling/store', $post);
-        if(isset($store['status']) && $store['status'] == 'success'){
+        if (isset($store['status']) && $store['status'] == 'success') {
             return redirect('product-bundling')->withSuccess(['Success create product bundling']);
-        }else{
-            return redirect('product-bundling/create')->withErrors($store['messages']??['Failed create product bundling'])->withInput();
+        } else {
+            return redirect('product-bundling/create')->withErrors($store['messages'] ?? ['Failed create product bundling'])->withInput();
         }
     }
 
@@ -110,7 +110,7 @@ class ProductBundlingController extends Controller
     {
         $detail = MyHelper::post('product-bundling/be/detail', ['id_bundling' => $id]);
 
-        if(isset($detail['status']) && $detail['status'] == 'success'){
+        if (isset($detail['status']) && $detail['status'] == 'success') {
             $data = [
                 'title'          => 'Product Bundling',
                 'sub_title'      => 'Product Bundling Detail',
@@ -118,19 +118,19 @@ class ProductBundlingController extends Controller
                 'submenu_active' => 'product-bundling-list',
             ];
 
-            $data['category'] = MyHelper::get('product-bundling-category/list')['result']??[];
+            $data['category'] = MyHelper::get('product-bundling-category/list')['result'] ?? [];
             $data['result'] = $detail['result']['detail'];
-            $data['outlets'] = $detail['result']['outlets']??[];
-            $data['selected_outlet'] = $detail['result']['selected_outlet']??[];
-            $data['count_list_product'] = count($detail['result']['detail']['bundling_product']??[]);
-            $data['brands'] = MyHelper::get('brand/be/list')['result']??[];
-            $data['brand_tmp'] = json_encode($detail['result']['brand_tmp'])??[];
-            $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result']??[];
-            $data['selected_outlet_group_filter'] = array_column($detail['result']['detail']['bundling_outlet_group']??[], 'id_outlet_group');
+            $data['outlets'] = $detail['result']['outlets'] ?? [];
+            $data['selected_outlet'] = $detail['result']['selected_outlet'] ?? [];
+            $data['count_list_product'] = count($detail['result']['detail']['bundling_product'] ?? []);
+            $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
+            $data['brand_tmp'] = json_encode($detail['result']['brand_tmp']) ?? [];
+            $data['outlet_group_filter'] = MyHelper::get('outlet/group-filter')['result'] ?? [];
+            $data['selected_outlet_group_filter'] = array_column($detail['result']['detail']['bundling_outlet_group'] ?? [], 'id_outlet_group');
 
             return view('productbundling::detail', $data);
-        }else{
-            return redirect('product-bundling')->withErrors($store['messages']??['Failed get detail product bundling']);
+        } else {
+            return redirect('product-bundling')->withErrors($store['messages'] ?? ['Failed get detail product bundling']);
         }
     }
 
@@ -154,10 +154,10 @@ class ProductBundlingController extends Controller
         $post['id_bundling'] = $id;
         $update = MyHelper::post('product-bundling/update', $post);
 
-        if(isset($update['status']) && $update['status'] == 'success'){
-            return redirect('product-bundling/detail/'.$id)->withSuccess(['Success update product bundling']);
-        }else{
-            return redirect('product-bundling/detail/'.$id)->withErrors($update['messages']??['Failed update product bundling']);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            return redirect('product-bundling/detail/' . $id)->withSuccess(['Success update product bundling']);
+        } else {
+            return redirect('product-bundling/detail/' . $id)->withErrors($update['messages'] ?? ['Failed update product bundling']);
         }
     }
 
@@ -180,24 +180,28 @@ class ProductBundlingController extends Controller
         return $delete;
     }
 
-    public function productBrand(Request $request){
+    public function productBrand(Request $request)
+    {
         $post = $request->except('_token');
         $getDataProduct = MyHelper::post('product/product-brand', $post);
         return $getDataProduct;
     }
 
-    public function outletAvailable(Request $request){
+    public function outletAvailable(Request $request)
+    {
         $post = $request->except('_token');
         $outlets = MyHelper::post('product-bundling/outlet-available', $post);
         return $outlets;
     }
-    public function getGlobalPrice(Request $request){
+    public function getGlobalPrice(Request $request)
+    {
         $post = $request->except('_token');
         $outlets = MyHelper::post('product-bundling/global-price', $post);
         return $outlets;
     }
 
-    public function positionAssign() {
+    public function positionAssign()
+    {
         $data = [
             'title'          => 'Manage Product Bundling Position',
             'sub_title'      => 'Assign Product Bundling Position',
@@ -208,8 +212,7 @@ class ProductBundlingController extends Controller
         $catParent = MyHelper::get('product-bundling-category/list');
         if (isset($catParent['status']) && $catParent['status'] == "success") {
             $data['category'] = $catParent['result'];
-        }
-        else {
+        } else {
             $data['category'] = [];
         }
 
@@ -217,8 +220,7 @@ class ProductBundlingController extends Controller
 
         if (isset($bundlings['status']) && $bundlings['status'] == "success") {
             $data['bundlings'] = $bundlings['result'];
-        }
-        else {
+        } else {
             $data['bundlings'] = [];
         }
 
@@ -239,25 +241,26 @@ class ProductBundlingController extends Controller
         return $result;
     }
 
-    function settings(Request $request){
+    public function settings(Request $request)
+    {
         $post = $request->except('_token');
 
-        if(empty($post)){
+        if (empty($post)) {
             $data = [
                 'title'          => 'Product Bundling',
                 'sub_title'      => 'Setting Name Brand Product Bundling',
                 'menu_active'    => 'product-bundling',
                 'submenu_active' => 'product-bundling-setting'
             ];
-            $data['result'] = MyHelper::get('product-bundling/setting')['result']??[];
+            $data['result'] = MyHelper::get('product-bundling/setting')['result'] ?? [];
             return view('productbundling::setting', $data);
-        }else{
+        } else {
             $update = MyHelper::post('product-bundling/setting', $post);
 
-            if(isset($update['status']) && $update['status'] == 'success'){
+            if (isset($update['status']) && $update['status'] == 'success') {
                 return redirect('product-bundling/setting')->withSuccess(['Success update product bundling']);
-            }else{
-                return redirect('product-bundling/setting')->withErrors($update['messages']??['Failed update product bundling']);
+            } else {
+                return redirect('product-bundling/setting')->withErrors($update['messages'] ?? ['Failed update product bundling']);
             }
         }
     }

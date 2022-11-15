@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 
 class ReportController extends Controller
 {
-    public function reportGlobal(Request $request) {
+    public function reportGlobal(Request $request)
+    {
         $post = $request->except('_token');
 
         $warna = [
@@ -44,7 +44,12 @@ class ReportController extends Controller
             '#FF0F00',
         ];
 
-        $chara = ["https://www.amcharts.com/lib/images/faces/A04.png","https://www.amcharts.com/lib/images/faces/C02.png","https://www.amcharts.com/lib/images/faces/D02.png","https://www.amcharts.com/lib/images/faces/E01.png"];
+        $chara = [
+            "https://www.amcharts.com/lib/images/faces/A04.png",
+            "https://www.amcharts.com/lib/images/faces/C02.png",
+            "https://www.amcharts.com/lib/images/faces/D02.png",
+            "https://www.amcharts.com/lib/images/faces/E01.png"
+        ];
 
         if (empty($post)) {
             $data = [
@@ -124,7 +129,7 @@ class ReportController extends Controller
             } else {
                 $data['report'] = [];
             }
-         
+
             return view('report::report_global', $data);
         } else {
             $data = [
@@ -138,7 +143,7 @@ class ReportController extends Controller
             $data['date_end']   = $post['date_end'];
 
             $report = MyHelper::post('report/global', $post);
-        
+
             if (isset($report['status']) && $report['status'] == "success") {
                 $data['report'] = $report['result'];
 
@@ -205,15 +210,16 @@ class ReportController extends Controller
                 return parent::redirect($report, 'ok');
                 // return back()->withErrors($report['messages']);
             }
-            
+
             // return $data;
             return view('report::report_global', $data);
         }
     }
 
-    public function customerSummary(Request $request) {
+    public function customerSummary(Request $request)
+    {
         $post = $request->except('_token');
-        
+
         if (empty($post)) {
             $data = [
                 'title'          => 'Report',
@@ -221,15 +227,19 @@ class ReportController extends Controller
                 'sub_title'      => 'Report Customer',
                 'submenu_active' => 'report-summary'
             ];
-            
+
             $getCity = MyHelper::get('city/list');
 
-            if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
+            if ($getCity['status'] == 'success') {
+                $data['city'] = $getCity['result'];
+            } else {
+                $data['city'] = null;
+            }
 
             $getMembership = MyHelper::post('membership/be/list', $post);
-            if($getMembership['status'] == 'success'){
+            if ($getMembership['status'] == 'success') {
                 $data['membership'] = $getMembership['result'];
-            }else{
+            } else {
                 $data['membership'] = [];
             }
 
@@ -237,7 +247,7 @@ class ReportController extends Controller
 
             if (isset($customer['status']) && $customer['status'] == 'success') {
                 $data['customer'] = $customer['result'];
-             
+
                 return view('report::report_customer_summary', $data);
             } else {
                 return parent::redirect($data, 'failed');
@@ -253,7 +263,7 @@ class ReportController extends Controller
             $data['post'] = $post;
             $data['cust'] = 1;
             $post['cust'] = 1;
-            
+
             if (isset($post['age_start']) && isset($post['age_end'])) {
                 if ($post['age_start'] > $post['age_end']) {
                     return back()->withErrors(['Age start must be smaller than age end'])->withInput();
@@ -262,7 +272,9 @@ class ReportController extends Controller
 
             if (isset($post['regis_date_start']) && isset($post['regis_date_end'])) {
                 if ($post['regis_date_start'] > $post['regis_date_end']) {
-                    return back()->withErrors(['Registration start must be smaller than registration end'])->withInput();
+                    return back()
+                        ->withErrors(['Registration start must be smaller than registration end'])
+                        ->withInput();
                 }
             }
 
@@ -280,12 +292,16 @@ class ReportController extends Controller
 
             $getCity = MyHelper::get('city/list');
 
-            if($getCity['status'] == 'success') $data['city'] = $getCity['result']; else $data['city'] = null;
+            if ($getCity['status'] == 'success') {
+                $data['city'] = $getCity['result'];
+            } else {
+                $data['city'] = null;
+            }
 
             $getMembership = MyHelper::post('membership/be/list', $post);
-            if($getMembership['status'] == 'success'){
+            if ($getMembership['status'] == 'success') {
                 $data['membership'] = $getMembership['result'];
-            }else{
+            } else {
                 $data['membership'] = [];
             }
 
@@ -300,7 +316,8 @@ class ReportController extends Controller
         }
     }
 
-    public function customerDetail(Request $request, $id, $type) {
+    public function customerDetail(Request $request, $id, $type)
+    {
         $data = [
             'title'          => 'Report',
             'menu_active'    => 'report-customer',
@@ -310,25 +327,32 @@ class ReportController extends Controller
         ];
 
         $post = $request->except('_token');
-        if(isset($post['page'])){
-            $detail = MyHelper::post('report/customer/detail?page='.$post['page'], ['phone' => $id, 'type' => $type]);
-        }else{
+        if (isset($post['page'])) {
+            $detail = MyHelper::post('report/customer/detail?page=' . $post['page'], ['phone' => $id, 'type' => $type]);
+        } else {
             $detail = MyHelper::post('report/customer/detail', ['phone' => $id, 'type' => $type]);
         }
-     
+
         // dd($detail);die();
         if (isset($detail['status']) && $detail['status'] == "success") {
             $data['detail']     = $detail['result'];
-            
-            $data['paginator']  = new LengthAwarePaginator($detail['result'][$type]['data'], $detail['result'][$type]['total'], $detail['result'][$type]['per_page'], $detail['result'][$type]['current_page'], ['path' => url()->current()]);
-            if($detail['result'][$type]['from']) {
+
+            $data['paginator']  = new LengthAwarePaginator(
+                $detail['result'][$type]['data'],
+                $detail['result'][$type]['total'],
+                $detail['result'][$type]['per_page'],
+                $detail['result'][$type]['current_page'],
+                ['path' => url()->current()]
+            );
+
+            if ($detail['result'][$type]['from']) {
                 $data['from']   = $detail['result'][$type]['from'];
-            }else{
+            } else {
                 $data['from']   = 0;
             }
-            if($detail['result'][$type]['to']) {
+            if ($detail['result'][$type]['to']) {
                 $data['to']   = $detail['result'][$type]['to'];
-            }else{
+            } else {
                 $data['to']   = 0;
             }
             $data['total']      = $detail['result'][$type]['total'];
@@ -339,7 +363,8 @@ class ReportController extends Controller
         }
     }
 
-    public function reportProduct() {
+    public function reportProduct()
+    {
         $data = [
             'title'          => 'Report',
             'menu_active'    => 'report-product',
@@ -362,7 +387,7 @@ class ReportController extends Controller
             '#CD0D74'
         ];
 
-        $random_keys=array_rand($warna, 10);
+        $random_keys = array_rand($warna, 10);
 
         $data['date_start']   = date('Y-m-d', strtotime("- 30 days"));
         $data['date_end']     = date('Y-m-d');
@@ -420,9 +445,10 @@ class ReportController extends Controller
         }
     }
 
-    public function reportProductDetail(Request $request) {
+    public function reportProductDetail(Request $request)
+    {
         $post = $request->except('_token');
-        
+
         if (empty($post)) {
             return redirect('report/product');
         }
@@ -449,7 +475,7 @@ class ReportController extends Controller
             '#CD0D74'
         ];
 
-        $random_keys=array_rand($warna, 10);
+        $random_keys = array_rand($warna, 10);
 
         $data['date_start']   = date('Y-m-d', strtotime($post['date_start']));
         $data['date_end']     = date('Y-m-d', strtotime($post['date_end']));

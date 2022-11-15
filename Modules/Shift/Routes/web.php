@@ -11,7 +11,6 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'report/shift'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'report/shift'], function () {
     Route::any('summary', 'ShiftController@index')->middleware('feature_control:271');
 });

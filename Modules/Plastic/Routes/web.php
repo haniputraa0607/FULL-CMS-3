@@ -11,8 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'plastic-type'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'plastic-type'], function () {
     Route::get('/', ['middleware' => 'feature_control:48,49,51', 'uses' => 'PlasticTypeController@index']);
     Route::get('create', ['middleware' => 'feature_control:50', 'uses' => 'PlasticTypeController@create']);
     Route::post('store', ['middleware' => 'feature_control:50', 'uses' => 'PlasticTypeController@store']);
@@ -22,8 +21,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'plastic-
     Route::any('position', ['middleware' => 'feature_control:51', 'uses' => 'PlasticTypeController@position']);
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-plastic'], function()
-{
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-plastic'], function () {
     Route::get('/', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@index']);
     Route::any('stock-outlet/{key?}', ['middleware' => 'feature_control:48,49,51', 'uses' => 'ProductPlasticController@productPlasticStockOutlet']);
     Route::get('create', ['middleware' => 'feature_control:50', 'uses' => 'ProductPlasticController@create']);

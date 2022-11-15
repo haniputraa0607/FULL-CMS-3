@@ -26,8 +26,8 @@ Route::prefix('quest')->middleware(['web', 'validate_session'])->group(function 
     Route::any('update/detail', 'QuestController@update');
 
     Route::group(['prefix' => 'report'], function () {
-    	Route::any('/', 'ReportQuestController@reportQuest');
-    	Route::any('detail/{id}', 'ReportQuestController@reportDetail');
-    	Route::any('list-user/{id}', 'ReportQuestController@reportListUser');
-	});
+        Route::any('/', 'ReportQuestController@reportQuest');
+        Route::any('detail/{id}', 'ReportQuestController@reportDetail');
+        Route::any('list-user/{id}', 'ReportQuestController@reportListUser');
+    });
 });

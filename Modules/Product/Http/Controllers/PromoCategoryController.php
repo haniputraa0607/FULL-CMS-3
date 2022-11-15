@@ -5,7 +5,6 @@ namespace Modules\Product\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use App\Lib\MyHelper;
 
 class PromoCategoryController extends Controller
@@ -22,7 +21,7 @@ class PromoCategoryController extends Controller
             'menu_active'    => 'product',
             'submenu_active' => 'product-promo-category-list',
         ];
-        return view('product::promo_category.list',$data);
+        return view('product::promo_category.list', $data);
     }
 
     /**
@@ -32,13 +31,13 @@ class PromoCategoryController extends Controller
     public function indexAjax(Request $request)
     {
         $post = $request->except('_token');
-        $raw_data = MyHelper::post('product/promo-category',$post)['result']??[];
+        $raw_data = MyHelper::post('product/promo-category', $post)['result'] ?? [];
         $data['data'] = $raw_data['data'];
-        $data['total'] = $raw_data['total']??0;
-        $data['from'] = $raw_data['from']??0;
-        $data['order_by'] = $raw_data['order_by']??0;
-        $data['order_sorting'] = $raw_data['order_sorting']??0;
-        $data['last_page'] = !($raw_data['next_page_url']??false);
+        $data['total'] = $raw_data['total'] ?? 0;
+        $data['from'] = $raw_data['from'] ?? 0;
+        $data['order_by'] = $raw_data['order_by'] ?? 0;
+        $data['order_sorting'] = $raw_data['order_sorting'] ?? 0;
+        $data['last_page'] = !($raw_data['next_page_url'] ?? false);
         return $data;
     }
 
@@ -54,7 +53,7 @@ class PromoCategoryController extends Controller
             'menu_active'    => 'product',
             'submenu_active' => 'product-promo-category-new',
         ];
-        return view('product::promo_category.create',$data);
+        return view('product::promo_category.create', $data);
     }
 
     /**
@@ -65,11 +64,11 @@ class PromoCategoryController extends Controller
     public function store(Request $request)
     {
         $post = $request->except('_token');
-        $create = MyHelper::post('product/promo-category/create',$post);
-        if($create['status'] == 'success'){
-            return redirect('product/promo-category/'.$create['result']['id_product_promo_category']??'')->with('success',['Create promo category success']);
-        }else{
-            back()->withInput()->withErrors($create['messages']??['Create promo category fail']);
+        $create = MyHelper::post('product/promo-category/create', $post);
+        if ($create['status'] == 'success') {
+            return redirect('product/promo-category/' . $create['result']['id_product_promo_category'] ?? '')->with('success', ['Create promo category success']);
+        } else {
+            back()->withInput()->withErrors($create['messages'] ?? ['Create promo category fail']);
         }
     }
 
@@ -86,16 +85,16 @@ class PromoCategoryController extends Controller
             'menu_active'    => 'product',
             'submenu_active' => 'product-promo-category-list',
         ];
-        $raw_data = MyHelper::post('product/promo-category/show',['id_product_promo_category'=>$id])['result']??[];
-        if(!$raw_data){
+        $raw_data = MyHelper::post('product/promo-category/show', ['id_product_promo_category' => $id])['result'] ?? [];
+        if (!$raw_data) {
             return abort(404);
         }
         $data['promo_category'] = $raw_data['info'];
         $data['products'] = [];
         foreach ($raw_data['products'] as $product) {
-            $data['products'][$product['product_group_code']??$product['product_code']] = $product;
+            $data['products'][$product['product_group_code'] ?? $product['product_code']] = $product;
         }
-        return view('product::promo_category.show',$data);
+        return view('product::promo_category.show', $data);
     }
 
     /**
@@ -108,11 +107,11 @@ class PromoCategoryController extends Controller
     {
         $post = $request->except('_token');
         $post['id_product_promo_category'] = $id;
-        $update = MyHelper::post('product/promo-category/update',$post);
-        if(($update['status']??false) == 'success'){
-            return back()->with('success',['Update data success']);
-        }else{
-            return back()->withInput()->withErrors($update['messages']??['Update data fail']);
+        $update = MyHelper::post('product/promo-category/update', $post);
+        if (($update['status'] ?? false) == 'success') {
+            return back()->with('success', ['Update data success']);
+        } else {
+            return back()->withInput()->withErrors($update['messages'] ?? ['Update data fail']);
         }
     }
 
@@ -123,11 +122,11 @@ class PromoCategoryController extends Controller
      */
     public function destroy(Request $request)
     {
-        $delete = MyHelper::post('product/promo-category/delete',$request->except('_token'));
-        if(($delete['status']??false) == 'success'){
-            return back()->with('success',['Delete data success']);
-        }else{
-            return back()->withInput()->withErrors($update['messages']??['Delete data fail']);
+        $delete = MyHelper::post('product/promo-category/delete', $request->except('_token'));
+        if (($delete['status'] ?? false) == 'success') {
+            return back()->with('success', ['Delete data success']);
+        } else {
+            return back()->withInput()->withErrors($update['messages'] ?? ['Delete data fail']);
         }
     }
 
@@ -139,7 +138,7 @@ class PromoCategoryController extends Controller
     public function reorder(Request $request)
     {
         $post = $request->except(['_token']);
-        return MyHelper::post('product/promo-category/reorder',$post);
+        return MyHelper::post('product/promo-category/reorder', $post);
     }
 
     /**
@@ -147,14 +146,15 @@ class PromoCategoryController extends Controller
      * @param  Request $request [description]
      * @return [type]           [description]
      */
-    public function assign(Request $request,$id) {
+    public function assign(Request $request, $id)
+    {
         $post = $request->except('_token');
         $post['id_product_promo_category'] = $id;
-        $update = MyHelper::post('product/promo-category/assign',$post);
-        if(($update['status']??false) == 'success'){
-            return redirect("product/promo-category/$id#products")->with('success',['Update data success']);
-        }else{
-            return redirect("product/promo-category/$id#products")->withInput()->withErrors($update['messages']??['Update data fail']);
+        $update = MyHelper::post('product/promo-category/assign', $post);
+        if (($update['status'] ?? false) == 'success') {
+            return redirect("product/promo-category/$id#products")->with('success', ['Update data success']);
+        } else {
+            return redirect("product/promo-category/$id#products")->withInput()->withErrors($update['messages'] ?? ['Update data fail']);
         }
     }
 }

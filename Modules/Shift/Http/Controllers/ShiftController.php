@@ -24,19 +24,20 @@ class ShiftController extends Controller
             'submenu_active' => 'report-shift',
             'post'           => []
         ];
-        
-        if(!empty($post)){
+
+        if (!empty($post)) {
             /* Jika User melakukan filter data Shift */
 
-            $data['post'] = array_filter($post, function($item){
-                if(is_array($item)){
-                    foreach($item as $val)
+            $data['post'] = array_filter($post, function ($item) {
+                if (is_array($item)) {
+                    foreach ($item as $val) {
                         return !is_null($val);
+                    }
                 }
                 return !is_null($item);
             });
 
-            
+
             if (isset($post['shift_start_date']) && isset($post['shift_end_date'])) {
                 if (strtotime($post['shift_start_date']) > strtotime($post['shift_end_date'])) {
                     return back()->withErrors(['Shift start date must be smaller than shift end date'])->withInput();
@@ -68,19 +69,19 @@ class ShiftController extends Controller
 
         if (isset($shifts['status']) && $shifts['status'] == "success") {
             $data['shifts'] = $shifts['result'];
-        }else{
+        } else {
             $data['shifts'] = [];
         }
 
-        if(isset($outlets['status']) && $outlets['status'] == 'success'){
+        if (isset($outlets['status']) && $outlets['status'] == 'success') {
             $data['outlets'] = $outlets['result'];
-        }else{
+        } else {
             $data['outlets'] = [];
         }
 
-        if(isset($user_outletapps['status']) && $user_outletapps['status'] == 'success'){
+        if (isset($user_outletapps['status']) && $user_outletapps['status'] == 'success') {
             $data['user_outletapps'] = $user_outletapps['result'];
-        }else{
+        } else {
             $data['user_outletapps'] = [];
         }
 

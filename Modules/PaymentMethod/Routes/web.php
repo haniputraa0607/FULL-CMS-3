@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'payment-method'], function() {
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'payment-method'], function () {
     Route::get('/', 'PaymentMethodController@index');
     Route::get('create', 'PaymentMethodController@create');
     Route::post('store', 'PaymentMethodController@store');
@@ -23,7 +23,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'payment-
     Route::post('detail/update', 'PaymentMethodController@updateDifferentPaymentMethod');
 });
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'payment-method-category'], function() {
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'payment-method-category'], function () {
     Route::get('/', 'PaymentMethodCategoryController@index');
     Route::get('create', 'PaymentMethodCategoryController@create');
     Route::post('store', 'PaymentMethodCategoryController@store');

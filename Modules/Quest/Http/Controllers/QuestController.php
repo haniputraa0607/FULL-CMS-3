@@ -25,22 +25,22 @@ class QuestController extends Controller
         ];
         $post = $request->all();
 
-        if(session('list_quest_filter')){
-            $extra=session('list_quest_filter');
-            $data['rule']=array_map('array_values', $extra['rule']);
-            $data['operator']=$extra['operator'];
-        } else{
-            $extra=[
+        if (session('list_quest_filter')) {
+            $extra = session('list_quest_filter');
+            $data['rule'] = array_map('array_values', $extra['rule']);
+            $data['operator'] = $extra['operator'];
+        } else {
+            $extra = [
                 'rule' => [],
                 'operator' => ''
             ];
-            $data['rule']=array_map('array_values', $extra['rule']);
-            $data['operator']=$extra['operator'];
-            $data['hide_record_total']=1;
+            $data['rule'] = array_map('array_values', $extra['rule']);
+            $data['operator'] = $extra['operator'];
+            $data['hide_record_total'] = 1;
         }
-        
+
         $dateRange = [];
-        foreach ($data['rule']??[] as $rule) {
+        foreach ($data['rule'] ?? [] as $rule) {
             if ($rule[0] == 'transaction_date') {
                 if ($rule[1] == '<=') {
                     $dateRange[0] = $rule[2];
@@ -76,7 +76,7 @@ class QuestController extends Controller
     {
         $post = $request->all();
 
-        if(($post['rule']??false) && !isset($post['draw'])){
+        if (($post['rule'] ?? false) && !isset($post['draw'])) {
             if (($post['filter_type'] ?? false) == 'today') {
                 $post['rule'][9998] = [
                     'subject' => 'transaction_date',
@@ -91,12 +91,12 @@ class QuestController extends Controller
                     'hide' => '1',
                 ];
             }
-            session(['list_quest_filter'=>$post]);
+            session(['list_quest_filter' => $post]);
             return back();
         }
 
-        if($post['clear']??false){
-            session(['list_quest_filter'=>null]);
+        if ($post['clear'] ?? false) {
+            session(['list_quest_filter' => null]);
             return back();
         }
 
@@ -121,7 +121,7 @@ class QuestController extends Controller
         $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
         $data['province']   = MyHelper::get('province/list')['result'];
         $data['deals']      = MyHelper::get('quest/list-quest-voucher')['result'] ?? [];
-        $data['outlet_group_filters'] = MyHelper::get('outlet/group-filter')['result']??[];
+        $data['outlet_group_filters'] = MyHelper::get('outlet/group-filter')['result'] ?? [];
         $data['details']     = (old('detail') ?? false) ?: [[]];
 
         $data['product_variant_groups'] = [];
@@ -150,7 +150,7 @@ class QuestController extends Controller
                 unset($post['detail'][$key]['rule_total']);
                 unset($post['detail'][$key]['value_total']);
             }
-            
+
             $save = MyHelper::post('quest/create-detail', $post);
 
             if (isset($save['status']) && $save['status'] == "success") {
@@ -201,8 +201,8 @@ class QuestController extends Controller
             $data['product']    = MyHelper::get('quest/list-product')['result'];
             $data['outlet']     = MyHelper::get('outlet/be/list')['result'];
             $data['province']   = MyHelper::get('province/list')['result'];
-            $data['deals']      = MyHelper::get('quest/list-quest-voucher')['result']??[];
-            $data['outlet_group_filters'] = MyHelper::get('outlet/group-filter')['result']??[];
+            $data['deals']      = MyHelper::get('quest/list-quest-voucher')['result'] ?? [];
+            $data['outlet_group_filters'] = MyHelper::get('outlet/group-filter')['result'] ?? [];
 
             $data['product_variant_groups'] = [];
             foreach ($data['product'] as $product) {
@@ -262,9 +262,9 @@ class QuestController extends Controller
         $post = $request->all();
         $result = MyHelper::post('quest/update-content', $post + ['id_quest' => $slug]);
         if (($result['status'] ?? false) == 'success') {
-            return redirect('quest/detail/'.$slug.'#content')->withSuccess(['Update Success']);
+            return redirect('quest/detail/' . $slug . '#content')->withSuccess(['Update Success']);
         }
-        return redirect('quest/detail/'.$slug.'#content')->withErrors($result['messages']??['Something went wrong']);
+        return redirect('quest/detail/' . $slug . '#content')->withErrors($result['messages'] ?? ['Something went wrong']);
     }
 
     public function updateQuest(Request $request, $slug)
@@ -286,17 +286,17 @@ class QuestController extends Controller
             $post['quest']['date_end'] = date('Y-m-d H:i:s', strtotime(str_replace('-', '', $post['quest']['date_end'])));
         }
 
-        if($post['quest']['user_rule_type'] == 'all'){
-            $post['quest']['user_rule_subject'] = NULL;
-            $post['quest']['user_rule_operator'] = NULL;
-            $post['quest']['user_rule_parameter'] = NULL;
+        if ($post['quest']['user_rule_type'] == 'all') {
+            $post['quest']['user_rule_subject'] = null;
+            $post['quest']['user_rule_operator'] = null;
+            $post['quest']['user_rule_parameter'] = null;
         }
 
         $result = MyHelper::post('quest/update-quest', $post + ['id_quest' => $slug]);
         if (($result['status'] ?? false) == 'success') {
-            return redirect('quest/detail/'.$slug)->withSuccess(['Update Success']);
+            return redirect('quest/detail/' . $slug)->withSuccess(['Update Success']);
         }
-        return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
+        return redirect('quest/detail/' . $slug)->withErrors($result['messages'] ?? ['Something went wrong']);
     }
 
     public function updateBenefit(Request $request, $slug)
@@ -304,26 +304,26 @@ class QuestController extends Controller
         $post = $request->all();
         $result = MyHelper::post('quest/update-benefit', $post + ['id_quest' => $slug]);
         if (($result['status'] ?? false) == 'success') {
-            return redirect('quest/detail/'.$slug)->withSuccess(['Update Success']);
+            return redirect('quest/detail/' . $slug)->withSuccess(['Update Success']);
         }
-        return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
+        return redirect('quest/detail/' . $slug)->withErrors($result['messages'] ?? ['Something went wrong']);
     }
 
     public function start(Request $request, $slug)
     {
         $result = MyHelper::post('quest/start', ['id_quest' => $slug]);
         if (($result['status'] ?? false) == 'success') {
-            return redirect('quest/detail/'.$slug)->withSuccess(['Quest Started']);
+            return redirect('quest/detail/' . $slug)->withSuccess(['Quest Started']);
         }
-        return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
+        return redirect('quest/detail/' . $slug)->withErrors($result['messages'] ?? ['Something went wrong']);
     }
 
     public function reclaim(Request $request, $slug)
     {
         $result = MyHelper::post('quest/trigger-manual-autoclaim', ['id_quest' => $slug]);
         if (($result['status'] ?? false) == 'success') {
-            return redirect('quest/detail/'.$slug)->withSuccess($result['messages'] ?? ['Success']);
+            return redirect('quest/detail/' . $slug)->withSuccess($result['messages'] ?? ['Success']);
         }
-        return redirect('quest/detail/'.$slug)->withErrors($result['messages']??['Something went wrong']);
+        return redirect('quest/detail/' . $slug)->withErrors($result['messages'] ?? ['Something went wrong']);
     }
 }

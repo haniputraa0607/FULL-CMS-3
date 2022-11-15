@@ -24,11 +24,10 @@ class PaymentMethodCategoryController extends Controller
 
         // outlet
         $payment_method = MyHelper::get('payment-method-category');
-        
+
         if (isset($payment_method['status']) && $payment_method['status'] == "success") {
             $data['payment_method_category'] = $payment_method['result'];
-        }
-        else {
+        } else {
             $data['payment_method_category'] = [];
         }
 
@@ -59,11 +58,11 @@ class PaymentMethodCategoryController extends Controller
     {
         $post = $request->except('_token');
         $create = MyHelper::post('payment-method-category/store', $post);
-  
-        if($create['status'] == 'success'){
-            return redirect('payment-method-category')->with('success',['Create payment method category success']);
-        }else{
-            return back()->withInput()->withErrors($create['messages']??['Create payment method  category fail']);
+
+        if ($create['status'] == 'success') {
+            return redirect('payment-method-category')->with('success', ['Create payment method category success']);
+        } else {
+            return back()->withInput()->withErrors($create['messages'] ?? ['Create payment method  category fail']);
         }
     }
 
@@ -82,12 +81,11 @@ class PaymentMethodCategoryController extends Controller
             'submenu_active' => 'category-list',
         ];
 
-        $edit = MyHelper::get('payment-method-category/edit/'.$id);
-     
+        $edit = MyHelper::get('payment-method-category/edit/' . $id);
+
         if (isset($edit['status']) && $edit['status'] == "success") {
             $data['payment_method_category'] = $edit['result'];
-        }
-        else {
+        } else {
             $data['payment_method_category'] = [];
         }
         //dd($data);exit;
@@ -103,12 +101,12 @@ class PaymentMethodCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $post = $request->except('_token');
-        $update = MyHelper::post('payment-method-category/update/'.$id, $post);
-  
-        if($update['status'] == 'success'){
-            return redirect('payment-method-category')->with('success',['Update payment method category success']);
-        }else{
-            return back()->withInput()->withErrors($create['messages']??['Update payment method category fail']);
+        $update = MyHelper::post('payment-method-category/update/' . $id, $post);
+
+        if ($update['status'] == 'success') {
+            return redirect('payment-method-category')->with('success', ['Update payment method category success']);
+        } else {
+            return back()->withInput()->withErrors($create['messages'] ?? ['Update payment method category fail']);
         }
     }
 
@@ -119,12 +117,12 @@ class PaymentMethodCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $delete = MyHelper::get('payment-method-category/delete/'.$id);
-        
-        if($delete['status'] == 'success'){
-            return redirect('payment-method-category')->with('success',['Delete payment method category success']);
-        }else{
-            return back()->withInput()->withErrors($create['messages']??['Delete payment method category fail']);
+        $delete = MyHelper::get('payment-method-category/delete/' . $id);
+
+        if ($delete['status'] == 'success') {
+            return redirect('payment-method-category')->with('success', ['Delete payment method category success']);
+        } else {
+            return back()->withInput()->withErrors($create['messages'] ?? ['Delete payment method category fail']);
         }
     }
 }

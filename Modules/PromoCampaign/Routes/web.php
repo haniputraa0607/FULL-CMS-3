@@ -15,8 +15,12 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:93'], 
     Route::any('/', 'PromoCampaignController@index');
     Route::any('list', 'PromoCampaignController@index');
     Route::any('list/filter', 'PromoCampaignController@index');
-    Route::get('step1', function(){ return redirect('promo-campaign');});
-    Route::get('step2', function(){ return redirect('promo-campaign');});
+    Route::get('step1', function () {
+        return redirect('promo-campaign');
+    });
+    Route::get('step2', function () {
+        return redirect('promo-campaign');
+    });
     Route::any('create', 'PromoCampaignController@step1');
     Route::any('detail/{slug}', 'PromoCampaignController@detail');
     Route::any('detail-coupon/{slug}', 'PromoCampaignController@detail');
@@ -30,7 +34,7 @@ Route::group(['middleware' => ['web', 'validate_session', 'config_control:93'], 
     Route::any('export-action/{action}/{id}', [ 'uses' => 'PromoCampaignController@actionExport']);
     Route::post('extend-period', 'PromoCampaignController@extendPeriod');
     Route::post('promo-description', 'PromoCampaignController@updatePromoDescription');
-    
+
     Route::any('step1/{slug}', 'PromoCampaignController@step1');
     Route::any('step2/{slug}', 'PromoCampaignController@step2');
 

@@ -5,12 +5,10 @@ namespace Modules\Transaction\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use App\Lib\MyHelper;
 
 class WebviewController extends Controller
 {
-
     public function detail(Request $request)
     {
         $bearer = $request->header('Authorization');
@@ -41,9 +39,9 @@ class WebviewController extends Controller
             $view = 'detail_transaction_pickup';
         }
 
-        // 	if ($data['kind'] == 'Offline') {
-        // 		$view = 'detail_transaction_off';
-        // 	}
+        //  if ($data['kind'] == 'Offline') {
+        //      $view = 'detail_transaction_off';
+        //  }
 
         if ($data['kind'] == 'Voucher') {
             $view = 'detail_transaction_voucher';

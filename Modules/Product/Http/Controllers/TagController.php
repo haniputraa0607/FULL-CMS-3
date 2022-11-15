@@ -5,31 +5,33 @@ namespace Modules\Product\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 
 class TagController extends Controller
 {
-    function __construct() {
+    public function __construct()
+    {
         date_default_timezone_set('Asia/Jakarta');
     }
 
     /**
      * create tag
      */
-    function create(Request $request) {
+    public function create(Request $request)
+    {
         $post = $request->except('_token');
         $save = MyHelper::post('product/tag/create', $post);
-        if(isset($post['ajax'])){
+        if (isset($post['ajax'])) {
             return $save;
-        } 
+        }
         return parent::redirect($save, 'Tag has been created.', 'product/tag');
     }
 
     /**
      * list tag
      */
-    function list(Request $request) {
+    public function list(Request $request)
+    {
         $data = [
             'title'          => 'Product',
             'sub_title'      => 'Tag List',
@@ -40,42 +42,42 @@ class TagController extends Controller
         $tags = MyHelper::get('product/tag/list');
         if (isset($tags['status']) && $tags['status'] == "success") {
             $data['tag'] = $tags['result'];
-        }
-        else {
+        } else {
             $data['tag'] = [];
         }
-        
+
         return view('product::tag.list', $data);
     }
 
     /**
      * tag update
      */
-    function update(Request $request) {
+    public function update(Request $request)
+    {
         $post = $request->except('_token');
         $save = MyHelper::post('product/tag/update', $post);
         return parent::redirect($save, 'Tag has been updated.', 'product/tag');
-
     }
 
     /**
      * tag delete
      */
-    function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $post = $request->except('_token');
 
         $delete = MyHelper::post('product/tag/delete', $post);
 
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
 
      /* CREATE PRODUCT TAG FROM PRODUCT */
-     function createProductTag($id_product, $post=[]) {     
+    public function createProductTag($id_product, $post = [])
+    {
         if (!empty($post)) {
             foreach ($post as $value) {
                 $data = [
@@ -90,7 +92,8 @@ class TagController extends Controller
     }
 
      /* CREATE PRODUCT TAG FROM TAG */
-     function createTagProduct(Request $request) {     
+    public function createTagProduct(Request $request)
+    {
         $post = $request->except('_token');
         if (!empty($post)) {
             foreach ($post['id_product'] as $value) {
@@ -107,7 +110,6 @@ class TagController extends Controller
                 if (!isset($save['status'])) {
                     return back()->withErrors($save['message'])->withInput();
                 }
-                
             }
         }
 
@@ -115,7 +117,8 @@ class TagController extends Controller
     }
 
     /* DELETE PRODUCT TAG */
-    function deleteAllProductTag($id_product) {
+    public function deleteAllProductTag($id_product)
+    {
         $data = [
             'id_product' => $id_product
         ];
@@ -125,7 +128,8 @@ class TagController extends Controller
         return $save;
     }
 
-    function listProductTag(Request $request, $id) {
+    public function listProductTag(Request $request, $id)
+    {
         $data = [
             'title'          => 'Product',
             'sub_title'      => 'Tag List',
@@ -141,28 +145,26 @@ class TagController extends Controller
             $product = MyHelper::post('product/be/list', $data);
             if (isset($product['status']) && $product['status'] == "success") {
                 $data['products'] = $product['result'];
-            }
-            else {
+            } else {
                 $data['products'] = [];
             }
-        }
-        else {
+        } else {
             $e = ['e' => 'Data Tag not found.'];
             return back()->witherrors($e);
         }
-        
+
         return view('product::tag.list_product', $data);
     }
 
-    function deleteProductTag(Request $request) {
+    public function deleteProductTag(Request $request)
+    {
         $post = $request->except('_token');
 
         $delete = MyHelper::post('product/product-tag/delete', $post);
 
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }

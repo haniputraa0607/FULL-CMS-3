@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 // use Illuminate\Routing\Controller;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 
 class WebviewUserController extends Controller
@@ -24,7 +23,6 @@ class WebviewUserController extends Controller
         $data['user'] = [];
 
         if (!empty($user)) {
-
             $data['cities'] = parent::getData(MyHelper::get('city/list'));
 
             // get only some data
@@ -35,7 +33,7 @@ class WebviewUserController extends Controller
                 // $user_data['relationship'] = $user['relationship'];
 
                 //jika sudah complete lempar ke halaman success
-                if($user['birthday']!=null && $user['gender']!=null && $user['id_city']!=null){
+                if ($user['birthday'] != null && $user['gender'] != null && $user['id_city'] != null) {
                     return redirect('webview/complete-profile/success#true');
                 }
 
@@ -52,7 +50,7 @@ class WebviewUserController extends Controller
         $bearer = $post['bearer'];
         unset($post['bearer']);
         // manual validation
-        if ($post['gender'] == "" || $post['date'] == "" || $post['month'] == "" || $post['year'] == "" || $post['id_city'] == "" ) {
+        if ($post['gender'] == "" || $post['date'] == "" || $post['month'] == "" || $post['year'] == "" || $post['id_city'] == "") {
             // manually redirect back
             $data['errors'] = ['Submit data gagal.', 'Silakan ulangi lagi.'];
 
@@ -67,7 +65,7 @@ class WebviewUserController extends Controller
         }
 
         // date format
-        $post['birthday'] = $post['year'] ."-". $post['month'] ."-". $post['date'];
+        $post['birthday'] = $post['year'] . "-" . $post['month'] . "-" . $post['date'];
         $post['birthday'] = date('Y-m-d', strtotime($post['birthday']));
         unset($post['date']);
         unset($post['month']);
@@ -75,12 +73,11 @@ class WebviewUserController extends Controller
 
         $result = MyHelper::postWithBearer('users/complete-profile', $post, $bearer);
 
-        if (isset($result['status']) && $result['status']=="success") {
+        if (isset($result['status']) && $result['status'] == "success") {
             // $data['content'] = $result['result'];
             // return view('users::webview_complete_profile_success', $data);
             return redirect('webview/complete-profile/success#true');
-        }
-        else{
+        } else {
             // manually redirect back
             $data['errors'] = ['Submit data gagal.', 'Silakan ulangi lagi.'];
 
@@ -123,5 +120,4 @@ class WebviewUserController extends Controller
 
         return view('users::webview_complete_profile_success', $data);
     }
-
 }

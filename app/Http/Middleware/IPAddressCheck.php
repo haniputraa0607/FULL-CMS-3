@@ -17,27 +17,26 @@ class IPAddressCheck
      */
     public function handle($request, Closure $next)
     {
-        if(env('APP_ENV') == 'local'){
+        if (env('APP_ENV') == 'local') {
             return $next($request);
         }
-        if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $ip = $_SERVER['HTTP_CLIENT_IP'];
-        }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        }else{
+        } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
         $getLocation = \Location::get($ip);
 
-        if($getLocation && isset($getLocation->countryCode)){
-            if($getLocation->countryCode == 'SG' || $getLocation->countryCode == "ID"){
+        if ($getLocation && isset($getLocation->countryCode)) {
+            if ($getLocation->countryCode == 'SG' || $getLocation->countryCode == "ID") {
                 return $next($request);
-            }else{
+            } else {
                 return abort(403, 'Unauthorized');
             }
-        }else{
+        } else {
             return abort(403, 'Unauthorized');
         }
-
     }
 }

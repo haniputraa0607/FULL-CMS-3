@@ -59,9 +59,9 @@ class DoctorServiceController extends Controller
         $post = $request->all();
         $store = MyHelper::post('doctor/service/store', $post);
 
-        if(($store['status']??'')=='success'){
-            return redirect('doctor/service')->with('success',['Create Service Success']);
-        }else{
+        if (($store['status'] ?? '') == 'success') {
+            return redirect('doctor/service')->with('success', ['Create Service Success']);
+        } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
     }
@@ -90,7 +90,7 @@ class DoctorServiceController extends Controller
             'submenu_active' => 'doctor-service'
         ];
 
-        $service = MyHelper::get('doctor/service/'.$id);
+        $service = MyHelper::get('doctor/service/' . $id);
 
         if (isset($service['status']) && $service['status'] == "success") {
             $data['service'] = $service['result'];
@@ -112,9 +112,9 @@ class DoctorServiceController extends Controller
         $post = $post = $request->except('_method');
         $store = MyHelper::post('doctor/service/store', $post);
 
-        if(($store['status']??'')=='success'){
-            return redirect('doctor/service')->with('success',['Update Service Success']);
-        }else{
+        if (($store['status'] ?? '') == 'success') {
+            return redirect('doctor/service')->with('success', ['Update Service Success']);
+        } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }
     }
@@ -127,9 +127,9 @@ class DoctorServiceController extends Controller
     public function destroy($id)
     {
         $result = MyHelper::post('doctor/service/delete', ['id_doctor_service' => $id]);
-        if(($result['status']??'')=='success'){
-            return redirect('doctor/service')->with('success',['Delete Service Success']);
-        }else{
+        if (($result['status'] ?? '') == 'success') {
+            return redirect('doctor/service')->with('success', ['Delete Service Success']);
+        } else {
             return back()->withInput()->withErrors($result['messages'] ?? ['Something went wrong']);
         }
     }

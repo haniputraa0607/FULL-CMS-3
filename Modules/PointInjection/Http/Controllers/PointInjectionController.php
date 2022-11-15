@@ -30,28 +30,44 @@ class PointInjectionController extends Controller
         }
 
         $post = $request->except(['_token']);
-        $this->session_mixer($request, $post);
+        $this->sessionMixer($request, $post);
 
-        if (!isset($post['order_field'])) $post['order_field'] = 'id_point_injection';
-        if (!isset($post['order_method'])) $post['order_method'] = 'desc';
-        if (!isset($post['take'])) $post['take'] = 10;
+        if (!isset($post['order_field'])) {
+            $post['order_field'] = 'id_point_injection';
+        }
+        if (!isset($post['order_method'])) {
+            $post['order_method'] = 'desc';
+        }
+        if (!isset($post['take'])) {
+            $post['take'] = 10;
+        }
         $post['skip'] = 0 + (($page - 1) * $post['take']);
 
         $getPointInjection = MyHelper::post('point-injection/list', $post);
 
-        if (isset($getPointInjection['status']) && $getPointInjection['status'] == 'success') $data['content'] = $getPointInjection['result'];
-        else $data['content'] = null;
+        if (isset($getPointInjection['status']) && $getPointInjection['status'] == 'success') {
+            $data['content'] = $getPointInjection['result'];
+        } else {
+            $data['content'] = null;
+        }
 
-        if ($getPointInjection['status'] == 'success') $data['count'] = $getPointInjection['count'];
-        else $data['count'] = null;
+        if ($getPointInjection['status'] == 'success') {
+            $data['count'] = $getPointInjection['count'];
+        } else {
+            $data['count'] = null;
+        }
 
         $data['begin'] = $post['skip'] + 1;
         $data['last'] = $post['take'] + $post['skip'];
-        if ($data['count'] <= $data['last']) $data['last'] = $data['count'];
+        if ($data['count'] <= $data['last']) {
+            $data['last'] = $data['count'];
+        }
         $data['page'] = $page;
-        if ($data['content'])
+        if ($data['content']) {
             $data['jumlah'] = count($data['content']);
-        else $data['jumlah'] = 0;
+        } else {
+            $data['jumlah'] = 0;
+        }
         foreach ($post as $key => $row) {
             $data[$key] = $row;
         }
@@ -61,16 +77,25 @@ class PointInjectionController extends Controller
         $data['table_title'] = "Point Injection list order by " . $data['order_field'] . ", " . $data['order_method'] . "ending (" . $data['begin'] . " to " . $data['last'] . " From " . $data['count'] . " data)";
 
         $getOutlet = MyHelper::get('outlet/list?log_save=0');
-        if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result'];
-        else $data['outlets'] = [];
+        if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') {
+            $data['outlets'] = $getOutlet['result'];
+        } else {
+            $data['outlets'] = [];
+        }
 
         $getProduct = MyHelper::get('product/list?log_save=0');
-        if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result'];
-        else $data['products'] = [];
+        if (isset($getProduct['status']) && $getProduct['status'] == 'success') {
+            $data['products'] = $getProduct['result'];
+        } else {
+            $data['products'] = [];
+        }
 
         $getCategory = MyHelper::get('product/category/all?log_save=0');
-        if (isset($getCategory['status']) && $getCategory['status'] == 'success') $data['categories'] = $getCategory['result'];
-        else $data['categories'] = [];
+        if (isset($getCategory['status']) && $getCategory['status'] == 'success') {
+            $data['categories'] = $getCategory['result'];
+        } else {
+            $data['categories'] = [];
+        }
 
         if (isset($data['rule'])) {
             $filter = array_map(function ($x) {
@@ -90,7 +115,7 @@ class PointInjectionController extends Controller
         return view('pointinjection::index', $data);
     }
 
-    public function session_mixer($request, &$post)
+    public function sessionMixer($request, &$post)
     {
         $session = session('promo_campaign_filter');
         $session = is_array($session) ? $session : array();
@@ -111,36 +136,57 @@ class PointInjectionController extends Controller
         ];
 
         $getCity = MyHelper::get('city/list?log_save=0');
-        if ($getCity['status'] == 'success') $data['city'] = $getCity['result'];
-        else $data['city'] = [];
+        if ($getCity['status'] == 'success') {
+            $data['city'] = $getCity['result'];
+        } else {
+            $data['city'] = [];
+        }
 
         $getProvince = MyHelper::get('province/list?log_save=0');
-        if ($getProvince['status'] == 'success') $data['province'] = $getProvince['result'];
-        else $data['province'] = [];
+        if ($getProvince['status'] == 'success') {
+            $data['province'] = $getProvince['result'];
+        } else {
+            $data['province'] = [];
+        }
 
         $getCourier = MyHelper::get('courier/list?log_save=0');
-        if ($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result'];
-        else $data['couriers'] = [];
+        if ($getCourier['status'] == 'success') {
+            $data['couriers'] = $getCourier['result'];
+        } else {
+            $data['couriers'] = [];
+        }
 
         $getOutlet = MyHelper::get('outlet/list?log_save=0');
-        if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result'];
-        else $data['outlets'] = [];
+        if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') {
+            $data['outlets'] = $getOutlet['result'];
+        } else {
+            $data['outlets'] = [];
+        }
 
         $getProduct = MyHelper::get('product/list?log_save=0');
-        if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result'];
-        else $data['products'] = [];
+        if (isset($getProduct['status']) && $getProduct['status'] == 'success') {
+            $data['products'] = $getProduct['result'];
+        } else {
+            $data['products'] = [];
+        }
 
         $getTag = MyHelper::get('product/tag/list?log_save=0');
-        if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result'];
-        else $data['tags'] = [];
+        if (isset($getTag['status']) && $getTag['status'] == 'success') {
+            $data['tags'] = $getTag['result'];
+        } else {
+            $data['tags'] = [];
+        }
 
         $getMembership = MyHelper::post('membership/list?log_save=0', []);
-        if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result'];
-        else $data['memberships'] = [];
+        if (isset($getMembership['status']) && $getMembership['status'] == 'success') {
+            $data['memberships'] = $getMembership['result'];
+        } else {
+            $data['memberships'] = [];
+        }
 
-        $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
-        $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
-        $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
+        $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result'] ?? [];
+        $data['quest'] = MyHelper::get('quest/list-all')['result'] ?? [];
+        $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result'] ?? [];
 
         $getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
         if (isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']) {
@@ -197,7 +243,7 @@ class PointInjectionController extends Controller
         }
 
         $action = MyHelper::post('point-injection/create', $post);
-        
+
         if (isset($action['status']) && $action['status'] == 'success') {
             return redirect('point-injection/review/' . $action['result']['id_point_injection']);
         } else {
@@ -226,19 +272,29 @@ class PointInjectionController extends Controller
 
         $action = MyHelper::post('point-injection/review', $post);
 
-        if (isset($action['status']) && $action['status'] == 'success') $data['content'] = $action['result']['point_injection_users'];
-        else $data['content'] = null;
+        if (isset($action['status']) && $action['status'] == 'success') {
+            $data['content'] = $action['result']['point_injection_users'];
+        } else {
+            $data['content'] = null;
+        }
 
-        if ($action['status'] == 'success') $data['count'] = $action['count'];
-        else $data['count'] = null;
+        if ($action['status'] == 'success') {
+            $data['count'] = $action['count'];
+        } else {
+            $data['count'] = null;
+        }
 
         $data['begin'] = $post['skip'] + 1;
         $data['last'] = $post['take'] + $post['skip'];
-        if ($data['count'] <= $data['last']) $data['last'] = $data['count'];
+        if ($data['count'] <= $data['last']) {
+            $data['last'] = $data['count'];
+        }
         $data['page'] = $page;
-        if ($data['content'])
+        if ($data['content']) {
             $data['jumlah'] = count($data['content']);
-        else $data['jumlah'] = 0;
+        } else {
+            $data['jumlah'] = 0;
+        }
         foreach ($post as $key => $row) {
             $data[$key] = $row;
         }
@@ -274,19 +330,29 @@ class PointInjectionController extends Controller
 
         $action = MyHelper::post('point-injection/review', $post);
 
-        if (isset($action['status']) && $action['status'] == 'success') $data['content'] = $action['result']['point_injection_users'];
-        else $data['content'] = null;
+        if (isset($action['status']) && $action['status'] == 'success') {
+            $data['content'] = $action['result']['point_injection_users'];
+        } else {
+            $data['content'] = null;
+        }
 
-        if (isset($action['status']) && $action['status'] == 'success') $data['count'] = $action['count'];
-        else $data['count'] = null;
+        if (isset($action['status']) && $action['status'] == 'success') {
+            $data['count'] = $action['count'];
+        } else {
+            $data['count'] = null;
+        }
 
         $data['begin'] = $post['skip'] + 1;
         $data['last'] = $post['take'] + $post['skip'];
-        if ($data['count'] <= $data['last']) $data['last'] = $data['count'];
+        if ($data['count'] <= $data['last']) {
+            $data['last'] = $data['count'];
+        }
         $data['page'] = $page;
-        if ($data['content'])
+        if ($data['content']) {
             $data['jumlah'] = count($data['content']);
-        else $data['jumlah'] = 0;
+        } else {
+            $data['jumlah'] = 0;
+        }
         foreach ($post as $key => $row) {
             $data[$key] = $row;
         }
@@ -294,36 +360,57 @@ class PointInjectionController extends Controller
         $data['result'] = $action['result'];
 
         $getCity = MyHelper::get('city/list?log_save=0');
-        if ($getCity['status'] == 'success') $data['city'] = $getCity['result'];
-        else $data['city'] = [];
+        if ($getCity['status'] == 'success') {
+            $data['city'] = $getCity['result'];
+        } else {
+            $data['city'] = [];
+        }
 
-        $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result']??[];
-        $data['quest'] = MyHelper::get('quest/list-all')['result']??[];
-        $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result']??[];
+        $data['deals'] = MyHelper::post('deals/list-all', ['deals_type' => 'Deals'])['result'] ?? [];
+        $data['quest'] = MyHelper::get('quest/list-all')['result'] ?? [];
+        $data['subscription'] = MyHelper::post('subscription/list-all', ['subscription_type' => 'Subscription'])['result'] ?? [];
 
         $getProvince = MyHelper::get('province/list?log_save=0');
-        if ($getProvince['status'] == 'success') $data['province'] = $getProvince['result'];
-        else $data['province'] = [];
+        if ($getProvince['status'] == 'success') {
+            $data['province'] = $getProvince['result'];
+        } else {
+            $data['province'] = [];
+        }
 
         $getCourier = MyHelper::get('courier/list?log_save=0');
-        if ($getCourier['status'] == 'success') $data['couriers'] = $getCourier['result'];
-        else $data['couriers'] = [];
+        if ($getCourier['status'] == 'success') {
+            $data['couriers'] = $getCourier['result'];
+        } else {
+            $data['couriers'] = [];
+        }
 
         $getOutlet = MyHelper::get('outlet/list?log_save=0');
-        if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') $data['outlets'] = $getOutlet['result'];
-        else $data['outlets'] = [];
+        if (isset($getOutlet['status']) && $getOutlet['status'] == 'success') {
+            $data['outlets'] = $getOutlet['result'];
+        } else {
+            $data['outlets'] = [];
+        }
 
         $getProduct = MyHelper::get('product/list?log_save=0');
-        if (isset($getProduct['status']) && $getProduct['status'] == 'success') $data['products'] = $getProduct['result'];
-        else $data['products'] = [];
+        if (isset($getProduct['status']) && $getProduct['status'] == 'success') {
+            $data['products'] = $getProduct['result'];
+        } else {
+            $data['products'] = [];
+        }
 
         $getTag = MyHelper::get('product/tag/list?log_save=0');
-        if (isset($getTag['status']) && $getTag['status'] == 'success') $data['tags'] = $getTag['result'];
-        else $data['tags'] = [];
+        if (isset($getTag['status']) && $getTag['status'] == 'success') {
+            $data['tags'] = $getTag['result'];
+        } else {
+            $data['tags'] = [];
+        }
 
         $getMembership = MyHelper::post('membership/list?log_save=0', []);
-        if (isset($getMembership['status']) && $getMembership['status'] == 'success') $data['memberships'] = $getMembership['result'];
-        else $data['memberships'] = [];
+        if (isset($getMembership['status']) && $getMembership['status'] == 'success') {
+            $data['memberships'] = $getMembership['result'];
+        } else {
+            $data['memberships'] = [];
+        }
 
         $getApiKey = MyHelper::get('setting/whatsapp?log_save=0');
         if (isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']) {
@@ -399,7 +486,8 @@ class PointInjectionController extends Controller
         }
     }
 
-    public function report(Request $request, $id_point_injection){
+    public function report(Request $request, $id_point_injection)
+    {
         $post = $request->except('_token');
         $data = [
             'title'             => 'Report Point Injection',
@@ -407,27 +495,27 @@ class PointInjectionController extends Controller
             'submenu_active'    => 'point-injection-report'
         ];
         $export = 0;
-        if(isset($post['export'])){
+        if (isset($post['export'])) {
             $export = 1;
         }
 
-        if(Session::has('filter-point-inject') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-point-inject') && !empty($post) && !isset($post['filter'])) {
             $post = Session::get('filter-point-inject');
-        }else{
+        } else {
             Session::forget('filter-point-inject');
         }
 
         $post['export'] = $export;
         $post['id_point_injection'] = $id_point_injection;
-        $report = MyHelper::post('point-injection/report?page='.$request->get('page'), $post);
-        if(isset($report['status']) && $report['status'] == 'success'){
-            if(isset($post['export']) && $post['export'] == 1){
-                foreach($report['result'] as $row){
+        $report = MyHelper::post('point-injection/report?page=' . $request->get('page'), $post);
+        if (isset($report['status']) && $report['status'] == 'success') {
+            if (isset($post['export']) && $post['export'] == 1) {
+                foreach ($report['result'] as $row) {
                     $dt = [
                         'Name' => $row['name'],
                         'Phone' => $row['phone'],
                         'Email' => $row['email'],
-                        'Date Send' => $row['created_at'] == NULL ? '' : date('d M Y H:i', strtotime($row['created_at'])),
+                        'Date Send' => $row['created_at'] == null ? '' : date('d M Y H:i', strtotime($row['created_at'])),
                         'Status' => $row['status'],
                         'Total Point' => number_format($row['point']),
                         'Total Point Received' => number_format($row['total_point']),
@@ -436,15 +524,15 @@ class PointInjectionController extends Controller
                 }
 
                 $dataExport = new MultisheetExport($arr);
-                return Excel::download($dataExport, date('d M Y Hi').'.xls');
-            }else{
+                return Excel::download($dataExport, date('d M Y Hi') . '.xls');
+            } else {
                 $data['data']      = $report['result']['data'];
                 $data['total']     = $report['result']['total'];
                 $data['perPage']   = $report['result']['from'];
-                $data['upTo']      = $report['result']['from'] + count($report['result']['data'])-1;
+                $data['upTo']      = $report['result']['from'] + count($report['result']['data']) - 1;
                 $data['paginator'] = new LengthAwarePaginator($report['result']['data'], $report['result']['total'], $report['result']['per_page'], $report['result']['current_page'], ['path' => url()->current()]);
             }
-        }else {
+        } else {
             $data['data']          = [];
             $data['total']     = 0;
             $data['perPage']   = 0;
@@ -452,15 +540,15 @@ class PointInjectionController extends Controller
             $data['paginator'] = false;
         }
 
-        if($post){
-            Session::put('filter-point-inject',$post);
+        if ($post) {
+            Session::put('filter-point-inject', $post);
         }
 
         $detail = MyHelper::post('point-injection/detail', ['id_point_injection' => $id_point_injection]);
-        if(isset($detail['status']) && $detail['status'] == 'success'){
+        if (isset($detail['status']) && $detail['status'] == 'success') {
             $data['detail'] = $detail['result'];
             $data['detail']['count'] = $detail['count'];
-        }else{
+        } else {
             $data['detail'] = [];
             $data['detail']['count'] = 0;
         }

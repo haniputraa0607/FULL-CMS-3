@@ -25,9 +25,9 @@ class CustomPageController extends Controller
         $action = MyHelper::get('custom-page/be/list');
 
         if (isset($action['status']) && $action['status'] == 'success') {
-        	foreach ($action['result'] as $key => $value) {
-        		$action['result'][$key]['id_custom_page'] = MyHelper::createSlug($value['id_custom_page'], $value['created_at']);
-        	}
+            foreach ($action['result'] as $key => $value) {
+                $action['result'][$key]['id_custom_page'] = MyHelper::createSlug($value['id_custom_page'], $value['created_at']);
+            }
             $data['result'] = $action['result'];
         } else {
             $data['result'] = [];
@@ -66,7 +66,7 @@ class CustomPageController extends Controller
     public function store(Request $request)
     {
         $post = $request->except('_token');
-        
+
         $post['custom_page_description'] = preg_replace('/(img style="width: )([0-9]+)(px)/', 'img style="width: 100%', $post['custom_page_description']);
 
         if (isset($post['custom_page_description'])) {
@@ -81,7 +81,7 @@ class CustomPageController extends Controller
             unset($post['custom_page_event_longitude']);
         }
 
-        // set tanggal 
+        // set tanggal
         if (isset($post['custom_page_post_date'])) {
             $post['custom_page_post_date'] = date('Y-m-d', strtotime($post['custom_page_post_date'])) . " " . date('H:i:s', strtotime($post['custom_page_post_time']));
         }
@@ -123,7 +123,7 @@ class CustomPageController extends Controller
         if (isset($post['custom_page_icon_image']) && $post['custom_page_icon_image'] != null) {
             $post['custom_page_icon_image'] = MyHelper::encodeImage($post['custom_page_icon_image']);
         }
-        
+
         $action = MyHelper::post('custom-page/create', $post);
 
         if (isset($action['status']) && $action['status'] == 'success') {
@@ -146,15 +146,15 @@ class CustomPageController extends Controller
             'submenu_active'    => 'custom-page-create'
         ];
 
-        $id_custom_page_decrypt = MyHelper::explodeSlug($id_custom_page)[0]??'';
+        $id_custom_page_decrypt = MyHelper::explodeSlug($id_custom_page)[0] ?? '';
         $action = MyHelper::post('custom-page/detail', ['id_custom_page' => $id_custom_page_decrypt]);
-        if(isset($action['result']['id_custom_page'])){
-        	$action['result']['id_custom_page'] = $id_custom_page;
+        if (isset($action['result']['id_custom_page'])) {
+            $action['result']['id_custom_page'] = $id_custom_page;
         }
 
-        $action['result']['custom_page_button_form_text_button'] = json_decode($action['result']['custom_page_button_form_text']??'', true)['button']??'';
-        $action['result']['custom_page_button_form_text_value'] = json_decode($action['result']['custom_page_button_form_text']??'', true)['value']??'';
-        
+        $action['result']['custom_page_button_form_text_button'] = json_decode($action['result']['custom_page_button_form_text'] ?? '', true)['button'] ?? '';
+        $action['result']['custom_page_button_form_text_value'] = json_decode($action['result']['custom_page_button_form_text'] ?? '', true)['value'] ?? '';
+
         $data['detail'] = $action['result'];
 
         // get outlet
@@ -179,12 +179,12 @@ class CustomPageController extends Controller
             'submenu_active'    => 'custom-page-create'
         ];
 
-        $id_custom_page_decrypt = MyHelper::explodeSlug($id_custom_page)[0]??'';
+        $id_custom_page_decrypt = MyHelper::explodeSlug($id_custom_page)[0] ?? '';
 
         $action = MyHelper::post('custom-page/detail', ['id_custom_page' => $id_custom_page_decrypt]);
 
-        $action['result']['custom_page_button_form_text_button'] = json_decode($action['result']['custom_page_button_form_text']??'', true)['button']??'';
-        $action['result']['custom_page_button_form_text_value'] = json_decode($action['result']['custom_page_button_form_text']??'', true)['value']??'';
+        $action['result']['custom_page_button_form_text_button'] = json_decode($action['result']['custom_page_button_form_text'] ?? '', true)['button'] ?? '';
+        $action['result']['custom_page_button_form_text_value'] = json_decode($action['result']['custom_page_button_form_text'] ?? '', true)['value'] ?? '';
         $data['result'] = $action['result'];
 
         // get outlet
@@ -196,7 +196,7 @@ class CustomPageController extends Controller
         return view('custompage::form', $data);
     }
 
-    function getData($access)
+    public function getData($access)
     {
         if (isset($access['status']) && $access['status'] == "success") {
             return $access['result'];
@@ -213,7 +213,7 @@ class CustomPageController extends Controller
     public function update(Request $request, $id_custom_page)
     {
         $post = $request->except('_token');
-		$id_custom_page_decrypt = MyHelper::explodeSlug($id_custom_page)[0]??'';
+        $id_custom_page_decrypt = MyHelper::explodeSlug($id_custom_page)[0] ?? '';
         if (isset($post['custom_page_icon_image']) && $post['custom_page_icon_image'] != null) {
             $post['custom_page_icon_image'] = MyHelper::encodeImage($post['custom_page_icon_image']);
         }
@@ -223,7 +223,7 @@ class CustomPageController extends Controller
             unset($post['customform']);
         } else {
             // set to null if form type didn't match
-            foreach ($post['customform']??[] as $key => $form) {
+            foreach ($post['customform'] ?? [] as $key => $form) {
                 if (is_string($form['custom_page_image_header'])) {
                     $post['customform'][$key]['custom_page_image_header'] = $form['custom_page_image_header'];
                 } else {
@@ -264,7 +264,7 @@ class CustomPageController extends Controller
      */
     public function destroy($id_custom_page)
     {
-    	$id_custom_page_decrypt = MyHelper::explodeSlug($id_custom_page)[0]??'';
+        $id_custom_page_decrypt = MyHelper::explodeSlug($id_custom_page)[0] ?? '';
 
         $action = MyHelper::post('custom-page/delete', ['id_custom_page' => $id_custom_page_decrypt]);
 

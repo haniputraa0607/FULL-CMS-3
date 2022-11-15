@@ -5,7 +5,6 @@ namespace Modules\SpinTheWheel\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-
 use App\Lib\MyHelper;
 
 class SpinTheWheelController extends Controller
@@ -22,16 +21,15 @@ class SpinTheWheelController extends Controller
             'menu_active'    => 'spinthewheel',
             'submenu_active' => 'spinthewheel-list'
         ];
-        
+
         $post['deals_type'] = 'Spin';
         $spin_item = MyHelper::post('deals/be/list', $post);
         if (isset($spin_item['status']) && $spin_item['status'] == "success") {
-            $data['items'] = array_map(function($var){
-                $var['id_deals'] = MyHelper::createSlug($var['id_deals'],($var['created_at']??false));
+            $data['items'] = array_map(function ($var) {
+                $var['id_deals'] = MyHelper::createSlug($var['id_deals'], ($var['created_at'] ?? false));
                 return $var;
-            },$spin_item['result']);
-        }
-        else {
+            }, $spin_item['result']);
+        } else {
             $data['items'] = [];
         }
 
@@ -45,19 +43,19 @@ class SpinTheWheelController extends Controller
     public function create(Request $request)
     {
         $post = $request->except('_token');
-        
+
         $data = [
             'title'          => 'Spin The Wheel',
             'sub_title'      => 'New Item',
             'menu_active'    => 'spinthewheel',
             'submenu_active' => 'spinthewheel-new'
         ];
-    
+
         if (!empty($post)) {
             $post['deals_type'] = "Spin";
             $post['deals_promo_id_type'] = "promoid";
             $post['deals_voucher_type'] = "Unlimited";
-            if ($post['deals_voucher_expired']!=null) {
+            if ($post['deals_voucher_expired'] != null) {
                 $date = $post['deals_voucher_expired'];
                 $post['deals_voucher_expired'] = date('Y-m-d', strtotime($date));
             }
@@ -90,7 +88,7 @@ class SpinTheWheelController extends Controller
             'menu_active'    => 'spinthewheel',
             'submenu_active' => 'spinthewheel-list'
         ];
-        
+
         $post['id_deals'] = $id_deals;
         $post['created_at'] = $created_at;
         $post['deals_type'] = "Spin";
@@ -98,15 +96,14 @@ class SpinTheWheelController extends Controller
 
         if (isset($spin_item['status']) && $spin_item['status'] == "success") {
             $data['item'] = $spin_item['result'][0];
-            if(isset($data['item']['id_deals'])){
+            if (isset($data['item']['id_deals'])) {
                 $data['item']['id_deals'] = $slug;
             }
             $data['item']['duration'] = "duration";
-            if ($data['item']['deals_voucher_expired']!=null) {
+            if ($data['item']['deals_voucher_expired'] != null) {
                 $data['item']['duration'] = "dates";
             }
-        }
-        else {
+        } else {
             return redirect('/spinthewheel/list')->withErrors(['Item not found.']);
         }
 
@@ -121,23 +118,23 @@ class SpinTheWheelController extends Controller
     public function update(Request $request)
     {
         $post = $request->except('_token');
-        $slug='';
-        if(isset($post['id_deals'])){
-            $slug=$post['id_deals'];
+        $slug = '';
+        if (isset($post['id_deals'])) {
+            $slug = $post['id_deals'];
             $post['id_deals'] = MyHelper::explodeSlug($post['id_deals'])[0];
         }
-        
+
         $data = [
             'title'          => 'Spin The Wheel',
             'sub_title'      => 'Edit Item',
             'menu_active'    => 'spinthewheel',
             'submenu_active' => 'spinthewheel-list'
         ];
-    
+
         $post['deals_type'] = "Spin";
         $post['deals_promo_id_type'] = "promoid";
         $post['deals_voucher_type'] = "Unlimited";
-        if ($post['deals_voucher_expired']!=null) {
+        if ($post['deals_voucher_expired'] != null) {
             $date = $post['deals_voucher_expired'];
             $post['deals_voucher_expired'] = date('Y-m-d', strtotime($date));
         }
@@ -148,7 +145,7 @@ class SpinTheWheelController extends Controller
             return redirect()->back()->withInput()->withErrors(['Something went wrong. Please try again.']);
         }
 
-        return redirect('/spinthewheel/edit/'.($slug??MyHelper::createSlug($post['id_deals'],$update['result']['created_at']??'')))->withSuccess(['Spin the wheel item has been updated.']);
+        return redirect('/spinthewheel/edit/' . ($slug ?? MyHelper::createSlug($post['id_deals'], $update['result']['created_at'] ?? '')))->withSuccess(['Spin the wheel item has been updated.']);
     }
 
     /**
@@ -158,7 +155,7 @@ class SpinTheWheelController extends Controller
     public function destroy(Request $request)
     {
         $post = $request->except('_token');
-        if(isset($post['id_deals'])){
+        if (isset($post['id_deals'])) {
             $post['id_deals'] = MyHelper::explodeSlug($post['id_deals'])[0];
         }
         $post['deals_type'] = 'Spin';
@@ -183,8 +180,7 @@ class SpinTheWheelController extends Controller
         $spin_item = MyHelper::post('deals/be/list', $post_list);
         if (isset($spin_item['status']) && $spin_item['status'] == "success") {
             $data['items'] = $spin_item['result'];
-        }
-        else {
+        } else {
             return redirect('/spinthewheel/create')->withErrors(['Spin the wheel item is empty.', 'Please add first.']);
         }
 
@@ -196,14 +192,12 @@ class SpinTheWheelController extends Controller
                 $result = $spinthewheel['result'];
                 $data['spin_the_wheel_point'] = $result['spin_the_wheel_point'];
                 $data['spin_weighted_items']  = $result['spin_weighted_items'];
-            }
-            else {
+            } else {
                 return redirect()->back()->withErrors(['Failed to get data.']);
             }
-        }
-        else {
+        } else {
             // submit data
-            if ( !isset($post['spin_weighted_items']) ) {
+            if (!isset($post['spin_weighted_items'])) {
                 return redirect()->back()->withErrors(['Failed to save data.', 'Item should not be empty.']);
             }
 
@@ -211,8 +205,7 @@ class SpinTheWheelController extends Controller
 
             if (isset($save['status']) && $save['status'] == "success") {
                 return redirect('/spinthewheel/setting')->withSuccess(['Spin the wheel setting has been updated.']);
-            }
-            else {
+            } else {
                 return redirect()->back()->withErrors($save['messages']);
             }
         }

@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'doctor'], function(){
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'doctor'], function () {
     Route::get('/', 'DoctorController@index');
     Route::post('/', 'DoctorController@filter');
     Route::any('/create', 'DoctorController@create');
@@ -27,6 +27,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'doctor']
     Route::resource('specialist', 'DoctorSpecialistController');
     Route::resource('specialist-category', 'DoctorSpecialistCategoryController');
 
-    Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:93', 'uses' =>'DoctorController@autoResponse']);
+    Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:93', 'uses' => 'DoctorController@autoResponse']);
     Route::any('recommendation', ['uses' => 'DoctorController@doctorRecommendation']);
-}); 
+});

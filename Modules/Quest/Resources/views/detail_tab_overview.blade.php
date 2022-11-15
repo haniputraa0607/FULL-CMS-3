@@ -209,7 +209,7 @@
                                                     <i class="fa fa-img-up"></i>
                                                 </span>
                                                 <span class="sale-num font-black">
-                                                    {{\App\Lib\MyHelper::thousand_number_format($data['quest']['quest_benefit']['value'], '_CURRENCY')}}
+                                                    {{\App\Lib\MyHelper::thousandNumberFormat($data['quest']['quest_benefit']['value'], '_CURRENCY')}}
                                                 </span>
                                             </li>
                                             @endif

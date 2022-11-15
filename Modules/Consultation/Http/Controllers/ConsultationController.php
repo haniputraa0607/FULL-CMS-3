@@ -8,7 +8,6 @@ use Illuminate\Routing\Controller;
 use Auth;
 use Excel;
 use App\Exports\MultisheetExport;
-
 use App\Lib\MyHelper;
 
 class ConsultationController extends Controller
@@ -18,7 +17,8 @@ class ConsultationController extends Controller
     //     return view('consultation::index');
     // }
 
-    public function consultationList() {
+    public function consultationList()
+    {
         $data = [];
         $data = [
             'title'          => 'Consultation',
@@ -37,7 +37,8 @@ class ConsultationController extends Controller
         return view('consultation::consultationList', $data);
     }
 
-    public function consultationSearch() {
+    public function consultationSearch()
+    {
         $data = [];
         $data = [
             'title'   => 'Consultation',
@@ -46,13 +47,18 @@ class ConsultationController extends Controller
         ];
 
         $getList = MyHelper::get('consultation');
-        if($getList['status'] == 'success') $data['list'] = $getList['result']; else $data['list'] = null;
-		
-		// return $data;
+        if ($getList['status'] == 'success') {
+            $data['list'] = $getList['result'];
+        } else {
+            $data['list'] = null;
+        }
+
+        // return $data;
         return view('consultation::consultationSearch', $data);
     }
 
-    public function consultationFilter(Request $request) {
+    public function consultationFilter(Request $request)
+    {
         $post = $request->all();
 
         if (empty($post)) {
@@ -68,7 +74,7 @@ class ConsultationController extends Controller
         ];
 
         $filter = MyHelper::post('consultation/filter', $post);
-       
+
         if (isset($filter['status']) && $filter['status'] == 'success') {
             $data['list']       = $filter['data'];
             $data['conditions'] = $filter['conditions'];
@@ -76,7 +82,6 @@ class ConsultationController extends Controller
             $data['rule']       = $filter['rule'];
             $data['search']     = $filter['search'];
             return view('consultation::consultationSearch', $data);
-
         } elseif (isset($filter['status']) && $filter['status'] == 'fail') {
             $data['list']       = $filter['data'];
             $data['conditions'] = $filter['conditions'];
@@ -85,7 +90,6 @@ class ConsultationController extends Controller
             $data['search']     = $filter['search'];
 
             return view('consultation::consultationSearch', $data);
-
         }
     }
 
@@ -105,22 +109,22 @@ class ConsultationController extends Controller
             'filter_title'   => 'Filter Consultation',
         ];
 
-        if(session('list_consultation_filter')){
-            $extra=session('list_consultation_filter');
-            $data['rule']=array_map('array_values', $extra['rule']);
-            $data['operator']=$extra['operator'];
-        } else{
-            $extra=[
+        if (session('list_consultation_filter')) {
+            $extra = session('list_consultation_filter');
+            $data['rule'] = array_map('array_values', $extra['rule']);
+            $data['operator'] = $extra['operator'];
+        } else {
+            $extra = [
                 'rule' => [],
                 'operator' => ''
             ];
-            $data['rule']=array_map('array_values', $extra['rule']);
-            $data['operator']=$extra['operator'];
-            $data['hide_record_total']=1;
+            $data['rule'] = array_map('array_values', $extra['rule']);
+            $data['operator'] = $extra['operator'];
+            $data['hide_record_total'] = 1;
         }
 
         if ($request->wantsJson()) {
-            $data = MyHelper::post('be/consultation', $post + $extra )['result'] ?? [];
+            $data = MyHelper::post('be/consultation', $post + $extra)['result'] ?? [];
             $data['recordsFiltered'] = $data['total'] ?? 0;
             $data['recordsTotal'] = $data['total'] ?? 0;
             $data['draw'] = $request->draw;
@@ -132,8 +136,8 @@ class ConsultationController extends Controller
         $outlets = MyHelper::post('outlet/be/list', ['all_outlet' => 1])['result'] ?? [];
 
         $outletOption = [];
-        if(!empty($outlets)){
-            foreach($outlets as $key => $outlet){
+        if (!empty($outlets)) {
+            foreach ($outlets as $key => $outlet) {
                 $outletOption[] = $outlet['outlet_name'];
             }
         }
@@ -151,19 +155,19 @@ class ConsultationController extends Controller
     {
         $post = $request->all();
 
-        if(($post['rule']??false) && !isset($post['draw'])){
-            session(['list_consultation_filter'=>$post]);
+        if (($post['rule'] ?? false) && !isset($post['draw'])) {
+            session(['list_consultation_filter' => $post]);
             return back();
         }
 
-        if($post['clear']??false){
-            session(['list_consultation_filter'=>null]);
+        if ($post['clear'] ?? false) {
+            session(['list_consultation_filter' => null]);
             return back();
         }
 
         return abort(404);
     }
-    
+
     public function detail($id)
     {
         $data = [
@@ -173,12 +177,16 @@ class ConsultationController extends Controller
             'submenu_active' => 'consultation-list',
         ];
 
-        $consultation = MyHelper::get('be/consultation/detail/'.$id);
+        $consultation = MyHelper::get('be/consultation/detail/' . $id);
         //dd($consultation);
-        if($consultation['status'] == 'success') $data['result'] = $consultation['result']; else $data['result'] = null;
+        if ($consultation['status'] == 'success') {
+            $data['result'] = $consultation['result'];
+        } else {
+            $data['result'] = null;
+        }
 
         //dd($data['result']);
-        
+
         return view('consultation::detail', $data);
     }
 
@@ -191,10 +199,14 @@ class ConsultationController extends Controller
             'submenu_active' => 'consultation-list',
         ];
 
-        $consultation = MyHelper::get('be/consultation/detail/'.$id);
+        $consultation = MyHelper::get('be/consultation/detail/' . $id);
 
-        if($consultation['status'] == 'success') $data['result'] = $consultation['result']; else $data['result'] = null;
-        
+        if ($consultation['status'] == 'success') {
+            $data['result'] = $consultation['result'];
+        } else {
+            $data['result'] = null;
+        }
+
         return view('consultation::edit', $data);
     }
 
@@ -204,7 +216,7 @@ class ConsultationController extends Controller
         unset($post['use_reason']);
 
         $update = MyHelper::post('be/consultation/update', $post);
-        return redirect('consultation/be/'.$post['id_transaction'].'/detail')->with('success',['Update Status Consultation Success']);
+        return redirect('consultation/be/' . $post['id_transaction'] . '/detail')->with('success', ['Update Status Consultation Success']);
     }
 
     public function getScheduleTime(Request $request)
@@ -213,17 +225,22 @@ class ConsultationController extends Controller
 
         $consultation = MyHelper::post('be/consultation/get-schedule-time', $post);
 
-        if($consultation['status'] == 'success') $data = $consultation['result']; else $data = null;
-        
+        if ($consultation['status'] == 'success') {
+            $data = $consultation['result'];
+        } else {
+            $data = null;
+        }
+
         return $data;
     }
 
-    public function autoResponse(Request $request, $subject){
-        $autocrmSubject = ucwords(str_replace('-',' ',$subject));
-		$data = [ 'title'             => 'Consultation Auto Response '.$autocrmSubject,
-				  'menu_active'       => 'doctor',
-                  'submenu_active'    => 'consultation-autoresponse-'.$subject,
-				];
+    public function autoResponse(Request $request, $subject)
+    {
+        $autocrmSubject = ucwords(str_replace('-', ' ', $subject));
+        $data = [ 'title'             => 'Consultation Auto Response ' . $autocrmSubject,
+                  'menu_active'       => 'doctor',
+                  'submenu_active'    => 'consultation-autoresponse-' . $subject,
+                ];
 
         switch ($subject) {
             case 'user-received-chat':
@@ -317,43 +334,43 @@ class ConsultationController extends Controller
                 break;
         }
 
-        $autocrmSubject = ucwords(str_replace('-',' ',$subject));
+        $autocrmSubject = ucwords(str_replace('-', ' ', $subject));
 
         $query = MyHelper::post('autocrm/list', ['autocrm_title' => $autocrmSubject]);
-		$test = MyHelper::get('autocrm/textreplace');
-		$auto = null;
-		$post = $request->except('_token');
-		if(!empty($post)){
-			if (isset($post['autocrm_push_image'])) {
-				$post['autocrm_push_image'] = MyHelper::encodeImage($post['autocrm_push_image']);
+        $test = MyHelper::get('autocrm/textreplace');
+        $auto = null;
+        $post = $request->except('_token');
+        if (!empty($post)) {
+            if (isset($post['autocrm_push_image'])) {
+                $post['autocrm_push_image'] = MyHelper::encodeImage($post['autocrm_push_image']);
             }
-            
-            if(isset($post['files'])){
+
+            if (isset($post['files'])) {
                 unset($post['files']);
             }
-			
-			$query = MyHelper::post('autocrm/update', $post);
-			return back()->withSuccess(['Response updated']);
+
+            $query = MyHelper::post('autocrm/update', $post);
+            return back()->withSuccess(['Response updated']);
         }
-        
+
         $getApiKey = MyHelper::get('setting/whatsapp');
-		if(isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']){
-			$data['api_key_whatsapp'] = $getApiKey['result']['value'];
-		}else{
-			$data['api_key_whatsapp'] = null;
-		}
-        
-		if(isset($query['result'])){
-			$auto = $query['result'];
-		}else{
-			return back()->withErrors(['No such response']);
+        if (isset($getApiKey['status']) && $getApiKey['status'] == 'success' && $getApiKey['result']['value']) {
+            $data['api_key_whatsapp'] = $getApiKey['result']['value'];
+        } else {
+            $data['api_key_whatsapp'] = null;
         }
-        
-		$data['data'] = $auto;
-		if($test['status'] == 'success'){
-			$data['textreplaces'] = $test['result'];
-			$data['subject'] = $subject;
-		}
+
+        if (isset($query['result'])) {
+            $auto = $query['result'];
+        } else {
+            return back()->withErrors(['No such response']);
+        }
+
+        $data['data'] = $auto;
+        if ($test['status'] == 'success') {
+            $data['textreplaces'] = $test['result'];
+            $data['subject'] = $subject;
+        }
 
         $custom = [];
         if (isset($data['data']['custom_text_replace'])) {
@@ -362,25 +379,26 @@ class ConsultationController extends Controller
             unset($custom[count($custom) - 1]);
         }
 
-        if(stristr($request->url(), 'deals')||stristr($request->url(), 'voucher')){
+        if (stristr($request->url(), 'deals') || stristr($request->url(), 'voucher')) {
             $data['deals'] = true;
             $custom[] = '%outlet_name%';
             $custom[] = '%outlet_code%';
         }
-        
+
         $data['custom'] = $custom;
 
         return view('users::response', $data);
-	}
+    }
 
-    function exportData(Request $request) {
-        $post=$request->except('_token');
-        $consultation = MyHelper::post('be/consultation/detail/export',$post);
+    public function exportData(Request $request)
+    {
+        $post = $request->except('_token');
+        $consultation = MyHelper::post('be/consultation/detail/export', $post);
         if (isset($consultation['status']) && $consultation['status'] == "success") {
             $res = $consultation['result'];
             $data = new MultisheetExport($res);
-            return Excel::download($data,'Data_Consultation_'.date('Ymdhis').'.xls');
-        }else {
+            return Excel::download($data, 'Data_Consultation_' . date('Ymdhis') . '.xls');
+        } else {
             return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
         }
     }

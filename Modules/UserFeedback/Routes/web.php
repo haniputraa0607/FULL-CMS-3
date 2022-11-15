@@ -11,7 +11,7 @@
 |
 */
 
-Route::prefix('user-feedback')->middleware(['web', 'validate_session'])->group(function() {
+Route::prefix('user-feedback')->middleware(['web', 'validate_session'])->group(function () {
     Route::post('item', ['middleware' => 'feature_control:213', 'uses' => 'RatingItemController@update']);
     Route::get('setting', ['middleware' => 'feature_control:212', 'uses' => 'UserFeedbackController@setting']);
     Route::post('setting', ['middleware' => 'feature_control:212', 'uses' => 'UserFeedbackController@settingUpdate']);
@@ -19,11 +19,11 @@ Route::prefix('user-feedback')->middleware(['web', 'validate_session'])->group(f
     Route::get('/detail/{id}', 'UserFeedbackController@show');
     Route::get('/', 'UserFeedbackController@index');
     Route::post('/', 'UserFeedbackController@setFilter');
-    Route::group(['prefix'=>'report'],function(){
-	    Route::get('/', 'UserFeedbackController@report');
-	    Route::post('/', 'UserFeedbackController@setReportFilter');
-	    Route::get('outlet', 'UserFeedbackController@reportOutlet');
-	    Route::get('outlet/{outlet_code}', 'UserFeedbackController@reportOutletDetail');
-	});
+    Route::group(['prefix' => 'report'], function () {
+        Route::get('/', 'UserFeedbackController@report');
+        Route::post('/', 'UserFeedbackController@setReportFilter');
+        Route::get('outlet', 'UserFeedbackController@reportOutlet');
+        Route::get('outlet/{outlet_code}', 'UserFeedbackController@reportOutletDetail');
+    });
     Route::get('get-list', 'UserFeedbackController@list');
 });

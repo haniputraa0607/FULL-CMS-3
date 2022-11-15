@@ -15,7 +15,10 @@ class ValidateSessionUserFranchise
      */
     public function handle($request, Closure $next)
     {
-        if(session()->has('username-franchise')) return $next($request);
-        else return redirect('disburse/login')->withErrors(['e' => 'Please login.']);
+        if (session()->has('username-franchise')) {
+            return $next($request);
+        } else {
+            return redirect('disburse/login')->withErrors(['e' => 'Please login.']);
+        }
     }
 }

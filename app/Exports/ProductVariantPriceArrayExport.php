@@ -19,11 +19,11 @@ class ProductVariantPriceArrayExport implements FromArray, WithTitle, ShouldAuto
     protected $alphabet;
     protected $length;
 
-    public function __construct(array $datas,$brand=null,$title='')
+    public function __construct(array $datas, $brand = null, $title = '')
     {
         $this->datas = $datas;
-        $this->code_brand = $brand['code_brand']??'';
-        $this->name_brand = $brand['name_brand']??'';
+        $this->code_brand = $brand['code_brand'] ?? '';
+        $this->name_brand = $brand['name_brand'] ?? '';
         $this->title = $title;
         $this->alphabet = array( 'a', 'b', 'c', 'd', 'e',
             'f', 'g', 'h', 'i', 'j',
@@ -41,9 +41,9 @@ class ProductVariantPriceArrayExport implements FromArray, WithTitle, ShouldAuto
         $array = [
             ['Brand Code',$this->code_brand],
             ['Brand Name',$this->name_brand],
-            array_keys($this->datas[0]??[])
+            array_keys($this->datas[0] ?? [])
         ];
-        return array_merge($array,$this->datas);
+        return array_merge($array, $this->datas);
     }
 
     /**
@@ -75,15 +75,15 @@ class ProductVariantPriceArrayExport implements FromArray, WithTitle, ShouldAuto
         $count = 1;
         $i = 4;
         foreach ($this->datas as $key => $value) {
-            if($value['product'] !== $name){
+            if ($value['product'] !== $name) {
                 $count = $count + 1;
-                if($count % 2 != 0){
-                    array_push($arr, 'A'.$i.':'.strtoupper($this->until).$i);
+                if ($count % 2 != 0) {
+                    array_push($arr, 'A' . $i . ':' . strtoupper($this->until) . $i);
                 }
-            }elseif($count == 1){
-                array_push($arr, 'A'.$i.':'.strtoupper($this->until).$i);
-            }elseif($count % 2 != 0){
-                array_push($arr, 'A'.$i.':'.strtoupper($this->until).$i);
+            } elseif ($count == 1) {
+                array_push($arr, 'A' . $i . ':' . strtoupper($this->until) . $i);
+            } elseif ($count % 2 != 0) {
+                array_push($arr, 'A' . $i . ':' . strtoupper($this->until) . $i);
             }
 
             $name = $value['product'];
@@ -91,7 +91,7 @@ class ProductVariantPriceArrayExport implements FromArray, WithTitle, ShouldAuto
         }
 
         return [
-            AfterSheet::class    => function(AfterSheet $event) use ($arr){
+            AfterSheet::class    => function (AfterSheet $event) use ($arr) {
                 $last = count($this->datas);
                 $styleArray = [
                     'borders' => [
@@ -120,11 +120,11 @@ class ProductVariantPriceArrayExport implements FromArray, WithTitle, ShouldAuto
                     ],
                 ];
 
-                $event->sheet->getStyle('A3:'.strtoupper($this->until).($last+3))->applyFromArray($styleArray);
-                $headRange = 'A3:'.strtoupper($this->until).'3';
+                $event->sheet->getStyle('A3:' . strtoupper($this->until) . ($last + 3))->applyFromArray($styleArray);
+                $headRange = 'A3:' . strtoupper($this->until) . '3';
                 $event->sheet->getStyle($headRange)->applyFromArray($styleHead);
 
-                foreach($arr as $dt){
+                foreach ($arr as $dt) {
                     $cellRange = $dt;
                     $event->sheet->getColumnDimensionByColumn('1')->setAutoSize(false)->setWidth(20);
                     $event->sheet->getDelegate()->getStyle($cellRange)->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setARGB('ffe2e2e2');

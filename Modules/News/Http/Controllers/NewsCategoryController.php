@@ -5,7 +5,6 @@ namespace Modules\News\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 
 class NewsCategoryController extends Controller
@@ -24,8 +23,8 @@ class NewsCategoryController extends Controller
         ];
 
         // get category
-        $data['categories']    = $this->getData(MyHelper::post('news/be/category',['all'=>1, 'admin' => '1']));
-        return view('news::category.index',$data);
+        $data['categories']    = $this->getData(MyHelper::post('news/be/category', ['all' => 1, 'admin' => '1']));
+        return view('news::category.index', $data);
     }
 
     /**
@@ -41,7 +40,7 @@ class NewsCategoryController extends Controller
                 'submenu_active' => 'news-category-new',
         ];
 
-        return view('news::category.create',$data);
+        return view('news::category.create', $data);
     }
 
     /**
@@ -53,11 +52,10 @@ class NewsCategoryController extends Controller
     {
         $post   = $request->all();
 
-        $update = MyHelper::post('news/category/create', ['category_name'=>$post['category_name']]);
+        $update = MyHelper::post('news/category/create', ['category_name' => $post['category_name']]);
         if (isset($update['status']) && $update['status'] == "success") {
-            return redirect('news/category')->with('success',['Create category success']);
-        }
-        else {
+            return redirect('news/category')->with('success', ['Create category success']);
+        } else {
             return redirect('news/category')->withErrors(['Create category fail']);
         }
     }
@@ -89,11 +87,10 @@ class NewsCategoryController extends Controller
     {
         $post   = $request->all();
 
-        $update = MyHelper::post('news/category/update', ['id_news_category'=>$post['id_news_category'],'category_name'=>$post['category_name']]);
+        $update = MyHelper::post('news/category/update', ['id_news_category' => $post['id_news_category'],'category_name' => $post['category_name']]);
         if (isset($update['status']) && $update['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
@@ -103,20 +100,21 @@ class NewsCategoryController extends Controller
      * @return Response
      */
 
-    function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $post   = $request->all();
 
         $delete = MyHelper::post('news/category/delete', ['id_news_category' => $post['id_news_category']]);
-        
+
         if (isset($delete['status']) && $delete['status'] == "success") {
             return "success";
-        }
-        else {
+        } else {
             return "fail";
         }
     }
 
-    function positionCategoryAssign(Request $request){
+    public function positionCategoryAssign(Request $request)
+    {
         $post = $request->except('_token');
         if (!isset($post['category_ids'])) {
             return [

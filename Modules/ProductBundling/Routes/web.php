@@ -11,13 +11,12 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-bundling'], function()
-{
-	/**
-	 * Bundling
-	 */
-	Route::any('/', 'ProductBundlingController@index');
-	Route::get('create', 'ProductBundlingController@create');
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'product-bundling'], function () {
+    /**
+     * Bundling
+     */
+    Route::any('/', 'ProductBundlingController@index');
+    Route::get('create', 'ProductBundlingController@create');
     Route::post('store', 'ProductBundlingController@store');
     Route::get('detail/{id}', 'ProductBundlingController@detail');
     Route::post('update/{id}', 'ProductBundlingController@update');

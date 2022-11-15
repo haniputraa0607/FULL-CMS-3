@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Http\Controllers\Controller;
-
 use App\Lib\MyHelper;
 use Session;
 use Excel;
 
 class ReportGosend extends Controller
 {
-    function index(Request $request){
+    public function index(Request $request)
+    {
         $post = $request->except('_token');
         $data = [
             'title'          => 'Report',
@@ -23,14 +23,14 @@ class ReportGosend extends Controller
             'submenu_active' => 'report-gosend'
         ];
 
-        if(Session::has('filter-list-gosend') && !empty($post) && !isset($post['filter'])){
+        if (Session::has('filter-list-gosend') && !empty($post) && !isset($post['filter'])) {
             $page = 1;
-            if(isset($post['page'])){
+            if (isset($post['page'])) {
                 $page = $post['page'];
             }
             $post = Session::get('filter-list-gosend');
             $post['page'] = $page;
-        }else{
+        } else {
             Session::forget('filter-list-gosend');
         }
 
@@ -40,10 +40,10 @@ class ReportGosend extends Controller
             $data['trx']          = $report['result']['data']['data'];
             $data['trxTotal']     = $report['result']['data']['total'];
             $data['trxPerPage']   = $report['result']['data']['from'];
-            $data['trxUpTo']      = $report['result']['data']['from'] + count($report['result']['data']['data'])-1;
+            $data['trxUpTo']      = $report['result']['data']['from'] + count($report['result']['data']['data']) - 1;
             $data['trxPaginator'] = new LengthAwarePaginator($report['result']['data']['data'], $report['result']['data']['total'], $report['result']['data']['per_page'], $report['result']['data']['current_page'], ['path' => url()->current()]);
-            $data['sum'] = $report['result']['sum']['total_price_go_send']??0;
-        }else{
+            $data['sum'] = $report['result']['sum']['total_price_go_send'] ?? 0;
+        } else {
             $data['trx']          = [];
             $data['trxTotal']     = 0;
             $data['trxPerPage']   = 0;
@@ -52,16 +52,17 @@ class ReportGosend extends Controller
             $data['sum'] = 0;
         }
 
-        if($post){
-            Session::put('filter-list-gosend',$post);
+        if ($post) {
+            Session::put('filter-list-gosend', $post);
         }
         return view('report::report_gosend.index', $data);
     }
 
-    function export(Request $request){
+    public function export(Request $request)
+    {
         $post = $request->except('_token');
 
-        if(Session::has('filter-list-gosend') && !isset($post['filter'])){
+        if (Session::has('filter-list-gosend') && !isset($post['filter'])) {
             $post = Session::get('filter-list-gosend');
         }
         $post['export'] = 1;
@@ -70,8 +71,8 @@ class ReportGosend extends Controller
         if (isset($report['status']) && $report['status'] == "success") {
             $arr['All Type'] = $report['result'];
             $data = new MultisheetExport($arr);
-            return Excel::download($data,'report_gosend_'.date('dmYHis').'.xls');
-        }else{
+            return Excel::download($data, 'report_gosend_' . date('dmYHis') . '.xls');
+        } else {
             return redirect('report/gosend')->withErrors(['No data to export']);
         }
     }

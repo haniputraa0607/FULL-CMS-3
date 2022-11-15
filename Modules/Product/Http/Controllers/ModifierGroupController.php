@@ -46,9 +46,9 @@ class ModifierGroupController extends Controller
             $data['modifierGroup']  = $get['result']['data'];
             $data['modifierGroupTotal']     = $get['result']['total'];
             $data['modifierGroupPerPage']   = $get['result']['from'];
-            $data['modifierGroupUpTo']      = $get['result']['from'] + count($get['result']['data'])-1;
+            $data['modifierGroupUpTo']      = $get['result']['from'] + count($get['result']['data']) - 1;
             $data['modifierGroupPaginator'] = new LengthAwarePaginator($get['result']['data'], $get['result']['total'], $get['result']['per_page'], $get['result']['current_page'], ['path' => url()->current()]);
-        }else{
+        } else {
             $data['modifierGroup']  = [];
             $data['modifierGroupTotal']     = 0;
             $data['modifierGroupPerPage']   = 0;
@@ -102,10 +102,11 @@ class ModifierGroupController extends Controller
         }
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $post = $request->except(['_token']);
 
-        if(!$post){
+        if (!$post) {
             $data = [
                 'title'          => 'Product Variant NON PRICE (NO SKU)',
                 'sub_title'      => 'Detail Product Variant NON PRICE (NO SKU)',
@@ -123,7 +124,7 @@ class ModifierGroupController extends Controller
             $data['product_variant'] = MyHelper::post('product-variant', ['get_child' => 1])['result'] ?? [];
 
             return view('product::modifier_group.edit', $data);
-        }else{
+        } else {
             $post['id_product_modifier_group'] = $id;
             $result = MyHelper::post('product/modifier-group/update', $post);
             if (isset($result['status']) && $result['status'] == 'success') {
@@ -275,11 +276,12 @@ class ModifierGroupController extends Controller
         return redirect('product/modifier-group')->withErrors(['Fail delete product variant NON PRICE (NO SKU)']);
     }
 
-    public function export(Request $request) {
+    public function export(Request $request)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::get('product/modifier-group/export')['result']??[];
+        $data = MyHelper::get('product/modifier-group/export')['result'] ?? [];
 
-        if(empty($data)){
+        if (empty($data)) {
             $datas['All Type'] = [
                 [
                     'product_modifier_group_name' => 'Ice',
@@ -294,13 +296,14 @@ class ModifierGroupController extends Controller
                     'modifier' => '1-Level Pedas 1(A0002),2-Level Pedas 2,3-Level Pedas 3'
                 ]
             ];
-        }else{
+        } else {
             $datas['All Type'] = $data;
         }
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_product product variant NON PRICE (NO SKU).xlsx');
+        return Excel::download(new MultisheetExport($datas), date('YmdHi') . '_product product variant NON PRICE (NO SKU).xlsx');
     }
 
-    public function import(Request $request){
+    public function import(Request $request)
+    {
         $data = [
             'title'          => 'Product Variant NON PRICE (NO SKU)',
             'sub_title'      => 'Import Product Variant NON PRICE (NO SKU)',
@@ -317,8 +320,8 @@ class ModifierGroupController extends Controller
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
-            if(!empty($data)){
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(), $request->file('import_file'));
+            if (!empty($data)) {
                 $import = MyHelper::post('product/modifier-group/import', ['data' => $data]);
             }
         }
@@ -326,11 +329,12 @@ class ModifierGroupController extends Controller
         return $import;
     }
 
-    public function exportPrice(Request $request) {
+    public function exportPrice(Request $request)
+    {
         $post = $request->except('_token');
-        $data = MyHelper::get('product/modifier-group/export-price')['result']??[];
+        $data = MyHelper::get('product/modifier-group/export-price')['result'] ?? [];
 
-        if(empty($data)){
+        if (empty($data)) {
             $datas['All Type'] = [
                 [
                     'modifier_group_code' => 'M0001',
@@ -345,13 +349,14 @@ class ModifierGroupController extends Controller
                     'price_PP002' => '3000'
                 ],
             ];
-        }else{
+        } else {
             $datas['All Type'] = $data;
         }
-        return Excel::download(new MultisheetExport($datas),date('YmdHi').'_modifier group price.xlsx');
+        return Excel::download(new MultisheetExport($datas), date('YmdHi') . '_modifier group price.xlsx');
     }
 
-    public function importPrice(Request $request){
+    public function importPrice(Request $request)
+    {
         $data = [
             'title'          => 'Product Variant NON PRICE (NO SKU) Price',
             'sub_title'      => 'Import Product Variant NON PRICE (NO SKU) Price',
@@ -368,8 +373,8 @@ class ModifierGroupController extends Controller
 
         if ($request->hasFile('import_file')) {
             $path = $request->file('import_file')->getRealPath();
-            $data = \Excel::toCollection(new FirstSheetOnlyImport(),$request->file('import_file'));
-            if(!empty($data)){
+            $data = \Excel::toCollection(new FirstSheetOnlyImport(), $request->file('import_file'));
+            if (!empty($data)) {
                 $import = MyHelper::post('product/modifier-group/import-price', ['data' => $data]);
                 \Log::info($import);
             }
@@ -378,7 +383,8 @@ class ModifierGroupController extends Controller
         return $import;
     }
 
-    public function position(){
+    public function position()
+    {
         $data = [
             'title'          => 'Product Variant NON PRICE (NO SKU)',
             'sub_title'      => 'Product Variant NON PRICE (NO SKU) Position',
@@ -388,15 +394,16 @@ class ModifierGroupController extends Controller
 
         $get = MyHelper::post('product/modifier-group', ['order_position' => 1]);
 
-        if(isset($get['status']) && $get['status'] == 'success'){
+        if (isset($get['status']) && $get['status'] == 'success') {
             $data['list'] = $get['result'];
             return view('product::modifier_group.position', $data);
-        }else{
+        } else {
             return redirect('product/modifier')->withErrors(['Fail get list position']);
         }
     }
 
-    public function positionAssign(Request $request){
+    public function positionAssign(Request $request)
+    {
         $post = $request->except('_token');
         if (!isset($post['modifier_group_ids'])) {
             return [
@@ -419,7 +426,7 @@ class ModifierGroupController extends Controller
         ];
         $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
         $data['modifier_groups'] = MyHelper::get('product/modifier-group/inventory-brand')['result'] ?? [];
-        $data['modifier_groups'] = array_map(function($modifier_group) {
+        $data['modifier_groups'] = array_map(function ($modifier_group) {
             $modifier_group['inventory_brand'] = array_column($modifier_group['inventory_brand'], 'id_brand');
             return $modifier_group;
         }, $data['modifier_groups']);
