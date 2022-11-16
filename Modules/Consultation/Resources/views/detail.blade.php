@@ -164,7 +164,7 @@
                                             </tr>
                                             <tr>	
                                                 <td>Jenis Pembayaran</td>
-                                                <td>{{$result['transaction']['trasaction_payment_type']}}</td>
+                                                <td>{{(empty($result['transaction']['trasaction_payment_type']) ? '-' : $result['transaction']['trasaction_payment_type'])}}</td>
                                             </tr>
                                             <tr>
                                                 <td>Status Pembayaran </td>
@@ -173,6 +173,10 @@
                                             <tr>	
                                                 <td>Tipe Konsultasi</td>
                                                 <td>{{$result['consultation']['consultation_type']}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tanggal Konsultasi</td>
+                                                <td>{{date('d F Y', strtotime($result['consultation']['schedule_date']))}}</td>
                                             </tr>
                                             <tr>	
                                                 <td>Waktu Mulai</td>
