@@ -1149,6 +1149,12 @@ return [
                                     'active' => '\View::shared("submenu_active") == "consultation-autoresponse-consultation-missed"',
                                     'url' => 'consultation/autoresponse/consultation-missed'
                                 ],
+                                [
+                                    'label' => '[Response] Consultation Canceled',
+                                    'required_features' => [],
+                                    'active' => '\View::shared("submenu_active") == "consultation-autoresponse-consultation-canceled"',
+                                    'url' => 'consultation/autoresponse/consultation-canceled'
+                                ]
                             ],
                         ],
                     ],

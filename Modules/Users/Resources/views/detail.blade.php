@@ -778,7 +778,7 @@
 																		<tr>
 																			<td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
 																			<td>{{ $res['outlet_name']['outlet_name'] }}</td>
-																			<td><span class="badge bg-{{$res['transaction_pickup']['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['transaction_pickup']['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
+																			<td><span class="badge bg-{{$res['trasaction_type'] == 'Consultation' ? 'green-jungle':'blue'}}">{{$res['trasaction_type']}}</span></td>
 																			<td>{{ $res['transaction_receipt_number'] }}</td>
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
 																			<td>
@@ -818,7 +818,15 @@
 																				@endif
 																			</td>
 																			<td>
-																				<a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail/'.$res['id_transaction'].'/'.$res['trasaction_type']) }}"><i class="icon-pencil"></i> Detail </a>
+                                                                                <?php
+                                                                                    $url = '';
+                                                                                    if($res['trasaction_type'] == 'Consultation'){
+                                                                                        $url = url('consultation/be/'.$res['id_transaction'].'/detail');
+                                                                                    }else{
+                                                                                        $url = url('transaction/detail/'.$res['id_transaction']);
+                                                                                    }
+                                                                                ?>
+																				<a class="btn btn-block yellow btn-xs" href="{{$url}}"><i class="icon-pencil"></i> Detail </a>
 																			</td>
 																		</tr>
 																	@endforeach
@@ -860,7 +868,6 @@
 																					<th> Point </th>
 																					<th> Date </th>
 																					<th> Time </th>
-																					<th> Detail </th>
 																				</tr>
 																			</thead>
 																			@if(!empty($profile['history_balance']))
@@ -872,21 +879,6 @@
 																						<td> {{ $balance['balance'] }} </td>
 																						<td> {{ date('d F Y', strtotime($balance['created_at'])) }} </td>
 																						<td> {{ date('H:i:s', strtotime($balance['created_at'])) }} </td>
-																						@if ($balance['source'] != 'voucher' && $balance['source'] != 'Complete Profile' && $balance['source'] != 'Point Injection')
-																							<td>
-																							<a href="{{ url('transaction/detail/'.$balance['detail_trx']['id_transaction'].'/'.$balance['detail_trx']['trasaction_type']) }}">
-
-																							    {{ $balance['detail_trx']['transaction_receipt_number'] }}
-																							</a>
-																							</td>
-																						@else
-                                                                                            @if($balance['source'] == 'Point Injection' && MyHelper::hasAccess([245], $grantedFeature))
-                                                                                                <td> <a target="_blank" href="{{ url('point-injection/report') }}/{{ $balance['id_reference'] }}"> Detail Point Injection </a> </td>
-                                                                                            @else
-                                                                                                <td> {{ $balance['detail_trx']['trx_id']??'' }} </td>
-                                                                                            @endif
-																						@endif
-
 																					</tr>
 																				@endforeach
 																			@endif
