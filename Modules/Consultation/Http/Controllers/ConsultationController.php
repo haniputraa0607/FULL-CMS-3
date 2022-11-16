@@ -253,6 +253,7 @@ class ConsultationController extends Controller
                     ['value' => "consultation_chat",'title' => 'Consultation Chat']
                 ];
                 break;
+            case 'consultation-canceled':
             case 'reschedule-consultation':
                 $data['click_inbox'] = [
                     ['value' => "consultation_detail",'title' => 'Consultation Detail']
