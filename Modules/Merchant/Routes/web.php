@@ -27,6 +27,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant
     Route::post('store', 'MerchantController@store');
     Route::get('detail/{id}', 'MerchantController@detail');
     Route::post('update/{id}', 'MerchantController@update');
+    Route::post('grading/{id}', 'MerchantController@updateGrading');
     Route::any('candidate', 'MerchantController@candidate');
     Route::get('candidate/detail/{id}', 'MerchantController@detail');
     Route::post('candidate/update/{id}', 'MerchantController@candidateUpdate');
