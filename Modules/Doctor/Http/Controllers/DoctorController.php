@@ -321,6 +321,11 @@ class DoctorController extends Controller
                 foreach ($post['schedules'][$key]['session_time'] as $time) {
                     $time['start_time'] = (!empty($time['start_time']) ? date('H:i', strtotime($time['start_time'])) : null);
                     $endTime = (!empty($endTime) ? date('H:i', strtotime($endTime)) : null);
+
+                    if (strtotime($time['start_time']) > strtotime($time['end_time'])) {
+                        return back()->withInput()->withErrors(['End time should be greater more than start time']);
+                    }
+
                     if ($time['start_time'] < $endTime) {
                         return back()->withInput()->withErrors(['Session time can not be the same in one day']);
                     }
