@@ -1,3 +1,9 @@
+<?php
+    use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
+    $configs     = session('configs');
+?>
+
 @extends('layouts.main')
 
 @section('page-style')
@@ -20,6 +26,7 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js')}}"></script>
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/scripts/jquery.inputmask.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/icheck/icheck.min.js') }}" type="text/javascript"></script>
     <script>
         var SweetAlert = function() {
@@ -87,12 +94,12 @@
                         </div>
                         <div class="col-md-2">
                             <div class="input-group">
-                                <input type="number" class="form-control" id="merchant_grading_min_qty_${noGrading}" name="merchant_grading[${noGrading}][min_qty]" required>
+                                <input type="text" class="form-control digit_mask" id="merchant_grading_min_qty_${noGrading}" name="merchant_grading[${noGrading}][min_qty]" required>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="input-group">
-                                <input type="number" class="form-control" id="merchant_grading_min_nominal_${noGrading}" name="merchant_grading[${noGrading}][min_nominal]" required>
+                                <input type="text" class="form-control digit_mask" id="merchant_grading_min_nominal_${noGrading}" name="merchant_grading[${noGrading}][min_nominal]" required>
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -102,6 +109,16 @@
                 </div>
             `;
             $('#merchant_gradings').append(html);
+            $('.digit_mask').inputmask({
+                removeMaskOnSubmit: true, 
+                placeholder: "",
+                alias: "currency", 
+                digits: 0, 
+                rightAlign: false,
+                min: 0,
+                max: '999999999',
+                prefix : "",
+            });
             noGrading++;
         }
 
@@ -127,6 +144,17 @@
         
         jQuery(document).ready(function() {
             SweetAlert.init()
+
+            $('.digit_mask').inputmask({
+                removeMaskOnSubmit: true, 
+                placeholder: "",
+                alias: "currency", 
+                digits: 0, 
+                rightAlign: false,
+                min: 0,
+                max: '999999999',
+                prefix : "",
+            });
         });
     </script>
 @endsection
@@ -160,20 +188,22 @@
 
     @include('layouts.notifications')
     <div class="portlet light bordered">
-        <div class="portlet-title">
+        <div class="portlet-title tabbable-line">
             <div class="caption">
                 <span class="caption-subject font-blue sbold uppercase">{{ (($detail['merchant_status'] == 'Active' || $detail['merchant_status'] == 'Inactive') ? $sub_title: 'Merchant Candidate Detail')}}</span>
             </div>
-        </div>
-        <div class="portlet-body form form-horizontal">
             <ul class="nav nav-tabs">
                 <li class="active">
                     <a href="#merchant_info" data-toggle="tab"> Info </a>
                 </li>
+                @if(MyHelper::hasAccess([141], $configs))
                 <li>
                     <a href="#merchant_grading" data-toggle="tab"> Grading </a>
                 </li>
+                @endif
             </ul>
+        </div>
+        <div class="portlet-body form form-horizontal">
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="merchant_info">
                     @if($detail['merchant_completed_step'] == 0)
@@ -407,12 +437,12 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" id="merchant_grading_min_qty_0" name="merchant_grading[0][min_qty]" {{$detail['reseller_status']??1?'required':''}}>
+                                                        <input type="text" class="form-control digit_mask" id="merchant_grading_min_qty_0" name="merchant_grading[0][min_qty]" {{$detail['reseller_status']??1?'required':''}}>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <div class="input-group">
-                                                        <input type="number" class="form-control" id="merchant_grading_min_nominal_0" name="merchant_grading[0][min_nominal]" {{$detail['reseller_status']??1?'required':''}}>
+                                                        <input type="text" class="form-control digit_mask" id="merchant_grading_min_nominal_0" name="merchant_grading[0][min_nominal]" {{$detail['reseller_status']??1?'required':''}}>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1">
@@ -432,12 +462,12 @@
                                                     </div>
                                                     <div class="col-md-2">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control col-md-2" id="merchant_grading_min_qty_{{$key}}" name="merchant_grading[{{$key}}][min_qty]" value="{{ $value['min_qty'] }}" {{$detail['reseller_status']??1?'required':''}} >
+                                                            <input type="text" class="form-control digit_mask" id="merchant_grading_min_qty_{{$key}}" name="merchant_grading[{{$key}}][min_qty]" value="{{ $value['min_qty'] }}" {{$detail['reseller_status']??1?'required':''}} >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-2">
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control" id="merchant_grading_min_nominal_{{$key}}" name="merchant_grading[{{$key}}][min_nominal]" value="{{ $value['min_nominal'] }}" {{$detail['reseller_status']??1?'required':''}}>
+                                                            <input type="text" class="form-control digit_mask" id="merchant_grading_min_nominal_{{$key}}" name="merchant_grading[{{$key}}][min_nominal]" value="{{ $value['min_nominal'] }}" {{$detail['reseller_status']??1?'required':''}}>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1">
