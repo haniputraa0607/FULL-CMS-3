@@ -852,7 +852,7 @@ class SettingController extends Controller
         return view('setting::holiday.holidayDetail', $data);
     }
 
-    public function homeSetting(Requestpublic $request)
+    public function homeSetting(Request $request)
     {
         $post = $request->except('_token');
         if ($post) {
@@ -987,7 +987,7 @@ class SettingController extends Controller
         return view('setting::home', $data);
     }
 
-    public function createGreeting(Requestpublic $request)
+    public function createGreeting(Request $request)
     {
         $post = $request->except('_token');
 
@@ -1004,7 +1004,7 @@ class SettingController extends Controller
         }
     }
 
-    public function createBackground(Requestpublic $request)
+    public function createBackground(Request $request)
     {
         $post = $request->except('_token');
         if (!empty($post)) {
@@ -1018,7 +1018,7 @@ class SettingController extends Controller
         }
     }
 
-    public function deleteBackground(Requestpublic $request)
+    public function deleteBackground(Request $request)
     {
         $post = $request->except('_token');
         if (!empty($post)) {
@@ -1033,7 +1033,7 @@ class SettingController extends Controller
         }
     }
 
-    public function updateGreetings(Requestpublic $request, $id)
+    public function updateGreetings(Request $request, $id)
     {
         $post = $request->except('_token');
 
@@ -1051,7 +1051,7 @@ class SettingController extends Controller
             }
         }
     }
-    public function deleteGreetings(Requestpublic $request)
+    public function deleteGreetings(Request $request)
     {
         $post = $request->except('_token');
 
@@ -1088,7 +1088,7 @@ class SettingController extends Controller
         }
     }
 
-    public function settingEmail(Requestpublic $request)
+    public function settingEmail(Request $request)
     {
         $post = $request->except('_token');
         if (empty($post)) {
@@ -1124,7 +1124,7 @@ class SettingController extends Controller
         }
     }
 
-    public function defaultHomeSave(Requestpublic $request)
+    public function defaultHomeSave(Request $request)
     {
         $post = $request->except('_token');
         if (isset($post['default_home_image'])) {
@@ -1145,7 +1145,7 @@ class SettingController extends Controller
         return parent::redirect($result, 'Default Home Background has been updated.');
     }
 
-    public function defaultDoctorHomeSave(Requestpublic $request)
+    public function defaultDoctorHomeSave(Request $request)
     {
         $post = $request->except('_token');
         if (isset($post['default_home_doctor_image'])) {
@@ -1166,7 +1166,7 @@ class SettingController extends Controller
         return parent::redirect($result, 'Default Doctor Home Background has been updated.');
     }
 
-    public function dashboardSetting(Requestpublic $request)
+    public function dashboardSetting(Request $request)
     {
         $post = $request->except('_token');
 
@@ -1203,7 +1203,7 @@ class SettingController extends Controller
         return view('setting::dashboard.form', $data);
     }
 
-    public function deleteDashboard(Requestpublic $request)
+    public function deleteDashboard(Request $request)
     {
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/delete', $post);
@@ -1214,7 +1214,7 @@ class SettingController extends Controller
         }
     }
 
-    public function updateDashboardAjax(Requestpublic $request)
+    public function updateDashboardAjax(Request $request)
     {
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/update', $post);
@@ -1225,14 +1225,14 @@ class SettingController extends Controller
         }
     }
 
-    public function visibilityDashboardSection(Requestpublic $request)
+    public function visibilityDashboardSection(Request $request)
     {
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/update-visibility', $post);
         return $save;
     }
 
-    public function orderDashboardSection(Requestpublic $request)
+    public function orderDashboardSection(Request $request)
     {
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/order-section', $post);
@@ -1243,7 +1243,7 @@ class SettingController extends Controller
         }
     }
 
-    public function orderDashboardCard(Requestpublic $request)
+    public function orderDashboardCard(Request $request)
     {
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/order-card', $post);
@@ -1254,7 +1254,7 @@ class SettingController extends Controller
         }
     }
 
-    public function updateDateRange(Requestpublic $request)
+    public function updateDateRange(Request $request)
     {
         $post = $request->except('_token');
         $save = MyHelper::post('setting/dashboard/update/date-range', $post);
@@ -1273,7 +1273,7 @@ class SettingController extends Controller
         }
     }
 
-    public function whatsApp(Requestpublic $request)
+    public function whatsApp(Request $request)
     {
         $post = $request->except('_token');
 
@@ -1654,7 +1654,7 @@ class SettingController extends Controller
         }
     }
 
-    public function maintenanceMode(Requestpublic $request)
+    public function maintenanceMode(Request $request)
     {
         $post = $request->except('_token');
         $data = [
@@ -1729,7 +1729,7 @@ class SettingController extends Controller
 
 /*========================= end of featured subscription =========================*/
 
-    public function timeExpired(Requestpublic $request)
+    public function timeExpired(Request $request)
     {
         $post = $request->except('_token');
         $data = [
