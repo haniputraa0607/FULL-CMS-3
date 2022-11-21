@@ -67,7 +67,7 @@ $grantedFeature     = session('granted_features');
 
             function buildItemAction(item) {
 
-                var html = "<li style='margin-top:1.2%;margin-bottom:1%;list-style-type:none;'>";
+                var html = "<li style='margin:5px 10px;height:30px;list-style-type:none;'>";
                 html += '<div class="row">' +
                     '<a href="{{ url("product/category/edit") }}/'+item.id_product_category+'" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></a>' +
                     '<a onclick="deleteCategory(\'' + item.id_product_category + '\',\'' + item.product_category_name + '\')" class="btn btn-sm btn-danger sweetalert-delete" style="margin-left:0.5%"><i class="fa fa-trash"></i></a>' +
