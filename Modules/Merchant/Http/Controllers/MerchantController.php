@@ -367,16 +367,17 @@ class MerchantController extends Controller
         }
     }
 
-    public function updateGrading(Request $request, $id){
+    public function updateGrading(Request $request, $id)
+    {
         $post = $request->except('_token');
 
         $post['id_merchant'] = $id;
         $update = MyHelper::post('merchant/update-grading', $post);
-        
+
         if (isset($update['status']) && $update['status'] == "success") {
             return redirect('merchant/detail/' . $id . '#merchant_grading')->withSuccess(['Success save data']);
         } else {
-            return redirect('merchant/detail/' . $id. '#merchant_grading')->withErrors($update['messages'] ?? ['Failed get data']);
+            return redirect('merchant/detail/' . $id . '#merchant_grading')->withErrors($update['messages'] ?? ['Failed get data']);
         }
     }
 }
