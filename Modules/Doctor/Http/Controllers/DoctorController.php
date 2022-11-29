@@ -283,7 +283,7 @@ class DoctorController extends Controller
         $store = MyHelper::post('doctor/change-password', $post);
 
         if (($store['status'] ?? '') == 'success') {
-            return redirect('doctor')->with('success', ['Update Doctor Success']);
+            return back()->with('success', ['Update Doctor Success']);
         } else {
             return back()->withInput()->withErrors($store['messages'] ?? ['Something went wrong']);
         }

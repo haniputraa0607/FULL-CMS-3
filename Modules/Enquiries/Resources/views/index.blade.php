@@ -565,7 +565,7 @@ $configs = session('configs');
 								<td class="noExport show">
 									<a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
 
-									<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
+									<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ $key }}"><i class="fa fa-search"></i> Detail</a>
 									@if(MyHelper::hasAccess([57], $configs))
 										<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
 									@endif
@@ -580,13 +580,13 @@ $configs = session('configs');
 								</td>
 							</tr>
 
-							<div id="{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
+							<div id="{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
 										</div>
-										<div class="col-md-12" style="margin-top: 10px">
+										<div class="modal-body">
 											<div class="portlet light portlet-fit bordered">
 												<div class="portlet-body form">
 													<div class="form-horizontal form-bordered">
