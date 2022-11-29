@@ -224,7 +224,33 @@ class DoctorController extends Controller
             $data['celebrate'] = null;
         }
 
-        //dd($data);
+        $schedules = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+        $scheduleRaw = [];
+        foreach ($schedules as $s) {
+            $arrayColumn = array_column($data['doctor']['schedules_raw'] ?? [], 'day');
+            $search = array_search(strtolower($s), array_map('strtolower', $arrayColumn));
+            if ($search !== false) {
+                $scheduleRaw[] = [
+                    "id_doctor_schedule" => $data['doctor']['schedules_raw'][$search]['id_doctor_schedule'],
+                    "id_doctor" => $id,
+                    "day" => $s,
+                    "is_active" => $data['doctor']['schedules_raw'][$search]['is_active'],
+                    "schedule_time" => $data['doctor']['schedules_raw'][$search]['schedule_time']
+                ];
+            } else {
+                $scheduleRaw[] = [
+                    "id_doctor_schedule" => null,
+                    "id_doctor" => $id,
+                    "day" => $s,
+                    "is_active" => 0,
+                    "schedule_time" => []
+                ];
+            }
+        }
+
+        if (!empty($data['doctor']['schedules_raw'])) {
+            $data['doctor']['schedules_raw'] = $scheduleRaw;
+        }
 
         return view('doctor::form', $data);
     }
