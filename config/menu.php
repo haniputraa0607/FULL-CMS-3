@@ -458,6 +458,25 @@ return [
                     ]
                 ],
                 [
+                    'label' => 'Reseller',
+                    'type' => 'tree',
+                    'icon' => 'fa fa-users',
+                    'required_features' => [],
+                    'required_configs' => [141],
+                    'children' => [
+                        [
+                            'label' => 'Candidate Reseller List',
+                            'url' => 'merchant/reseller/candidate',
+                            'required_features' => [],
+                        ],
+                        [
+                            'label' => 'Reseller List',
+                            'url' => 'merchant/reseller',
+                            'required_features' => [],
+                        ]
+                     ]
+                ],
+                [
                     'label' => 'Outlet',
                     'icon' => 'icon-pointer',
                     'type' => 'tree',
