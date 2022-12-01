@@ -11,8 +11,6 @@ use Session;
 
 class ResellerController extends Controller
 {
-  
-
     public function candidate(Request $request)
     {
         $post = $request->all();
@@ -39,9 +37,9 @@ class ResellerController extends Controller
         }
         $getList = MyHelper::post('merchant/be/reseller/candidate', $post);
         $vas = array();
-        foreach ($getList['result']['data']??[] as $value){
-            $value['id_enkripsi'] = MyHelper::createSlug($value['id_user_reseller_merchant'],date('Y-m-d H:i:s'));
-            array_push($vas,$value);
+        foreach ($getList['result']['data'] ?? [] as $value) {
+            $value['id_enkripsi'] = MyHelper::createSlug($value['id_user_reseller_merchant'], date('Y-m-d H:i:s'));
+            array_push($vas, $value);
         }
         if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $vas;
@@ -63,7 +61,7 @@ class ResellerController extends Controller
 
         return view('merchant::reseller.list', $data);
     }
-    public function candidateDetail(Request $request,$id)
+    public function candidateDetail(Request $request, $id)
     {
         $data = [
                 'title'          => 'Reseller',
@@ -75,29 +73,29 @@ class ResellerController extends Controller
                 'page_type'     => 'candidate'
             ];
         $data['id_enkripsi'] = $id;
-        $id = MyHelper::explodeSlug($id)[0]??'';
-        $detail = MyHelper::post('merchant/be/reseller/candidate/detail',['id_user_reseller_merchant' => $id]);
-        if(isset($detail['status']) && $detail['status'] == 'success'){
-           $data['detail'] = $detail['result'];
-          return view('merchant::reseller.detail', $data);
-        }else{
-            return redirect('merchant/reseller/candidate')->withErrors($store['messages']??['Failed get detail candidate']);
+        $id = MyHelper::explodeSlug($id)[0] ?? '';
+        $detail = MyHelper::post('merchant/be/reseller/candidate/detail', ['id_user_reseller_merchant' => $id]);
+        if (isset($detail['status']) && $detail['status'] == 'success') {
+            $data['detail'] = $detail['result'];
+            return view('merchant::reseller.detail', $data);
+        } else {
+            return redirect('merchant/reseller/candidate')->withErrors($store['messages'] ?? ['Failed get detail candidate']);
         }
     }
-    public function candidateUpdate(Request $request,$id)
+    public function candidateUpdate(Request $request, $id)
     {
         $post = $request->except('_token');
-        $id = MyHelper::createSlug($id,date('Y-m-d H:i:s'));
-        $update = MyHelper::post('merchant/be/reseller/candidate/update',$post);
-        if(isset($update['status']) && $update['status'] == 'success'){
-            return redirect('merchant/reseller/detail/'.$id)->withSuccess(['Success update data']);
-        }else{
-            return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
+        $id = MyHelper::createSlug($id, date('Y-m-d H:i:s'));
+        $update = MyHelper::post('merchant/be/reseller/candidate/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            return redirect('merchant/reseller/detail/' . $id)->withSuccess(['Success update data']);
+        } else {
+            return redirect()->back()->withErrors($update['messages'] ?? ['Failed update data to approved']);
         }
     }
-    
-    
-    public function detail(Request $request,$id)
+
+
+    public function detail(Request $request, $id)
     {
         $data = [
                 'title'          => 'Reseller',
@@ -109,13 +107,13 @@ class ResellerController extends Controller
                 'page_type'     => ''
             ];
         $data['id_enkripsi'] = $id;
-        $id = MyHelper::explodeSlug($id)[0]??'';
-        $detail = MyHelper::post('merchant/be/reseller/detail',['id_user_reseller_merchant' => $id]);
-        if(isset($detail['status']) && $detail['status'] == 'success'){
-           $data['detail'] = $detail['result'];
-          return view('merchant::reseller.detail', $data);
-        }else{
-            return redirect('merchant/reseller')->withErrors($store['messages']??['Failed get detail candidate']);
+        $id = MyHelper::explodeSlug($id)[0] ?? '';
+        $detail = MyHelper::post('merchant/be/reseller/detail', ['id_user_reseller_merchant' => $id]);
+        if (isset($detail['status']) && $detail['status'] == 'success') {
+            $data['detail'] = $detail['result'];
+            return view('merchant::reseller.detail', $data);
+        } else {
+            return redirect('merchant/reseller')->withErrors($store['messages'] ?? ['Failed get detail candidate']);
         }
     }
     public function index(Request $request)
@@ -144,9 +142,9 @@ class ResellerController extends Controller
         }
         $getList = MyHelper::post('merchant/be/reseller', $post);
         $vas = array();
-        foreach ($getList['result']['data']??[] as $value){
-            $value['id_enkripsi'] = MyHelper::createSlug($value['id_user_reseller_merchant'],date('Y-m-d H:i:s'));
-            array_push($vas,$value);
+        foreach ($getList['result']['data'] ?? [] as $value) {
+            $value['id_enkripsi'] = MyHelper::createSlug($value['id_user_reseller_merchant'], date('Y-m-d H:i:s'));
+            array_push($vas, $value);
         }
         if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $vas;
@@ -168,31 +166,31 @@ class ResellerController extends Controller
 
         return view('merchant::reseller.index', $data);
     }
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $post = $request->except('_token');
-        $id = MyHelper::createSlug($id,date('Y-m-d H:i:s'));
-        $update = MyHelper::post('merchant/be/reseller/update',$post);
-        if(isset($update['status']) && $update['status'] == 'success'){
-            return redirect('merchant/reseller/detail/'.$id)->withSuccess(['Success update data']);
-        }else{
-            return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
+        $id = MyHelper::createSlug($id, date('Y-m-d H:i:s'));
+        $update = MyHelper::post('merchant/be/reseller/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            return redirect('merchant/reseller/detail/' . $id)->withSuccess(['Success update data']);
+        } else {
+            return redirect()->back()->withErrors($update['messages'] ?? ['Failed update data to approved']);
         }
     }
     public function active(Request $request)
     {
         $post = $request->except('_token');
-        $data['id_user_reseller_merchant'] = MyHelper::explodeSlug($post['id_enkripsi'])[0]??'';
+        $data['id_user_reseller_merchant'] = MyHelper::explodeSlug($post['id_enkripsi'])[0] ?? '';
         $data['reseller_merchant_status'] = "Active";
-        $update = MyHelper::post('merchant/be/reseller/update',$data);
+        $update = MyHelper::post('merchant/be/reseller/update', $data);
         return $update;
     }
     public function inactive(Request $request)
     {
         $post = $request->except('_token');
-        $data['id_user_reseller_merchant'] = MyHelper::explodeSlug($post['id_enkripsi'])[0]??'';
+        $data['id_user_reseller_merchant'] = MyHelper::explodeSlug($post['id_enkripsi'])[0] ?? '';
         $data['reseller_merchant_status'] = "Inactive";
-        $update = MyHelper::post('merchant/be/reseller/update',$data);
+        $update = MyHelper::post('merchant/be/reseller/update', $data);
         return $update;
     }
 }

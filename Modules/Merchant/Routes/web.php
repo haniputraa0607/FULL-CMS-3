@@ -37,18 +37,18 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant
     Route::get('withdrawal', 'MerchantController@withdrawalList');
     Route::post('withdrawal', 'MerchantController@withdrawalList');
     Route::post('withdrawal/completed', 'MerchantController@withdrawalCompleted');
-    
+
      //reseller
      Route::group(['prefix' => '/reseller'], function () {
             Route::group(['prefix' => 'candidate/'], function () {
                 Route::any('', 'ResellerController@candidate');
                 Route::get('detail/{id}', 'ResellerController@candidateDetail');
-                Route::post('update/{id}', 'ResellerController@candidateUpdate');    
+                Route::post('update/{id}', 'ResellerController@candidateUpdate');
             });
             Route::any('', 'ResellerController@index');
             Route::get('detail/{id}', 'ResellerController@detail');
-            Route::post('update/{id}', 'ResellerController@update');  
-            Route::post('active', 'ResellerController@active');  
-            Route::post('inactive', 'ResellerController@inactive');  
-        });
+            Route::post('update/{id}', 'ResellerController@update');
+            Route::post('active', 'ResellerController@active');
+            Route::post('inactive', 'ResellerController@inactive');
+     });
 });
