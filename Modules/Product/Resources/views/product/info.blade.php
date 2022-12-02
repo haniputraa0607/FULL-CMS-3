@@ -195,13 +195,13 @@
         </div>
 
 
-        <div class="form-group" id="stock" @if($product[0]['product_variant_status'] == 1) style="display: none" @endif>
+        <div class="form-group" id="stock" @if(!empty($variant_price)) style="display: none" @endif>
             <label class="col-md-3 control-label">Stock <span class="required" aria-required="true"> * </span>
                 <i class="fa fa-question-circle tooltips" data-original-title="Total jumlah produk" data-container="body"></i>
             </label>
             <div class="col-md-4">
                 <div class="input-group">
-                    <input type="text" class="form-control onlynumber" name="stock" placeholder="Stock" @if($product[0]['product_variant_status'] == 1) disabled @else required @endif value="{{$detail['stock']??0}}">
+                    <input type="text" class="form-control onlynumber" name="stock" placeholder="Stock" @if(!empty($variant_price)) disabled @else required @endif value="{{$detail['stock']??0}}">
                     <span class="input-group-addon">
                     qty
                 </span>
@@ -219,13 +219,13 @@
                         <span class="input-group-addon">
                         Rp
                         </span>
-                        <input type="text" id="base_price" class="form-control price" name="base_price" placeholder="Base Price" value="{{$detail['base_price']}}" @if($product[0]['product_variant_status'] == 1) readonly @else required @endif>
+                        <input type="text" id="base_price" class="form-control price" name="base_price" placeholder="Base Price" value="{{$detail['base_price']}}" @if(!empty($variant_price)) readonly @else required @endif>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group" id="div_parent_wholesaler" @if($product[0]['product_variant_status'] == 1) style="display: none" @endif>
+        <div class="form-group" id="div_parent_wholesaler" @if(!empty($variant_price)) style="display: none" @endif>
             <label for="multiple" class="control-label col-md-3">Wholesaler
                 <i class="fa fa-question-circle tooltips" data-original-title="Harga grosir" data-container="body"></i>
             </label>

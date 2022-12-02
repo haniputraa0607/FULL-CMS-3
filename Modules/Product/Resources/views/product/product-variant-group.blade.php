@@ -1,17 +1,20 @@
 <form class="form-horizontal" id="form_product_variant_group" action="{{url('product/product-variant-group/'.$product[0]['product_code'])}}" method="POST">
     {{ csrf_field() }}
     <div class="form-body">
+        @if(!empty($variant_use_transaction))
+            <div class="alert alert-warning text-brown">Can not inactive variant because variant already use : {{implode(', ', $variant_use_transaction)}}</div>
+        @endif
         <div class="form-group">
             <label for="multiple" class="control-label col-md-3">Use Variant
                 <i class="fa fa-question-circle tooltips" data-original-title="Status penggunaan variant" data-container="body"></i>
             </label>
             <div class="col-md-8">
                 <div class="icheck-list" style="margin-top: 1.5%">
-                    <label><input type="checkbox" class="icheck" id="checkbox-variant" name="product_variant_status" @if($product[0]['product_variant_status'] == 1) checked @endif> </label>
+                    <label><input type="checkbox" class="icheck" id="checkbox-variant" name="product_variant_status" @if(!empty($variant_price)) checked @endif @if(!empty($variant_use_transaction)) disabled @endif> </label>
                 </div>
             </div>
         </div>
-        <div id="variants" @if($product[0]['product_variant_status'] == 0) style="display: none" @endif>
+        <div id="variants" @if(empty($variant_price)) style="display: none" @endif>
             <div class="form-group">
                 <label for="multiple" class="control-label col-md-3">Variant Color
                 </label>
