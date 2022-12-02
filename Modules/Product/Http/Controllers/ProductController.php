@@ -819,6 +819,8 @@ class ProductController extends Controller
             $data['array_color'] = $data['variant_color']['variant_child'] ?? [];
             $data['array_size'] = $data['variant_size']['variant_child'] ?? [];
             $data['variant_price'] = $variants['variants_price'] ?? [];
+            $data['variant_use_transaction'] = $data['detail']['variant_use_transaction'] ?? null;
+
             return view('product::product.detail', $data);
         } else {
             if ($post['id_product_category'] == 0  || empty($post['id_product_category'])) {
@@ -841,7 +843,7 @@ class ProductController extends Controller
         if (!empty($post['variant_deletes'])) {
             $delete = MyHelper::post('product-variant/delete', ['ids' => $post['variant_deletes']]);
             if (!isset($delete['status']) || (isset($delete['status']) && $delete['status'] == 'fail')) {
-                return redirect('product/detail/' . $product_code . '#variant')->withErrors($create_update['messages'] ?? ['Failed delete variant']);
+                return redirect('product/detail/' . $product_code . '#variant')->withErrors($create_update['messages'] ?? ['Failed delete variant, variant already use transaction']);
             }
         }
 
