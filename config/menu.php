@@ -2792,6 +2792,13 @@ return [
                     'url' => 'enquiries',
                     'icon' => 'icon-action-undo'
                 ],
+                [
+                    'label' => 'Forward Contact Us',
+                    'required_features' => [83,84],
+                    'active' => '\View::shared("submenu_active") == "contact-us-autoresponse-forward-contact-us"',
+                    'url' => 'autoresponse/contact-us/forward-contact-us',
+                    'icon' => 'icon-action-undo'
+                ],
             ]
         ],
         [
