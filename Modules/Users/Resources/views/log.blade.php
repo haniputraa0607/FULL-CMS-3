@@ -82,7 +82,7 @@
 
 <div class="row" style="margin-top:20px">
 	<div class="col-md-12">
-		<form role="form" action="{{ url('user/activity') }}" method="post">
+		<form role="form" action="{{ url('user/activity') }}?filter=1 " method="post">
 			{{ csrf_field() }}
 			@include('filter-log')
 		</form>
@@ -101,7 +101,7 @@
 						@if(isset($search_param['conditions']))
 						@foreach($search_param['conditions'] as $row)
 							<p>{{ucwords(str_replace("_"," ",$row['subject']))}}
-							@if($row['parameter'] != "") {{str_replace("-"," - ",$row['operator'])}}{{str_replace("-"," - ",$row['parameter'])}}
+							@if($row['parameter'] != "") {{str_replace("-"," - ",$row['operator'])}} {{str_replace("-"," - ",$row['parameter'])}}
 							@else : {{str_replace("-"," - ",$row['operator'])}}
 							@endif
 							</p>
