@@ -1050,8 +1050,8 @@ class UsersController extends Controller
             ];
             return view('users::password', $data);
         } else {
-            $data['conditions'] = $post['conditions']??[];
-            $data['rule'] = $post['rule']??"";
+            $data['conditions'] = $post['conditions'] ?? [];
+            $data['rule'] = $post['rule'] ?? "";
             return view('users::log', $data);
         }
     }
