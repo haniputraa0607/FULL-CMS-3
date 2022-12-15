@@ -956,7 +956,11 @@ class UsersController extends Controller
         $input = $request->input();
         $post = $request->except('_token');
 
-        if (!empty(Session::get('form')) && !isset($post['password'])) {
+        if (Session::has('form') && !empty($post) && !isset($post['filter']) && !isset($post['password'])) {
+            $page = 1;
+            if (isset($post['page'])) {
+                $page = $post['page'];
+            }
             if (isset($post['take'])) {
                 $takes = $post['take'];
             }
@@ -967,12 +971,9 @@ class UsersController extends Controller
                 $order_methods = $post['order_method'];
             }
             $post = Session::get('form');
-
-            if (isset($takes) && isset($order_fields) && isset($order_methods)) {
-                $post['take'] = $takes;
-                $post['order_field'] = $order_fields;
-                $post['order_method'] = $order_methods;
-            }
+            $post['page'] = $page;
+        } else {
+            Session::forget('form');
         }
 
         if (!empty($post) && !isset($post['password'])) {
@@ -1041,7 +1042,7 @@ class UsersController extends Controller
 
         $data['table_title'] = "User Log Activity list order by " . $data['order_field'] . ", " . $data['order_method'] . "ending (" . $data['begin'] . " to " . $data['jumlah'] . " From " . $data['total']['mobile'] . " data)";
 
-        if (empty(Session::get('secure')) || Session::get('secure_last_activity') < (time() - 900)) {
+        if (empty(Session::get('secure')) && Session::get('secure_last_activity') < (time() - 900)) {
             $data = [
                 'title'             => 'User',
                 'menu_active'       => 'user',
@@ -1049,6 +1050,8 @@ class UsersController extends Controller
             ];
             return view('users::password', $data);
         } else {
+            $data['conditions'] = $post['conditions'] ?? [];
+            $data['rule'] = $post['rule'] ?? "";
             return view('users::log', $data);
         }
     }

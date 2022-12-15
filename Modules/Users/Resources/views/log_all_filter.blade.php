@@ -90,10 +90,7 @@
 											<div class="input-group">
 												<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 													<option value="subject" @if($cond['subject'] == 'subject') selected @endif>Subject</option>
-													<option value="request" @if($cond['subject'] == 'request') selected @endif>Request</option>
 													<option value="response_status" @if($cond['subject'] == 'response_status') selected @endif>Response Status</option>
-													<option value="response" @if($cond['subject'] == 'response') selected @endif>Response</option>
-													<option value="module" @if($cond['subject'] == 'module') selected @endif>Module</option>
 													<option value="url" @if($cond['subject'] == 'url') selected @endif>URL</option>
 													<option value="ip" @if($cond['subject'] == 'ip') selected @endif>IP</option>
 													<option value="useragent" @if($cond['subject'] == 'useragent') selected @endif>Useragent</option>
@@ -140,10 +137,7 @@
 										<div class="input-group">
 											<select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
 												<option value="subject">Subject</option>
-												<option value="request">Request</option>
 												<option value="response_status">Response Status</option>
-												<option value="response">Response</option>
-												<option value="module">Module</option>
 												<option value="url">URL</option>
 												<option value="ip">IP</option>
 												<option value="useragent">Useragent</option>

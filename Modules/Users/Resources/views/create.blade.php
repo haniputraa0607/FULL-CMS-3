@@ -286,30 +286,6 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="input-icon right">
-								<label class="col-md-3 control-label">
-									ID Card
-									<i class="fa fa-question-circle tooltips" data-original-title="Foto KTP Customer" data-container="body"></i>
-								</label>
-							</div>
-							<div class="col-md-9">
-								<div class="fileinput fileinput-new" data-provides="fileinput">
-									<div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-										<img src="https://www.cs.emory.edu/site/media/rg5">
-									</div>
-									<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
-									<div>
-										<span class="btn default btn-file">
-											<span class="fileinput-new"> Select image </span>
-											<span class="fileinput-exists"> Change </span>
-											<input type="file" accept="image/*" id="field_image" class="file" name="id_card_image">
-										</span>
-										<a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-									</div>
-								</div>
-							</div>
-						</div>
 					</div>
 					<div class="form-actions" style="text-align:center;">
 						{{ csrf_field() }}
