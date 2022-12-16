@@ -562,7 +562,7 @@ $clickTo = [
 								</div>
 							</div>
 							@endif
-							@if(isset($result['campaign_push_clickto']) && ($result['campaign_push_clickto'] == "Link"))
+							@if(isset($result['campaign_push_clickto']) && ($result['campaign_push_clickto'] == "url"))
 							<div class="form-group">
 								<label for="multiple" class="control-label col-md-2">Link</label>
 								<div class="col-md-10">
@@ -617,7 +617,7 @@ $clickTo = [
 								</div>
 							</div>
 							@endif
-							@if(isset($result['campaign_inbox_clickto']) && ($result['campaign_inbox_clickto'] == "Link"))
+							@if(isset($result['campaign_inbox_clickto']) && ($result['campaign_inbox_clickto'] == "url"))
 							<div class="form-group">
 								<label for="multiple" class="control-label col-md-2">Link</label>
 								<div class="col-md-10">

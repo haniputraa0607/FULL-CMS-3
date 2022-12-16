@@ -80,6 +80,20 @@
 				$('#create_banner_end').focus();
 				focusSet = true;
 			}
+
+			var clickto = $('#create_click_to').val();
+			if(clickto == 'url'){
+				var url = $('#create_banner_url').val();
+				var urlregex = /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
+				if(!urlregex)
+				{
+					$('#note_create_banner_url').empty();
+					$('#note_create_banner_url').append('Please input url use http:// or https://');
+					e.preventDefault();
+					$('#create_banner_url').focus();
+					focusSet = true;
+				}
+			}
 		});
 
 		$('#form_banner_edit').on('submit', function(e) {
@@ -98,6 +112,20 @@
 				$('#banner_end').focus();
 				focusSet = true;
 			}
+
+			var clickto = $('#click-to-type').val();
+			if(clickto == 'url'){
+				var url = $('#edit_banner_url').val();
+				var urlregex = /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(url);
+				if(!urlregex)
+				{
+					$('#note_edit_banner_url').empty();
+					$('#note_edit_banner_url').append('Please input url use http:// or https://');
+					e.preventDefault();
+					$('#edit_banner_url').focus();
+					focusSet = true;
+				}
+			}
 		});
 	});
 
@@ -115,6 +143,14 @@
 
 	$('#banner_end').on('change', function() {
 		$('#note_end_edit').empty();
+	});
+
+	$('#edit_banner_url').keyup(function (e) {
+		$('#note_edit_banner_url').empty();
+	});
+
+	$('#create_banner_url').keyup(function (e) {
+		$('#note_create_banner_url').empty();
 	});
 
 
@@ -1350,7 +1386,7 @@
                             Click To
                         </label>
 						<div class="col-md-5">
-							<select class="select2 form-control" name="click_to">
+							<select class="select2 form-control" name="click_to" id="create_click_to">
 								<option value="none">None</option>
 								<option value="home">Home</option>
 								<option value="membership">Membership</option>
@@ -1398,7 +1434,8 @@
                             URL
                         </label>
                         <div class="col-md-5">
-							<input class="form-control" type="text" name="url" placeholder="https://www.google.com">
+							<input class="form-control" type="text" name="url" id="create_banner_url" placeholder="https://www.google.com">
+							<p id="note_create_banner_url" style="color: red;margin-top: -0.1%"></p>
                         </div>
 					</div>
 					<div class="form-group clearfix" data-visible="promo_detail">
@@ -1611,7 +1648,8 @@
                             URL
                         </label>
                         <div class="col-md-5">
-							<input class="form-control" type="text" name="url" placeholder="https://www.google.com">
+							<input class="form-control" type="text" name="url" id="edit_banner_url" placeholder="https://www.google.com">
+							<p id="note_edit_banner_url" style="color: red;margin-top: -0.1%"></p>
                         </div>
 					</div>
 					<div class="form-group clearfix" data-visible="promo_detail">
