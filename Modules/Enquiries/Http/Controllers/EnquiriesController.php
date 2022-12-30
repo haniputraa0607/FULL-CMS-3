@@ -134,11 +134,6 @@ class EnquiriesController extends Controller
     {
         $post = $request->except('_token');
         $delete = MyHelper::post('enquiries/delete', $post);
-
-        if (isset($delete['status']) && $delete['status'] == "success") {
-            return "success";
-        } else {
-            return "fail";
-        }
+        return $delete;
     }
 }

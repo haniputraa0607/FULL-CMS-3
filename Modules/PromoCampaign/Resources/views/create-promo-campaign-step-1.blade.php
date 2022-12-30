@@ -363,7 +363,7 @@
 				['color', ['color']],
 				['para', ['ul', 'ol', 'paragraph']],
 				['insert', ['table']],
-				['insert', []],
+				['insert', ['link']],
 				['misc', ['fullscreen', 'codeview', 'help']], ['height', ['height']]
 			]
 		});
