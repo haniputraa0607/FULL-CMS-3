@@ -248,9 +248,7 @@ class DoctorController extends Controller
             }
         }
 
-        if (!empty($data['doctor']['schedules_raw'])) {
-            $data['doctor']['schedules_raw'] = $scheduleRaw;
-        }
+        $data['doctor']['schedules_raw'] = $scheduleRaw;
 
         return view('doctor::form', $data);
     }
