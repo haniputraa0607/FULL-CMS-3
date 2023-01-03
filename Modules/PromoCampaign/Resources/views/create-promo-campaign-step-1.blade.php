@@ -713,17 +713,17 @@
 						<i class="fa fa-question-circle tooltips" data-original-title="Pilih tipe produk yang akan dikenakan promo jika promo yang dipilih menggunakan syarat produk" data-container="body"></i>
 						<div class="mt-radio-list">
 							<label class="mt-radio mt-radio-outline"> Product only
-								<input type="radio" value="single" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single") checked @elseif(old('product_type') == "single") checked @endif required/>
+								<input type="radio" value="single" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single") checked @elseif(old('product_type') == "single") checked @endif/>
 								<i class="fa fa-question-circle tooltips" data-original-title="Syarat produk yang dapat dipilih hanya produk saja tanpa variant" data-container="body"></i>
 								<span></span>
 							</label>
 							<label class="mt-radio mt-radio-outline"> Product variant only
-								<input type="radio" value="variant" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "variant") checked  @elseif(old('product_type') == "variant") checked @endif required/>
+								<input type="radio" value="variant" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "variant") checked  @elseif(old('product_type') == "variant") checked @endif/>
 								<i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dengan variant" data-container="body"></i>
 								<span></span>
 							</label>
 							<label class="mt-radio mt-radio-outline"> Product + Product variant
-								<input type="radio" value="single + variant" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single + variant") checked  @elseif(old('product_type') == "single + variant") checked @endif required/>
+								<input type="radio" value="single + variant" class="radio_product_type" name="product_type" @if(isset($result['product_type']) && $result['product_type'] == "single + variant") checked  @elseif(old('product_type') == "single + variant") checked @endif/>
 								<i class="fa fa-question-circle tooltips" data-original-title="Syarat product yang dapat dipilih adalah product dan product dengan variant" data-container="body"></i>
 								<span></span>
 							</label>
