@@ -956,8 +956,8 @@ class UsersController extends Controller
         $input = $request->input();
         $post = $request->except('_token');
 
-        if (Session::has('form') && !empty($post) && !isset($post['filter']) && !isset($post['password'])) {
-            $page = 1;
+        if (Session::has('form') && !isset($post['filter']) && !isset($post['password'])) {
+            $page = $page;
             if (isset($post['page'])) {
                 $page = $post['page'];
             }
@@ -972,6 +972,11 @@ class UsersController extends Controller
             }
             $post = Session::get('form');
             $post['page'] = $page;
+            if (isset($order_fields)) {
+                $post['order_field'] = $order_fields;
+                $post['order_method'] = $order_methods;
+                $post['take'] = $takes;
+            }
         } else {
             Session::forget('form');
         }
