@@ -289,6 +289,31 @@ return [
                             'active' => '\View::shared("submenu_active") == "doctor-autoresponse-doctor-pin-sent"',
                             'url' => 'doctor/autoresponse/doctor-pin-sent'
                         ],
+                        [
+                            'label' => 'Request Update Data',
+                            'required_features' => [356,357,358],
+                            'active' => '\View::shared("submenu_active") == "doctor-update-data"',
+                            'children' => [
+                                [
+                                    'label' => 'List Request',
+                                    'required_features' => [],
+                                    'active' => '\View::shared("submenu_active") == "doctor-update-data-list"',
+                                    'url' => 'doctor/update-data',
+                                ],
+                                [
+                                    'label' => '[Response] Approve Request',
+                                    'required_features' => [],
+                                    'active' => '\View::shared("submenu_active") == "doctor-autoresponse-approve-doctor-request-update-data"',
+                                    'url' => 'doctor/autoresponse/approve-doctor-request-update-data'
+                                ],
+                                [
+                                    'label' => '[Response] Reject Request',
+                                    'required_features' => [],
+                                    'active' => '\View::shared("submenu_active") == "doctor-autoresponse-reject-doctor-request-update-data"',
+                                    'url' => 'doctor/autoresponse/reject-doctor-request-update-data'
+                                ],
+                            ]
+                        ],
                     ]
                 ],
             ],

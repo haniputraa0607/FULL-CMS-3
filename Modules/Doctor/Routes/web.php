@@ -29,4 +29,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'doctor']
 
     Route::any('autoresponse/{subject}', ['middleware' => 'feature_control:93', 'uses' => 'DoctorController@autoResponse']);
     Route::any('recommendation', ['uses' => 'DoctorController@doctorRecommendation']);
+
+    Route::group(['prefix' => 'update-data'], function () {
+        Route::any('/', ['middleware' => 'feature_control:356,357,358', 'uses' => 'DoctorUpdateDataController@list']);
+        Route::get('detail/{id}', ['middleware' => 'feature_control:357,358', 'uses' => 'DoctorUpdateDataController@detail']);
+        Route::post('update/{id}', ['middleware' => 'feature_control:358', 'uses' => 'DoctorUpdateDataController@update']);
+    });
 });
