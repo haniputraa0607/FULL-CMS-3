@@ -403,6 +403,9 @@ class DoctorController extends Controller
                     ['value' => 'Voucher','title' => 'Voucher']
                 ];
                 break;
+            case 'receive-inject-voucher':
+                $data['menu_active'] = 'doctor-update-data';
+                break;
             default:
                 $data['click_inbox'] = [
                     ['value' => "Doctor Pin Sent",'title' => 'Doctor Pin Sent']
