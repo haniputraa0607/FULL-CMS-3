@@ -96,10 +96,6 @@
 
                 image.onload = function() {
                     if (type == "landscape") {
-                        if ($(".file").val().split('.').pop().toLowerCase() != 'png') {
-                            toastr.warning("Please check type of your photo.");
-                            $(this2).parent().parent().find('.removeLogo').trigger( "click" );
-                        }
                         if (this.width != 1080 || this.height != 1720) {
                             toastr.warning("Please check dimension of your photo.");
                             $(this2).parent().parent().find('.removeLogo').trigger( "click" );
