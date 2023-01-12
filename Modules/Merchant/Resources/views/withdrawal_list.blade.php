@@ -163,7 +163,7 @@
                                                     Bank Name
                                                 </label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" value="{{$val['data_bank_account']['bank_name']}}" disabled>
+                                                    <input class="form-control" value="{{$val['data_bank_account']['bank_name']??''}}" disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -171,7 +171,7 @@
                                                     Beneficiary Name
                                                 </label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" value="{{$val['data_bank_account']['beneficiary_name']}}" disabled>
+                                                    <input class="form-control" value="{{$val['data_bank_account']['beneficiary_name']??''}}" disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -179,7 +179,7 @@
                                                     Beneficiary Number
                                                 </label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" value="{{$val['data_bank_account']['beneficiary_account']}}" disabled>
+                                                    <input class="form-control" value="{{$val['data_bank_account']['beneficiary_account']??''}}" disabled>
                                                 </div>
                                             </div>
                                         </div>

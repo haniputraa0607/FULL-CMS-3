@@ -1,6 +1,13 @@
 <?php
     use App\Lib\MyHelper;
     $grantedFeature     = session('granted_features');
+    $field = [
+        'doctor_name' => 'Nama',
+        'doctors_services' => 'Service',
+        'practice_experience' => 'Pengalaman Praktik',
+        'alumni' => 'Alumni',
+        'registration_certificate_number' => 'Nomor STR'
+    ];
  ?>
 @section('page-style')
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
@@ -117,7 +124,7 @@
                         <td class="text-center">
                             <span class="sbold badge badge-pill" style="font-size: 14px!important;height: 25px!important;background-color: {{ $color }};padding: 5px 12px;color: {{ $textColor }};">{{ $status }}</span>
                         </td>
-                        <td class="text-center">{{ $val['field'] }}</td>
+                        <td class="text-center">{{ $field[$val['field']]??'' }}</td>
                         <td class="text-center">{{ $val['new_value'] }}</td>
                         <td class="text-center">{{ $val['notes'] }}</td>
                         <td class="text-center">{{ date('d M Y H:i', strtotime($val['created_at'])) }}</td>

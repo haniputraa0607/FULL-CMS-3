@@ -299,6 +299,10 @@ return [
                                     'required_features' => [],
                                     'active' => '\View::shared("submenu_active") == "doctor-update-data-list"',
                                     'url' => 'doctor/update-data',
+                                    'badge' => [
+                                        'type' => 'warning',
+                                        'value' => 'doctor_request_update_data_pending',
+                                    ]
                                 ],
                                 [
                                     'label' => '[Response] Approve Request',
@@ -312,8 +316,16 @@ return [
                                     'active' => '\View::shared("submenu_active") == "doctor-autoresponse-reject-doctor-request-update-data"',
                                     'url' => 'doctor/autoresponse/reject-doctor-request-update-data'
                                 ],
+                            ],
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'doctor_request_update_data_pending',
                             ]
                         ],
+                    ],
+                    'badge' => [
+                        'type' => 'warning',
+                        'value' => 'doctor_request_update_data_pending',
                     ]
                 ],
             ],
@@ -455,6 +467,10 @@ return [
                             'label' => 'Withdrawal',
                             'url' => 'merchant/withdrawal',
                             'required_features' => [348],
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'withdrawal_pending',
+                            ]
                         ],
                         [
                             'label' => '[Response] Register Merchant',
@@ -479,7 +495,7 @@ return [
                     ],
                     'badge' => [
                         'type' => 'warning',
-                        'value' => 'merchant_register_pending',
+                        'value' => 'merchant',
                     ]
                 ],
                 [
