@@ -275,14 +275,12 @@ class ConsultationController extends Controller
                 break;
             case 'consultation-done':
                 $data['click_inbox'] = [
-                    ['value' => "consultation_done",'title' => 'Consultation Done'],
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
                     ['value' => "consultation_summary",'title' => 'Consultation Summary'],
                     ['value' => "history_consultation",'title' => 'History Consultation']
                 ];
                 $data['click_notification'] = [
-                    ['value' => "consultation_done",'title' => 'Consultation Done'],
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
                     ['value' => "consultation_summary",'title' => 'Consultation Summary'],
@@ -291,6 +289,7 @@ class ConsultationController extends Controller
                 break;
             case 'consultation-completed':
                 $data['click_inbox'] = [
+                    ['value' => "consultation_done",'title' => 'Consultation Done'],
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
                     ['value' => "consultation_summary",'title' => 'Consultation Summary'],
@@ -299,6 +298,7 @@ class ConsultationController extends Controller
                     ['value' => "history_consultation",'title' => 'History Consultation']
                 ];
                 $data['click_notification'] = [
+                    ['value' => "consultation_done",'title' => 'Consultation Done'],
                     ['value' => "consultation_detail",'title' => 'Consultation Detail'],
                     ['value' => "consultation_chat",'title' => 'Consultation Chat'],
                     ['value' => "consultation_summary",'title' => 'Consultation Summary'],
