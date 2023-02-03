@@ -334,6 +334,10 @@ class SettingController extends Controller
     {
         $post = $request->except('_token');
 
+        if (empty($post['value_text'])) {
+            return redirect('setting/consultation_option_setting#usage_rules')->witherrors(['Aturan dosis tidak boleh kosong']);
+        }
+
         if (str_contains($type, 'usage_rules') !== false || strpos($type, 'diagnosis') !== false || strpos($type, 'complaints') !== false) {
             $post['value_text'] = json_encode($post['value_text']);
         }
