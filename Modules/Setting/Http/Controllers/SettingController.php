@@ -334,7 +334,7 @@ class SettingController extends Controller
     {
         $post = $request->except('_token');
 
-        if(empty($post['value_text'])){
+        if (empty($post['value_text'])) {
             return redirect('setting/consultation_option_setting#usage_rules')->witherrors(['Aturan dosis tidak boleh kosong']);
         }
 
