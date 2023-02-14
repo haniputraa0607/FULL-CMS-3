@@ -126,11 +126,11 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-4 control-label">
-                                                    Amount
+                                                    Amount Withdrawal
                                                 </label>
                                                 <div class="col-md-8">
                                                     <div style="margin-top: 2%"></div>
-                                                    Rp {{number_format(abs($val['nominal']),0,",",".")}}
+                                                    Rp {{number_format(abs($val['nominal'])+abs($val['fee']),0,",",".")}}
                                                 </div>
                                             </div>
                                             <div class="form-group" style="color: red">
@@ -140,6 +140,15 @@
                                                 <div class="col-md-8">
                                                     <div style="margin-top: 2%"></div>
                                                     Rp - {{number_format(abs($val['fee']),0,",",".")}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label">
+                                                    Amount Receive
+                                                </label>
+                                                <div class="col-md-8">
+                                                    <div style="margin-top: 2%"></div>
+                                                    Rp {{number_format(abs($val['nominal']),0,",",".")}}
                                                 </div>
                                             </div>
                                             <div class="form-group">
