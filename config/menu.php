@@ -184,7 +184,7 @@ return [
                 [
                     'type' => 'group',
                     'required_configs' => [19,78],
-                    'required_features' => [457],
+                    'required_features' => [359],
                     'required_configs_rule' => 'and',
                     'children' => [
                         [
