@@ -1098,6 +1098,14 @@ return [
                     'icon' => 'fa fa-exclamation-triangle'
                 ],
                 [
+                        'label' => 'Points History',
+                        'required_features' => [71],
+                        'required_configs' => [19],
+                        'active' => '\View::shared("menu_active") == "balance"',
+                        'url' => 'transaction/balance',
+                        'icon' => 'fa fa-clock-o'
+                ],
+                [
                     'type' => 'tree',
                     'label' => 'Order Settings',
                     'icon' => 'fa fa-cogs',
