@@ -1099,8 +1099,7 @@ return [
                 ],
                 [
                         'label' => 'Points History',
-                        'required_features' => [71],
-                        'required_configs' => [19],
+                        'required_features' => [93],
                         'active' => '\View::shared("menu_active") == "balance"',
                         'url' => 'transaction/balance',
                         'icon' => 'fa fa-clock-o'
