@@ -290,7 +290,7 @@ return [
                             'url' => 'doctor/autoresponse/doctor-pin-sent'
                         ],
                         [
-                            'label' => 'Request Update Data',
+                            'label' => 'Req Update Data',
                             'required_features' => [356,357,358],
                             'active' => '\View::shared("submenu_active") == "doctor-update-data"',
                             'children' => [
