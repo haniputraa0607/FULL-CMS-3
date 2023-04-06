@@ -426,8 +426,8 @@
                                                     <option value="Total Female Customer">Total Female Customer</option>
                                                     <option value="Total Customer Verified">Total Customer Verified</option>
                                                     <option value="Total Customer Not Verified">Total Customer Not Verified</option>
-                                                    <option value="Total Android Customer">Total Android Customer</option>
-                                                    <option value="Total IOS Customer">Total IOS Customer</option>
+                                                    <option value="Device Android">Device Android</option>
+                                                    <option value="Device IOS">Device IOS</option>
                                                     <option value="Total Customer Subscribed">Total Customer Subscribed</option>
                                                     <option value="Total Customer Unsubscribed">Total Customer Unsubscribed</option>
                                                     <option value="Top 10 Customer Table">Top 10 Customer Table</option>
@@ -605,8 +605,8 @@
                                                                                 <option @if($card['card_name'] == 'Total Female Customer') selected @endif value="Total Female Customer">Total Female Customer</option>
                                                                                 <option @if($card['card_name'] == 'Total Customer Verified') selected @endif value="Total Customer Verified">Total Customer Verified</option>
                                                                                 <option @if($card['card_name'] == 'Total Customer Not Verified') selected @endif value="Total Customer Not Verified">Total Customer Not Verified</option>
-                                                                                <option @if($card['card_name'] == 'Total Android Customer') selected @endif value="Total Android Customer">Total Android Customer</option>
-                                                                                <option @if($card['card_name'] == 'Total IOS Customer') selected @endif value="Total IOS Customer">Total IOS Customer</option>
+                                                                                <option @if($card['card_name'] == 'Device Android') selected @endif value="Device Android">Device Android</option>
+                                                                                <option @if($card['card_name'] == 'Device IOS') selected @endif value="Device IOS">Device IOS</option>
                                                                                 <option @if($card['card_name'] == 'Total Customer Subscribed') selected @endif value="Total Customer Subscribed">Total Customer Subscribed</option>
                                                                                 <option @if($card['card_name'] == 'Total Customer Unsubscribed') selected @endif value="Total Customer Unsubscribed">Total Customer Unsubscribed</option>
                                                                                 <option @if($card['card_name'] == 'Top 10 Customer Table') selected @endif value="Top 10 Customer Table">Top 10 Customer Table</option>

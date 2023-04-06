@@ -292,9 +292,9 @@
 															<i class="fa fa-calculator"></i>
 														@elseif($card['card_name'] == 'New Customer')
 															<i class="fa fa-user-plus"></i>
-														@elseif($card['card_name'] == 'Total IOS Customer')
+														@elseif($card['card_name'] == 'Device IOS')
 															<i class="fa fa-apple"></i>
-														@elseif($card['card_name'] == 'Total Android Customer')
+														@elseif($card['card_name'] == 'Device Android')
 															<i class="fa fa-android"></i>
 														@elseif($card['card_name'] == 'Total Male Customer')
 															<i class="fa fa-male"></i>
