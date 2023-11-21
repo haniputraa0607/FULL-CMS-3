@@ -238,7 +238,7 @@ $configs     		= session('configs');
 													<center><img src="{{ $featured_promo['promo_campaign']['url_promo_image'] ?? null }}" alt="FeaturedPromoCampaign Image" width="150"></center>
 												</div>
 												<div class="click-to text-center">
-													<div>{{ $featured_promo['promo_campaign']['promo_title'] }}</div>
+													<div style="white-space: nowrap">@if(strlen($featured_promo['promo_campaign']['promo_title']) > 18) {{ substr($featured_promo['promo_campaign']['promo_title'], 0, 18) }} ... @else {{ $featured_promo['promo_campaign']['promo_title'] }} @endif </div>
 													<div>{!! date('d M Y H:i:s',strtotime($featured_promo['date_start']))."<br> - <br>".date('d M Y H:i:s',strtotime($featured_promo['date_end'])) !!}</div>
 												</div>
 												<div style="text-align: right;">

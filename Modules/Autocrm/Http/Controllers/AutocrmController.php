@@ -208,6 +208,7 @@ class AutocrmController extends Controller
             case 'create-welcome-voucher':
             case 'update-news':
             case 'create-news':
+            case 'forward-contact-us':
                 $data['forwardOnly'] = true;
                 break;
             case 'delivery-rejected':

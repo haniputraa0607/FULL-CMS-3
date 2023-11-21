@@ -3,7 +3,7 @@
     $configs  = session('configs');
     $grantedFeature     = session('granted_features');
  ?>
-@extends('layouts.main')
+@extends('layouts.main-closed')
 @include('infinitescroll')
 
 @section('page-style')
@@ -482,6 +482,9 @@
                                                     <li>
 														<a href="#max_reschedule_settings" data-toggle="tab"> Maks. Reschedule Konsultasi </a>
 													</li>
+                                                    <li>
+                                                        <a href="#min_session_consultation_now" data-toggle="tab"> Min. Session Konsultasi Now</a>
+                                                    </li>
 												</ul>
 											</div>
 											<div class="tab-content">
@@ -725,6 +728,76 @@
 													</div>
 													<!-- END: Comments -->
 												</div>
+                                                <div class="tab-pane" id="min_session_consultation_now">
+                                                    <!-- BEGIN: Comments -->
+                                                    <div class="mt-comments">
+                                                        <div class="portlet light form-fit bordered">
+                                                            <div class="portlet-title">
+                                                                <div class="caption">
+                                                                    <i class=" icon-layers font-green"></i>
+                                                                    <span class="caption-subject font-green bold uppercase">{{ $subTitle }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="portlet-body form">
+                                                                <form class="form-horizontal" action="{{ url('setting/consultation/min_session_consultation_now/update') }}" method="post">
+                                                                    {{ csrf_field() }}
+                                                                    <div class="form-body">
+                                                                        <div class="form-group">
+                                                                            <div class="input-icon right">
+                                                                                <label class="col-md-4 control-label">
+                                                                                    Min. Session Consultation Now
+                                                                                    <span class="required" aria-required="true"> * </span>
+                                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Minumum waktu untuk konsultasi saat ini (now)" data-container="body"></i>
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="col-md-8">
+                                                                                <div class="repeat">
+                                                                                    <div data-repeater-list="setting">
+                                                                                        @if(isset($result['min_session_consultation_now']) && is_array($result['min_session_consultation_now']))
+                                                                                            <div data-repeater-item class="row" style="padding-bottom:20px;">
+                                                                                                <input type="hidden" name="id_setting" value="{{$result['min_session_consultation_now']['id_setting']}}"/>
+                                                                                                <div class="col-md-5">
+                                                                                                    <div class="input-group">
+                                                                                                        <input type="text" class="form-control" placeholder="Min. Session Consultation Now" name="value" value="{{$result['min_session_consultation_now']['value']}}"/>
+                                                                                                        <span class="input-group-addon">
+                                                                                                            minute
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <br>
+                                                                                            </div>
+                                                                                        @else
+                                                                                            <div data-repeater-item class="row" style="padding-bottom:20px;">
+                                                                                                <div class="col-md-5">
+                                                                                                    <div class="input-group">
+                                                                                                        <input type="text" class="form-control" placeholder="Min. Session Consultation Now" name="value"/>
+                                                                                                        <span class="input-group-addon">
+                                                                                                            minute
+                                                                                                        </span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <br>
+                                                                                            </div>
+                                                                                        @endif
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-actions">
+                                                                        <div class="row">
+                                                                            <div class="col-md-offset-3 col-md-10">
+                                                                                <button type="submit" class="btn green">
+                                                                                    <i class="fa fa-check"></i> Update</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- END: Comments -->
+                                                </div>
 											</div>
 										</div>
 								</div>

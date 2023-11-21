@@ -184,7 +184,7 @@ return [
                 [
                     'type' => 'group',
                     'required_configs' => [19,78],
-                    'required_features' => [457],
+                    'required_features' => [359],
                     'required_configs_rule' => 'and',
                     'children' => [
                         [
@@ -289,6 +289,43 @@ return [
                             'active' => '\View::shared("submenu_active") == "doctor-autoresponse-doctor-pin-sent"',
                             'url' => 'doctor/autoresponse/doctor-pin-sent'
                         ],
+                        [
+                            'label' => 'Req Update Data',
+                            'required_features' => [356,357,358],
+                            'active' => '\View::shared("submenu_active") == "doctor-update-data"',
+                            'children' => [
+                                [
+                                    'label' => 'List Request',
+                                    'required_features' => [],
+                                    'active' => '\View::shared("submenu_active") == "doctor-update-data-list"',
+                                    'url' => 'doctor/update-data',
+                                    'badge' => [
+                                        'type' => 'warning',
+                                        'value' => 'doctor_request_update_data_pending',
+                                    ]
+                                ],
+                                [
+                                    'label' => '[Response] Approve Request',
+                                    'required_features' => [],
+                                    'active' => '\View::shared("submenu_active") == "doctor-autoresponse-approve-doctor-request-update-data"',
+                                    'url' => 'doctor/autoresponse/approve-doctor-request-update-data'
+                                ],
+                                [
+                                    'label' => '[Response] Reject Request',
+                                    'required_features' => [],
+                                    'active' => '\View::shared("submenu_active") == "doctor-autoresponse-reject-doctor-request-update-data"',
+                                    'url' => 'doctor/autoresponse/reject-doctor-request-update-data'
+                                ],
+                            ],
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'doctor_request_update_data_pending',
+                            ]
+                        ],
+                    ],
+                    'badge' => [
+                        'type' => 'warning',
+                        'value' => 'doctor_request_update_data_pending',
                     ]
                 ],
             ],
@@ -430,6 +467,10 @@ return [
                             'label' => 'Withdrawal',
                             'url' => 'merchant/withdrawal',
                             'required_features' => [348],
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'withdrawal_pending',
+                            ]
                         ],
                         [
                             'label' => '[Response] Register Merchant',
@@ -454,8 +495,27 @@ return [
                     ],
                     'badge' => [
                         'type' => 'warning',
-                        'value' => 'merchant_register_pending',
+                        'value' => 'merchant',
                     ]
+                ],
+                [
+                    'label' => 'Reseller',
+                    'type' => 'tree',
+                    'icon' => 'fa fa-users',
+                    'required_features' => [],
+                    'required_configs' => [141],
+                    'children' => [
+                        [
+                            'label' => 'Candidate Reseller List',
+                            'url' => 'merchant/reseller/candidate',
+                            'required_features' => [],
+                        ],
+                        [
+                            'label' => 'Reseller List',
+                            'url' => 'merchant/reseller',
+                            'required_features' => [],
+                        ]
+                     ]
                 ],
                 [
                     'label' => 'Outlet',
@@ -1036,6 +1096,13 @@ return [
                     'active' => '\View::shared("menu_active") == "failed-void-payment"',
                     'url' => 'transaction/failed-void-payment',
                     'icon' => 'fa fa-exclamation-triangle'
+                ],
+                [
+                        'label' => 'Points History',
+                        'required_features' => [93],
+                        'active' => '\View::shared("menu_active") == "balance"',
+                        'url' => 'transaction/balance',
+                        'icon' => 'fa fa-clock-o'
                 ],
                 [
                     'type' => 'tree',
@@ -2771,6 +2838,13 @@ return [
                     'required_features' => [83,84],
                     'active' => '\View::shared("submenu_active") == "enquiries-list"',
                     'url' => 'enquiries',
+                    'icon' => 'icon-action-undo'
+                ],
+                [
+                    'label' => 'Forward Contact Us',
+                    'required_features' => [83,84],
+                    'active' => '\View::shared("submenu_active") == "contact-us-autoresponse-forward-contact-us"',
+                    'url' => 'autoresponse/contact-us/forward-contact-us',
                     'icon' => 'icon-action-undo'
                 ],
             ]

@@ -12,7 +12,7 @@ $configs = session('configs');
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}" rel="stylesheet" type="text/css" />
-
+	<link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css" />
 	<style type="text/css">
     .show{
         display:block !important;
@@ -35,7 +35,9 @@ $configs = session('configs');
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
-    <script type="text/javascript">
+	<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
+
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$.fn.modal.Constructor.prototype.enforceFocus = function() {};
 
@@ -481,6 +483,61 @@ $configs = session('configs');
 			document.getElementById('link').style.display = 'none';
 		}
 	}
+
+		var SweetAlert = function() {
+			return {
+				init: function() {
+					$(".sweetalert-delete").each(function() {
+						var token  	= "{{ csrf_token() }}";
+						let column 	= $(this).parents('tr');
+						let id     	= $(this).data('id');
+						let name    = $(this).data('name');
+						$(this).click(function() {
+							swal({
+										title: name+"\n\nAre you sure want to delete this data?",
+										text: "Your will not be able to recover this data!",
+										type: "warning",
+										showCancelButton: true,
+										confirmButtonClass: "btn-danger",
+										confirmButtonText: "Yes, delete it!",
+										closeOnConfirm: false
+									},
+									function(){
+
+										$.ajax({
+											type : "POST",
+											url : "{{ url('enquiries/delete') }}",
+											data : "_token="+token+"&id_enquiry="+id,
+											success : function(result) {
+												if (result.status == "success") {
+													swal({
+														title: 'Deleted!',
+														text: 'Data has been deleted.',
+														type: 'success',
+														showCancelButton: false,
+														showConfirmButton: false
+													})
+													SweetAlert.init()
+													location.href = "{{url('enquiries')}}";
+												}
+												else if(result.status == "fail"){
+													swal("Error!", result.messages[0], "error")
+												}
+												else {
+													swal("Error!", "Something went wrong. Failed to delete data.", "error")
+												}
+											}
+										});
+									});
+						})
+					})
+				}
+			}
+		}();
+
+		jQuery(document).ready(function() {
+			SweetAlert.init()
+		});
     </script>
 
 @endsection
@@ -544,17 +601,17 @@ $configs = session('configs');
             </div>
         </div>
 		<div class="portlet-body form">
-			<div style="white-space: nowrap;">
-				<table class="table table-striped table-bordered table-hover dt-responsive tablesData" id="tablesDataBusinessDevelopment" width="100%">
+			<div style="overflow-x: scroll; white-space: nowrap; overflow-y: hidden;">
+				<table class="table table-striped table-bordered table-hover tablesData">
 					<thead>
 					<tr>
 						<th class="noExport show"> Action </th>
+						<th> Status </th>
 						<th> Subject </th>
 						<th> Date </th>
 						<th> Name </th>
 						<th> Phone </th>
 						<th> Email </th>
-						<th> Status </th>
 					</tr>
 					</thead>
 					<tbody>
@@ -563,30 +620,30 @@ $configs = session('configs');
 						@foreach($data as $key => $value)
 							<tr>
 								<td class="noExport show">
-									<a data-toggle="confirmation" data-popout="true" class="btn btn-block red btn-xs delete" data-id="{{ $value['id_enquiry'] }}" data-subject="{{ $value['enquiry_subject'] }}"><i class="fa fa-trash-o"></i> Delete</a>
+									<a class="btn btn-block red btn-xs sweetalert-delete" data-id="{{ $value['id_enquiry'] }}" data-name="{{ $value['enquiry_subject'] }} ({{$value['enquiry_name']}})"><i class="fa fa-trash-o"></i> Delete</a>
 
-									<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}"><i class="fa fa-search"></i> Detail</a>
+									<a class="btn btn-block btn-xs blue" data-toggle="modal" data-target="#{{ $key }}"><i class="fa fa-search"></i> Detail</a>
 									@if(MyHelper::hasAccess([57], $configs))
 										<a class="btn btn-block btn-xs green" data-toggle="modal" data-target="#modalReply" onClick="setIdEnquiry({{$value['id_enquiry']}})"><i class="fa fa-mail-reply"></i> Reply</a>
 									@endif
+								</td>
+								<td>
+									<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
 								</td>
 								<td>{{$value['enquiry_subject']}}</td>
 								<td>{{ date('d F Y H:i', strtotime($value['created_at'])) }}</td>
 								<td>{{ $value['enquiry_name'] }}</td>
 								<td>{{ $value['enquiry_phone'] }}</td>
 								<td>{{ $value['enquiry_email'] }}</td>
-								<td>
-									<input type="checkbox" class="make-switch changeStatus" data-on-text="Read" data-off-text="Unread" data-id="{{ $value['id_enquiry'] }}" data-category="{{ $value['enquiry_subject'] }}" data-nama="{{ $value['enquiry_name'] }}" value="{{ $value['enquiry_status'] }}" data-status="{{ $value['enquiry_status'] }}" @if ($value['enquiry_status'] == "Read") checked @endif >
-								</td>
 							</tr>
 
-							<div id="{{ str_replace(" ","_",$value['enquiry_subject']) }}-{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
+							<div id="{{ $key }}" class="modal fade" tabindex="-1" data-keyboard="false">
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
 											<h4 class="modal-title">({{ date('d F Y H:i:s', strtotime($value['created_at'])) }}) - {{ $value['enquiry_name'] }} </h4>
 										</div>
-										<div class="col-md-12" style="margin-top: 10px">
+										<div class="modal-body">
 											<div class="portlet light portlet-fit bordered">
 												<div class="portlet-body form">
 													<div class="form-horizontal form-bordered">

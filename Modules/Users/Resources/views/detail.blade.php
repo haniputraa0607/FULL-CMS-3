@@ -1354,26 +1354,6 @@
                                                     <option value="Can Not Request" @if($profile['email_verify_request_status'] == 'Can Not Request') selected @endif>Can Not Request</option>
                                                 </select>
                                             </div>
-											<div class="form-group">
-												<div class="fileinput fileinput-new" data-provides="fileinput">
-                                                    @if(!empty($profile['id_card_image']))
-                                                        <div class="fileinput-new thumbnail" style="width: 200px; height: 100px;">
-                                                            <img src="{{env('STORAGE_URL_API').$profile['id_card_image']}}">
-                                                        </div>
-                                                    @endif
-													<div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 100px; max-height: 100px;"> </div>
-                                                    @if(MyHelper::hasAccess([5], $grantedFeature) || $profile['phone'] == session('phone'))
-													<div>
-															<span class="btn default btn-file">
-																<span class="fileinput-new"> Select image ID Card </span>
-																<span class="fileinput-exists"> Change </span>
-																<input type="file" accept="image/*" id="field_image" class="file" name="id_card_image">
-															</span>
-														<a href="javascript:;" id="removeImage" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
-													</div>
-                                                    @endif
-												</div>
-											</div>
 											<!-- <div class="form-group">
 												<label class="control-label">Email Verified</label>
 												<div class="mt-radio-inline">

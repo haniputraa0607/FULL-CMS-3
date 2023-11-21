@@ -838,6 +838,15 @@ class CampaignController extends Controller
     public function campaignStep2Post(Request $request, $id_campaign)
     {
         $post = $request->except(['_token','sample_1_length','files']);
+
+        if (!empty($post['campaign_push_clickto']) && $post['campaign_push_clickto'] == 'url' && !filter_var($post['campaign_push_link'] ?? '', FILTER_VALIDATE_URL)) {
+            return back()->withErrors("Please use http:// or https:// for push notif url");
+        }
+
+        if (!empty($post['campaign_inbox_clickto']) && $post['campaign_inbox_clickto'] == 'url' && !filter_var($post['campaign_inbox_link'] ?? '', FILTER_VALIDATE_URL)) {
+            return back()->withErrors("Please use http:// or https:// for inbox url");
+        }
+
         $id_campaign_decrypt = MyHelper::explodeSlug($id_campaign)[0] ?? '';
         $post['id_campaign'] = $id_campaign_decrypt;
         if (isset($post['campaign_email_more_recipient'])) {

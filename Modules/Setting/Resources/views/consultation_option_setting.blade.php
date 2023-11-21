@@ -516,7 +516,7 @@
                                                                                     <br>
                                                                                     @if(isset($result['diagnosis']) && $result['diagnosis'] != null)
                                                                                         <input type="hidden" name="id_setting" value="{{$result['diagnosis']['id_setting']}}"/>
-                                                                                        @foreach($result['diagnosis']['value_text'] as $value)
+                                                                                        @foreach($result['diagnosis']['value_text']??[] as $value)
                                                                                             <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value_text[]" placeholder="Pilihan Diagnosis , ex: Kulit Kusam" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
                                                                                         @endforeach
                                                                                     @else
@@ -568,7 +568,7 @@
                                                                                     <br>
                                                                                     @if(isset($result['complaints']) && $result['complaints'] != null)
                                                                                         <input type="hidden" name="id_setting" value="{{$result['complaints']['id_setting']}}"/>
-                                                                                        @foreach($result['complaints']['value_text'] as $value)
+                                                                                        @foreach($result['complaints']['value_text']??[] as $value)
                                                                                             <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value_text[]" placeholder="Pilihan Keluhan , ex: Kulit Gatal dan Perih" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
                                                                                         @endforeach
                                                                                     @else
@@ -620,7 +620,7 @@
                                                                                     <br>
                                                                                     @if(isset($result['usage_rules']) && $result['usage_rules'] != null)
                                                                                         <input type="hidden" name="id_setting" value="{{$result['usage_rules']['id_setting']}}"/>
-                                                                                        @foreach($result['usage_rules']['value_text'] as $value)
+                                                                                        @foreach($result['usage_rules']['value_text']??[] as $value)
                                                                                             <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value_text[]" placeholder="Aturan Penggunaan Dosis, ex: 3 x 1" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
                                                                                         @endforeach
                                                                                     @else
@@ -672,7 +672,7 @@
                                                                                     <br>
                                                                                     @if(isset($result['usage_rules_time']) && $result['usage_rules_time'] != null)
                                                                                         <input type="hidden" name="id_setting" value="{{$result['usage_rules_time']['id_setting']}}"/>
-                                                                                        @foreach($result['usage_rules_time']['value_text'] as $value)
+                                                                                        @foreach($result['usage_rules_time']['value_text']??[] as $value)
                                                                                             <div><div class="col-md-8" style="margin-bottom:10px;"><input type="text" name="value_text[]" placeholder="Aturan Waktu Penggunaan ex: Siang" class="form-control" value="{{$value}}" /></div><div class="col-md-4" style="margin-top:10px;"> <a href="#" class="delete">Delete</a> </div></div>
                                                                                         @endforeach
                                                                                     @else
